@@ -1,6 +1,6 @@
 # #11 — Cartes en main épurées
 
-- Statut : à valider
+- Statut : à valider (Q1 à Q3 tranchées par Mathieu le 2026-11-24 ; reste à voir l'icône « i »)
 - Issue : #11 (Epic #31 Finitions v0.1.0, milestone v0.1.0) ; répond aussi à #12 (Lecture d'esprit) et corrige #13 (cartes
   tronquées), fermées par la PR d'implémentation
 - Dépend de : spec 073 (panneaux, boutons d'effet), spec 077 (cartes agrandies) ; implémentées. Après la spec #10 (Source dans
@@ -125,6 +125,7 @@ Cherchés à la rédaction (`grep -rn 'strong_effects\|basic_effects\|\.color' c
   `effect_button_tooltips` (pastille verte de Marche renforcée retirée), `effect_buttons_without_icon` (pastilles vertes de
   Tranquillité retirées), `paid_option_in_strong_block` (remplacé par C11).
 - `crates/arcanum-ui/tests/sorts.rs` : `strong_spell_at_night_pays_color_then_black` (C9).
+- `crates/arcanum-ui/tests/icones.rs` : `every_icon_image_exists` (37 images de `ui/`, 38 avec `info.svg`).
 - À vérifier au fil d'implémentation, sans changement attendu : les tests qui indexent `strong_effects` d'une carte à options
   payantes (`actions_avancees_mana.rs`, Don pour la magie : indices des options renforcées inchangés, la carte n'a pas
   d'option payante de base) et `cartes_de_mana.rs` (`paid_plays`, inchangé). Aucun champ retiré ni renommé.
@@ -162,11 +163,22 @@ Clés réutilisées, relues dans `main` : `panel.strong` « Renforcé » / « Po
 d'esprit ») ; `card.<id>.basic_text` et `strong_text` ; `effect.gain_crystal` « Cristal {color} » (texte de repli de la face
 cristal, « Cristal rouge »). `effect.pay_for_crystal` et `effect.gain_spell` restent pour les infobulles et le bandeau.
 
-Le « i » est la lettre i : aucun caractère hors des polices du jeu. Les traits de la séparation sont dessinés, pas écrits.
+Le « i » est une icône SVG, pas un caractère : aucun souci de police. Les traits de la séparation sont dessinés, pas écrits.
+
+## Icône « i »
+
+Demandée par Mathieu (2026-11-24, sur un modèle : rond bleu, « i » blanc calligraphié). Dessinée pour cette spec,
+[`images/issue-11-cartes-en-main-epurees/info.svg`](images/issue-11-cartes-en-main-epurees/info.svg) (aperçu :
+[`info-apercu.png`](images/issue-11-cartes-en-main-epurees/info-apercu.png), en grand, à 18 points devant un nom, à 32 et
+64) : rond bleu `#1E4F8C` cerné du trait sombre des autres icônes (`#20242A`), point et jambage crème `#F4F1E8`, jambage
+incliné avec son attaque et sa queue arrondies. Fond 64 × 64 comme les icônes de la spec 071.
+
+La PR d'implémentation la copie en `assets/images/ui/info.svg` et ajoute `Icon::Info` (stem `info`) ; le compte de
+`every_icon_image_exists` (icones.rs, spec 071 C1) passe de 37 à 38 : test **modifié**.
 
 ## Interface
 
-- **En-tête** : pastille, nom, puis un bouton rond « i » (infobulle `card.info`), puis les icônes de côté ou la case
+- **En-tête** : pastille, nom, puis le bouton « i », l'icône `Icon::Info` à la taille des icônes de côté (infobulle `card.info`), puis les icônes de côté ou la case
   « Défausser » à droite, comme aujourd'hui (C1, C4, C5 : pas de « i » sur une Blessure ni un artefact ; place : vérification
   à l'œil).
 - **Fenêtre du « i »** : au clic, au-dessus du bouton, par-dessus le reste ; le nom (en gras), le texte de base, un trait,
@@ -216,14 +228,11 @@ demanderait de désigner la carte, ce que rien d'autre ne fait encore.
 
 ## Questions ouvertes
 
-- **Q1. Artefacts** : l'issue doute de l'intérêt du « i » pour eux. Leurs boutons ne disent que « Jouer » et « Détruire » ;
-  sans texte sur la carte, on ne saurait pas ce qu'ils font. Proposition : l'artefact garde son texte sur la carte, sans « i »
-  ni ligne « Renforcé », avec la séparation « —— si détruit —— » (maquette). Autre option : boutons qui portent le texte,
-  comme les actions, et un « i » ; plus long, pour un gain faible.
-- **Q2. Options payantes de base** (Cristallisation, Magie pure de base) : aujourd'hui dans le bloc renforcé (spec 073
-  C17), au milieu des options renforcées (Magie pure : huit boutons sous « Renforcé »). Avec la règle « le mana du renforcé
-  n'est plus répété », elles y seraient trompeuses. Proposition : dans le bloc de base, au format « pastille : effet » (C11,
-  maquette).
-- **Q3. Nom tronqué** : le « i » prend la place d'environ quatre lettres ; avec les trois icônes de côté, « Bouclier de
-  glace » devient « Bouclier… ». Proposition : l'accepter, le nom entier est dans la fenêtre du « i ». Autre option : le
-  « i » après les icônes de côté, à l'extrême droite (même place prise).
+Tranchées par Mathieu (2026-11-24) :
+
+- **Q1. Artefacts** : ils gardent leur texte sur la carte, sans « i » ni ligne « Renforcé », avec la séparation « —— si
+  détruit —— » (proposition retenue : leurs boutons ne disent que « Jouer » et « Détruire »).
+- **Q2. Options payantes de base** (Cristallisation, Magie pure de base) : pas d'exception pour ces cartes, le formalisme
+  général s'applique : dans le bloc de base, au format « pastille : effet » (C11 ; spec 073 C17 remplacée).
+- **Q3. Nom tronqué** : accepté, le nom entier se lit dans la fenêtre du « i » (L1).
+- **Icône « i »** : en SVG, dans le style du modèle fourni (section Icône « i ») ; dessin à valider.
