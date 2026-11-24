@@ -308,8 +308,10 @@ tests du directeur (aucune partie à jouer) ; les tests de la session partent d'
 
 - **C10** — `sound_situation` : écran de lancement → `Title` ; écran de nouvelle partie ouvert en cours de partie →
   `Title` ; partie de jour sans combat → `Exploration(Day)` (`situation_follows_the_screen`).
-- **C11** — Partie en combat (`PlayerView::combat` présent), « Voir le plateau » compris → `Combat(…)` ; partie finie
-  (`PlayerView::game_end`) → `GameOver(…)` (`situation_in_combat_and_after_game_end`).
+- **C11** — Partie en combat (`PlayerView::combat` présent et pas fini), « Voir le plateau » compris → `Combat(…)` ; combat
+  fini (`CombatEnded`, il reste dans la vue jusqu'à la fin du tour) → `Exploration(…)`, issue #18
+  (`situation_returns_to_exploration_once_combat_ended`) ; partie finie (`PlayerView::game_end`) → `GameOver(…)`
+  (`situation_in_combat_and_after_game_end`).
 - **C28** — Victoire ou défaite de la situation `GameOver`, une ligne par case du tableau : Conquête en solitaire finie par
   `AllCitiesConquered` → victoire, par `LastRound` → défaite ; Première reconnaissance par `CityRevealed` → victoire, par
   `LastRound` → défaite ; bac à sable → victoire (`game_over_tells_victory_or_defeat`).

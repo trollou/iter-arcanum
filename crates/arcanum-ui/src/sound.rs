@@ -15,7 +15,9 @@ pub fn situation_of(view: Option<&PlayerView>, title: bool) -> SoundSituation {
     if let Some(reason) = view.game_end {
         let scenario = view.scenario.as_ref().map(|scenario| scenario.id());
         SoundSituation::GameOver(time, game_outcome(scenario, reason))
-    } else if view.combat.is_some() {
+    // Un combat fini reste dans la vue jusqu'à la fin du tour (spec 031), l'écran est déjà
+    // revenu au plateau (issue #18).
+    } else if view.combat.as_ref().is_some_and(|combat| !combat.ended) {
         SoundSituation::Combat(time)
     } else {
         SoundSituation::Exploration(time)
