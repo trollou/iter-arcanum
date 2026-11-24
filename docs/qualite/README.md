@@ -11,7 +11,7 @@
   seuil, nouvelle fonction trop longue, clones ajoutés) est un point à discuter au bilan. Puis
   `scripts/qualite.sh --enregistrer`, et commiter `reference.txt` avec le bilan : la spec suivante se
   compare à celle-ci.
-- **Fin de jalon**, en plus : `scripts/qualite.sh --couverture --enregistrer`. La couverture rejoue tous
+- **Fin de milestone** (ou d'Epic), en plus : `scripts/qualite.sh --couverture --enregistrer`. La couverture rejoue tous
   les tests instrumentés (4 à 5 minutes, plus d'1 Go de compilation, libéré à la fin) : trop long pour
   chaque spec. Sans `--couverture`, `--enregistrer` garde la couverture de la référence.
 

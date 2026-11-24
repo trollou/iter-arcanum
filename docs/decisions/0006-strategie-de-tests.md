@@ -24,7 +24,8 @@ On a étudié quatre options : (A) les tests d'interaction egui avec `egui_kitte
   tour, jusqu'à la fin de manche. Il vérifie les points d'étape qui comptent pour les règles (vue du joueur, événements clés dans
   l'ordre, avec la page du livret en commentaire), pas le journal complet mot pour mot. **Chaque jalon de règles se termine par une
   spec de parcours** (numérotée en 9 dans `PLAN.md`, ex. 019 pour J1), qui écrit au moins un parcours couvrant les grandes
-  fonctionnalités du jalon, ce que promet sa ligne « Jouable » (Mathieu, 2026-10-26). La première spec de parcours apporte aussi le joueur scripté
+  fonctionnalités du jalon, ce que promet sa ligne « Jouable » (Mathieu, 2026-10-26). Depuis le passage aux issues
+  (2026-11-24), c'est une `Feature` de parcours, dernière sous-issue de chaque `Epic` de règles (`docs/issues.md`). La première spec de parcours apporte aussi le joueur scripté
   (la 028, rédigée avant la 019 : décision de Mathieu, 2026-10-27).
   **Une spec de parcours fixe les points d'étape, leurs préconditions et l'ordre qui compte pour les règles ; le découpage en tours de
   son schéma est indicatif** (issue privée 44, Mathieu, 2026-10-27). Le budget de points et de cartes de chaque tour dépend de la main tirée :

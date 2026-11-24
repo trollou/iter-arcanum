@@ -1,8 +1,10 @@
-# NNN — Titre de la spec
+# #N — Titre de la spec
 
-- Statut : brouillon | à valider | validée | implémentée (reporter tout changement dans la colonne Statut de `PLAN.md`)
-- Jalon : J?
-- Dépend de : NNN, NNN
+À copier en `issue-<N>-<sujet>.md`, où N est le numéro de l'issue `Feature` (ou `Epic`) de la spec (`docs/issues.md`, Specs et issues).
+
+- Statut : brouillon | à valider | validée | implémentée
+- Issue : #N (Epic #…, milestone v…)
+- Dépend de : spec #…, spec 0NN
 - Livret : MKUE p. ?
 - Crates touchées : arcanum-core, …
 

@@ -6,7 +6,7 @@
 #
 # Usage : scripts/qualite.sh                rapport, comparé à la référence
 #         scripts/qualite.sh --couverture   ajoute la couverture (cargo llvm-cov,
-#                                           4 à 5 min : fin de jalon plutôt)
+#                                           4 à 5 min : fin de milestone)
 #         scripts/qualite.sh --enregistrer  écrit aussi les mesures comme nouvelle
 #                                           référence (docs/qualite/reference.txt)
 # Les options se combinent. Un outil absent est sauté, avec sa commande d'installation.

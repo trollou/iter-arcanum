@@ -1,10 +1,10 @@
-# Plan de développement — spec NNN <Titre>
+# Plan de développement — spec #N <Titre>
 
-Gabarit d'un plan de développement : à copier en `plans/NNN-<sujet>.md` quand une spec demande plus que quelques fichiers
+Gabarit d'un plan de développement : à copier en `plans/issue-<N>-<sujet>.md` quand une spec demande plus que quelques fichiers
 (`CLAUDE.md`, « proposer un plan »). Exemple rempli : [`031-deroule-combat.md`](031-deroule-combat.md).
 
 - Statut : brouillon | accepté par Mathieu (date).
-- Spec : [`NNN-<sujet>.md`](../NNN-<sujet>.md). Branche : `spec/NNN-<sujet>`.
+- Spec : [`issue-<N>-<sujet>.md`](../issue-<N>-<sujet>.md). Branche : `feature/<N>-<sujet>`.
 - Méthode : celle de `CLAUDE.md` (tests rouges, code minimal, refactor ; `scripts/verifier.sh` vert avant chaque push).
 
 ## Découpage en PR
@@ -64,7 +64,7 @@ sous-agent tout le contexte que le fil a déjà** : déléguer une étape liée 
 spec 031, issue privée 66).
 
 - **Ne déléguer que les étapes isolées**, celles qu'un sous-agent fait à partir d'un brief court sans relire la spec entière ni
-  le code voisin : recopie de libellés, docs (architecture, index, PLAN), lecture du livret ou du compendium pour une question
+  le code voisin : recopie de libellés, docs (architecture, index), lecture du livret ou du compendium pour une question
   précise, captures sous Xvfb, tests sur un patron déjà posé (ex. manques de libellés, sur le patron de la spec 030, C28).
   Modèle : Haiku pour le mécanique, Sonnet pour un patron à suivre.
 - **Une étape liée au reste** (nouveaux types, dessin qui dépend des tests et des corrections vues à l'œil, étapes qui se

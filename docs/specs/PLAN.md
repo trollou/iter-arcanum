@@ -1,4 +1,9 @@
-# Plan des specs
+# Plan des specs (archivé)
+
+> **Archivé le 2026-11-24, ne plus le modifier.** La planification vit dans GitHub : milestones (versions), issues `Epic`,
+> `Feature`, `Bug` et `Task`, champs Priority, Effort et Rang (`docs/issues.md`, Planification). Ce plan ne sert plus qu'à
+> retrouver les jalons J0 à J6 et l'index des specs `000` à `092`. Les lignes « à rédiger » qui restaient sont devenues des
+> issues ; leurs statuts ci-dessous ne sont plus tenus à jour.
 
 - Statut : **validé par Mathieu** (2026-10-23), J4 à J6 revus et validés le 2026-10-30.
 - Références : `CLAUDE.md`, `docs/decisions/0001` à `0004`, `docs/glossaire.md`, livret `docs/regles/mkue-rulebook.pdf` (transcrit dans `docs/regles/livret/`)
