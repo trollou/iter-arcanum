@@ -3,7 +3,8 @@
 //! règle du livret : c'est de l'affichage (rappel : MKUE p. 4, *Deed Cards* 3.a à 3.d).
 
 use arcanum_core::{
-    AdvancedAction, Artifact, BasicAction, CardId, DeedCard, GameState, Spell, legal_actions, view,
+    AdvancedAction, Artifact, BasicAction, BasicColor, CardId, DeedCard, GameState, ManaColor,
+    Spell, legal_actions, view,
 };
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
@@ -157,4 +158,24 @@ fn info_stays_in_choice_mode() {
         rage.info,
         info("Rage", "Attaque 2 ou Parade 2", "Renforcé", "Attaque 4")
     );
+}
+
+// --- Titre du bloc renforcé ---
+
+// Spec #11 C7 : le titre et ses pastilles.
+#[test]
+fn strong_heading_names_its_mana() {
+    let catalog = french();
+    let rage = held_alone(card(Rage, 1), &catalog);
+    assert_eq!(rage.strong_heading, "Renforcé");
+    assert_eq!(rage.strong_colors, [ManaColor::Basic(BasicColor::Red)]);
+    let chill = held_alone(spell(Spell::Chill), &catalog);
+    assert_eq!(chill.strong_heading, "Frisson fatal");
+    assert_eq!(
+        chill.strong_colors,
+        [ManaColor::Basic(BasicColor::Blue), ManaColor::Black]
+    );
+    let ring = held_alone(artifact(Artifact::RubyRing), &catalog);
+    assert_eq!(ring.strong_heading, "si détruit");
+    assert!(ring.strong_colors.is_empty());
 }
