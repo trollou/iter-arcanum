@@ -172,14 +172,20 @@ impl IterArcanumApp {
         };
         let before = fan_layout(n, width, previous);
         // La carte agrandie reste survolée tant que le pointeur est sur elle, même au-dessus de
-        // la rangée.
-        let hovered = ui.ctx().pointer_hover_pos().and_then(|pointer| {
-            if rect.contains(pointer) {
-                before.card_at(pointer.x - rect.left())
-            } else {
-                previous.filter(|&k| lifted(k, before.positions[k]).contains(pointer))
-            }
-        });
+        // la rangée. Aucune ne s'agrandit pendant qu'une liste déroulante est ouverte : son aire,
+        // de même ordre et plus récente, couvrirait la liste (issue #24, Euphorie cristalline).
+        let popup_open = egui::Popup::is_any_open(ui.ctx());
+        let hovered = ui
+            .ctx()
+            .pointer_hover_pos()
+            .filter(|_| !popup_open)
+            .and_then(|pointer| {
+                if rect.contains(pointer) {
+                    before.card_at(pointer.x - rect.left())
+                } else {
+                    previous.filter(|&k| lifted(k, before.positions[k]).contains(pointer))
+                }
+            });
         if hovered != previous {
             ui.data_mut(|data| data.insert_temp(id, hovered));
             ui.ctx().request_repaint();
