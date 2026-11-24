@@ -1,19 +1,25 @@
-//! Barre de menu en haut de la fenêtre (spec 074) : le Menu, puis le scénario, la manche, les
-//! pioches de tuiles et, à droite, le message de la dernière sauvegarde.
+//! Barre de menu en haut de la fenêtre (spec 074) : le Menu, puis le scénario, la manche, la
+//! Source (spec #10), les pioches de tuiles et, à droite, le message de la dernière sauvegarde.
 
 use arcanum_core::TimeOfDay;
 use eframe::egui::{self, Color32, Sense, Vec2};
 
+use super::widgets::{source_line, source_width};
 use super::{IterArcanumApp, full_uv};
-use crate::{Clock, Command, ImagePaint, MenuBar, MenuItem, time_of_day_image};
+use crate::{Clock, Command, ImagePaint, MenuBar, MenuItem, SourceLine, time_of_day_image};
 
 /// Couleurs de repli de l'icône du moment de la journée (spec 023).
 const CLOCK_DAY: Color32 = Color32::from_rgb(0xFF, 0xD5, 0x4A);
 const CLOCK_NIGHT: Color32 = Color32::from_rgb(0xC9, 0xD4, 0xF2);
 
 impl IterArcanumApp {
-    /// La ligne de la barre ; rend la commande choisie dans le Menu.
-    pub(super) fn menu_bar(&mut self, ui: &mut egui::Ui, bar: &MenuBar) -> Option<Command> {
+    /// La ligne de la barre ; rend la commande choisie dans le Menu ou le dé cliqué de la Source.
+    pub(super) fn menu_bar(
+        &mut self,
+        ui: &mut egui::Ui,
+        bar: &MenuBar,
+        source: Option<&SourceLine>,
+    ) -> Option<Command> {
         let mut clicked = None;
         egui::MenuBar::new().ui(ui, |ui| {
             ui.menu_button(&bar.title, |ui| {
@@ -45,7 +51,8 @@ impl IterArcanumApp {
             });
             ui.separator();
             // L7 : à droite d'abord le message, puis le reste de gauche à droite ; le nom du
-            // scénario se tronque en dernier recours.
+            // scénario se tronque en dernier recours ; la place réservée compte la Source (spec #10,
+            // L1).
             let notice_width = bar.notice.as_ref().map_or(0.0, |notice| {
                 ui.fonts_mut(|fonts| {
                     fonts
@@ -59,7 +66,8 @@ impl IterArcanumApp {
                 })
             });
             if let Some(scenario) = &bar.scenario {
-                let right = notice_width + 260.0;
+                let source = source.map_or(0.0, |source| source_width(ui, source));
+                let right = notice_width + 260.0 + source;
                 let width = (ui.available_width() - right).max(40.0);
                 ui.scope(|ui| {
                     ui.set_max_width(width);
@@ -70,6 +78,12 @@ impl IterArcanumApp {
             self.clock_icon(ui, &bar.clock);
             ui.label(&bar.round);
             ui.separator();
+            // Spec #10, C6 : la Source juste après le soleil ou la lune, qui dit pourquoi un dé est
+            // épuisé.
+            if let Some(source) = source {
+                clicked = source_line(ui, source).or(clicked);
+                ui.separator();
+            }
             for deck in &bar.tile_decks {
                 self.icon_value(ui, deck, false);
             }

@@ -54,35 +54,60 @@ pub(super) fn color_swatch(ui: &mut egui::Ui, color: BasicColor) {
 }
 
 /// Ligne « Source » : les dés utilisables, puis les épuisés grisés (spec 020) ; renvoie le dé
-/// cliqué en mode « mettre un dé sur une couleur » (spec 025).
+/// cliqué en mode « mettre un dé sur une couleur » (spec 025). Dessinée à la suite dans la barre
+/// de menu, sans passer à la ligne (spec #10, L1).
 pub(super) fn source_line(ui: &mut egui::Ui, source: &SourceLine) -> Option<Command> {
     let mut clicked = None;
-    ui.horizontal_wrapped(|ui| {
-        ui.label(&source.title);
-        for die in &source.dice {
-            // Spec 058, C6 : plus de dé ce tour, les dés grisés comme épuisés.
-            clicked = source_die(ui, die, die.forbidden).or(clicked);
+    ui.label(&source.title);
+    for die in &source.dice {
+        // Spec 058, C6 : plus de dé ce tour, les dés grisés comme épuisés.
+        clicked = source_die(ui, die, die.forbidden).or(clicked);
+    }
+    if let Some(title) = &source.taken_title {
+        ui.weak(title);
+        for die in &source.taken {
+            taken_die(ui, die);
         }
-        if let Some(title) = &source.taken_title {
-            group_title(ui, title, source.taken.first());
-            for die in &source.taken {
-                taken_die(ui, die);
-            }
+    }
+    // Spec 058, C39 : le dé d'Embrasure de la Source, gardé tel quel à la fin du tour.
+    if let Some(keep) = &source.keep
+        && ui.button(&keep.label).clicked()
+    {
+        clicked = Some(keep.command);
+    }
+    if let Some(title) = &source.depleted_title {
+        ui.weak(title);
+        for die in &source.depleted {
+            clicked = source_die(ui, die, true).or(clicked);
         }
-        // Spec 058, C39 : le dé d'Embrasure de la Source, gardé tel quel à la fin du tour.
-        if let Some(keep) = &source.keep
-            && ui.button(&keep.label).clicked()
-        {
-            clicked = Some(keep.command);
-        }
-        if let Some(title) = &source.depleted_title {
-            group_title(ui, title, source.depleted.first());
-            for die in &source.depleted {
-                clicked = source_die(ui, die, true).or(clicked);
-            }
-        }
-    });
+    }
     clicked
+}
+
+/// Largeur de la ligne de la Source, que la barre réserve avant de tronquer le nom du scénario
+/// (spec #10, L1).
+pub(super) fn source_width(ui: &egui::Ui, source: &SourceLine) -> f32 {
+    let spacing = ui.spacing().item_spacing.x;
+    let dice = source
+        .dice
+        .iter()
+        .chain(&source.taken)
+        .chain(&source.depleted)
+        .map(|die| die_width(ui, die) + spacing);
+    let titles = [&source.taken_title, &source.depleted_title]
+        .into_iter()
+        .flatten()
+        .map(|title| text_width(ui, title, egui::TextStyle::Body) + spacing);
+    let keep = source.keep.as_ref().map_or(0.0, |keep| {
+        text_width(ui, &keep.label, egui::TextStyle::Button)
+            + 2.0 * ui.spacing().button_padding.x
+            + spacing
+    });
+    text_width(ui, &source.title, egui::TextStyle::Body)
+        + spacing
+        + dice.sum::<f32>()
+        + titles.sum::<f32>()
+        + keep
 }
 
 /// Largeur de la pastille d'un dé et de l'écart qui la sépare de son nom.
@@ -112,24 +137,6 @@ fn die_width(ui: &egui::Ui, die: &SourceDie) -> f32 {
     }
 }
 
-/// Passe à la ligne si `width` ne tient plus au bout de la ligne commencée : dans
-/// `horizontal_wrapped`, un groupe `ui.horizontal` réserve toute la largeur restante et ne passe
-/// jamais à la ligne de lui-même, si bien que la ligne de la Source débordait du panneau
-/// (issue privée 233).
-fn wrap_unless_fits(ui: &mut egui::Ui, width: f32) {
-    let row_started = ui.cursor().min.x > ui.max_rect().min.x + 1.0;
-    if row_started && width > ui.available_size_before_wrap().x {
-        ui.end_row();
-    }
-}
-
-/// Le titre d'un groupe de dés (pris, épuisés), gardé sur la même ligne que son premier dé.
-fn group_title(ui: &mut egui::Ui, title: &str, first: Option<&SourceDie>) {
-    let first = first.map_or(0.0, |die| ui.spacing().item_spacing.x + die_width(ui, die));
-    wrap_unless_fits(ui, text_width(ui, title, egui::TextStyle::Body) + first);
-    ui.weak(title);
-}
-
 /// Un dé : carré arrondi de sa couleur et son nom, avec son info-bulle ; un bouton quand on peut le
 /// choisir (spec 025).
 fn source_die(ui: &mut egui::Ui, die: &SourceDie, depleted: bool) -> Option<Command> {
@@ -140,7 +147,6 @@ fn source_die(ui: &mut egui::Ui, die: &SourceDie, depleted: bool) -> Option<Comm
         color
     };
     let mut clicked = None;
-    wrap_unless_fits(ui, die_width(ui, die));
     ui.horizontal(|ui| {
         ui.spacing_mut().item_spacing.x = 3.0;
         let (rect, _) = ui.allocate_exact_size(Vec2::splat(14.0), Sense::hover());
@@ -176,7 +182,6 @@ fn source_die(ui: &mut egui::Ui, die: &SourceDie, depleted: bool) -> Option<Comm
 
 /// Un dé pris ce tour : rond cerclé de sa couleur, pour le distinguer des dés libres (spec 022).
 fn taken_die(ui: &mut egui::Ui, die: &SourceDie) {
-    wrap_unless_fits(ui, die_width(ui, die));
     ui.horizontal(|ui| {
         ui.spacing_mut().item_spacing.x = 3.0;
         let (rect, _) = ui.allocate_exact_size(Vec2::splat(14.0), Sense::hover());

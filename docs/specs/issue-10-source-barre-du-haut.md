@@ -1,6 +1,6 @@
 # #10 — Source dans la barre du haut
 
-- Statut : validée (2026-11-24, Q1 à Q5 retenues telles que proposées par Mathieu)
+- Statut : implémentée (validée le 2026-11-24, Q1 à Q5 retenues telles que proposées par Mathieu)
 - Issue : #10 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec 020 (Source), 022 et 025 (dés pris, dés mis sur une couleur), 060 (Vol de mana, Appel du mana),
   058 (Embrasure de la Source, Magie inutile), 073 (panneau de droite), 074 (barre de menu) ; toutes implémentées
