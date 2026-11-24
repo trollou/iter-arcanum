@@ -15,7 +15,7 @@ use eframe::egui::{
 
 use crate::{
     BOARD_BACKGROUND, BoardCamera, ClientSession, Illustration, IllustrationIndex, ImageId,
-    ImageLoad, ImagePaint, ImageWarnings, KEY_BINDINGS, KeyModifier, WALK_STEP_SECONDS,
+    ImageLoad, ImagePaint, ImageWarnings, KEY_BINDINGS, KeyModifier, SourceLine, WALK_STEP_SECONDS,
     WindowRequest, catalog_or_empty, illustration_paint, image_paint, svg_size,
 };
 
@@ -323,7 +323,8 @@ impl IterArcanumApp {
         // Spec 078, Q4 : en cours de partie, l'écran de nouvelle partie prend toute la place sous
         // la barre de menu ; le plateau et les panneaux ne sont pas dessinés.
         if self.client.new_game_page(&self.catalog).is_some() {
-            self.menu_bar_panel(ui);
+            // L3 : la barre sans la Source, comme le plateau et les panneaux.
+            self.menu_bar_panel(ui, None);
             self.new_game_central(ui);
             self.windows(&ctx);
             return;
@@ -336,7 +337,7 @@ impl IterArcanumApp {
         let Some(game_screen) = self.client.game_screen(&self.catalog) else {
             return;
         };
-        self.menu_bar_panel(ui);
+        self.menu_bar_panel(ui, Some(&game_screen.source));
         // Spec 073 : le panneau du bas sur toute la largeur, le panneau de droite au-dessus.
         egui::Panel::bottom("bottom_panel")
             .resizable(false)
@@ -380,12 +381,13 @@ impl IterArcanumApp {
 }
 
 impl IterArcanumApp {
-    /// Spec 074 : la barre de menu sur toute la largeur, au-dessus des panneaux.
-    fn menu_bar_panel(&mut self, ui: &mut egui::Ui) {
+    /// Spec 074 : la barre de menu sur toute la largeur, au-dessus des panneaux ; spec #10 : avec
+    /// la Source de l'écran de la partie, dont un dé cliqué rend sa commande comme le Menu.
+    fn menu_bar_panel(&mut self, ui: &mut egui::Ui, source: Option<&SourceLine>) {
         if let Some(bar) = self.client.menu_bar(&self.catalog) {
             let clicked = egui::Panel::top("menu_bar")
                 .resizable(false)
-                .show(ui, |ui| self.menu_bar(ui, &bar))
+                .show(ui, |ui| self.menu_bar(ui, &bar, source))
                 .inner;
             if let Some(command) = clicked {
                 self.client.command(command);
