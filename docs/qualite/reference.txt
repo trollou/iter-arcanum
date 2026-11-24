@@ -1,6 +1,6 @@
-# Référence de scripts/qualite.sh : 34720d4 2026-11-20 ; une mesure par ligne.
-lignes_src 52944
-lignes_tests 88402
+# Référence de scripts/qualite.sh : d42ef06 2026-11-24 ; une mesure par ligne.
+lignes_src 52977
+lignes_tests 88718
 plus_gros_fichier 2463
 fichiers_trop_longs 1
 fonctions_trop_longues 43
