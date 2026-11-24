@@ -1,6 +1,6 @@
 # #10 — Source dans la barre du haut
 
-- Statut : à valider
+- Statut : validée (2026-11-24, Q1 à Q5 retenues telles que proposées par Mathieu)
 - Issue : #10 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec 020 (Source), 022 et 025 (dés pris, dés mis sur une couleur), 060 (Vol de mana, Appel du mana),
   058 (Embrasure de la Source, Magie inutile), 073 (panneau de droite), 074 (barre de menu) ; toutes implémentées
@@ -147,7 +147,7 @@ Aucun (voir Q4).
 
 ## Questions ouvertes
 
-Propositions de la spec entre parenthèses ; chacune est retenue si Mathieu ne dit rien d'autre.
+Aucune. Décisions de Mathieu (2026-11-24) : les cinq propositions ci-dessous sont retenues telles quelles.
 
 - **Q1. Place dans la barre** (issue, question 1) : entre la manche et les pioches de tuiles, à côté du soleil ou de la lune
   qui explique les dés épuisés (proposition). Autres : après les pioches ; à droite, le message de sauvegarde passant alors
