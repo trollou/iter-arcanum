@@ -1,6 +1,6 @@
 # #10 — Source dans la barre du haut
 
-- Statut : implémentée (validée le 2026-11-24, Q1 à Q5 retenues telles que proposées par Mathieu)
+- Statut : implémentée (validée le 2026-11-24 ; Q2 à Q5 retenues telles que proposées, Q1 changée à l'implémentation)
 - Issue : #10 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec 020 (Source), 022 et 025 (dés pris, dés mis sur une couleur), 060 (Vol de mana, Appel du mana),
   058 (Embrasure de la Source, Magie inutile), 073 (panneau de droite), 074 (barre de menu) ; toutes implémentées
@@ -10,9 +10,8 @@
 
 ## Objectif
 
-La Source de mana quitte le haut du panneau de droite pour la **barre de menu**, entre la manche et les pioches de tuiles :
-ses dés se voient d'un coup d'œil à côté du soleil ou de la lune qui dit lesquels sont épuisés, sur le plateau comme en
-combat. Le panneau de droite commence directement par le joueur, qui gagne la place de la Source. Ce qu'on fait avec les dés
+La Source de mana quitte le haut du panneau de droite pour la **barre de menu**, juste après les pioches de tuiles : ses
+dés se voient d'un coup d'œil, sur le plateau comme en combat. Le panneau de droite commence directement par le joueur, qui gagne la place de la Source. Ce qu'on fait avec les dés
 ne change pas.
 
 ## Règles
@@ -35,7 +34,7 @@ Appel du mana), que l'écran connaît et la barre non. Seul le dessin change de 
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ [Menu ▾] Première reconnaissance  ☀ Manche 1/4 (tour 3)  Source ■ rouge ■ vert pris : ● bleu épuisé : ■ noir │ ⬡ 6 ⬡ 3   Partie sauvegardée │
+│ [Menu ▾] Première reconnaissance  ☀ Manche 1/4 (tour 3)  ⬡ 6 ⬡ 3 │ Source ■ rouge ■ vert pris : ● bleu épuisé : ■ noir   Partie sauvegardée │
 ├─────────────────────────────────────────────────────────────────────────────┬────────────────────────────┤
 │                                                                             │ (bandeaux)                 │
 │ Plateau de jeu                                                              │ Joueur                     │
@@ -46,8 +45,8 @@ Appel du mana), que l'écran connaît et la barre non. Seul le dessin change de 
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-Ordre de la barre, de gauche à droite : Menu | scénario | soleil ou lune, manche | **Source** | pioches de tuiles | à droite,
-le message de sauvegarde. La Source vient juste après le soleil ou la lune, qui dit pourquoi un dé est épuisé.
+Ordre de la barre, de gauche à droite : Menu | scénario | soleil ou lune, manche | pioches de tuiles | **Source** | à droite,
+le message de sauvegarde (Q1).
 
 ## Actions et événements
 
@@ -76,8 +75,7 @@ vérifie un comportement, pas une mise en page). Tout ce qui suit se vérifie à
 
 **Ce qui change (vérification à l'œil) :**
 
-- **C6** — Sur le plateau, la Source est dans la barre, après la manche et avant les pioches de tuiles, séparée par un trait
-  de part et d'autre ; elle n'est plus dans le panneau de droite.
+- **C6** — Sur le plateau, la Source est dans la barre, après les pioches de tuiles, séparée d'elles par un trait ; elle n'est plus dans le panneau de droite.
 - **C7** — En combat (écran de combat ou « Voir le plateau »), même chose : la barre est la même (spec 074, test
   `bar_stays_during_combat`).
 - **C8** — Le panneau de droite commence par les bandeaux et le message, puis le joueur (portrait, inventaire…) ; un seul
@@ -115,7 +113,7 @@ Aucune clé nouvelle. Clés réutilisées, telles quelles (relues dans `assets/i
 
 ## Interface
 
-- **Source dans la barre de menu**, entre la manche et les pioches de tuiles (C6, C7 ; `GameScreen::source` ; vérification
+- **Source dans la barre de menu**, après les pioches de tuiles (C6, C7 ; `GameScreen::source` ; vérification
   à l'œil).
 - **Dés cliquables et cochés** dans la barre (C2, C3, C4, C5 ; `SourceDie::pick`, `checked`, `forbidden`, `SourceLine::keep`).
 - **Panneau de droite** sans Source (C8, vérification à l'œil).
@@ -129,7 +127,7 @@ Parties préparées pour la vérification à l'œil (`docs/verification-manuelle
 | `tactiques-jour` | Vol de mana : les dés cliquables dans la barre, un clic prend le dé (C2) |
 | `actions-avancees-mana` | Tempête de mana sur un dé de la barre (C2) |
 | `competences-goldyx` | Embrasure de la Source : au tour suivant, le dé en plus et « Garder ce dé tel quel » dans la barre (C4, L2) |
-| `sorts-cibles` | Nuit : la lune puis la Source, le dé noir utilisable (C6) ; jouer un sort renforcé avec le dé noir le range dans « pris : » (C1) |
+| `sorts-cibles` | Nuit : la Source dans la barre, le dé noir utilisable (C6) ; jouer un sort renforcé avec le dé noir le range dans « pris : » (C1) |
 
 Aucune partie préparée ne part avec un dé épuisé (or de nuit, noir de jour) : le groupe « épuisé : », inchangé, n'est vu
 dans la barre que si une partie de la liste en tire un. Les lignes de `docs/verification-manuelle.md` disent « dans la
@@ -147,11 +145,12 @@ Aucun (voir Q4).
 
 ## Questions ouvertes
 
-Aucune. Décisions de Mathieu (2026-11-24) : les cinq propositions ci-dessous sont retenues telles quelles.
+Aucune. Décisions de Mathieu (2026-11-24) : les propositions de Q2 à Q5 sont retenues telles quelles ; pour Q1, à la
+vérification à l'œil, Mathieu a préféré les pioches de tuiles à gauche, la Source à leur droite.
 
 - **Q1. Place dans la barre** (issue, question 1) : entre la manche et les pioches de tuiles, à côté du soleil ou de la lune
   qui explique les dés épuisés (proposition). Autres : après les pioches ; à droite, le message de sauvegarde passant alors
-  avant elle.
+  avant elle. **Décision : après les pioches** (Mathieu, vu à l'œil, 2026-11-24).
 - **Q2. Taille et forme des dés** (questions 2 et 3) : taille actuelle, nom de la couleur écrit, groupes « pris : » et
   « épuisé : » sur la même ligne comme dans le panneau (proposition). Autre : carrés seuls, sans le nom (le nom en infobulle),
   pour une barre plus courte ; le daltonien perd alors le nom écrit.

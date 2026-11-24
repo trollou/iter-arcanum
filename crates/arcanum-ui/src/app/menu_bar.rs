@@ -1,5 +1,5 @@
-//! Barre de menu en haut de la fenêtre (spec 074) : le Menu, puis le scénario, la manche, la
-//! Source (spec #10), les pioches de tuiles et, à droite, le message de la dernière sauvegarde.
+//! Barre de menu en haut de la fenêtre (spec 074) : le Menu, puis le scénario, la manche, les
+//! pioches de tuiles, la Source (spec #10) et, à droite, le message de la dernière sauvegarde.
 
 use arcanum_core::TimeOfDay;
 use eframe::egui::{self, Color32, Sense, Vec2};
@@ -78,14 +78,13 @@ impl IterArcanumApp {
             self.clock_icon(ui, &bar.clock);
             ui.label(&bar.round);
             ui.separator();
-            // Spec #10, C6 : la Source juste après le soleil ou la lune, qui dit pourquoi un dé est
-            // épuisé.
-            if let Some(source) = source {
-                clicked = source_line(ui, source).or(clicked);
-                ui.separator();
-            }
             for deck in &bar.tile_decks {
                 self.icon_value(ui, deck, false);
+            }
+            // Spec #10, C6 : la Source après les pioches de tuiles (Q1, retour de Mathieu).
+            if let Some(source) = source {
+                ui.separator();
+                clicked = source_line(ui, source).or(clicked);
             }
             if let Some(notice) = &bar.notice {
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
