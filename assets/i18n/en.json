@@ -386,6 +386,8 @@
     "no_titles_solo": "Solo: no title bonuses."
   },
   "card": {
+    "info": "Card text",
+    "if_destroyed": "if destroyed",
     "rage": {
       "name": "Rage"
     },
@@ -840,6 +842,7 @@
     "reroll_source": "Reroll the Source; 3 extra dice",
     "repeat": "Another Action card, {times} times",
     "gain_spell": "Pay {color}: a {color} Spell from the offer",
+    "spell_from_offer": "a {color} Spell from the offer",
     "train": "Throw away an Action card: Advanced Action of the same color",
     "on_all_enemies": "all enemies: {effect}",
     "destroy_enemy": "destroy an enemy",

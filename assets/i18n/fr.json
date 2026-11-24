@@ -386,6 +386,8 @@
     "no_titles_solo": "Solo : pas de bonus de titre."
   },
   "card": {
+    "info": "Texte de la carte",
+    "if_destroyed": "si détruit",
     "rage": {
       "name": "Rage"
     },
@@ -840,6 +842,7 @@
     "reroll_source": "Relancer la Source ; 3 dés de plus",
     "repeat": "Une autre carte action, {times} fois",
     "gain_spell": "Payer {color} : un sort {color} de l'offre",
+    "spell_from_offer": "un sort {color} de l'offre",
     "train": "Détruire une carte action : action avancée de même couleur",
     "on_all_enemies": "tous les ennemis : {effect}",
     "destroy_enemy": "détruire un ennemi",

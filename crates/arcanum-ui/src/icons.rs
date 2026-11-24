@@ -220,6 +220,7 @@ pub fn ui_images() -> Vec<ImageId> {
         .chain(ManaColor::ALL.map(crystal_image))
         .chain([CRYSTAL_EMPTY_IMAGE])
         .chain(Hero::ALL.map(hero_emblem))
+        .chain([Icon::Info.image()])
         .collect();
     images.into_iter().collect()
 }
