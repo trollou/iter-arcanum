@@ -30,6 +30,9 @@ pub enum Icon {
     TileCountryside,
     /// Dos d'une tuile royaume.
     TileCore,
+    /// « i » rond bleu : le texte complet d'une carte de la main (spec #11). Hors de la planche
+    /// nommée (`all`) : son infobulle est `card.info`.
+    Info,
 }
 
 impl Icon {
@@ -81,6 +84,7 @@ impl Icon {
             Icon::Sideways => "sideways",
             Icon::TileCountryside => "tile_countryside",
             Icon::TileCore => "tile_core",
+            Icon::Info => "info",
         };
         ImageId::new("ui", stem)
     }
@@ -116,6 +120,7 @@ impl Icon {
             Icon::Sideways => "play.sideways",
             Icon::TileCountryside => "icon.tile.countryside",
             Icon::TileCore => "icon.tile.core",
+            Icon::Info => "card.info",
         }
     }
 }
