@@ -257,6 +257,7 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
         (effect, strong_effect, card_strong_text(card, catalog))
     };
     let (basic_effects, strong_effects) = idle_effects(card, None, catalog);
+    let info = card_info(card, &effect, &strong_text, catalog);
     HandCard {
         card,
         name: card_name(card, catalog),
@@ -275,10 +276,38 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
         strong_text,
         strong_effects,
         unit_plays: Vec::new(),
-        info: None,
-        show_text: false,
+        info,
+        show_text: card.card().is_artifact(),
         strong_heading: String::new(),
         strong_colors: Vec::new(),
+    }
+}
+
+/// Le texte complet derrière « i » (spec #11, C1 à C5) : le texte écrit de la carte quand elle en
+/// a un (actions avancées, sorts), sinon les textes calculés ; rien pour une Blessure ni un
+/// artefact, qui écrit le sien sur lui (Q1).
+fn card_info(card: CardId, effect: &str, strong_text: &str, catalog: &Catalog) -> Option<CardInfo> {
+    if card.card().is_wound() || card.card().is_artifact() {
+        return None;
+    }
+    let (basic, strong) = match card.card().unsupported_text_keys() {
+        Some((basic, strong)) => (catalog.text(basic), catalog.text(strong)),
+        None => (effect.to_owned(), strong_text.to_owned()),
+    };
+    Some(CardInfo {
+        name: card_name(card, catalog),
+        basic,
+        strong_title: strong_title(card, catalog),
+        strong,
+    })
+}
+
+/// « Renforcé », ou le nom renforcé d'un sort (« Vol d'esprit »).
+fn strong_title(card: CardId, catalog: &Catalog) -> String {
+    if card.card().is_spell() {
+        spell_name(card, true, catalog)
+    } else {
+        catalog.text("panel.strong")
     }
 }
 
