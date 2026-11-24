@@ -9,7 +9,7 @@ ou de spec. La planification vit dans GitHub (issues, milestones, projet « suiv
 - **Milestone = version** du jeu (`v0.1.0`, `v0.2.0`…), sans date : on livre quand c'est prêt. À chaque milestone
   terminé, une release (issue #33). Une version corrective (dernier chiffre) peut sortir hors milestone, sans fonctionnalité
   nouvelle. Pas d'itérations (Mathieu, 2026-11-24).
-- **Ordre de travail** : le milestone ouvert le plus ancien, puis le champ **Rang** croissant. Les issues `réservé` sont
+- **Ordre de travail** : le milestone ouvert le plus ancien, puis le champ **Rank** croissant. Les issues `réservé` sont
   sautées, comme celles bloquées par une issue encore ouverte (« blocked by »).
 - **Projet GitHub** « suivi projet » : la vue de Mathieu sur ces informations. Claude ne peut ni le lire ni l'écrire (API
   fermée depuis ses sessions) : tout ce qu'il doit lire ou remplir est porté par l'issue elle-même (type, milestone, parent,
@@ -36,9 +36,9 @@ GitHub « blocked by », pas par un label.
 |---|---|---|
 | Priority | liste de choix | Mathieu |
 | Effort | `Low` : un fil d'issue ; `Medium` : une spec codée en un fil ; `High` : une spec en deux fils ou plus | Mathieu, ou Claude quand il est vide |
-| Rang | nombre (10, 20, 30… pour pouvoir insérer sans tout renuméroter) | Claude, d'après la priorité, les dépendances et l'ordre des sous-issues de l'Epic |
+| Rank | nombre (10, 20, 30… pour pouvoir insérer sans tout renuméroter) | Claude, d'après la priorité, les dépendances et l'ordre des sous-issues de l'Epic |
 
-Claude remplit Effort et Rang quand il crée une issue, et quand il en trouve une sans ces champs dans un milestone. Le Rang
+Claude remplit Effort et Rank quand il crée une issue, et quand il en trouve une sans ces champs dans un milestone. Le Rank
 ne compte qu'à l'intérieur d'un milestone.
 
 ## Specs et issues
@@ -105,10 +105,10 @@ devient une issue, avant que la spec passe en « validée ».
 ## Quand les traiter
 
 **Dans l'ordre de travail** (voir [Planification](#planification)) : la prochaine issue est la première du milestone en cours
-par Rang, qui n'est ni `réservé` ni bloquée.
+par Rank, qui n'est ni `réservé` ni bloquée.
 
 **Bilan d'abord** : les issues ouvertes par le bilan d'une spec se traitent après la fusion de la spec et avant la suivante,
-même si leur Rang est plus loin.
+même si leur Rank est plus loin.
 
 **Une issue à la fois, un fil par issue** : la suivante ne démarre qu'une fois la précédente finie (PR fusionnée, ou issue
 laissée `à trancher`), sauf si plusieurs se regroupent naturellement (même code).
