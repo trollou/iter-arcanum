@@ -275,6 +275,10 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
         strong_text,
         strong_effects,
         unit_plays: Vec::new(),
+        info: None,
+        show_text: false,
+        strong_heading: String::new(),
+        strong_colors: Vec::new(),
     }
 }
 
