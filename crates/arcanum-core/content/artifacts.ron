@@ -1,0 +1,22 @@
+// Les 16 artefacts du jeu de base (spec 050), texte dans ../mage-knight/docs/regles/cartes/artefacts.md (version Lost Legion quand il y a un
+// errata). number : numéro n/16 imprimé. Un artefact n'a pas de couleur (MKUE p. 4, 3.c) : son effet de base se joue sans mana,
+// son effet renforcé en le détruisant (spec 055). L'effet de base d'une bannière (BannerAssigned) ne se joue que par AssignBanner.
+{
+    BannerOfGlory: (number: 1, basic: Options([BannerAssigned]), strong: Options([With(Nothing, [UnitArmorBonus(1), UnitBonus(attack: 1, block: 1), FamePerUnitAttackOrBlock])])),
+    BannerOfFear: (number: 2, basic: Options([BannerAssigned]), strong: Options([CancelAttacks(3)])),
+    BannerOfProtection: (number: 3, basic: Options([BannerAssigned]), strong: Options([With(Nothing, [ThrowAwayReceivedWounds])])),
+    BannerOfCourage: (number: 4, basic: Options([BannerAssigned]), strong: Options([ReadyAllUnits])),
+    RubyRing: (number: 5, basic: Options([TokenCrystalAndFame(Red)]), strong: Options([With(Nothing, [EndlessMana(Red)])])),
+    SapphireRing: (number: 6, basic: Options([TokenCrystalAndFame(Blue)]), strong: Options([With(Nothing, [EndlessMana(Blue)])])),
+    DiamondRing: (number: 7, basic: Options([TokenCrystalAndFame(White)]), strong: Options([With(Nothing, [EndlessMana(White)])])),
+    EmeraldRing: (number: 8, basic: Options([TokenCrystalAndFame(Green)]), strong: Options([With(Nothing, [EndlessMana(Green)])])),
+    SwordOfJustice: (number: 9, basic: Options([With(SwordDiscard, [FamePerEnemyDefeated])]), strong: Options([With(Nothing, [DoublePhysicalAttacks, OnAllEnemies(LosesResistance(Physical)), FamePerEnemyDefeated])])),
+    HornOfWrath: (number: 10, basic: Options([HornOfWrath(extra: 0)]), strong: Options([HornOfWrath(extra: 5)])),
+    EndlessBagOfGold: (number: 11, basic: Options([InfluenceAndFame(amount: 4, fame: 2)]), strong: Options([InfluenceAndFame(amount: 9, fame: 3)])),
+    EndlessGemPouch: (number: 12, basic: Options([GemPouchDice]), strong: Options([TokensEachColorAndTime])),
+    GoldenGrail: (number: 13, basic: Options([With(Heal(2), [GrailFame(left: 2)])]), strong: Options([With(Heal(6), [DrawPerHandWoundHealed])])),
+    BookOfWisdom: (number: 14, basic: Options([TrainFromOffer(Hand)]), strong: Options([SpellAndCrystalFromOffer])),
+    // Spec 055 : DayRules n'est posé que de nuit, NightMana que de jour (L6).
+    AmuletOfSun: (number: 15, basic: Options([With(AmuletOfSun(tokens: 1), [DayRules])]), strong: Options([With(AmuletOfSun(tokens: 3), [DayRules])])),
+    AmuletOfDarkness: (number: 16, basic: Options([With(AmuletOfDarkness(tokens: 1), [NightMana])]), strong: Options([With(AmuletOfDarkness(tokens: 3), [NightMana])])),
+}

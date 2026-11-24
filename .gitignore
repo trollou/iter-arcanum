@@ -1,0 +1,10 @@
+/target
+/logs/
+/saves/
+/config/
+__pycache__/
+
+# Matériel de tiers (spec 082) : il vit dans le dépôt privé voisin ../mage-knight, jamais ici.
+# Première barrière ; le test crates/arcanum-core/tests/depot_public.rs est la seconde.
+/docs/regles/
+*.pdf

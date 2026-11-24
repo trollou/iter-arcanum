@@ -1,0 +1,126 @@
+// Les 20 sorts du jeu de base (spec 050), texte dans ../mage-knight/docs/regles/cartes/sorts.md. number : numéro n/20 imprimé ; color : couleur
+// du sort, le mana de son effet de base (MKUE p. 4, 3.b) ; l'effet renforcé se paie en plus d'un mana noir (p. 5, 2.b ; spec 054).
+// Mêmes effets que advanced_actions.ron ; tous les sorts du jeu de base sont codés (spec 057).
+{
+    // Spec 054 : renforcé, une Blessure en main (Compendium, *Firestorm* S1).
+    Fireball: (number: 1, color: Red, basic: Options([RangedFireAttack(5)]), strong: Options([SiegeFireAttackWithWound(8)])),
+    Snowstorm: (number: 2, color: Blue, basic: Options([RangedIceAttack(5)]), strong: Options([SiegeIceAttackWithWound(8)])),
+    // Spec 054 : l'ennemi visé, ou tous les ennemis (une option par perte) ; les points vont à l'attaque en cours (Q3).
+    Expose: (
+        number: 3, color: White,
+        basic: Options([With(RangedAttack(2), [OnTargetEnemy(LosesFortifications), OnTargetEnemy(LosesResistances)])]),
+        strong: Options([
+            With(RangedAttack(3), [OnAllEnemies(LosesFortifications)]),
+            With(RangedAttack(3), [OnAllEnemies(LosesResistances)]),
+        ]),
+    ),
+    // Spec 054 : un ennemi ou tous ; renforcé, le double contre un fortifié (Compendium, *Earthquake* S1, S5).
+    Tremor: (
+        number: 4, color: Green,
+        basic: Options([
+            With(Nothing, [OnTargetEnemy(ArmorReduction(by: 3, min: 1))]),
+            With(Nothing, [OnAllEnemies(ArmorReduction(by: 2, min: 1))]),
+        ]),
+        strong: Options([
+            With(Nothing, [OnTargetEnemyByFortification(plain: ArmorReduction(by: 3, min: 1), fortified: ArmorReduction(by: 6, min: 1))]),
+            With(Nothing, [OnAllEnemiesByFortification(plain: ArmorReduction(by: 2, min: 1), fortified: ArmorReduction(by: 4, min: 1))]),
+        ]),
+    ),
+    // Spec 054 : renforcé, +2 par jeton ennemi affronté (Q4).
+    FlameWall: (
+        number: 5, color: Red,
+        basic: Options([FireAttack(5), FireBlock(7)]),
+        strong: Options([FireAttackPerEnemy(amount: 5, per: 2), FireBlockPerEnemy(amount: 7, per: 2)]),
+    ),
+    // Spec 054 : un mana en plus, une option par couleur (comme Magie pure, spec 053).
+    ManaBolt: (
+        number: 6, color: Blue,
+        basic: Options([Paying(Blue, IceAttack(8)), Paying(Red, ColdFireAttack(7)), Paying(White, RangedIceAttack(6)), Paying(Green, SiegeIceAttack(5))]),
+        strong: Options([Paying(Blue, IceAttack(11)), Paying(Red, ColdFireAttack(10)), Paying(White, RangedIceAttack(9)), Paying(Green, SiegeIceAttack(8))]),
+    ),
+    // Spec 054 : comme les Illusionnistes (spec 053, Q7) ; renforcé, détruire en phase d'attaque.
+    Whirlwind: (
+        number: 7, color: White,
+        basic: Options([With(Nothing, [OnTargetEnemy(DoesNotAttack)])]),
+        strong: Options([DestroyEnemy]),
+    ),
+    // Spec 057 : 3 cases sans marais ni lac ; renforcé, assaut d'un site fortifié, ses fortifications ignorées.
+    UndergroundTravel: (
+        number: 8, color: Green,
+        basic: Options([UndergroundMove(assault: false)]),
+        strong: Options([With(UndergroundMove(assault: true), [IgnoreSiteFortifications])]),
+    ),
+    // Spec 054 : posés par la parade réussie seulement (Compendium, *Burning Shield* S2, *Exploding Shield* S1).
+    BurningShield: (
+        number: 9, color: Red,
+        basic: Options([With(FireBlock(4), [DeferredAttack(amount: 4, element: Fire)])]),
+        strong: Options([With(FireBlock(4), [DestroyBlockedEnemy])]),
+    ),
+    // Spec 054 : mêmes moments et cibles que Tourbillon (Q6) ; bleu, rien sur un résistant à la Glace (*Chill* S1).
+    Chill: (
+        number: 10, color: Blue,
+        basic: Options([With(Nothing, [OnTargetEnemy(DoesNotAttack), OnTargetEnemy(LosesResistance(Fire))])]),
+        strong: Options([With(Nothing, [OnTargetEnemy(DoesNotAttack), OnTargetEnemy(ArmorReduction(by: 4, min: 1))])]),
+    ),
+    // Spec 057 : 1 à 5 points de Mouvement, autant de cases ; renforcé, version Lost Legion (*Wings of Night* S1).
+    WingsOfWind: (
+        number: 11, color: White,
+        basic: Options([FlyMove(max: 5)]),
+        strong: Options([DoesNotAttackPerMove]),
+    ),
+    // Spec 057 : Soin 3, 5 en forêt ; renforcé, des unités épuisées de 3 niveaux en tout, 5 en forêt (*Rebirth* S2).
+    Restoration: (
+        number: 12, color: Green,
+        basic: Options([HealByTerrain(heal: 3, forest: 5)]),
+        strong: Options([HealAndReadyLevels(heal: 3, forest_heal: 5, levels: 3, forest_levels: 5)]),
+    ),
+    // Spec 054 : rouge, ni armure réduite ni destruction d'un résistant au Feu ; les fortifications des sites, si (*Demolish* Q2).
+    Demolish: (
+        number: 13, color: Red,
+        basic: Options([With(Nothing, [IgnoreSiteFortifications, OnAllEnemies(ArmorReduction(by: 1, min: 1))])]),
+        strong: Options([With(DestroyEnemy, [OnAllEnemies(ArmorReduction(by: 1, min: 1))])]),
+    ),
+    // Spec 057 : les cases à 2 comme voisines, sans provoquer, pour le tour.
+    SpaceBending: (
+        number: 14, color: Blue,
+        basic: Options([With(Nothing, [SpaceBending])]),
+        // Spec 057 : renforcé, Distorsion temporelle (tour supplémentaire, carte écartée).
+        strong: Options([With(Nothing, [TimeBending])]),
+    ),
+    // Spec 057 : une unité de l'offre activée, ou recrutée gratuitement, une fois ce tour.
+    CallToArms: (
+        number: 15, color: White,
+        basic: Options([With(Nothing, [UnitFromOffer])]),
+        strong: Options([With(Nothing, [RecruitFromOffer])]),
+    ),
+    // Spec 057 : deux cartes de la défausse sur ou sous le deck, deux cartes de plus à la pioche.
+    Meditation: (
+        number: 16, color: Green,
+        basic: Options([With(DiscardToDeck(random: true), [DrawBonus(2)])]),
+        strong: Options([With(DiscardToDeck(random: false), [DrawBonus(2)])]),
+    ),
+    // Spec 057 : la base ne vise que les autres joueurs (Q2) ; renforcé, une option par couleur.
+    ManaMeltdown: (
+        number: 17, color: Red,
+        basic: Options([OthersOnly]),
+        strong: Options([WoundsPerCrystal(Red), WoundsPerCrystal(Blue), WoundsPerCrystal(White), WoundsPerCrystal(Green)]),
+    ),
+    // Spec 057 : un dé gardé jusqu'à la fin de la manche ; renforcé, en solo, le même effet.
+    ManaClaim: (
+        number: 18, color: Blue,
+        basic: Options([ClaimDie(each_turn: false), ClaimDie(each_turn: true)]),
+        strong: Options([ClaimDie(each_turn: false), ClaimDie(each_turn: true)]),
+    ),
+    // Spec 057 : en solo, un cristal de la couleur choisie, de base comme renforcé.
+    MindRead: (
+        number: 19, color: White,
+        basic: Options([GainCrystal(Red), GainCrystal(Blue), GainCrystal(White), GainCrystal(Green)]),
+        strong: Options([GainCrystal(Red), GainCrystal(Blue), GainCrystal(White), GainCrystal(Green)]),
+    ),
+    // Spec 057 : une unité épuisée de tout niveau ; renforcé, soignée aussi (*Energy Steal* S2).
+    EnergyFlow: (
+        number: 20, color: Green,
+        basic: Options([ReadyAnyUnit(heal: false)]),
+        strong: Options([ReadyAnyUnit(heal: true)]),
+    ),
+}

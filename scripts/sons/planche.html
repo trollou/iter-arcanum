@@ -1,0 +1,117 @@
+<title>__TITRE__</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Mise en page : une colonne de « pupitres », un par son du jeu, candidats en rangée ; récapitulatif collant en bas */
+:root{
+  --bg:#f3f1ec; --panel:#fffdf8; --ink:#2a2620; --muted:#6d655a; --line:#ddd5c6; --accent:#7b4a1e; --pick:#2f6b4f; --warn:#9a5b00;
+  --display:"Alegreya SC",Georgia,serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1916;--panel:#24211d;--ink:#ece6da;--muted:#a69d8f;--line:#3a352e;--accent:#d49a5e;--pick:#6fbf95;--warn:#e0a24a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1b1916;--panel:#24211d;--ink:#ece6da;--muted:#a69d8f;--line:#3a352e;--accent:#d49a5e;--pick:#6fbf95;--warn:#e0a24a;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body)}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 140px}
+h1{font:700 2rem/1.1 var(--display);margin:0 0 .4rem;text-wrap:balance}
+h2{font:700 1.3rem/1.2 var(--display);margin:2rem 0 .6rem;color:var(--accent);letter-spacing:.02em}
+.intro{max-width:68ch;color:var(--muted);display:grid;gap:.4rem}
+.intro p{margin:0}
+.need{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px;display:grid;gap:10px}
+.need header{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.need h3{margin:0;font:600 1.05rem var(--body)}
+.need code{font:12px var(--mono);color:var(--muted)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.cand{border:1px solid var(--line);border-radius:4px;padding:10px;display:grid;gap:6px;min-width:0;cursor:pointer}
+.cand:has(input:checked){border-color:var(--pick);box-shadow:0 0 0 2px var(--pick) inset}
+.cand .top{display:flex;gap:8px;align-items:flex-start}
+.letter{font:700 1.1rem var(--display);color:var(--accent);min-width:1.2em}
+.title{font-weight:600;overflow-wrap:anywhere}
+.meta{font-size:.85rem;color:var(--muted);overflow-wrap:anywhere}
+.meta a{color:inherit}
+.lic{font:12px var(--mono);padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
+.lic.cc0{color:var(--pick);border-color:var(--pick)}
+.lic.sa{color:var(--warn);border-color:var(--warn)}
+.plays{display:flex;flex-wrap:wrap;gap:6px}
+button{font:600 .9rem var(--body);background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:4px 10px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.on{background:var(--accent);color:var(--panel);border-color:var(--accent)}
+.none{font-size:.9rem;color:var(--muted);display:flex;gap:6px;align-items:center}
+.ask{color:var(--warn);font-size:.9rem}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));padding-top:10px}
+.bar .in{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:10px;align-items:center}
+.bar textarea{flex:1;min-width:0;height:3.2em;font:12px var(--mono);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:6px;resize:none}
+#loading{color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <h1>__TITRE__</h1>
+  <div class="intro">
+    <p id="intro"></p>
+    <p>Cochez un candidat par son, ou « Aucun » pour en chercher d'autres. Le récapitulatif en bas se remplit tout seul : copiez-le dans le fil.</p>
+  </div>
+  <p id="loading">Chargement des sons…</p>
+  <div id="board"></div>
+</div>
+<div class="bar"><div class="in">
+  <textarea id="summary" readonly aria-label="Récapitulatif des choix"></textarea>
+  <button id="copy" type="button">Copier</button>
+</div></div>
+
+<script>
+let audio=null, playingBtn=null;
+const picks={};
+try{Object.assign(picks,JSON.parse(localStorage.getItem(document.title)||'{}'))}catch(e){}
+function stop(){ if(audio){audio.pause();audio=null} if(playingBtn){playingBtn.classList.remove('on');playingBtn.textContent=playingBtn.dataset.label;playingBtn=null} }
+function play(btn,b64){
+  const same=playingBtn===btn; stop(); if(same) return;
+  audio=new Audio('data:audio/mpeg;base64,'+b64); audio.play().catch(()=>{});
+  playingBtn=btn; btn.classList.add('on'); btn.textContent='■ Arrêter';
+  audio.onended=stop;
+}
+function fmt(s){ if(!s) return ''; const m=Math.floor(s/60), r=Math.round(s%60); return m? `${m} min ${String(r).padStart(2,'0')}` : `${s.toFixed(1)} s`; }
+function summary(data){
+  const lines=data.map(n=>{ const p=picks[n.key]; return `${n.key} : ${p===undefined?'?':p}`; });
+  document.getElementById('summary').value='Choix des sons : '+lines.join(' ; ');
+}
+function el(tag,cls,txt){const e=document.createElement(tag); if(cls)e.className=cls; if(txt!==undefined)e.textContent=txt; return e;}
+fetch('data.json').then(r=>r.json()).then(all=>{
+  document.getElementById('intro').textContent=all.intro||'';
+  const data=all.besoins;
+  document.getElementById('loading').hidden=true;
+  const board=document.getElementById('board'); let grp=null;
+  data.forEach(n=>{
+    if(n.grp!==grp){grp=n.grp; board.appendChild(el('h2',null,grp));}
+    const sec=el('section','need'); const h=el('header');
+    h.appendChild(el('h3',null,n.label)); h.appendChild(el('code',null,'assets/sounds/'+n.key+'…'));
+    sec.appendChild(h);
+    const cands=el('div','cands');
+    n.items.forEach(it=>{
+      const lab=el('label','cand'); const top=el('div','top');
+      const r=document.createElement('input'); r.type='radio'; r.name=n.key; r.id=n.key+'-'+it.letter; r.value=it.letter;
+      if(picks[n.key]===it.letter) r.checked=true;
+      r.onchange=()=>{picks[n.key]=it.letter; try{localStorage.setItem(document.title,JSON.stringify(picks))}catch(e){} summary(data)};
+      top.appendChild(r); top.appendChild(el('span','letter',it.letter)); top.appendChild(el('span','title',it.title));
+      lab.appendChild(top);
+      const meta=el('div','meta'); meta.append(it.author+' · ');
+      const a=el('a',null,'source'); a.href=it.url; a.target='_blank'; a.rel='noopener'; meta.appendChild(a);
+      meta.append(' · ');
+      const lic=el('span','lic'+(it.lic==='CC0'?' cc0':it.lic.includes('SA')?' sa':''),it.lic); meta.appendChild(lic);
+      if(it.full) meta.append(' · fichier de '+fmt(it.full));
+      lab.appendChild(meta);
+      const plays=el('div','plays');
+      it.clips.forEach((c,i)=>{ const b=el('button',null); b.type='button';
+        b.dataset.label= it.clips.length>1? `▶ ${i+1}` : '▶ Écouter'; b.textContent=b.dataset.label;
+        b.onclick=(e)=>{e.preventDefault(); play(b,c)}; plays.appendChild(b); });
+      lab.appendChild(plays); cands.appendChild(lab);
+    });
+    const none=el('label','none'); const r0=document.createElement('input'); r0.type='radio'; r0.name=n.key; r0.id=n.key+'-aucun'; r0.value='aucun';
+    if(picks[n.key]==='aucun') r0.checked=true;
+    r0.onchange=()=>{picks[n.key]='aucun'; try{localStorage.setItem(document.title,JSON.stringify(picks))}catch(e){} summary(data)};
+    none.appendChild(r0); none.append('Aucun ne convient');
+    sec.appendChild(cands); sec.appendChild(none); board.appendChild(sec);
+  });
+  summary(data);
+}).catch(()=>{document.getElementById('loading').textContent='Les sons n\'ont pas pu être chargés : rechargez la page.'});
+document.getElementById('copy').onclick=()=>{const t=document.getElementById('summary');
+  navigator.clipboard.writeText(t.value).then(()=>{document.getElementById('copy').textContent='Copié'}).catch(()=>{t.select()});};
+</script>

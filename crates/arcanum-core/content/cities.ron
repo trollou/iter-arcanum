@@ -1,0 +1,69 @@
+// Défenseurs des cités (spec 062) : les cercles de couleur de la figurine de chaque cité, niveaux 1 à 11 dans l'ordre.
+// Valeurs reprises de ../mage-knight/docs/regles/cartes/sites-et-cites.md, *Défenseurs par niveau* (cartes de cité).
+// Couleurs des piles d'ennemis : Grey (forteresses), Violet (tours de mage), Brown (donjons), White (cités).
+[
+    (
+        color: Blue,
+        levels: [
+            [Grey, Violet], // 1
+            [Violet, Violet], // 2
+            [Violet, White], // 3
+            [Grey, Violet, White], // 4
+            [Violet, Violet, White], // 5
+            [Violet, White, White], // 6
+            [Grey, Violet, Violet, White], // 7
+            [Violet, Violet, White, White], // 8
+            [Violet, White, White, White], // 9
+            [Grey, Violet, Violet, White, White], // 10
+            [Violet, Violet, White, White, White], // 11
+        ],
+    ),
+    (
+        color: Green,
+        levels: [
+            [Grey, Brown], // 1
+            [Brown, Brown], // 2
+            [Grey, Grey, Brown], // 3
+            [Grey, Brown, White], // 4
+            [Brown, Brown, White], // 5
+            [Grey, Grey, Brown, White], // 6
+            [Grey, Brown, Brown, White], // 7
+            [Brown, Brown, White, White], // 8
+            [Grey, Brown, Brown, Brown, White], // 9
+            [Grey, Brown, Brown, White, White], // 10
+            [Brown, Brown, White, White, White], // 11
+        ],
+    ),
+    (
+        color: Red,
+        levels: [
+            [White], // 1
+            [Brown, Violet], // 2
+            [Brown, White], // 3
+            [Brown, Violet, Violet], // 4
+            [Brown, Violet, White], // 5
+            [Brown, Brown, Violet, Violet], // 6
+            [Brown, Violet, Violet, White], // 7
+            [Brown, Violet, White, White], // 8
+            [Brown, Brown, Violet, Violet, White], // 9
+            [Brown, Brown, Violet, White, White], // 10
+            [Brown, Violet, White, White, White], // 11
+        ],
+    ),
+    (
+        color: White,
+        levels: [
+            [White], // 1
+            [Grey, White], // 2
+            [White, White], // 3
+            [Grey, Grey, White], // 4
+            [Grey, White, White], // 5
+            [Grey, Grey, Grey, White], // 6
+            [Grey, Grey, White, White], // 7
+            [Grey, White, White, White], // 8
+            [Grey, Grey, Grey, White, White], // 9
+            [Grey, Grey, White, White, White], // 10
+            [Grey, White, White, White, White], // 11
+        ],
+    ),
+]

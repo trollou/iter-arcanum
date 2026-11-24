@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6d6b0"/><stop offset="1" stop-color="#b9805a"/></linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e35a40"/><stop offset=".55" stop-color="#a8281c"/><stop offset="1" stop-color="#5a120c"/></linearGradient>
+    <linearGradient id="white" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c6ccd2"/></linearGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d27a"/><stop offset=".5" stop-color="#d9b24a"/><stop offset="1" stop-color="#8a6524"/></linearGradient>
+    <linearGradient id="fire" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2a0"/><stop offset=".5" stop-color="#ffb02e"/><stop offset="1" stop-color="#e0401a"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="44" ry="8" fill="url(#shadow)"/>
+  <!-- jambes : culotte blanche, bottes -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M42,104 L40,132 L56,134 L58,106 Z" fill="url(#white)"/>
+    <path d="M62,106 L64,134 L80,132 L78,104 Z" fill="url(#white)"/>
+    <path d="M37,126 L57,126 L57,146 L30,146 C30,138 32,132 37,126 Z" fill="#2b1a0c"/>
+    <path d="M63,126 L83,126 C88,132 90,138 90,146 L63,146 Z" fill="#2b1a0c"/>
+  </g>
+  <!-- torse : habit rouge à revers blancs, baudrier de cartouches -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,60 C36,80 36,98 38,116 L82,116 C84,98 84,80 82,60 C72,54 48,54 38,60 Z" fill="url(#coat)"/>
+    <path d="M50,60 L60,80 L70,60 L70,108 L50,108 Z" fill="url(#white)" stroke-width="1.6"/>
+    <path d="M42,62 L80,104" stroke="#2b1a0c" stroke-width="7" fill="none"/>
+    <path d="M48,69 L50,67 M56,78 L58,76 M64,87 L66,85 M72,96 L74,94" stroke="#d9b24a" stroke-width="3" fill="none"/>
+    <path d="M38,100 L82,100 L82,108 L38,108 Z" fill="#2b1a0c"/>
+    <rect x="55" y="99" width="10" height="10" rx="2" fill="url(#brass)"/>
+  </g>
+  <!-- bras gauche : main qui soutient le canon -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,62 C30,66 26,74 28,84 L40,84 C40,78 42,74 48,72 Z" fill="url(#coat)"/>
+  </g>
+  <!-- arme : canon à main de laiton, gueule qui crache le feu -->
+  <g id="arme" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M14,104 L28,92 L34,98 L22,112 Z" fill="#553419"/>
+    <path d="M26,88 L88,58 L94,70 L32,100 Z" fill="url(#brass)"/>
+    <path d="M86,54 C92,52 96,56 98,62 C100,68 98,74 92,74 Z" fill="url(#brass)"/>
+    <ellipse cx="95" cy="64" rx="3.6" ry="7" fill="#17120c" stroke="none" transform="rotate(-26 95 64)"/>
+    <path d="M44,80 L48,90 M64,70 L68,80" stroke="#8a6524" stroke-width="3.2" fill="none"/>
+    <path d="M100,62 C106,52 112,52 118,44 C116,54 120,56 116,64 C120,66 118,74 110,74 C114,78 108,82 100,72 Z" fill="url(#fire)" stroke-width="1.6"/>
+    <circle cx="34" cy="90" r="7" fill="url(#skin)"/>
+  </g>
+  <!-- bras droit : main sur le canon -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,62 C88,64 90,70 86,78 L74,76 C76,72 76,68 74,64 Z" fill="url(#coat)"/>
+    <circle cx="78" cy="76" r="7" fill="url(#skin)"/>
+  </g>
+  <!-- tête : morion d'acier au plumet rouge, moustache -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,38 C44,56 50,64 60,64 C70,64 76,56 76,38 Z" fill="url(#skin)"/>
+    <path d="M48,44 L56,47 M72,44 L64,47" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <circle cx="52" cy="50" r="2.2" fill="#17120c" stroke="none"/><circle cx="68" cy="50" r="2.2" fill="#17120c" stroke="none"/>
+    <path d="M50,57 C54,54 58,55 60,57 C62,55 66,54 70,57 C66,60 62,59 60,58 C58,59 54,60 50,57 Z" fill="#553419" stroke-width="1.4"/>
+    <path d="M60,6 C70,4 76,10 72,18 C68,14 64,14 60,16 Z" fill="url(#coat)" stroke-width="1.8"/>
+    <path d="M44,38 C42,26 50,16 60,16 C70,16 78,26 76,38 Z" fill="#aab4bf"/>
+    <path d="M32,40 C40,34 50,36 60,36 C70,36 80,34 88,40 C80,44 40,44 32,40 Z" fill="#aab4bf"/>
+    <path d="M60,16 L60,36" stroke-width="1.6" fill="none"/>
+    <path d="M48,24 C51,20 54,18 58,18" stroke="#fff" stroke-opacity=".7" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,56 @@
+Iter Arcanum, an unofficial fan project
+
+Iter Arcanum is an unofficial fan project, heavily inspired by the Mage Knight
+board game. It is not affiliated with, endorsed, sponsored or approved by
+WizKids, NECA, Czech Games Edition or Vlaada Chvátil. "Mage Knight" is a
+trademark of its owner; it is used here only to describe what inspired the game.
+
+The project is free and non-commercial. If you hold rights on anything in this
+repository and want it changed or removed, please open an issue: we will act
+promptly.
+
+
+Licenses
+
+- Source code (crates/, scripts/, build and configuration files) and the
+  documentation we wrote: GNU General Public License, version 3 or (at your
+  option) any later version. Full text in LICENSE.
+- Visual assets and texts in assets/ (SVG drawn by us, generated illustrations,
+  interface texts in assets/i18n/): Creative Commons Attribution-ShareAlike 4.0
+  International (CC BY-SA 4.0). Full text in assets/LICENSE.
+- Sounds in assets/sounds/ (music, ambiences, sound effects) are NOT under
+  CC BY-SA 4.0: each file keeps the license chosen by its author (CC0, CC BY,
+  CC BY-SA, OGA-BY). assets/sounds/LICENSES.md gives, for every file, its title,
+  author, source and license; it is the reference for credits. A file marked
+  non-commercial there (CC BY-NC, CC BY-NC-SA, or Sampling+ 1.0 for an
+  unmodified copy) may not be reused commercially.
+
+
+What these licenses do not cover
+
+- Rules and game mechanics are not owned by anyone; the game engine is our own
+  implementation of them, written in our own words.
+- Names and values that come from the original game (card, hero, enemy and site
+  names, card values) are used to describe and play the rules. We claim no
+  rights on them and grant none.
+- The illustrations in assets/images/card-art/ and assets/images/unit-art/ were
+  generated with an AI image model (Google Gemini) from text descriptions we
+  wrote, without any official image given as input. They may not be protected
+  by copyright in every country; where they are, CC BY-SA 4.0 applies. No
+  official artwork of the original game is included.
+- Reference documents that come from third parties (rulebook, walkthrough,
+  official FAQ and its translation, BoardGameGeek compendium, card scans and
+  photos, and their transcriptions) belong to their owners. They are not part
+  of this repository: they are kept in a separate private repository for
+  development only, are not covered by any license of this project, and must
+  not be redistributed. Our documents refer to them by page and paragraph
+  (e.g. "MKUE p. 7, 5.b") instead of quoting them.
+
+
+Third-party software
+
+The game depends on Rust crates (egui, eframe, serde, ron, image and others)
+under permissive licenses compatible with the GPL v3; deny.toml lists the
+accepted licenses and `cargo deny check licenses` verifies them. The fonts
+embedded by egui are under their own licenses (Ubuntu Font License, SIL Open
+Font License, MIT, Apache 2.0).

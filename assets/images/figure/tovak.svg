@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc8c"/><stop offset=".5" stop-color="#c9962f"/><stop offset="1" stop-color="#7a5318"/></linearGradient>
+    <linearGradient id="bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b98a36"/><stop offset="1" stop-color="#5c3d10"/></linearGradient>
+    <linearGradient id="cloak" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a2f33"/><stop offset=".55" stop-color="#641a1f"/><stop offset="1" stop-color="#360b0f"/></linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f4f7fa"/><stop offset=".5" stop-color="#aab4bf"/><stop offset="1" stop-color="#5f6b78"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="42" ry="8" fill="url(#shadow)"/>
+  <!-- cape rouge sombre, large, derrière -->
+  <g id="cape">
+    <path d="M36,58 C16,76 8,114 12,144 L30,137 L42,146 L60,136 L78,146 L90,137 L108,144 C112,114 104,76 84,58 Z" fill="url(#cloak)" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M24,92 C20,110 20,126 23,138 M96,92 C100,110 100,126 97,138" stroke="#17120c" stroke-opacity=".5" stroke-width="1.6" fill="none"/>
+  </g>
+  <!-- jambes en armure -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M45,106 L41,132 L56,134 L58,108 Z" fill="url(#gold)"/>
+    <path d="M62,108 L64,134 L79,132 L75,106 Z" fill="url(#bronze)"/>
+    <path d="M40,119 L57,120 L56,128 L40,127 Z" fill="url(#bronze)"/>
+    <path d="M63,120 L80,119 L80,127 L64,128 Z" fill="url(#gold)"/>
+    <path d="M37,130 L56,132 L57,146 L30,146 C30,140 32,134 37,130 Z" fill="url(#gold)"/>
+    <path d="M64,132 L83,130 C88,134 90,140 90,146 L63,146 Z" fill="url(#gold)"/>
+    <path d="M33,139 L56,140 M64,140 L87,139" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+  </g>
+  <!-- cuirasse -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M43,106 L39,120 L52,122 L60,113 L68,122 L81,120 L77,106 Z" fill="url(#bronze)"/>
+    <path d="M38,62 C36,82 38,96 43,108 L77,108 C82,96 84,82 82,62 C70,55 50,55 38,62 Z" fill="url(#gold)"/>
+    <path d="M42,84 C50,92 56,92 60,86 C64,92 70,92 78,84" stroke-width="1.6" stroke-opacity=".6" fill="none"/>
+    <path d="M42,100 L78,100 L77,108 L43,108 Z" fill="#2b1a0c"/>
+  </g>
+  <!-- épée plantée devant lui, tenue à deux mains -->
+  <g id="arme" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M55,84 L65,84 L64,136 L60,146 L56,136 Z" fill="url(#steel)"/>
+    <path d="M60,88 L60,136" stroke="#5f6b78" stroke-width="1.3" fill="none"/>
+    <path d="M42,79 C48,82 72,82 78,79 L78,86 C72,88 48,88 42,86 Z" fill="url(#gold)"/>
+    <circle cx="60" cy="83" r="2.6" fill="#b3202a" stroke-width="1.2"/>
+  </g>
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M28,74 L26,86 L36,92 L56,80 L52,68 L38,74 Z" fill="url(#bronze)"/>
+    <path d="M40,56 C28,56 22,66 24,78 L42,76 C48,70 48,60 40,56 Z" fill="url(#gold)"/>
+    <path d="M27,70 C32,66 38,66 44,69" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+    <circle cx="54" cy="73" r="7" fill="url(#gold)"/>
+  </g>
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M92,74 L94,86 L84,92 L64,80 L68,68 L82,74 Z" fill="url(#bronze)"/>
+    <path d="M80,56 C92,56 98,66 96,78 L78,76 C72,70 72,60 80,56 Z" fill="url(#gold)"/>
+    <path d="M93,70 C88,66 82,66 76,69" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+    <circle cx="66" cy="73" r="7" fill="url(#gold)"/>
+  </g>
+  <!-- heaume aux ailes de dragon -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M45,30 C34,28 22,18 12,4 C13,12 14,17 18,22 C14,22 11,21 7,19 C10,26 15,31 22,34 C19,35 17,35 14,34 C22,42 34,44 46,40 Z" fill="url(#bronze)"/>
+    <path d="M75,30 C86,28 98,18 108,4 C107,12 106,17 102,22 C106,22 109,21 113,19 C110,26 105,31 98,34 C101,35 103,35 106,34 C98,42 86,44 74,40 Z" fill="url(#bronze)"/>
+    <path d="M44,33 L18,22 M44,36 L22,34 M76,33 L102,22 M76,36 L98,34" stroke-width="1.3" stroke-opacity=".6" fill="none"/>
+    <path d="M42,60 C37,38 44,16 60,16 C76,16 83,38 78,60 C72,67 48,67 42,60 Z" fill="url(#gold)"/>
+    <path d="M60,16 L60,38" stroke-width="1.6" fill="none"/>
+    <path d="M42,36 C50,31 70,31 78,36" stroke-width="1.6" stroke-opacity=".7" fill="none"/>
+    <path d="M45,39 L75,39 L75,46 L63,46 L63,60 L57,60 L57,46 L45,46 Z" fill="#17120c"/>
+    <circle cx="51" cy="42.5" r="1.5" fill="#ffd94a" stroke="none"/><circle cx="69" cy="42.5" r="1.5" fill="#ffd94a" stroke="none"/>
+    <path d="M49,52 L49,56 M53,53 L53,58 M71,52 L71,56 M67,53 L67,58" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+    <path d="M47,24 C50,21 54,20 57,20" stroke="#fff" stroke-opacity=".7" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

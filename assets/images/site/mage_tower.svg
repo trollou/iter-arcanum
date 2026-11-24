@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="tw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e4dcf2"/><stop offset=".5" stop-color="#a093bd"/><stop offset="1" stop-color="#5e5180"/></linearGradient>
+    <linearGradient id="rf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b6be0"/><stop offset="1" stop-color="#3d2370"/></linearGradient>
+    <radialGradient id="orb"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ffe37a"/><stop offset="1" stop-color="#ffe37a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="st" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8d2c6"/><stop offset=".5" stop-color="#a39a8c"/><stop offset="1" stop-color="#6f665b"/></linearGradient>
+    <linearGradient id="sts" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8c8476"/><stop offset="1" stop-color="#5a534a"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="60" ry="8" fill="url(#sh)"/>
+  <g id="socle" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M134,186 L146,178 L146,162 L134,170 Z" fill="url(#sts)"/>
+    <path d="M66,170 L78,162 L146,162 L134,170 Z" fill="#cfc6b6"/>
+    <rect x="66" y="170" width="68" height="16" fill="url(#st)"/>
+  </g>
+  <g id="tour" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,174 L84,64 L116,64 L120,174 C120,182 80,182 80,174 Z" fill="url(#tw)"/>
+    <path d="M78,66 L76,58 L124,58 L122,66 Z" fill="url(#tw)"/>
+    <path d="M72,60 L100,4 L128,60 C128,68 72,68 72,60 Z" fill="url(#rf)"/>
+    <path d="M100,4 L112,58" stroke-width="1.4" stroke-opacity=".5" fill="none"/>
+    <path d="M94,104 v-12 a6,6 0 0 1 12,0 v12 z M94,146 v-12 a6,6 0 0 1 12,0 v12 z" fill="#ffd94a" stroke-width="1.8"/>
+    <path d="M84,120 C95,116 105,116 116,120" stroke-width="1.4" stroke-opacity=".5" fill="none"/>
+    <path d="M92,174 V160 a8,8 0 0 1 16,0 V174 Z" fill="#2b1a0c"/>
+  </g>
+  <g id="eclat" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <circle cx="100" cy="6" r="16" fill="url(#orb)" stroke="none"/>
+    <path d="M70,40 l3,-6 l3,6 l-3,6 z M128,30 l3,-6 l3,6 l-3,6 z" fill="#ffe37a" stroke-width="1.2"/>
+  </g>
+</svg>

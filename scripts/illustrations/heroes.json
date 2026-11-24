@@ -1,0 +1,22 @@
+{
+  "arythea": {
+    "description": "A slender, fierce sorceress-warrior in fitted crimson and blood-red armor, a sleek red helmet with two long swept-back horn-like crests, pale skin, glowing red eyes, a flowing dark red cloak, wielding a flail whose head is a glowing red crystal orb on a chain; everything bathed in deep red tones.",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "goldyx": {
+    "description": "A tall draconic humanoid mage with a horned reptilian dragon head, long snout and sharp teeth, grey-green scales, wearing long brown and dark red robes with an ornate round golden medallion on the chest, clawed hands, conjuring a glowing pale blue-white orb of magic.",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "norowas": {
+    "description": "A slender elven knight with a tall, pointed silver helmet topped by a flowing pale yellow plume, a calm noble face, layered dark green and grey cloak over silver armor, wielding a long, slightly curved elegant silver sword.",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "tovak": {
+    "description": "A towering, broad knight in heavy dark gold and bronze full plate armor, a closed great helm crowned with spread bat-like wings, a heavy dark cape, both gauntlets resting on the pommel of a huge longsword held point down; his face is never visible.",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  }
+}

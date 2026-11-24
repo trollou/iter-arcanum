@@ -1,0 +1,115 @@
+{
+  "battle_versatility": {
+    "description": "The hero in the middle of a battle, whirling between foes, striking with the flail while blocking a blow and hurling a bolt of red energy at a distant enemy, sparks and red battle haze.",
+    "hero": "arythea",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "cold_toughness": {
+    "description": "The hero standing firm in a snowstorm, shrugging off a blast of ice with a raised gauntlet, frost and icicles forming on his armor, cold blue light.",
+    "hero": "tovak",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "concentration": {
+    "description": "A focused sorcerer with eyes closed, fingertips touching temples, three small orbs of blue, white and red mana orbiting the head, calm green aura, dark background.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "crystal_joy": {
+    "description": "The hero laughing joyfully as glowing crystals of red, blue, white and green spill and float from his hands, playful sparkles, cool blue magical light in a crystal cave.",
+    "hero": "goldyx",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "crystallize": {
+    "description": "Hands holding swirling blue mana energy that condenses into a glowing faceted blue crystal, sparkles and light refractions, dark mystic background.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "determination": {
+    "description": "A steadfast armored knight standing firm behind a raised shield, jaw set, deep blue light glowing around him, enemies looming in a stormy background.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "improvisation": {
+    "description": "A resourceful warrior catching a sword and a torch mid-air while a card-like scroll burns away in red flames, energetic red-orange background, dynamic pose.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "instinct": {
+    "description": "The hero crouching and turning instantly to face a sudden ambush in a dark forest, sword swinging up, tense atmosphere, red and amber light.",
+    "hero": "tovak",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "mana_draw": {
+    "description": "A mage reaching up toward a radiant white source of light in the sky, ribbons of colored magical energy flowing down into an open palm, white luminous background.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "mana_pull": {
+    "description": "The hero pulling a stream of black and violet mana out of a swirling dark void with an outstretched hand, white sparks crackling, ominous night sky.",
+    "hero": "arythea",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "march": {
+    "description": "A lone traveller in a hooded green cloak striding briskly along a winding road through green hills and forest at dawn, walking staff in hand, sense of speed and determination, soft green light.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "noble_manners": {
+    "description": "The hero bowing gracefully before a delighted crowd of nobles and townsfolk in a sunlit hall, courtly elegance, soft white and gold light.",
+    "hero": "norowas",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "promise": {
+    "description": "A charismatic noble in white and gold clothing offering a handshake to a hesitant villager, warm golden light, a village square in the background.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "rage": {
+    "description": "A muscular bare-chested warrior screaming in uncontrolled battle fury, veins standing out, an aura of red and orange flames of anger around him, dark smoky background lit in red.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "rejuvenate": {
+    "description": "The hero in a forest glade with arms spread, vines and blossoms blooming around, wounded soldiers getting up refreshed, glowing green healing motes.",
+    "hero": "norowas",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "stamina": {
+    "description": "A tireless traveller in a blue cloak climbing a steep rocky mountain path with a heavy pack, determined expression, cool blue twilight light, distant peaks.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "swiftness": {
+    "description": "A nimble archer in a white and silver tunic leaping lightly through the air while loosing an arrow, motion streaks of white wind trailing behind, bright sky.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "threaten": {
+    "description": "A menacing armored warrior looming over cowering townsfolk, pointing a blade at them, harsh red light and dark shadows, intimidating posture.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "tranquility": {
+    "description": "A serene figure meditating cross-legged beside a calm forest pond, soft green glow, floating leaves and fireflies, peaceful misty trees.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  },
+  "will_focus": {
+    "description": "The hero channeling intense green magical energy into a glowing green crystal held between both clawed hands, concentric rings of light, emerald glow, ancient stone ruins.",
+    "hero": "goldyx",
+    "model": "gemini-3-pro-image-preview",
+    "date": "2026-11-06"
+  },
+  "wound": {
+    "description": "A single large, glossy drop of dark red blood, centered, on a plain dark muted grey-brown background, simple and bold, nothing else.",
+    "model": "gemini-2.5-flash-image",
+    "date": "2026-11-06"
+  }
+}

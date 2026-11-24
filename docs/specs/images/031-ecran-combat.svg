@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="Ubuntu, DejaVu Sans, sans-serif">
+<rect width="1600" height="1000" fill="#1b1b1b"/>
+<rect x="0" y="0" width="1260" height="1000" rx="0" fill="#202124" stroke="#202124" stroke-width="1"/>
+<text x="24" y="38" font-size="24" fill="#eee" text-anchor="start" font-weight="bold">Combat</text>
+<text x="130" y="38" font-size="15" fill="#999" text-anchor="start" font-weight="normal">· Manche 1/4 · Jour (tour 3)</text>
+<rect x="24" y="58" width="200" height="36" rx="18" fill="#2f3a2f" stroke="#444" stroke-width="1"/>
+<text x="124.0" y="81" font-size="15" fill="#aaa" text-anchor="middle" font-weight="normal">✓ Attaque à distance</text>
+<text x="229" y="81" font-size="20" fill="#666" text-anchor="middle" font-weight="normal">›</text>
+<rect x="236" y="58" width="200" height="36" rx="18" fill="#2f3a2f" stroke="#444" stroke-width="1"/>
+<text x="336.0" y="81" font-size="15" fill="#aaa" text-anchor="middle" font-weight="normal">✓ Parade</text>
+<text x="441" y="81" font-size="20" fill="#666" text-anchor="middle" font-weight="normal">›</text>
+<rect x="448" y="58" width="240" height="36" rx="18" fill="#2f3a2f" stroke="#444" stroke-width="1"/>
+<text x="568.0" y="81" font-size="15" fill="#aaa" text-anchor="middle" font-weight="normal">✓ Assignation des dégâts</text>
+<text x="693" y="81" font-size="20" fill="#666" text-anchor="middle" font-weight="normal">›</text>
+<rect x="700" y="58" width="200" height="36" rx="18" fill="#3d6fb5" stroke="#4d8be0" stroke-width="1"/>
+<text x="800.0" y="81" font-size="15" fill="#fff" text-anchor="middle" font-weight="bold">Attaque</text>
+<rect x="910" y="62" width="130" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="975.0" y="81" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Voir le plateau</text>
+<rect x="1050" y="62" width="190" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="1145.0" y="81" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Terminer le combat</text>
+<text x="24" y="124" font-size="13" fill="#c9a14a" text-anchor="start" font-weight="normal">Éléments, résistances et capacités ne sont pas encore appliqués.</text>
+<rect x="40" y="150" width="370" height="150" rx="10" fill="#2c2c2c" stroke="#e0a040" stroke-width="3"/>
+<circle cx="100" cy="225" r="44" fill="#2E5E2E" stroke="#1a3a1a" stroke-width="3" opacity="1"/>
+<text x="100" y="233" font-size="14" fill="#cfe8cf" text-anchor="middle" font-weight="normal">orc</text>
+<text x="160" y="185" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Rôdeurs</text>
+<text x="160" y="206" font-size="13" fill="#888" text-anchor="start" font-weight="normal">orques maraudeurs</text>
+<text x="160" y="232" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 3 · attaque 4 · gloire 2</text>
+<rect x="160" y="248" width="52" height="24" rx="12" fill="#1f1f1f" stroke="#5aa05a" stroke-width="1"/>
+<text x="170" y="265" font-size="13" fill="#5aa05a" text-anchor="start" font-weight="normal">paré</text>
+<rect x="362" y="166" width="26" height="26" rx="4" fill="#e0a040" stroke="#e0a040" stroke-width="1"/>
+<text x="375" y="186" font-size="18" fill="#222" text-anchor="middle" font-weight="bold">✓</text>
+<text x="375" y="210" font-size="11" fill="#c9a14a" text-anchor="middle" font-weight="normal">cible</text>
+<text x="40" y="330" font-size="13" fill="#888" text-anchor="start" font-weight="normal">Dans ce combat</text>
+<text x="48" y="354" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Distance : —</text>
+<text x="48" y="375" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Parade : Détermination renforcée</text>
+<text x="48" y="396" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">  Parade 5 / 4 ✓ paré</text>
+<text x="48" y="417" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Dégâts : —</text>
+<rect x="440" y="150" width="370" height="150" rx="10" fill="#2c2c2c" stroke="#e0a040" stroke-width="3"/>
+<circle cx="500" cy="225" r="44" fill="#2E5E2E" stroke="#1a3a1a" stroke-width="3" opacity="1"/>
+<text x="500" y="233" font-size="14" fill="#cfe8cf" text-anchor="middle" font-weight="normal">orc</text>
+<text x="560" y="185" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Fouisseurs</text>
+<text x="560" y="206" font-size="13" fill="#888" text-anchor="start" font-weight="normal">orques maraudeurs</text>
+<text x="560" y="232" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 3 · attaque 3 · gloire 2</text>
+<rect x="560" y="248" width="156" height="24" rx="12" fill="#1f1f1f" stroke="#bbb" stroke-width="1"/>
+<text x="570" y="265" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">en jeu · fortifié</text>
+<rect x="762" y="166" width="26" height="26" rx="4" fill="#e0a040" stroke="#e0a040" stroke-width="1"/>
+<text x="775" y="186" font-size="18" fill="#222" text-anchor="middle" font-weight="bold">✓</text>
+<text x="775" y="210" font-size="11" fill="#c9a14a" text-anchor="middle" font-weight="normal">cible</text>
+<text x="440" y="330" font-size="13" fill="#888" text-anchor="start" font-weight="normal">Dans ce combat</text>
+<text x="448" y="354" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Distance : impossible (fortifié)</text>
+<text x="448" y="375" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Parade : Polyvalence, Parade 2 / 3 ✗</text>
+<text x="448" y="396" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Dégâts : 2 blessures</text>
+<rect x="840" y="150" width="370" height="150" rx="10" fill="#262626" stroke="#555" stroke-width="1"/>
+<circle cx="900" cy="225" r="44" fill="#2E5E2E" stroke="#1a3a1a" stroke-width="3" opacity="0.4"/>
+<text x="900" y="233" font-size="16" fill="#cfe8cf" text-anchor="middle" font-weight="normal">☠</text>
+<text x="960" y="185" font-size="18" fill="#777" text-anchor="start" font-weight="bold">Chevaucheurs de loups</text>
+<text x="960" y="206" font-size="13" fill="#888" text-anchor="start" font-weight="normal">orques maraudeurs</text>
+<text x="960" y="232" font-size="14" fill="#777" text-anchor="start" font-weight="normal">armure 4 · attaque 3 · gloire 3</text>
+<rect x="960" y="248" width="68" height="24" rx="12" fill="#1f1f1f" stroke="#777" stroke-width="1"/>
+<text x="970" y="265" font-size="13" fill="#777" text-anchor="start" font-weight="normal">vaincu</text>
+<text x="840" y="330" font-size="13" fill="#888" text-anchor="start" font-weight="normal">Dans ce combat</text>
+<text x="848" y="354" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Distance : Célérité renforcée</text>
+<text x="848" y="375" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">  Attaque à distance 3 / 4 ✗</text>
+<text x="848" y="396" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">Attaque : Instinct renforcé</text>
+<text x="848" y="417" font-size="14" fill="#bbb" text-anchor="start" font-weight="normal">  Attaque 4 / 4 ✓ vaincus, gloire 3</text>
+<path d="M 225 432 L 225 448 L 625 448 L 625 432 M 425 448 L 425 470" stroke="#e0a040" stroke-width="2" fill="none"/>
+<rect x="140" y="470" width="570" height="190" rx="10" fill="#2e2a22" stroke="#e0a040" stroke-width="2"/>
+<text x="160" y="500" font-size="17" fill="#f0c060" text-anchor="start" font-weight="bold">Attaque en cours : Rôdeurs + Fouisseurs</text>
+<text x="160" y="522" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Il faut la somme des armures : 3 + 3 = 6</text>
+<rect x="160" y="540" width="230" height="48" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="178" cy="564" r="7" fill="#c0392b"/>
+<text x="194" y="560" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Rage</text>
+<text x="194" y="579" font-size="13" fill="#f0c060" text-anchor="start" font-weight="normal">Attaque 2</text>
+<rect x="402" y="540" width="230" height="48" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="420" cy="564" r="7" fill="#3c9a4a"/>
+<text x="436" y="560" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Marche (de côté)</text>
+<text x="436" y="579" font-size="13" fill="#f0c060" text-anchor="start" font-weight="normal">Attaque 1</text>
+<text x="160" y="630" font-size="22" fill="#f0c060" text-anchor="start" font-weight="bold">Attaque : 3 / 6</text>
+<rect x="380" y="610" width="230" height="28" rx="4" fill="#3d6fb5" stroke="#5a5a5a" stroke-width="1"/>
+<text x="495.0" y="629" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Valider l'attaque (Entrée)</text>
+<text x="620" y="629" font-size="12" fill="#888" text-anchor="start" font-weight="normal">Ctrl+Z</text>
+<text x="160" y="652" font-size="12" fill="#999" text-anchor="start" font-weight="normal">Une seule attaque par ennemi et par phase : une attaque ratée ne se recommence pas.</text>
+<text x="760" y="500" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">Cocher ou décocher un ennemi</text>
+<text x="760" y="520" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">compose le groupe tant qu'aucune</text>
+<text x="760" y="540" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">carte n'est jouée ; « Attaquer »</text>
+<text x="760" y="560" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">le fige (une attaque en cours).</text>
+<text x="760" y="595" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">Les cartes jouées vont au groupe</text>
+<text x="760" y="615" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">ciblé, et restent listées sous</text>
+<text x="760" y="635" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">chaque ennemi une fois validées.</text>
+<line x1="0" y1="690" x2="1260" y2="690" stroke="#3a3a3a"/>
+<text x="24" y="720" font-size="18" fill="#ddd" text-anchor="start" font-weight="normal">Main</text>
+<text x="80" y="720" font-size="13" fill="#888" text-anchor="start" font-weight="normal">seules les cartes jouables maintenant ont un bouton</text>
+<rect x="24" y="736" width="230" height="230" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<rect x="24" y="736" width="230" height="10" rx="4" fill="#d8d8d8"/>
+<text x="38" y="774" font-size="16" fill="#eee" text-anchor="start" font-weight="bold">Promesse</text>
+<text x="38" y="800" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">De côté : Attaque 1</text>
+<rect x="38" y="880" width="200" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="138.0" y="899" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Jouer de côté : Attaque 1</text>
+<rect x="38" y="916" width="200" height="28" rx="4" fill="#2b2b2b" stroke="#5a5a5a" stroke-width="1"/>
+<text x="138.0" y="935" font-size="14" fill="#777" text-anchor="middle" font-weight="normal">—</text>
+<rect x="268" y="736" width="230" height="230" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<rect x="268" y="736" width="230" height="10" rx="4" fill="#2f6db5"/>
+<text x="282" y="774" font-size="16" fill="#eee" text-anchor="start" font-weight="bold">Endurance</text>
+<text x="282" y="800" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">De côté : Attaque 1</text>
+<rect x="282" y="880" width="200" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="382.0" y="899" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Jouer de côté : Attaque 1</text>
+<rect x="282" y="916" width="200" height="28" rx="4" fill="#2b2b2b" stroke="#5a5a5a" stroke-width="1"/>
+<text x="382.0" y="935" font-size="14" fill="#777" text-anchor="middle" font-weight="normal">—</text>
+<rect x="512" y="736" width="230" height="230" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<rect x="512" y="736" width="230" height="10" rx="4" fill="#3c9a4a"/>
+<text x="526" y="774" font-size="16" fill="#eee" text-anchor="start" font-weight="bold">Concentration</text>
+<text x="526" y="800" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Gagner un jeton</text>
+<text x="526" y="820" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Renforcé : +2 (Rage…)</text>
+<rect x="526" y="880" width="200" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="626.0" y="899" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Jouer pour l'effet de base</text>
+<rect x="526" y="916" width="200" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="626.0" y="935" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Renforcer…</text>
+<rect x="756" y="736" width="230" height="230" rx="8" fill="#232323" stroke="#555" stroke-width="1"/>
+<rect x="756" y="736" width="230" height="10" rx="4" fill="#555"/>
+<text x="770" y="774" font-size="16" fill="#888" text-anchor="start" font-weight="bold">Blessure</text>
+<text x="770" y="800" font-size="13" fill="#777" text-anchor="start" font-weight="normal">Ne se joue pas</text>
+<rect x="1000" y="736" width="230" height="230" rx="8" fill="#232323" stroke="#555" stroke-width="1"/>
+<rect x="1000" y="736" width="230" height="10" rx="4" fill="#555"/>
+<text x="1014" y="774" font-size="16" fill="#888" text-anchor="start" font-weight="bold">Blessure</text>
+<text x="1014" y="800" font-size="13" fill="#777" text-anchor="start" font-weight="normal">Ne se joue pas</text>
+<rect x="1260" y="0" width="340" height="1000" rx="0" fill="#1b1b1b" stroke="#333" stroke-width="1"/>
+<text x="1278" y="30" font-size="18" fill="#ccc" text-anchor="start" font-weight="normal">Bac à sable</text>
+<text x="1278" y="60" font-size="14" fill="#ddd" text-anchor="start" font-weight="normal">Manche 1/4 · Jour (tour 3)</text>
+<text x="1278" y="84" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">Source : blanc  or  bleu (pris)</text>
+<text x="1278" y="106" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">Inventaire : ◇◇◇ ◆◇◇ ◇◇◇ ◇◇◇</text>
+<text x="1278" y="128" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">Jetons de mana : —</text>
+<text x="1278" y="150" font-size="16" fill="#f0c060" text-anchor="start" font-weight="bold">Gloire : 3</text>
+<text x="1278" y="186" font-size="17" fill="#ddd" text-anchor="start" font-weight="normal">Zone de jeu</text>
+<text x="1290" y="210" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Célérité : Attaque à distance 3</text>
+<text x="1290" y="230" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Détermination : Parade 5</text>
+<text x="1290" y="250" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Polyvalence : Parade 2</text>
+<text x="1290" y="270" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Instinct : Attaque 4</text>
+<text x="1290" y="290" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Rage : Attaque 2</text>
+<text x="1290" y="310" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Marche : Attaque 1 (de côté)</text>
+<text x="1278" y="344" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Deck : 6 cartes · Défausse : 2</text>
+<rect x="1278" y="374" width="140" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="1348.0" y="393" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Revenir en arrière</text>
+<rect x="1426" y="374" width="100" height="28" rx="4" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1"/>
+<text x="1476.0" y="393" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Sauvegarder</text>
+<rect x="1278" y="424" width="300" height="70" rx="6" fill="#222" stroke="#444" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1290" y="448" font-size="13" fill="#999" text-anchor="start" font-weight="normal">Le plateau de jeu est remplacé par</text>
+<text x="1290" y="468" font-size="13" fill="#999" text-anchor="start" font-weight="normal">l'écran de combat jusqu'à « Terminer</text>
+<text x="1290" y="486" font-size="13" fill="#999" text-anchor="start" font-weight="normal">le combat ». « Voir le plateau » l'affiche.</text>
+</svg>

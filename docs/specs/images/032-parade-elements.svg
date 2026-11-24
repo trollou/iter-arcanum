@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="560" viewBox="0 0 1260 560" font-family="Ubuntu, DejaVu Sans, sans-serif">
+<rect width="1260" height="560" fill="#202124"/>
+<text x="24" y="34" font-size="20" fill="#eee" text-anchor="start" font-weight="bold">Parade contre une attaque de glace (phase de parade)</text>
+<text x="24" y="56" font-size="13" fill="#999" text-anchor="start" font-weight="normal">Spec 032, visuels provisoires. Parade efficace ou inefficace selon l'élément de l'attaque (MKUE p. 9, Block Phase 5).</text>
+<rect x="24" y="80" width="460" height="140" rx="10" fill="#2c2c2c" stroke="#e0a040" stroke-width="3"/>
+<circle cx="80" cy="150" r="40" fill="#7a2020" stroke="#3a1010" stroke-width="3"/>
+<text x="80" y="156" font-size="13" fill="#f0d0d0" text-anchor="middle" font-weight="normal">dragon</text>
+<text x="134" y="112" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Dragons de glace</text>
+<text x="134" y="136" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 7 · attaque de glace 6 · gloire 8</text>
+<path d="M 144 159 L 154 163 L 154 172 Q 154 180 144 183 Q 134 180 134 172 L 134 163 Z" fill="#7fb3e0" stroke="#111" stroke-width="1"/>
+<text x="144" y="175" font-size="11" fill="#111" text-anchor="middle" font-weight="bold">G</text>
+<text x="160" y="175" font-size="13" fill="#7fb3e0" text-anchor="start" font-weight="normal">résistance à la glace</text>
+<path d="M 316 159 L 326 163 L 326 172 Q 326 180 316 183 Q 306 180 306 172 L 306 163 Z" fill="#9aa7b4" stroke="#111" stroke-width="1"/>
+<text x="316" y="175" font-size="11" fill="#111" text-anchor="middle" font-weight="bold">P</text>
+<text x="332" y="175" font-size="13" fill="#9aa7b4" text-anchor="start" font-weight="normal">résistance physique</text>
+<rect x="134" y="192" width="90" height="22" rx="11" fill="#1f1f1f" stroke="#777" stroke-width="1"/>
+<text x="142" y="208" font-size="12" fill="#aaa" text-anchor="start" font-weight="normal">Paralysie</text>
+<text x="232" y="208" font-size="11" fill="#888" text-anchor="start" font-weight="normal">(spec 033)</text>
+<path d="M 234 222 L 234 250" stroke="#e0a040" stroke-width="2" fill="none"/>
+<rect x="24" y="250" width="800" height="290" rx="10" fill="#2e2a22" stroke="#e0a040" stroke-width="2"/>
+<text x="44" y="280" font-size="17" fill="#f0c060" text-anchor="start" font-weight="bold">Parade en cours : Dragons de glace</text>
+<rect x="44" y="292" width="760" height="34" rx="8" fill="#252a30" stroke="#7fb3e0" stroke-width="1.5"/>
+<text x="58" y="314" font-size="14" fill="#ddd" text-anchor="start" font-weight="normal">Contre une attaque de glace, les parades autres que de feu et de feu glacé sont divisées par deux</text>
+<rect x="44" y="338" width="245" height="70" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="60" cy="360" r="7" fill="#c0392b"/>
+<text x="74" y="364" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Polyvalence renforcée</text>
+<text x="74" y="386" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Parade de feu 3</text>
+<text x="74" y="402" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal">feu contre glace : compte entier</text>
+<rect x="301" y="338" width="245" height="70" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="317" cy="360" r="7" fill="#2f6db5"/>
+<text x="331" y="364" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Détermination renforcée</text>
+<text x="331" y="386" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Parade 5</text>
+<rect x="481" y="372" width="54" height="22" rx="11" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="508" y="388" font-size="12" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<text x="331" y="402" font-size="11" fill="#9aa7b4" text-anchor="start" font-weight="normal">physique ÷2</text>
+<rect x="558" y="338" width="245" height="70" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="574" cy="360" r="7" fill="#3a8a3a"/>
+<text x="588" y="364" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Marche (de côté)</text>
+<text x="588" y="386" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Parade 1</text>
+<rect x="738" y="372" width="54" height="22" rx="11" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="765" y="388" font-size="12" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<text x="588" y="402" font-size="11" fill="#9aa7b4" text-anchor="start" font-weight="normal">physique ÷2</text>
+<text x="44" y="438" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Divisées par deux : (5 + 1) ÷ 2 = 3 · Autres : 3</text>
+<text x="44" y="470" font-size="22" fill="#f0c060" text-anchor="start" font-weight="bold">Parade : 6 / 6</text>
+<rect x="230" y="450" width="230" height="28" rx="4" fill="#3d6fb5" stroke="#5a5a5a" stroke-width="1"/>
+<text x="345" y="469" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Valider la parade (Entrée)</text>
+<text x="44" y="506" font-size="12" fill="#999" text-anchor="start" font-weight="normal">Une seule division, sur la somme des parades inefficaces (MKUE p. 9, Block Phase 5.b). Sans Marche : 2 + 3 = 5.</text>
+<text x="850" y="280" font-size="15" fill="#ddd" text-anchor="start" font-weight="bold">Main : repères sur les cartes</text>
+<rect x="850" y="296" width="380" height="64" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<text x="864" y="322" font-size="15" fill="#eee" text-anchor="start" font-weight="bold">Rage</text>
+<text x="864" y="344" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Parade 2</text>
+<rect x="1170" y="306" width="48" height="24" rx="12" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="1194" y="323" font-size="13" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<rect x="850" y="370" width="380" height="64" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<text x="864" y="396" font-size="15" fill="#eee" text-anchor="start" font-weight="bold">Endurance</text>
+<text x="864" y="418" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">De côté : Parade 1</text>
+<rect x="1170" y="380" width="48" height="24" rx="12" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="1194" y="397" font-size="13" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<rect x="850" y="444" width="380" height="64" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<text x="864" y="470" font-size="15" fill="#eee" text-anchor="start" font-weight="bold">Improvisation</text>
+<text x="864" y="492" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Parade 3 (défausser une carte)</text>
+<rect x="1170" y="454" width="48" height="24" rx="12" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="1194" y="471" font-size="13" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<text x="850" y="530" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Le repère dit, avant de jouer, ce que la carte vaudra.</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="st" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8d2c6"/><stop offset=".5" stop-color="#a39a8c"/><stop offset="1" stop-color="#6f665b"/></linearGradient>
+    <linearGradient id="sts" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8c8476"/><stop offset="1" stop-color="#5a534a"/></linearGradient>
+    <linearGradient id="tp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6e0d4"/><stop offset="1" stop-color="#b9b1a3"/></linearGradient>
+    <linearGradient id="rf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f08070"/><stop offset=".5" stop-color="#b8322e"/><stop offset="1" stop-color="#7a1e1b"/></linearGradient>
+    <linearGradient id="rfs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b8322e"/><stop offset="1" stop-color="#7a1e1b"/></linearGradient>
+    <linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc8c"/><stop offset="1" stop-color="#8a6524"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="92" ry="8" fill="url(#sh)"/>
+  <g id="palais" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M130,160 L144,151 L144,61 L130,70 Z" fill="url(#sts)"/>
+    <path d="M70,70 L84,61 L144,61 L130,70 Z" fill="url(#tp)"/>
+    <rect x="70" y="70" width="60" height="90" fill="url(#st)"/>
+    <path d="M66,70 C66,40 134,40 134,70 Z" fill="url(#rf)"/>
+    <path d="M100,42 L100,24" stroke-width="2.6"/><circle cx="100" cy="22" r="4" fill="url(#gd)"/>
+    <path d="M88,104 v-14 a6,6 0 0 1 12,0 v14 z M106,104 v-14 a6,6 0 0 1 12,0 v14 z" fill="#ffd94a" stroke-width="1.6"/>
+    <path d="M48,158 L48,64 L68,64 L68,158 C68,161.5 48,161.5 48,158 Z" fill="url(#st)"/>
+    <path d="M44,64 L58,34 L72,64 C72,68.0 44,68.0 44,64 Z" fill="url(#rf)"/>
+    <path d="M55,115.69999999999999 v-8 a3,3 0 0 1 6,0 v8 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M136,156 L136,68 L156,68 L156,156 C156,159.5 136,159.5 136,156 Z" fill="url(#st)"/>
+    <path d="M132,68 L146,40 L160,68 C160,72.0 132,72.0 132,68 Z" fill="url(#rf)"/>
+    <path d="M143,116.4 v-8 a3,3 0 0 1 6,0 v8 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M58,34 L58,12" stroke-width="2.6"/>
+    <path d="M58,12 L78,17 L70,20 L78,24 L58,26 Z" fill="#b8322e"/>
+    <path d="M146,40 L146,18" stroke-width="2.6"/>
+    <path d="M146,18 L166,23 L158,26 L166,30 L146,32 Z" fill="#b8322e"/>
+  </g>
+  <g id="ville" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <rect x="27" y="142" width="26" height="16" fill="#efe6d0"/>
+    <path d="M24,142 L40,126 L56,142 Z" fill="url(#rf)"/>
+    <rect x="37" y="146" width="6" height="7" fill="#ffd94a" stroke-width="1.4"/>
+    <rect x="68" y="136" width="24" height="16" fill="#efe6d0"/>
+    <path d="M65,136 L80,120 L95,136 Z" fill="url(#rf)"/>
+    <rect x="77" y="140" width="6" height="7" fill="#ffd94a" stroke-width="1.4"/>
+    <rect x="112" y="136" width="24" height="16" fill="#efe6d0"/>
+    <path d="M109,136 L124,120 L139,136 Z" fill="url(#rf)"/>
+    <rect x="121" y="140" width="6" height="7" fill="#ffd94a" stroke-width="1.4"/>
+    <rect x="151" y="142" width="26" height="16" fill="#efe6d0"/>
+    <path d="M148,142 L164,126 L180,142 Z" fill="url(#rf)"/>
+    <rect x="161" y="146" width="6" height="7" fill="#ffd94a" stroke-width="1.4"/>
+    <rect x="48" y="144" width="24" height="16" fill="#efe6d0"/>
+    <path d="M45,144 L60,128 L75,144 Z" fill="url(#rf)"/>
+    <rect x="57" y="148" width="6" height="7" fill="#ffd94a" stroke-width="1.4"/>
+    <rect x="130" y="144" width="24" height="16" fill="#efe6d0"/>
+    <path d="M127,144 L142,128 L157,144 Z" fill="url(#rf)"/>
+    <rect x="139" y="148" width="6" height="7" fill="#ffd94a" stroke-width="1.4"/>
+  </g>
+  <g id="remparts" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M166,186 L182,176 L182,142 L166,152 Z" fill="url(#sts)"/>
+    <path d="M34,152 L50,142 L182,142 L166,152 Z" fill="url(#tp)"/>
+    <rect x="34" y="152" width="132" height="34" fill="url(#st)"/>
+    <path d="M34.0,152 v-7 h6.3 v7 Z M46.6,152 v-7 h6.3 v7 Z M59.1,152 v-7 h6.3 v7 Z M71.7,152 v-7 h6.3 v7 Z M84.3,152 v-7 h6.3 v7 Z M96.9,152 v-7 h6.3 v7 Z M109.4,152 v-7 h6.3 v7 Z M122.0,152 v-7 h6.3 v7 Z M134.6,152 v-7 h6.3 v7 Z M147.1,152 v-7 h6.3 v7 Z M159.7,152 v-7 h6.3 v7 Z " fill="url(#st)"/>
+    <path d="M166,152 L182,142 L182,135 L166,145 Z" fill="url(#sts)"/>
+  </g>
+  <g id="porte" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M64,188 L64,138 L88,138 L88,188 C88,192.2 64,192.2 64,188 Z" fill="url(#st)"/>
+    <path d="M64.0,138 v-7 h3.4 v7 M70.9,138 v-7 h3.4 v7 M77.7,138 v-7 h3.4 v7 M84.6,138 v-7 h3.4 v7 " fill="url(#st)"/>
+    <path d="M73,165.5 v-8 a3,3 0 0 1 6,0 v8 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M112,188 L112,138 L136,138 L136,188 C136,192.2 112,192.2 112,188 Z" fill="url(#st)"/>
+    <path d="M112.0,138 v-7 h3.4 v7 M118.9,138 v-7 h3.4 v7 M125.7,138 v-7 h3.4 v7 M132.6,138 v-7 h3.4 v7 " fill="url(#st)"/>
+    <path d="M121,165.5 v-8 a3,3 0 0 1 6,0 v8 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M88,186 V168 C88,154 112,154 112,168 V186 Z" fill="#2b1a0c"/>
+    <path d="M84,146 L116,146 L116,164 L100,172 L84,164 Z" fill="url(#rf)"/>
+    <circle cx="100" cy="157" r="5" fill="url(#gd)" stroke-width="1.6"/>
+    <path d="M44,170 L56,168 M140,172 L156,170" stroke-width="1.4" stroke-opacity=".5" fill="none"/>
+  </g>
+  <g id="tours" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M21,190 L21,144 L43,144 L43,190 C43,193.85 21,193.85 21,190 Z" fill="url(#st)"/>
+    <path d="M17,144 L32,120 L47,144 C47,148.4 17,148.4 17,144 Z" fill="url(#rf)"/>
+    <path d="M29,169.3 v-8 a3,3 0 0 1 6,0 v8 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M159,186 L159,140 L181,140 L181,186 C181,189.85 159,189.85 159,186 Z" fill="url(#st)"/>
+    <path d="M155,140 L170,116 L185,140 C185,144.4 155,144.4 155,140 Z" fill="url(#rf)"/>
+    <path d="M167,165.3 v-8 a3,3 0 0 1 6,0 v8 z" fill="#2b1a0c" stroke-width="1.4"/>
+  </g>
+</svg>

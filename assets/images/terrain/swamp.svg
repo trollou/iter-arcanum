@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173.205 200.0" width="173.205" height="200.0">
+  <defs><clipPath id="c"><polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50"/></clipPath></defs>
+  <polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50" fill="#5E7D6B"/>
+  <g clip-path="url(#c)">
+    <ellipse cx="124.5" cy="143.8" rx="18.6" ry="6.8" fill="#45677A"/>
+    <ellipse cx="84.7" cy="67.6" rx="18.6" ry="8.1" fill="#45677A"/>
+    <ellipse cx="22.1" cy="122.1" rx="18.9" ry="7.0" fill="#45677A"/>
+    <ellipse cx="82.8" cy="135.3" rx="13.7" ry="8.4" fill="#45677A"/>
+    <ellipse cx="57.2" cy="141.1" rx="18.6" ry="7.3" fill="#45677A"/>
+    <ellipse cx="116.3" cy="88.3" rx="13.7" ry="6.6" fill="#45677A"/>
+    <ellipse cx="46.9" cy="107.3" rx="17.4" ry="6.9" fill="#45677A"/>
+    <path d="M152.1,113.5 l-3,-12 M155.1,113.5 l0,-14 M158.1,113.5 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M43.2,123.6 l-3,-12 M46.2,123.6 l0,-14 M49.2,123.6 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M107.6,130.1 l-3,-12 M110.6,130.1 l0,-14 M113.6,130.1 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M18.1,78.9 l-3,-12 M21.1,78.9 l0,-14 M24.1,78.9 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M101.4,70.3 l-3,-12 M104.4,70.3 l0,-14 M107.4,70.3 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M59.3,53.8 l-3,-12 M62.3,53.8 l0,-14 M65.3,53.8 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M44.5,155.6 l-3,-12 M47.5,155.6 l0,-14 M50.5,155.6 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M68.8,83.2 l-3,-12 M71.8,83.2 l0,-14 M74.8,83.2 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M122.4,84.5 l-3,-12 M125.4,84.5 l0,-14 M128.4,84.5 l3,-11" stroke="#3E5A45" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="robe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e070c4"/><stop offset=".55" stop-color="#a8338e"/><stop offset="1" stop-color="#521446"/></linearGradient>
+    <linearGradient id="mask" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9c4d8"/></linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8c8b0"/><stop offset="1" stop-color="#a07a68"/></linearGradient>
+    <radialGradient id="mist"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#ffb0f0"/><stop offset="1" stop-color="#c040b0"/></radialGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="40" ry="8" fill="url(#shadow)"/>
+  <!-- cape : double fantôme décalé derrière (l'illusion), puis la cape étoilée -->
+  <g id="cape" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M70,8 L88,40 C98,40 102,46 98,52 C110,74 112,110 108,140 L60,140 C58,110 62,74 74,52 C70,46 72,40 78,38 Z" fill="#ffb0f0" fill-opacity=".35" stroke="#a8338e" stroke-opacity=".6" stroke-dasharray="4 3"/>
+    <path d="M36,56 C24,78 22,110 26,140 L94,140 C98,110 96,78 84,56 Z" fill="#3a1032"/>
+    <path d="M32,96 L33,99 L36,99 L33.5,101 L34.5,104 L32,102 L29.5,104 L30.5,101 L28,99 L31,99 Z M88,116 L89,119 L92,119 L89.5,121 L90.5,124 L88,122 L85.5,124 L86.5,121 L84,119 L87,119 Z" fill="#ffd94a" stroke-width="1"/>
+  </g>
+  <!-- jambes : robe longue, babouches pointues -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,138 L56,138 L56,146 L24,146 C28,142 32,138 38,138 Z" fill="#2b1a0c"/>
+    <path d="M64,138 L82,138 C88,138 92,142 96,146 L64,146 Z" fill="#2b1a0c"/>
+    <path d="M42,100 C38,114 34,128 32,140 L88,140 C86,128 82,114 78,100 Z" fill="url(#robe)"/>
+    <path d="M32,135 C42,130 50,140 60,135 C70,130 78,140 88,135" stroke="#ffd94a" stroke-width="2.6" fill="none"/>
+  </g>
+  <!-- torse : robe à losanges, ceinture -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,62 C38,80 40,94 42,106 L78,106 C80,94 82,80 80,62 C70,56 50,56 40,62 Z" fill="url(#robe)"/>
+    <path d="M60,64 L68,76 L60,88 L52,76 Z" fill="#3a1032" stroke-width="1.6"/>
+    <path d="M60,70 L64,76 L60,82 L56,76 Z" fill="#ffd94a" stroke-width="1"/>
+    <path d="M41,96 L79,96 L78,104 L42,104 Z" fill="#2b1a0c"/>
+  </g>
+  <!-- bras gauche : main ouverte, brume qui tourne -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,64 C30,70 24,80 22,90 L36,92 C36,84 40,78 46,74 Z" fill="url(#robe)"/>
+    <circle cx="26" cy="94" r="7" fill="url(#skin)"/>
+    <path d="M24,104 C14,108 8,100 12,92 C16,86 24,88 22,94" stroke="#ffb0f0" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <circle cx="12" cy="112" r="2" fill="#ffb0f0" stroke="none"/>
+  </g>
+  <!-- bras droit levé : orbe de brume rose -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,64 C90,62 96,56 98,46 L86,42 C84,50 80,54 74,58 Z" fill="url(#robe)"/>
+    <circle cx="94" cy="40" r="7" fill="url(#skin)"/>
+    <circle cx="96" cy="24" r="9" fill="url(#mist)"/>
+    <path d="M86,16 C82,8 92,2 98,8 M108,20 C114,16 114,30 106,32" stroke="#ffb0f0" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- tête : chapeau pointu à bord tombant, masque blanc souriant -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M42,48 C42,36 50,30 60,30 C70,30 78,36 78,48 C78,60 70,68 60,68 C50,68 42,60 42,48 Z" fill="url(#skin)"/>
+    <path d="M44,40 C44,36 52,34 60,34 C68,34 76,36 76,40 L76,52 C76,62 68,66 60,66 C52,66 44,62 44,52 Z" fill="url(#mask)"/>
+    <path d="M48,46 C50,42 56,42 57,47 C54,49 50,49 48,46 Z M72,46 C70,42 64,42 63,47 C66,49 70,49 72,46 Z" fill="#17120c" stroke-width="1.2"/>
+    <circle cx="53" cy="46" r="1.4" fill="#ffb0f0" stroke="none"/><circle cx="67" cy="46" r="1.4" fill="#ffb0f0" stroke="none"/>
+    <path d="M50,56 C56,62 64,62 70,56" fill="none" stroke-width="1.8"/>
+    <path d="M60,68 L58,72" stroke="none" fill="none"/>
+    <path d="M30,38 C40,32 80,32 90,38 C86,42 34,42 30,38 Z" fill="#3a1032"/>
+    <path d="M44,36 C46,24 50,12 54,6 C58,0 66,-2 74,4 C66,4 62,10 64,18 C66,26 72,30 76,36 Z" fill="url(#robe)"/>
+    <path d="M45,32 L75,32" stroke="#ffd94a" stroke-width="2.6" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+// Decks de départ du jeu de base (MKUE p. 3) : sources et notes de lecture dans docs/reference/decks-de-depart.md.
+// Chaque héros part du deck standard (16 cartes, dans l'ordre des numéros n/16) et remplace deux cartes par les siennes.
+(
+    standard_deck: {
+        Rage: 2,
+        Determination: 1,
+        Swiftness: 2,
+        March: 2,
+        Stamina: 2,
+        Tranquility: 1,
+        Promise: 1,
+        Threaten: 1,
+        Crystallize: 1,
+        ManaDraw: 1,
+        Concentration: 1,
+        Improvisation: 1,
+    },
+    heroes: {
+        Arythea: [(replaced: Rage, by: BattleVersatility), (replaced: ManaDraw, by: ManaPull)],
+        Goldyx: [(replaced: Concentration, by: WillFocus), (replaced: Crystallize, by: CrystalJoy)],
+        Norowas: [(replaced: Promise, by: NobleManners), (replaced: Tranquility, by: Rejuvenate)],
+        Tovak: [(replaced: Determination, by: ColdToughness), (replaced: Improvisation, by: Instinct)],
+    },
+    // Joueur fantôme (spec 061 ; MKUE p. 15) : un cristal par cercle coloré au bas de la carte de héros,
+    // lu sur les scans ../mage-knight/docs/regles/scans/characters/<héros>/character_<héros>.jpg.
+    dummy_crystals: {
+        Arythea: [Red, Red, White],
+        Goldyx: [Green, Green, Blue],
+        Norowas: [White, White, Green],
+        Tovak: [Blue, Blue, Red],
+    },
+)

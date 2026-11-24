@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <clipPath id="medallion"><circle cx="50" cy="50" r="33"/></clipPath>
+  </defs>
+  <ellipse cx="53" cy="54" rx="44" ry="42" fill="#000000" opacity="0.35"/>
+  <circle cx="50" cy="50" r="44" fill="#3B2A1E"/>
+  <circle cx="50" cy="50" r="40" fill="#5C7FB0"/>
+  <circle cx="50" cy="50" r="33" fill="#2F4A70"/>
+  <g clip-path="url(#medallion)" stroke="#1C2638" stroke-width="2" stroke-linejoin="round">
+    <path d="M14,92 Q18,70 38,67 L62,67 Q82,70 86,92 Z" fill="#B9C8DE"/>
+    <path d="M42,67 L50,78 L58,67 Z" fill="#5C7FB0"/>
+    <path d="M50,24 Q33,25 33,44 Q32,62 36,74 L44,72 Q42,58 43,46 L57,46 Q58,58 56,72 L64,74 Q68,62 67,44 Q67,25 50,24 Z" fill="#F2E8C4"/>
+    <path d="M40,46 L27,36 L39,53 Z" fill="#EDC5A0"/>
+    <path d="M60,46 L73,36 L61,53 Z" fill="#EDC5A0"/>
+    <ellipse cx="50" cy="50" rx="10" ry="13" fill="#EDC5A0"/>
+    <path d="M39,44 Q44,30 50,31 Q56,30 61,44 Q56,37 50,36 Q44,37 39,44 Z" fill="#F2E8C4"/>
+  </g>
+  <g fill="#1C2638">
+    <ellipse cx="46" cy="49" rx="1.7" ry="1.2"/>
+    <ellipse cx="54" cy="49" rx="1.7" ry="1.2"/>
+  </g>
+  <path d="M47,57 Q50,58.5 53,57" stroke="#8A5A40" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <circle cx="50" cy="50" r="33" fill="none" stroke="#3B2A1E" stroke-width="2.5"/>
+</svg>

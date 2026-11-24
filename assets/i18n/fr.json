@@ -1,0 +1,1996 @@
+{
+  "language": {
+    "name": "Français"
+  },
+  "app": {
+    "title": "Iter Arcanum (prototype)"
+  },
+  "hand": {
+    "empty": "Aucune carte en main",
+    "title": "Main"
+  },
+  "deck": {
+    "count": "Deck : {count} carte(s)"
+  },
+  "game": {
+    "finished": "Partie terminée",
+    "last_round": "Partie terminée : la dernière manche est jouée."
+  },
+  "error": {
+    "game_stopped": "La partie s'est arrêtée sur une erreur."
+  },
+  "board": {
+    "recenter": "Recentrer le plateau",
+    "hover": {
+      "hero": "Votre héros",
+      "forbidden": "Au-delà de la côte : aucune tuile ne peut être posée ici",
+      "move_cost": "Coût de déplacement : {cost}",
+      "inaccessible": "Infranchissable",
+      "fortified": "Cité : ni conquise ni visitée dans ce scénario",
+      "click_to_move": "Cliquez pour vous y déplacer",
+      "click_to_follow": "Cliquez pour suivre ce trajet",
+      "missing_points": "Il vous manque {missing} point(s) de mouvement",
+      "movement_ended": "Déplacement terminé pour ce tour",
+      "route": "Trajet : {steps} case(s), {cost} points de mouvement",
+      "free_position": "Emplacement libre",
+      "explore_cost": "Explorer : {cost} points de mouvement",
+      "click_to_explore": {
+        "countryside": "Cliquez pour révéler une tuile de campagne",
+        "core": "Cliquez pour révéler une tuile royaume",
+        "removed": "Cliquez pour révéler une tuile écartée, au hasard"
+      },
+      "explore_limit": {
+        "countryside": "Une tuile de campagne doit toucher deux tuiles posées, ou une tuile qui en touche deux",
+        "core": "Une tuile royaume doit toucher au moins deux tuiles posées",
+        "removed": "Une tuile écartée doit toucher au moins trois tuiles posées"
+      },
+      "nothing_to_reveal": "Plus aucune tuile à révéler",
+      "mine": {
+        "gain": "Finir le tour ici : +1 cristal {color}",
+        "full": "Vous avez déjà 3 cristaux de cette couleur : rien à gagner ici."
+      },
+      "enemy_space": "Case occupée par un ennemi errant",
+      "provokes": "Provoque : {enemies}",
+      "assault": "⚔ Assaut : Réputation −1, combat obligatoire",
+      "defender_fortified": "Défenseur fortifié : siège seulement à distance",
+      "defender_fortified_twice": "Défenseur doublement fortifié : aucun tir à distance",
+      "adventure": {
+        "enemies_waiting": "Vous y attendent : {enemies}",
+        "fight": "Entrer : combat, récompense : {reward}"
+      },
+      "glade": "Jeton de mana au début du tour (or le jour, noir la nuit) ; finir le tour ici : jeter une Blessure",
+      "ruins": {
+        "altar": "Autel : offrande de 3 mana {color} pour 7 Gloire",
+        "enemies": "Ennemis : {colors} ; récompense : {reward}",
+        "face_down": "Jeton de ruines face cachée (révélé au prochain Jour, ou en y entrant)"
+      },
+      "unsafe_space": "Case non sécurisée : retraite forcée si vous y finissez le tour",
+      "city": {
+        "level": "{city}, niveau {level}",
+        "defenders": "Défenseurs : {enemies}",
+        "face_down": "Défenseurs face cachée : {colors}",
+        "bonus_white": "Bonus des défenseurs : Armure +1",
+        "bonus_blue": "Bonus des défenseurs : attaque de glace ou de feu +2, de feu glacé +1",
+        "bonus_red": "Bonus des défenseurs : brutal si leur attaque est physique",
+        "bonus_green": "Bonus des défenseurs : toxique si leur attaque est physique",
+        "shields": "Vos Boucliers : {count}",
+        "leader": "Conquise : vous en êtes le Seigneur",
+        "offer_white": "On y recrute toutes les unités ; unité d'élite ajoutée à l'offre pour 2 Influence",
+        "offer_blue": "On y achète des sorts : 7 Influence et un mana",
+        "offer_red": "On y achète des artefacts : 12 Influence",
+        "offer_green": "On y achète des actions avancées : 6 Influence",
+        "hand_limit": "Finir le tour ici ou à côté : limite de main +1, +2 pour le Seigneur"
+      },
+      "core_on_coastline": "Pas de tuile royaume sur la côte : explorez un emplacement plus à l'intérieur"
+    },
+    "action": {
+      "challenge": "Défier",
+      "start_combat": "Combattre",
+      "interact": "Interagir",
+      "plunder": "Piller",
+      "burn": "Incendier",
+      "enter": "Entrer",
+      "tribute": "Offrande"
+    }
+  },
+  "tile": {
+    "starting_a": "Tuile de départ (face A)",
+    "starting_b": "Tuile de départ (face B)",
+    "countryside": "Tuile de campagne {number}",
+    "core": "Tuile royaume {number}"
+  },
+  "terrain": {
+    "plains": {
+      "name": "Plaine"
+    },
+    "hills": {
+      "name": "Colline"
+    },
+    "forest": {
+      "name": "Forêt"
+    },
+    "wasteland": {
+      "name": "Terre désolée"
+    },
+    "desert": {
+      "name": "Désert"
+    },
+    "swamp": {
+      "name": "Marais"
+    },
+    "lake": {
+      "name": "Lac"
+    },
+    "mountain": {
+      "name": "Montagne"
+    },
+    "sea": {
+      "name": "Littoral"
+    }
+  },
+  "site": {
+    "village": {
+      "name": "Village"
+    },
+    "monastery": {
+      "name": "Monastère",
+      "burned": "Monastère incendié"
+    },
+    "keep": {
+      "name": "Forteresse"
+    },
+    "mage_tower": {
+      "name": "Tour de mage"
+    },
+    "dungeon": {
+      "name": "Donjon"
+    },
+    "tomb": {
+      "name": "Tombeau"
+    },
+    "monster_den": {
+      "name": "Antre"
+    },
+    "spawning_grounds": {
+      "name": "Sombre Terrier"
+    },
+    "ruins": {
+      "name": "Ruines"
+    },
+    "magical_glade": {
+      "name": "Clairière magique"
+    },
+    "portal": {
+      "name": "Portail"
+    },
+    "mine": {
+      "red": "Mine rouge",
+      "blue": "Mine bleue",
+      "white": "Mine blanche",
+      "green": "Mine verte"
+    },
+    "city": {
+      "red": "Cité rouge",
+      "blue": "Cité bleue",
+      "white": "Cité blanche",
+      "green": "Cité verte"
+    },
+    "conquered": {
+      "keep": "Forteresse conquise",
+      "mage_tower": "Tour de mage conquise",
+      "adventure": "{site} conquis",
+      "ruins": "Ruines conquises",
+      "city": "{site} conquise"
+    }
+  },
+  "enemy": {
+    "orc_marauders": {
+      "name": "Orques maraudeurs"
+    },
+    "draconum": {
+      "name": "Draconien"
+    },
+    "prowlers": {
+      "name": "Rôdeurs"
+    },
+    "diggers": {
+      "name": "Creuseurs"
+    },
+    "cursed_hags": {
+      "name": "Sorcières maudites"
+    },
+    "wolf_riders": {
+      "name": "Chevaucheurs de loups"
+    },
+    "ironclads": {
+      "name": "Cogneurs"
+    },
+    "orc_summoners": {
+      "name": "Invocateurs orques"
+    },
+    "crossbowmen": {
+      "name": "Arbalétriers"
+    },
+    "guardsmen": {
+      "name": "Gardiens"
+    },
+    "swordsmen": {
+      "name": "Soldats"
+    },
+    "golems": {
+      "name": "Golems"
+    },
+    "monks": {
+      "name": "Moines"
+    },
+    "illusionists": {
+      "name": "Illusionnistes"
+    },
+    "ice_mages": {
+      "name": "Mages de glace"
+    },
+    "ice_golems": {
+      "name": "Golem de glace"
+    },
+    "fire_mages": {
+      "name": "Mages de feu"
+    },
+    "fire_golems": {
+      "name": "Golem de feu"
+    },
+    "minotaur": {
+      "name": "Minotaure"
+    },
+    "gargoyle": {
+      "name": "Gargouille"
+    },
+    "medusa": {
+      "name": "Méduse"
+    },
+    "crypt_worm": {
+      "name": "Ver des cryptes"
+    },
+    "werewolf": {
+      "name": "Loup-garou"
+    },
+    "swamp_dragon": {
+      "name": "Dragons des marais"
+    },
+    "fire_dragon": {
+      "name": "Dragons de feu"
+    },
+    "ice_dragon": {
+      "name": "Dragons de glace"
+    },
+    "high_dragon": {
+      "name": "Dragons supérieurs"
+    },
+    "freezers": {
+      "name": "Glaceurs"
+    },
+    "gunners": {
+      "name": "Canonniers"
+    },
+    "altem_guardsmen": {
+      "name": "Gardiens d'Altem"
+    },
+    "altem_mages": {
+      "name": "Mages d'Altem"
+    },
+    "color": {
+      "green": "orques maraudeurs",
+      "grey": "gardes de forteresse",
+      "violet": "tour de mage",
+      "brown": "donjon",
+      "red": "draconien",
+      "white": "cité"
+    },
+    "token": "{name} ({group})",
+    "values": "armure {armor}, attaque {attack}, gloire {fame}",
+    "description": "{token} : {values}",
+    "summon": "invocation",
+    "abilities": "Capacités : {list}",
+    "resistances": "Résistances : {list}",
+    "ability": {
+      "fortified": "fortifié",
+      "swift": "vif",
+      "brutal": "brutal",
+      "poison": "toxique",
+      "paralyze": "paralysant"
+    },
+    "element": {
+      "physical": "physique",
+      "fire": "feu",
+      "ice": "glace",
+      "cold_fire": "feu glacé"
+    },
+    "face_down": "défenseur {color}, face cachée",
+    "pile_color": {
+      "green": "vert",
+      "grey": "gris",
+      "violet": "violet",
+      "brown": "marron",
+      "red": "rouge",
+      "white": "blanc"
+    }
+  },
+  "scenario": {
+    "sandbox": {
+      "name": "Bac à sable",
+      "tagline": "Essai libre, sans score",
+      "flavor": "Un terrain d'essai sans enjeu : déplacez-vous, explorez et découvrez les cartes à votre rythme.",
+      "length": "4 manches : Jour, Nuit, Jour, Nuit",
+      "players": "Solo",
+      "kind": "Essai libre",
+      "objective": "Aucun : apprendre les règles en jouant.",
+      "special_rules": "Pas de gloire pour les tuiles révélées.",
+      "game_end": "À la fin de la 4e manche.",
+      "scoring": "Pas de score final."
+    },
+    "first_reconnaissance": {
+      "name": "Première reconnaissance",
+      "tagline": "Conseillé pour une première partie",
+      "flavor": "Une contrée inexplorée s'étend devant vous. Votre mission : la parcourir jusqu'à trouver sa capitale, et revenir avec toute la gloire et les trésors que vous saurez y gagner.",
+      "length": "4 manches : Jour, Nuit, Jour, Nuit",
+      "players": "Solo",
+      "kind": "Entraînement",
+      "objective": "Explorer la région jusqu'à révéler une cité.\nGagner le plus de gloire possible en chemin.",
+      "special_rules": "Chaque tuile révélée rapporte 1 gloire.\nLes cités ne peuvent être ni conquises ni visitées.\nTactiques : vous choisissez la vôtre en premier, le joueur fantôme tire la sienne parmi les autres ; les deux sont retirées de la partie à la fin de la manche.\nJoueur fantôme : il retourne des cartes de son deck à chaque tour et annonce la fin de la manche quand il est vide.",
+      "game_end": "Une cité est révélée : vous finissez ce tour, puis jouez un dernier tour.\nSinon, la partie s'arrête à la fin de la 4e manche.",
+      "scoring": "Votre gloire, plus les Hauts Faits.\nPas de titres en solo."
+    },
+    "last_turn_next": "Cité révélée : après ce tour, encore un dernier tour.",
+    "last_turn": "Dernier tour",
+    "solo_conquest": {
+      "name": "Conquête en solitaire",
+      "tagline": "Le scénario solo de référence",
+      "flavor": "Vous êtes seul, mais le Conseil compte toujours sur vous : trouvez les deux cités de la région et prenez-les d'assaut avant la fin de la troisième nuit.",
+      "length": "6 manches : Jour, Nuit, Jour, Nuit, Jour, Nuit",
+      "players": "Solo",
+      "kind": "Conquête",
+      "objective": "Trouver et conquérir les deux cités : la première révélée est de niveau 5, la seconde de niveau 8.\nToutes conquises, la mission est accomplie.",
+      "special_rules": "Pas de tuile royaume sur la côte (les deux files du bord).\nTactiques : vous choisissez la vôtre en premier, le joueur fantôme tire la sienne parmi les autres ; les deux sont retirées de la partie à la fin de la manche.\nJoueur fantôme : il retourne des cartes de son deck à chaque tour et annonce la fin de la manche quand il est vide.\nLes quatre sorts qui visent les autres joueurs sont retirés.",
+      "game_end": "Toutes les cités conquises : vous finissez ce tour, puis jouez un dernier tour, sans le joueur fantôme.\nSinon, la partie s'arrête à la fin de la 6e manche.",
+      "scoring": "Votre gloire, plus les Hauts Faits (pas de titres en solo).\n+10 par cité conquise, +15 si toutes le sont.\nMission accomplie : +30 par manche non jouée, +1 par carte du deck du joueur fantôme, +5 si la fin de la manche n'était pas annoncée."
+    },
+    "cities_progress": "Cités conquises : {conquered}/{total}",
+    "last_turn_next_conquest": "Toutes les cités sont conquises : après ce tour, encore un dernier tour."
+  },
+  "score": {
+    "title": "Fin de partie",
+    "reason": {
+      "city_revealed": "Une cité a été révélée et le dernier tour est joué.",
+      "last_round": "La dernière manche est jouée.",
+      "all_cities_conquered": "Toutes les cités sont conquises et le dernier tour est joué."
+    },
+    "fame": "Gloire : {fame}",
+    "knowledge": "Le Savant : {points}",
+    "loot": "Le Collectionneur ({artifacts} artefact(s), {crystals} cristaux) : {points}",
+    "leader": "Le Commandant : {points}",
+    "conqueror": "Le Conquérant ({shields} Bouclier(s)) : {points}",
+    "adventurer": "L'Aventurier : {points}",
+    "beating": "La Victime ({wounds} Blessure(s)) : {points}",
+    "total": "Score final : {score}",
+    "no_titles": "Variante solo : pas de bonus de titre.",
+    "show_board": "Voir le plateau",
+    "reopen": "Score final",
+    "outcome": {
+      "success": "Mission accomplie !",
+      "failure": "Mission échouée : des cités restent à conquérir."
+    },
+    "cities": "Cités conquises ({count}) : {points}",
+    "all_cities": "Toutes les cités conquises : {points}",
+    "unplayed_rounds": "Manches non jouées ({rounds}) : {points}",
+    "dummy_deck": "Deck du joueur fantôme ({cards} carte(s)) : {points}",
+    "round_not_announced": "Fin de manche non annoncée : {points}",
+    "no_titles_solo": "Solo : pas de bonus de titre."
+  },
+  "card": {
+    "rage": {
+      "name": "Rage"
+    },
+    "determination": {
+      "name": "Détermination"
+    },
+    "swiftness": {
+      "name": "Célérité"
+    },
+    "march": {
+      "name": "Marche"
+    },
+    "stamina": {
+      "name": "Endurance"
+    },
+    "tranquility": {
+      "name": "Tranquillité"
+    },
+    "promise": {
+      "name": "Promesse"
+    },
+    "threaten": {
+      "name": "Menace"
+    },
+    "crystallize": {
+      "name": "Cristallisation"
+    },
+    "mana_draw": {
+      "name": "Source de mana"
+    },
+    "concentration": {
+      "name": "Concentration"
+    },
+    "improvisation": {
+      "name": "Improvisation"
+    },
+    "battle_versatility": {
+      "name": "Polyvalence"
+    },
+    "mana_pull": {
+      "name": "Attraction de mana"
+    },
+    "will_focus": {
+      "name": "Pouvoir de concentration"
+    },
+    "crystal_joy": {
+      "name": "Euphorie cristalline"
+    },
+    "noble_manners": {
+      "name": "Nobles manières"
+    },
+    "rejuvenate": {
+      "name": "Rajeunissement"
+    },
+    "cold_toughness": {
+      "name": "Endurance givrée"
+    },
+    "instinct": {
+      "name": "Instinct"
+    },
+    "wound": {
+      "name": "Blessure"
+    },
+    "strong": "Renforcé : {effect}",
+    "strong_unsupported": "Renforcé : pas encore disponible",
+    "fire_bolt": {
+      "name": "Boule de feu"
+    },
+    "ice_bolt": {
+      "name": "Boule de glace"
+    },
+    "swift_bolt": {
+      "name": "Boule vivifiante"
+    },
+    "crushing_bolt": {
+      "name": "Boule écrasante"
+    },
+    "blood_rage": {
+      "name": "Coup de sang",
+      "basic_text": "Attaque 2 ; une Blessure pour passer à 5",
+      "strong_text": "Attaque 4 ; une Blessure pour passer à 9"
+    },
+    "ice_shield": {
+      "name": "Bouclier de glace",
+      "strong_text": "Parade de glace 3 ; l'ennemi paré perd 3 d'Armure (min. 1)"
+    },
+    "agility": {
+      "name": "Agilité",
+      "basic_text": "Mouvement 2 ; en combat, chaque point de mouvement restant donne Attaque 1",
+      "strong_text": "Mouvement 4 ; en combat, 1 mouvement = Attaque 1, 2 mouvements = Attaque à distance 1"
+    },
+    "refreshing_walk": {
+      "name": "Marche revigorante",
+      "basic_text": "Mouvement 2 et Soin 1 ; en combat, Mouvement 2 seulement",
+      "strong_text": "Mouvement 4 et Soin 2 ; en combat, Mouvement 4 seulement"
+    },
+    "intimidate": {
+      "name": "Intimidation",
+      "basic_text": "Influence 4 ou Attaque 3 ; Réputation −1 en fin de tour",
+      "strong_text": "Influence 8 ou Attaque 7 ; Réputation −2 en fin de tour"
+    },
+    "frost_bridge": {
+      "name": "Pont de glace",
+      "basic_text": "Mouvement 2 ; les marais coûtent 1 ce tour",
+      "strong_text": "Mouvement 4 ; lacs franchissables, lacs et marais coûtent 1 ce tour"
+    },
+    "song_of_wind": {
+      "name": "Mélodie du vent",
+      "basic_text": "Mouvement 2 ; plaines, déserts et terres désolées coûtent 1 de moins (min. 0)",
+      "strong_text": "Mouvement 2 ; ces terrains coûtent 2 de moins ; mana bleu : lacs franchissables pour 0"
+    },
+    "path_finding": {
+      "name": "Chemins de traverse",
+      "basic_text": "Mouvement 2 ; tous les terrains coûtent 1 de moins (min. 2)",
+      "strong_text": "Mouvement 4 ; tous les terrains coûtent 2"
+    },
+    "blood_ritual": {
+      "name": "Rituel de sang",
+      "basic_text": "Blessure ; cristal rouge et jeton de mana de n'importe quelle couleur",
+      "strong_text": "Blessure ; trois jetons de mana de n'importe quelles couleurs ; mana de base payé : cristal de cette couleur"
+    },
+    "pure_magic": {
+      "name": "Magie pure",
+      "basic_text": "Payer un mana : vert Mouvement 4, blanc Influence 4, bleu Parade 4, rouge Attaque 4",
+      "strong_text": "Payer un mana : vert Mouvement 7, blanc Influence 7, bleu Parade 7, rouge Attaque 7"
+    },
+    "heroic_tale": {
+      "name": "Récit héroïque",
+      "basic_text": "Influence 3 ; Réputation +1 par unité recrutée ce tour",
+      "strong_text": "Influence 6 ; Gloire +1 et Réputation +1 par unité recrutée ce tour"
+    },
+    "regeneration": {
+      "name": "Régénération",
+      "basic_text": "Soin 1 ; rendre disponible une unité de niveau I ou II",
+      "strong_text": "Soin 2 ; rendre disponible une unité de niveau I, II ou III"
+    },
+    "into_the_heat": {
+      "name": "Au cœur du combat",
+      "basic_text": "Au début du combat : unités +2 en attaque et Parade ; pas de dégâts sur les unités",
+      "strong_text": "Au début du combat : unités +3 en attaque et Parade ; pas de dégâts sur les unités"
+    },
+    "steady_tempo": {
+      "name": "Temporisation",
+      "basic_text": "Mouvement 2 ; en fin de tour, peut aller sous le deck s'il n'est pas vide",
+      "strong_text": "Mouvement 4 ; en fin de tour, peut aller sur le deck"
+    },
+    "diplomacy": {
+      "name": "Diplomatie",
+      "basic_text": "Influence 2 ; l'Influence compte comme Parade ce tour",
+      "strong_text": "Influence 4 ; au choix glace ou feu : l'Influence compte comme Parade de cet élément"
+    },
+    "in_need": {
+      "name": "Besoin d'aide",
+      "basic_text": "Influence 3, +1 par Blessure en main ou sur une unité",
+      "strong_text": "Influence 5, +2 par Blessure en main ou sur une unité"
+    },
+    "decompose": {
+      "name": "Décomposition",
+      "basic_text": "Détruire une carte action de la main : deux cristaux de sa couleur",
+      "strong_text": "Détruire une carte action de la main : un cristal de chaque couleur de base autre que la sienne"
+    },
+    "crystal_mastery": {
+      "name": "Maîtrise du cristal",
+      "basic_text": "Cristal d'une couleur que vous possédez déjà",
+      "strong_text": "Les cristaux dépensés ce tour reviennent en fin de tour"
+    },
+    "mana_storm": {
+      "name": "Tempête de mana",
+      "basic_text": "Un dé de la Source en couleur de base : cristal de cette couleur, puis relancer le dé",
+      "strong_text": "Relancer tous les dés ; 3 dés de plus ; noir et or valent n'importe quelle couleur de base"
+    },
+    "ambush": {
+      "name": "Embuscade",
+      "basic_text": "Mouvement 2 ; première attaque +1 ou première Parade +2",
+      "strong_text": "Mouvement 4 ; première attaque +2 ou première Parade +4"
+    },
+    "maximal_effect": {
+      "name": "Effet maximum",
+      "basic_text": "Avec une autre carte action : son effet de base trois fois, puis la détruire",
+      "strong_text": "Avec une autre carte action : son effet renforcé deux fois gratuitement, puis la détruire"
+    },
+    "magic_talent": {
+      "name": "Don pour la magie",
+      "basic_text": "Défausser une carte : jouer un sort de la même couleur de l'offre comme s'il était en main",
+      "strong_text": "Payer un mana : prendre un sort de cette couleur de l'offre dans la défausse"
+    },
+    "learning": {
+      "name": "Apprentissage",
+      "basic_text": "Influence 2 ; une fois, payer Influence 6 : action avancée de l'offre dans la défausse",
+      "strong_text": "Influence 4 ; une fois, payer Influence 9 : action avancée de l'offre en main"
+    },
+    "training": {
+      "name": "Entraînement",
+      "basic_text": "Détruire une carte action : prendre une action avancée de même couleur dans la défausse",
+      "strong_text": "Détruire une carte action : prendre une action avancée de même couleur en main"
+    },
+    "fireball": {
+      "name": "Éclair de feu",
+      "strong_name": "Tempête de feu",
+      "basic_text": "Attaque à distance de feu 5",
+      "strong_text": "Blessure ; Attaque de siège de feu 8"
+    },
+    "snowstorm": {
+      "name": "Tempête de neige",
+      "strong_name": "Blizzard",
+      "basic_text": "Attaque à distance de glace 5",
+      "strong_text": "Blessure ; Attaque de siège de glace 8"
+    },
+    "expose": {
+      "name": "Exposition",
+      "strong_name": "Exposition de masse",
+      "basic_text": "Un ennemi perd fortifications et résistances ; Attaque à distance 2",
+      "strong_text": "Tous les ennemis perdent leurs fortifications ou leurs résistances ; Attaque à distance 3"
+    },
+    "tremor": {
+      "name": "Secousse",
+      "strong_name": "Tremblement de terre",
+      "basic_text": "Un ennemi Armure -3, ou tous Armure -2 (min. 1)",
+      "strong_text": "Un ennemi Armure -3 (-6 si fortifié), ou tous -2 (-4 si fortifiés) (min. 1)"
+    },
+    "flame_wall": {
+      "name": "Mur de flammes",
+      "strong_name": "Déluge de flammes",
+      "basic_text": "Attaque de feu 5 ou Parade de feu 7",
+      "strong_text": "Attaque de feu 5 ou Parade de feu 7, +2 par jeton ennemi affronté"
+    },
+    "mana_bolt": {
+      "name": "Éclair de mana",
+      "strong_name": "Tonnerre de mana",
+      "basic_text": "Payer un mana : bleu Attaque de glace 8, rouge feu glacé 7, blanc à distance de glace 6, vert siège de glace 5",
+      "strong_text": "Payer un mana : bleu Attaque de glace 11, rouge feu glacé 10, blanc à distance de glace 9, vert siège de glace 8"
+    },
+    "whirlwind": {
+      "name": "Tourbillon",
+      "strong_name": "Tornade",
+      "basic_text": "Un ennemi n'attaque pas ce combat",
+      "strong_text": "Phase d'attaque : détruire un ennemi"
+    },
+    "underground_travel": {
+      "name": "Voyage souterrain",
+      "strong_name": "Attaque souterraine",
+      "basic_text": "Se déplacer d'au plus 3 cases révélées, hors marais et lacs, jusqu'à une case sûre ; ne provoque pas",
+      "strong_text": "Idem, mais finir sur un site fortifié : assaut en ignorant ses fortifications"
+    },
+    "burning_shield": {
+      "name": "Bouclier ardent",
+      "strong_name": "Bouclier explosif",
+      "basic_text": "Parade de feu 4 ; si elle réussit, Attaque de feu 4 en phase d'attaque",
+      "strong_text": "Parade de feu 4 ; si elle réussit, l'ennemi paré est détruit"
+    },
+    "chill": {
+      "name": "Frisson",
+      "strong_name": "Frisson fatal",
+      "basic_text": "Un ennemi n'attaque pas ; il perd sa résistance au feu ce tour",
+      "strong_text": "Un ennemi n'attaque pas et a Armure -4 (min. 1) ce tour"
+    },
+    "wings_of_wind": {
+      "name": "Ailes du vent",
+      "strong_name": "Ailes de la nuit",
+      "basic_text": "Dépenser 1 à 5 mouvements : autant de cases révélées, jusqu'à une case sûre ; ne provoque pas",
+      "strong_text": "Un ennemi n'attaque pas ; mouvement : 1 pour le 2e ennemi, 2 pour le 3e, etc."
+    },
+    "restoration": {
+      "name": "Restauration",
+      "strong_name": "Renaissance",
+      "basic_text": "Soin 3 (5 en forêt)",
+      "strong_text": "Soin 3 (5 en forêt) ; rendre disponibles jusqu'à 3 niveaux d'unités (5 en forêt)"
+    },
+    "demolish": {
+      "name": "Démolition",
+      "strong_name": "Désintégration",
+      "basic_text": "Ignorer les fortifications des sites ce tour ; ennemis Armure -1 (min. 1)",
+      "strong_text": "Phase d'attaque : détruire un ennemi ; les autres Armure -1 (min. 1)"
+    },
+    "space_bending": {
+      "name": "Distorsion spatiale",
+      "strong_name": "Distorsion temporelle",
+      "basic_text": "Ce tour, les cases à 2 de distance comptent comme adjacentes ; ne provoque pas",
+      "strong_text": "En fin de tour, reprendre en main les autres cartes jouées ; rejouer un tour"
+    },
+    "call_to_arms": {
+      "name": "Appel aux armes",
+      "strong_name": "Appel à la gloire",
+      "basic_text": "Utiliser la capacité d'une unité de l'offre ce tour ; elle ne reçoit pas de dégâts",
+      "strong_text": "Recruter gratuitement une unité de l'offre (licencier une unité si besoin)"
+    },
+    "meditation": {
+      "name": "Méditation",
+      "strong_name": "Transe",
+      "basic_text": "Deux cartes au hasard de la défausse sur ou sous le deck ; piocher 2 cartes de plus en fin de tour",
+      "strong_text": "Idem, mais vous choisissez les cartes"
+    },
+    "mana_meltdown": {
+      "name": "Fuite de mana",
+      "strong_name": "Brûlure de mana",
+      "basic_text": "Les autres perdent un cristal au hasard (vous pouvez le prendre) ; sans cristal, Blessure",
+      "strong_text": "Couleur de base : chacun reçoit une Blessure par cristal de cette couleur ; vous gagnez 2 cristaux"
+    },
+    "mana_claim": {
+      "name": "Puits de mana",
+      "strong_name": "Malédiction de mana",
+      "basic_text": "Garder un dé de base jusqu'à la fin de la manche : 3 jetons ce tour, ou 1 jeton par tour",
+      "strong_text": "Idem ; les autres joueurs qui utilisent cette couleur reçoivent une Blessure"
+    },
+    "mind_read": {
+      "name": "Lecture d'esprit",
+      "strong_name": "Vol d'esprit",
+      "basic_text": "Une couleur : gagner son cristal ; les autres défaussent un sort ou une action de cette couleur",
+      "strong_text": "Idem ; vous pouvez voler une des cartes action ainsi défaussées"
+    },
+    "energy_flow": {
+      "name": "Flux d'énergie",
+      "strong_name": "Vol d'énergie",
+      "basic_text": "Rendre disponible une unité ; vous pouvez épuiser une unité adverse de niveau II ou moins",
+      "strong_text": "Rendre disponible et soigner une unité ; épuiser une unité adverse de niveau III ou moins"
+    },
+    "banner_of_glory": {
+      "name": "Bannière de gloire",
+      "basic_text": "Donner à une unité : Armure +1, +1 en attaque et Parade, Gloire +1 quand elle attaque ou pare",
+      "strong_text": "Unités : Armure +1 et +1 en attaque et Parade ce tour ; Gloire +1 par unité qui attaque ou pare"
+    },
+    "banner_of_fear": {
+      "name": "Bannière de peur",
+      "basic_text": "Donner à une unité : en Parade, l'épuiser pour annuler une attaque, Gloire +1",
+      "strong_text": "Jusqu'à 3 ennemis n'attaquent pas ce combat"
+    },
+    "banner_of_protection": {
+      "name": "Bannière de protection",
+      "basic_text": "Donner à une unité : Armure +1, résistances au feu et à la glace",
+      "strong_text": "En fin de tour, écarter les Blessures reçues ce tour"
+    },
+    "banner_of_courage": {
+      "name": "Bannière de courage",
+      "basic_text": "Donner à une unité : une fois par manche, hors combat, la retourner pour la rendre disponible",
+      "strong_text": "Hors combat : rendre disponibles toutes vos unités"
+    },
+    "ruby_ring": {
+      "name": "Anneau de rubis",
+      "basic_text": "Jeton et cristal rouges ; Gloire +1",
+      "strong_text": "Mana rouge et noir illimité ce tour ; Gloire +1 par sort rouge lancé"
+    },
+    "sapphire_ring": {
+      "name": "Anneau de saphir",
+      "basic_text": "Jeton et cristal bleus ; Gloire +1",
+      "strong_text": "Mana bleu et noir illimité ce tour ; Gloire +1 par sort bleu lancé"
+    },
+    "diamond_ring": {
+      "name": "Anneau de diamant",
+      "basic_text": "Jeton et cristal blancs ; Gloire +1",
+      "strong_text": "Mana blanc et noir illimité ce tour ; Gloire +1 par sort blanc lancé"
+    },
+    "emerald_ring": {
+      "name": "Anneau d'émeraude",
+      "basic_text": "Jeton et cristal verts ; Gloire +1",
+      "strong_text": "Mana vert et noir illimité ce tour ; Gloire +1 par sort vert lancé"
+    },
+    "sword_of_justice": {
+      "name": "Épée de justice",
+      "basic_text": "Défausser des cartes : Attaque 3 par carte ; Gloire +1 par ennemi vaincu",
+      "strong_text": "Attaques physiques doublées ; ennemis sans résistance physique ; Gloire +1 par ennemi vaincu"
+    },
+    "horn_of_wrath": {
+      "name": "Corne de la colère",
+      "basic_text": "Attaque de siège 5 ; lancer un dé de mana : noir ou rouge, une Blessure",
+      "strong_text": "Attaque de siège 5, jusqu'à +5 ; un dé par +1, une Blessure par noir ou rouge"
+    },
+    "endless_bag_of_gold": {
+      "name": "Bourse sans fond",
+      "basic_text": "Influence 4, Gloire +2",
+      "strong_text": "Influence 9, Gloire +3"
+    },
+    "endless_gem_pouch": {
+      "name": "Poche de mana",
+      "basic_text": "Lancer deux dés de mana : un cristal par couleur (or au choix) ; noir : Gloire +1",
+      "strong_text": "Un jeton de chaque couleur de base, plus or (jour) ou noir (nuit)"
+    },
+    "golden_grail": {
+      "name": "Graal doré",
+      "basic_text": "Soin 2 ; Gloire +1 par point de Soin de cette carte dépensé",
+      "strong_text": "Soin 6 ; piocher une carte à chaque Blessure soignée de la main ce tour"
+    },
+    "book_of_wisdom": {
+      "name": "Livre de sagesse",
+      "basic_text": "Écarter une carte action : action avancée de même couleur de l'offre en main",
+      "strong_text": "Écarter une carte action : sort de même couleur de l'offre en main et cristal de cette couleur"
+    },
+    "amulet_of_sun": {
+      "name": "Amulette du soleil",
+      "basic_text": "Jeton or ; de nuit : forêts à 3, mana or utilisable, garnisons révélées comme de jour",
+      "strong_text": "Comme l'effet de base, avec trois jetons or"
+    },
+    "amulet_of_darkness": {
+      "name": "Amulette des ténèbres",
+      "basic_text": "Jeton de mana de n'importe quelle couleur ; de jour : déserts à 3, mana noir utilisable",
+      "strong_text": "Comme l'effet de base, avec trois jetons de mana"
+    }
+  },
+  "effect": {
+    "move": "Mouvement {amount}",
+    "influence": "Influence {amount}",
+    "attack": "Attaque {amount}",
+    "ranged_attack": "Attaque à distance {amount}",
+    "block": "Parade {amount}",
+    "ice_attack": "Attaque de glace {amount}",
+    "ice_block": "Parade de glace {amount}",
+    "or": "{first} ou {second}",
+    "discard_another": "Défausser une autre carte : {effects}",
+    "unsupported": "Pas encore disponible",
+    "gain_token": "Jeton {color}",
+    "gain_crystal": "Cristal {color}",
+    "pay_for_crystal": "Payer {color} : cristal {color}",
+    "extra_die": "Un dé de plus ce tour",
+    "extra_die_black": "Un dé de plus ce tour ; noir : toute couleur",
+    "set_dice": "Mettre {amount} dé(s) sur une couleur, gagner des jetons",
+    "boost": "Renforcer une autre carte gratuitement, +{amount}",
+    "fire_attack": "Attaque de feu {amount}",
+    "cold_fire_attack": "Attaque de feu glacé {amount}",
+    "ranged_fire_attack": "Attaque à distance de feu {amount}",
+    "ranged_ice_attack": "Attaque à distance de glace {amount}",
+    "ranged_cold_fire_attack": "Attaque à distance de feu glacé {amount}",
+    "siege_attack": "Attaque de siège {amount}",
+    "siege_fire_attack": "Attaque de siège de feu {amount}",
+    "siege_ice_attack": "Attaque de siège de glace {amount}",
+    "siege_cold_fire_attack": "Attaque de siège de feu glacé {amount}",
+    "fire_block": "Parade de feu {amount}",
+    "cold_fire_block": "Parade de feu glacé {amount}",
+    "cold_toughness_strong": "Parade de glace {base} + {bonus} (capacités de l'ennemi paré)",
+    "ice_block_per_ability": "Parade de glace {amount}, +1 par capacité de l'ennemi paré",
+    "swift_block": "Parade {amount}, double contre Vif",
+    "ready_unit": "Rendre disponible une unité de niveau {level} au plus",
+    "token_and_crystal": "Jeton et cristal {color}",
+    "gain_tokens": "Jetons {first} et {second}",
+    "heal": "Soin {amount}",
+    "draw_cards": "Piocher {count} carte(s)",
+    "not_in_combat": "Soin : pas en combat",
+    "influence_reputation": "Influence {amount} ; Réputation {reputation}",
+    "influence_in_interaction": "Influence {amount} ; en interaction : {bonus}",
+    "fame": "Gloire +{amount}",
+    "reputation": "Réputation {amount}",
+    "move_and_heal": "Mouvement {movement} et Soin {heal}",
+    "heal_and_ready": "Soin {heal} ; rendre disponible une unité de niveau {level} au plus",
+    "influence_per_wound": "Influence {base}, +{per} par Blessure",
+    "crystal_and_token": "Cristal {crystal} et jeton {token}",
+    "draw_and_token": "Piocher {cards} cartes ; jeton {token}",
+    "heal_unit": "Soigner une unité",
+    "wound_crystal_and_token": "Blessure ; cristal {crystal} et jeton {token}",
+    "wound_and_tokens": "Blessure ; {count} jetons au choix",
+    "crystals_from_destroyed": "Détruire une carte action : {count} cristaux de sa couleur",
+    "crystals_other_colors": "Détruire une carte action : un cristal de chaque autre couleur",
+    "gain_owned_crystal": "Cristal {color} (déjà possédé)",
+    "crystal_from_die": "Dé de la Source : cristal de sa couleur, puis relancer le dé",
+    "reroll_source": "Relancer la Source ; 3 dés de plus",
+    "repeat": "Une autre carte action, {times} fois",
+    "gain_spell": "Payer {color} : un sort {color} de l'offre",
+    "train": "Détruire une carte action : action avancée de même couleur",
+    "on_all_enemies": "tous les ennemis : {effect}",
+    "destroy_enemy": "détruire un ennemi",
+    "attack_with_wound": "{attack} et une Blessure",
+    "wounds_per_crystal": "une Blessure par cristal {color}, puis deux cristaux {color}",
+    "others_only": "rien en solo (vise les autres joueurs)",
+    "heal_by_terrain": "Soin {heal} ({forest} en forêt)",
+    "heal_and_ready_levels": "Soin {heal} ({forest_heal} en forêt) ; rendre disponibles jusqu'à {levels} niveaux d'unités ({forest_levels} en forêt)",
+    "ready_any_unit": "rendre disponible une unité épuisée",
+    "ready_and_heal_any_unit": "rendre disponible une unité épuisée, et la soigner",
+    "underground": "Jusqu'à 3 cases, sans provoquer",
+    "underground_attack": "Jusqu'à 3 cases, assaut d'un site fortifié",
+    "fly": "Vol : jusqu'à {max} cases, 1 Mouvement par case",
+    "does_not_attack_per_move": "les ennemis visés n'attaquent pas (Mouvement en plus par ennemi)",
+    "meditation": "deux cartes de la défausse au hasard sur ou sous le deck ; 2 cartes de plus à la pioche",
+    "trance": "deux cartes choisies de la défausse sur ou sous le deck ; 2 cartes de plus à la pioche",
+    "claim_die": "Garder un dé de la Source : 3 jetons de sa couleur",
+    "claim_die_each_turn": "Garder un dé de la Source : 1 jeton de sa couleur par tour",
+    "amulet": "{amount} jeton(s) de mana",
+    "cancel_attacks": "Jusqu'à {amount} ennemis n'attaquent pas",
+    "ready_all_units": "Toutes les unités disponibles",
+    "sword_discard": "Attaque 3 par carte défaussée",
+    "horn_of_wrath": "Attaque de siège {amount} et dés de mana",
+    "gem_pouch_dice": "Deux dés de mana lancés : cristaux",
+    "tokens_each_color": "Un jeton de chaque couleur de base, et or de jour ou noir de nuit",
+    "spell_and_crystal": "Un sort de l'offre en main et un cristal",
+    "move_per_unit": "Mouvement 1 par unité prête et non blessée ({max} au plus)",
+    "crystal_color_influence": "Influence d'interaction 1 par couleur de cristal",
+    "discard_wound_to_draw": "Défausser une Blessure, piocher une carte",
+    "flight": "Vol : {spaces} case(s)",
+    "flight_cost": "Vol : {spaces} case(s) pour {cost} Mouvement",
+    "resistance_break": "Un ennemi : Armure −1 par résistance",
+    "source_opening": "Relancer un dé de la Source",
+    "calm_weather": "Terrains −2 ce tour (au moins 1)",
+    "mana_overload": "Un jeton de la couleur choisie"
+  },
+  "play": {
+    "basic": "Jouer : {effect}",
+    "basic_discarding": "Jouer : {effect}…",
+    "sideways": "Jouer de côté",
+    "sideways_effect": "Jouer de côté : {effect}",
+    "strong": "Renforcer : {effect}",
+    "strong_discarding": "Renforcer : {effect}…",
+    "strong_no_mana": "Il faut un mana {color} : un dé {color} ou or de la Source, un cristal ou un jeton {color}.",
+    "strong_die_taken": "Dé du tour déjà pris : il faut un cristal ou un jeton {color}.",
+    "throw_away": "Détruire : {effect}",
+    "assign_banner": "Assigner à une unité"
+  },
+  "discard_choice": {
+    "prompt": "{card} : {effect}. Choisissez la carte à défausser.",
+    "pick": "Défausser cette carte",
+    "cancel": "Annuler",
+    "destroy_prompt": "{card} : {effect}. Choisissez la carte à détruire.",
+    "destroy": "Détruire cette carte"
+  },
+  "play_area": {
+    "title": "Zone de jeu",
+    "empty": "Aucune carte jouée",
+    "line": "{card} : {effect}",
+    "line_from_offer": "{card} (depuis l'offre) : {effect}",
+    "line_sideways": "{card} : {effect} (de côté)",
+    "line_discarding": "{card} : {effect}, {discarded} défaussée",
+    "line_strong_die": "{card} (renforcée, dé {color}) : {effect}",
+    "line_strong_crystal": "{card} (renforcée, cristal {color}) : {effect}",
+    "line_strong_token": "{card} (renforcée, jeton {color}) : {effect}",
+    "line_boosted": "{card} (renforcée gratuitement) : {effect}",
+    "tokens": "Jetons :",
+    "token_tooltip": "Jeton de mana {color} : à utiliser ce tour, rendu à la réserve à la fin du tour.",
+    "token_spent": "Jeton de mana {color} : dépensé ce tour",
+    "modifiers": "Effets en cours",
+    "modifier_line": "{source} : {effect}",
+    "line_destroying": "{card} : {effect}, {discarded} détruite",
+    "repeated": "{target} {times} fois ({effect}), détruite"
+  },
+  "discard": {
+    "count": "Défausse : {count} carte(s)",
+    "title": "Défausse"
+  },
+  "time_of_day": {
+    "day": "Jour",
+    "night": "Nuit",
+    "icon": {
+      "day": "Jour",
+      "night": "Nuit"
+    }
+  },
+  "turn": {
+    "line": "Manche {round}/{limit} · {time_of_day} (tour {number})",
+    "extra": "Tour supplémentaire"
+  },
+  "round": {
+    "announce": {
+      "button": "Annoncer la fin de la manche",
+      "optional": "Votre deck est vide : vous pouvez annoncer la fin de la manche au lieu de jouer ce tour.",
+      "mandatory": "Votre deck et votre main sont vides : annoncez la fin de la manche.",
+      "confirm_prompt": "Annoncer la fin de la manche ? Vos {count} carte(s) en main seront remélangées sans être jouées.",
+      "confirm": "Confirmer",
+      "cancel": "Annuler",
+      "button_short": "Finir la manche…"
+    },
+    "new": "Nouvelle manche : la Source a été relancée et votre deck remélangé."
+  },
+  "end_turn": {
+    "button": "Finir le tour…",
+    "prompt": "Fin du tour : choisissez les cartes à défausser avant de repiocher.",
+    "draw": "Vous piocherez {count} carte(s).",
+    "draw_none": "Vous ne piocherez aucune carte.",
+    "must_discard": "Vous n'avez joué aucune carte ce tour : défaussez-en au moins une.",
+    "discard": "Défausser",
+    "confirm": "Finir le tour",
+    "cancel": "Annuler",
+    "reclaim": "Reprendre {card} en défaussant :",
+    "reclaim_none": "(ne pas reprendre)",
+    "rest_standard": "Repos standard : défaussez une carte qui n'est pas une Blessure, et autant de Blessures que vous voulez.",
+    "rest_slow": "Repos prolongé : votre main n'a que des Blessures, défaussez-en une.",
+    "no_rest": "Pas de repos : vous vous êtes déplacé ou avez combattu ce tour, les Blessures restent en main.",
+    "glade": "Clairière magique : jeter une Blessure",
+    "glade_hand": "de la main",
+    "glade_discard": "de la défausse",
+    "glade_none": "ne pas jeter",
+    "disabled": {
+      "combat": "Finissez d'abord le combat",
+      "choice": "Terminez d'abord le choix en cours",
+      "game_over": "La partie est terminée"
+    },
+    "forced_withdrawal": "Retraite forcée : {count} case(s), {count} Blessure(s) en main",
+    "steady_tempo": "Garder Temporisation sous le deck",
+    "steady_tempo_strong": "Garder Temporisation sur le deck"
+  },
+  "mana": {
+    "red": "rouge",
+    "blue": "bleu",
+    "white": "blanc",
+    "green": "vert",
+    "gold": "or",
+    "black": "noir"
+  },
+  "source": {
+    "title": "Source",
+    "depleted": "épuisé :",
+    "by_day": "de jour",
+    "by_night": "de nuit",
+    "die": {
+      "basic": "Dé de mana {color}",
+      "gold_day": "Dé de mana or : peut servir de mana de n'importe quelle couleur de base, de jour.",
+      "black_night": "Dé de mana noir : alimente certains effets, de nuit.",
+      "depleted": "Dé de mana {color} : épuisé, inutilisable {time_of_day_lower}.",
+      "taken": "Dé de mana {color} : pris ce tour, relancé à la fin du tour.",
+      "set": "Dé de mana {color} : mis sur {color} ce tour, rendu sans être relancé."
+    },
+    "taken": "pris :"
+  },
+  "inventory": {
+    "title": "Inventaire",
+    "crystals": {
+      "red": "Cristaux rouges : {count} sur {limit}",
+      "blue": "Cristaux bleus : {count} sur {limit}",
+      "white": "Cristaux blancs : {count} sur {limit}",
+      "green": "Cristaux verts : {count} sur {limit}"
+    }
+  },
+  "mana_choice": {
+    "prompt": "{card} renforcée : {effect}. Choisissez le mana à payer.",
+    "die": "Dé {color}",
+    "gold_die": "Dé or (vaut {color})",
+    "crystal": "Cristal {color} ({count} sur {limit})",
+    "cancel": "Annuler",
+    "prompt_basic": "{card} : {effect}. Choisissez le mana à payer.",
+    "token": "Jeton {color}",
+    "endless": "illimité ({color})",
+    "invocation": "Invocation : défausser {card} ({color})",
+    "polarization": "Polarisation : {from} comme {color}"
+  },
+  "set_die": {
+    "prompt": "Choisissez un dé de la Source, puis sa couleur."
+  },
+  "concentration": {
+    "prompt": "{card} : choisissez la carte à renforcer gratuitement (+{amount}).",
+    "button": "Renforcer avec {card} : {effect}",
+    "no_target": "Aucune autre carte à renforcer hors combat.",
+    "maximal_prompt": "{card} : choisissez une autre carte action, son effet {times} fois."
+  },
+  "hero": {
+    "arythea": {
+      "name": "Arythea",
+      "tagline": "Feu, siège et nuit",
+      "description": "On murmure que son culte a déclenché la Rupture. Revenue du chaos plus puissante que jamais, elle met sa lame au service du Conseil du Vide, pourvu que le sang coule pour son dieu.",
+      "style": "Offensive : attaques de feu et de siège, idéale pour prendre d'assaut les sites fortifiés.\nPlus forte la nuit : se déplace et négocie mieux dans l'obscurité, tire parti du mana noir.\nRetourne la douleur à son avantage : ses Blessures peuvent servir au lieu de l'encombrer.\nMoins à l'aise pour recruter ou soigner : plutôt pour un joueur qui aime le risque."
+    },
+    "goldyx": {
+      "name": "Goldyx",
+      "tagline": "Cristaux et mana",
+      "description": "Sorti de la Mue plus fort qu'aucun de ses semblables, il ne se fie à personne. Le Conseil du Vide l'a envoyé en mission, mais seuls les trésors et les ennemis dignes de lui l'intéressent.",
+      "style": "Maître du mana : gagne cristaux et jetons à volonté, et renforce presque toutes ses cartes.\nExcellent avec les sorts, qu'il alimente sans peine.\nPeut voler par-dessus le terrain et bloquer la Source aux autres.\nSouvent jugé le plus puissant, mais demande de bien planifier son mana."
+    },
+    "norowas": {
+      "name": "Norowas",
+      "tagline": "Unités et diplomatie",
+      "description": "Ancien chef des armées elfiques, il a rallié le Conseil du Vide pour imposer son ordre aux royaumes nés de la Rupture, sans pitié ni hésitation.",
+      "style": "Chef d'armée : ses unités frappent et parent plus fort, et le font avancer plus vite.\nDiplomate : Influence élevée de jour, gloire et réputation en plus quand il recrute.\nGarde ses troupes en état : soigne ou prépare une unité, recrute moins cher.\nPlus faible seul au combat en début de partie : il doit vite s'entourer."
+    },
+    "tovak": {
+      "name": "Tovak",
+      "tagline": "Combat sans magie, pour débuter",
+      "description": "Le Neuvième Cercle vendait ses épées au plus offrant ; sous sa poigne, il est devenu une puissance. Il épouse les conquêtes du Conseil du Vide tant qu'elles frappent les factions qui méprisent les siens.",
+      "style": "Guerrier solide : attaque, parade et tir sans dépendre du mana.\nBrise les résistances ennemies et encaisse les Blessures sans faiblir.\nTire le meilleur des cartes jouées de côté : peu de mana, beaucoup d'effet.\nLe plus simple à prendre en main : conseillé pour une première partie."
+    }
+  },
+  "undo": {
+    "button": "Revenir en arrière",
+    "hint": "Reprendre votre dernière action",
+    "blocked": {
+      "turn_start": "Rien à reprendre depuis le début du tour.",
+      "revealed": "Une information a été révélée (tuile, carte ou dé) : impossible de revenir avant."
+    }
+  },
+  "save": {
+    "button": "Sauvegarder",
+    "hint": "Sauvegarder la partie",
+    "done": "Partie sauvegardée : {name}",
+    "failed": "Sauvegarde impossible (voir les logs).",
+    "auto_failed": "Sauvegarde automatique impossible (voir les logs)."
+  },
+  "load": {
+    "button": "Charger…",
+    "hint": "Charger une partie",
+    "title": "Charger une partie",
+    "empty": "Aucune sauvegarde.",
+    "auto": "Sauvegarde automatique",
+    "entry": "{date} · {scenario} · {hero} · {line}",
+    "load": "Charger",
+    "close": "Fermer",
+    "failed": "Chargement impossible (voir les logs).",
+    "error": {
+      "unreadable": "Fichier illisible.",
+      "other_version": "Sauvegarde d'une autre version du jeu.",
+      "invalid": "Sauvegarde invalide."
+    },
+    "unreadable": "{name} · {reason}"
+  },
+  "combat": {
+    "start": "Engager le combat",
+    "next_phase": "Phase suivante",
+    "end": "Terminer le combat",
+    "challenge": "Défier {enemy}",
+    "to_fight": "À combattre : {enemies}",
+    "phase": {
+      "ranged": "Phase d'attaque à distance",
+      "block": "Phase de parade",
+      "damage": "Phase d'assignation des dégâts",
+      "attack": "Phase d'attaque"
+    },
+    "enemy": {
+      "blocked": "paré",
+      "defeated": "vaincu",
+      "siege_only": "fortifié : siège seulement",
+      "summons": "Invoque : {monster}",
+      "summoned_note": "retirée après les dégâts, sans gloire",
+      "stakes_block": "À parer : {block}",
+      "stakes_damage": "Si non paré : {damage} dégâts, {wounds} blessure(s)",
+      "swift_block": "{block} (vif, 2 × {attack})",
+      "brutal_damage": "{damage} (brutal, 2 × {attack})",
+      "site_fortified": "fortifié (site)",
+      "fortified_twice": "doublement fortifié : pas de cible à distance",
+      "armor_reduced": "Armure {armor} (au lieu de {printed})",
+      "does_not_attack": "n'attaque pas",
+      "no_fortification": "plus fortifié",
+      "no_resistances": "plus de résistances",
+      "no_fire_resistance": "plus de résistance au Feu",
+      "destroyed": "détruit",
+      "attack_increased": "Attaque {attack} (au lieu de {printed})",
+      "city_ability": "{ability} (cité)"
+    },
+    "attack": "Attaquer",
+    "block": "Parer",
+    "resolve_attack": "Valider l'attaque",
+    "resolve_block": "Valider la parade",
+    "cancel": "Annuler",
+    "wounds": "{enemy} : {count} blessure(s)",
+    "title": "Combat",
+    "show_board": "Voir le plateau",
+    "back": "Retour au combat",
+    "target": "cible",
+    "needed_armor": "Il faut la somme des armures : {sum}",
+    "history": {
+      "count": "Dans ce combat ({count})",
+      "attack": "{phase} : {cards}, {total} / {needed} {result}",
+      "success": "réussie",
+      "failure": "ratée",
+      "damage_enemy": "Dégâts : {enemy}, {damage} : {count} blessure(s)",
+      "brutal": "brutal 2 × {attack} = {damage}",
+      "poison": "toxique : {count} de plus dans la défausse",
+      "paralyze": "paralysant : {count} carte(s) défaussée(s) de la main",
+      "knocked_out": "Assommé : {count} carte(s) défaussée(s) de la main",
+      "reputation": "Réputation {amount}",
+      "unit_damage": "{name} : {wounds} Blessure(s)",
+      "unit_destroyed": "{name} détruite"
+    },
+    "knocked_out": "Assommé : {limit} Blessures reçues dans ce combat.",
+    "shared": {
+      "title": "Le groupe partage :",
+      "physical": "résistance physique ({enemies})",
+      "fire": "résistance au feu ({enemies})",
+      "ice": "résistance à la glace ({enemies})",
+      "fortified": "fortifié ({enemies}) : attaques de siège seulement"
+    },
+    "block_efficient": {
+      "fire": "Contre une attaque de feu, les parades autres que de glace et de feu glacé sont divisées par deux",
+      "ice": "Contre une attaque de glace, les parades autres que de feu et de feu glacé sont divisées par deux",
+      "cold_fire": "Contre une attaque de feu glacé, les parades autres que de feu glacé sont divisées par deux"
+    },
+    "mark": {
+      "halved": "÷2",
+      "siege_only": "siège seulement"
+    },
+    "calculation": "Divisées par deux : {halved} ÷ 2 = {halved_sum} · Autres : {full}",
+    "summon_warning": "Au début de la phase de parade, {enemies} invoquent une créature (pile marron) : pas de retour en arrière après.",
+    "swift_line": "Vif : il faut parer le double de son attaque, 2 × {attack} = {block}",
+    "night_rules": "Règles de Nuit : le mana or ne paie rien",
+    "move_as_attack": "Mouvement en Attaque ({move} restant)",
+    "move_as_ranged": "2 Mouvement en Attaque à distance ({move} restant)",
+    "influence_as_block": "Influence en Parade ({influence} restante)",
+    "use_deferred_attack": "Ajouter l'{attack}"
+  },
+  "fame": {
+    "pending": "Niveau {level} à la fin du tour"
+  },
+  "reputation": {
+    "line": "Réputation : {reputation} · bonus d'interaction {bonus}",
+    "line_x": "Réputation : X · interaction impossible"
+  },
+  "interaction": {
+    "button": "Interagir avec les habitants",
+    "lost_points": "Interagir fait perdre : {move} mouvement, {influence} influence",
+    "header": "Interaction : {site}",
+    "city_shields": "Boucliers dans la cité : Influence +{bonus}"
+  },
+  "level": {
+    "stats": "Limite de main {hand_limit} · Jetons de commandement {command}",
+    "gained": "Niveau {level} : armure {armor}, limite de main {hand_limit}, un jeton de commandement de plus",
+    "gained_even": "Niveau {level} : une compétence et une action avancée gagnées",
+    "hand_limit_keep": "Limite de main : {limit} (+{bonus} forteresse)",
+    "hand_limit_city": "Limite de main : {limit} (+{bonus} cité)"
+  },
+  "new_game": {
+    "title": "Nouvelle partie",
+    "button": "Nouvelle partie…",
+    "hint": "Commencer une autre partie",
+    "hero": "Héros",
+    "scenario": "Scénario",
+    "seed": "Graine (facultatif)",
+    "seed_hint": "Vide : une partie au hasard. La même graine avec le même héros et le même scénario rejoue la même partie.",
+    "seed_invalid": "La graine est un nombre entier de 0 à 18446744073709551615.",
+    "start": "Commencer",
+    "cancel": "Annuler",
+    "continue": "Continuer : {summary}",
+    "load": "Charger…",
+    "abandon_warning": "La partie en cours sera sauvegardée, puis remplacée.",
+    "previous_saved": "Partie précédente sauvegardée : {name}",
+    "recap": "Votre partie :",
+    "recap_choice": "{scenario} · {hero}",
+    "scenarios": "Scénarios",
+    "heroes": "Héros",
+    "next": "Suivant : choisir le héros",
+    "advanced": "Avancé",
+    "advanced_filled": "Avancé (graine saisie)",
+    "fact_length": "Durée",
+    "fact_players": "Joueurs",
+    "fact_kind": "Type",
+    "objective": "Objectif",
+    "special_rules": "Règles spéciales",
+    "game_end": "Fin de partie",
+    "scoring": "Décompte",
+    "style": "Style de jeu",
+    "own_cards_title": "Cartes propres",
+    "card_replaces": "à la place de {card}",
+    "card_basic": "Base",
+    "card_strong": "Renforcé (mana {color})",
+    "step_options": "Options",
+    "options": {
+      "dummy": "Joueur fantôme",
+      "dummy_help": "Il donne le tempo de la manche. Sans lui, vous jouez à votre rythme : conseillé pour une toute première partie.",
+      "none": "Pas d'option pour ce scénario.",
+      "dummy_hero": "Héros du joueur fantôme",
+      "dummy_hero_random": "Au hasard",
+      "dummy_required": "Ce scénario se joue avec le joueur fantôme."
+    },
+    "recap_no_dummy": "sans joueur fantôme",
+    "recap_dummy_hero": "joueur fantôme : {hero}"
+  },
+  "panel": {
+    "level": "Niveau {level}",
+    "fame": "{fame} / {next}",
+    "strong": "Renforcé",
+    "this_turn": "Ce tour",
+    "nothing_this_turn": "Rien de marquant"
+  },
+  "unit": {
+    "peasants": {
+      "name": "Paysans",
+      "ability_1": "Attaque ou Parade 2",
+      "ability_2": "Influence 2",
+      "ability_3": "Mouvement 2"
+    },
+    "herbalists": {
+      "name": "Herboristes",
+      "ability_1": "(mana vert) Soin 2",
+      "ability_2": "Rendre disponible une unité de niveau I ou II",
+      "ability_3": "Jeton de mana vert"
+    },
+    "foresters": {
+      "name": "Bûcherons",
+      "ability_1": "Mouvement 2 ; forêts, collines et marais coûtent 1 de moins (min. 0)",
+      "ability_2": "Parade 3"
+    },
+    "utem_crossbowmen": {
+      "name": "Arbalétriers d'Utem",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "Attaque à distance 2"
+    },
+    "utem_guardsmen": {
+      "name": "Gardes d'Utem",
+      "ability_1": "Attaque 2",
+      "ability_2": "Parade 4 ; compte double contre un ennemi Vif"
+    },
+    "utem_swordsmen": {
+      "name": "Guerriers d'Utem",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "Attaque ou Parade 6 ; l'unité est blessée"
+    },
+    "guardian_golems": {
+      "name": "Golems gardiens",
+      "ability_1": "Attaque ou Parade 2",
+      "ability_2": "(mana rouge) Parade de feu 4",
+      "ability_3": "(mana bleu) Parade de glace 4"
+    },
+    "illusionists": {
+      "name": "Illusionnistes",
+      "ability_1": "Influence 4",
+      "ability_2": "(mana blanc) Un ennemi non fortifié n'attaque pas",
+      "ability_3": "Cristal blanc"
+    },
+    "red_cape_monks": {
+      "name": "Moines du Cap Rouge",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "(mana rouge) Attaque ou Parade de feu 4"
+    },
+    "northern_monks": {
+      "name": "Moines du Nord",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "(mana bleu) Attaque ou Parade de glace 4"
+    },
+    "savage_monks": {
+      "name": "Moines sauvages",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "(mana vert) Attaque de siège 4"
+    },
+    "fire_golems": {
+      "name": "Golem de feu",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "(mana rouge) Attaque à distance de feu 4"
+    },
+    "ice_golems": {
+      "name": "Golem de glace",
+      "ability_1": "Attaque ou Parade 3",
+      "ability_2": "(mana bleu) Attaque de glace 6"
+    },
+    "fire_mages": {
+      "name": "Mages de feu",
+      "ability_1": "Attaque à distance de feu 3",
+      "ability_2": "(mana rouge) Attaque ou Parade de feu 6",
+      "ability_3": "Jeton et cristal rouges"
+    },
+    "ice_mages": {
+      "name": "Mages de glace",
+      "ability_1": "Attaque ou Parade de glace 4",
+      "ability_2": "(mana bleu) Attaque de siège de glace 4",
+      "ability_3": "Jeton et cristal bleus"
+    },
+    "amotep_gunners": {
+      "name": "Canonniers d'Amotep",
+      "ability_1": "Attaque ou Parade 5",
+      "ability_2": "(mana rouge) Attaque à distance de feu 6"
+    },
+    "amotep_freezers": {
+      "name": "Glaceurs d'Amotep",
+      "ability_1": "Attaque ou Parade 5",
+      "ability_2": "(mana bleu) Un ennemi n'attaque pas et a Armure -3 (min. 1)"
+    },
+    "catapults": {
+      "name": "Catapultes",
+      "ability_1": "Attaque de siège 3",
+      "ability_2": "(mana rouge) Attaque de siège de feu 5",
+      "ability_3": "(mana bleu) Attaque de siège de glace 5"
+    },
+    "altem_mages": {
+      "name": "Mages d'Altem",
+      "ability_1": "Deux jetons de mana de n'importe quelles couleurs",
+      "ability_2": "Attaque ou Parade de feu glacé 5 (7 avec mana bleu ou rouge, 9 avec les deux)",
+      "ability_3": "(mana noir) Vos attaques deviennent de feu glacé, ou de siège en plus"
+    },
+    "altem_guardians": {
+      "name": "Gardiens d'Altem",
+      "ability_1": "Attaque 5",
+      "ability_2": "Parade 8 ; compte double contre un ennemi Vif",
+      "ability_3": "(mana vert) Vos unités gagnent toutes les résistances ce tour"
+    },
+    "cost": "Coût : Influence {influence}",
+    "level": "Niveau {level}",
+    "armor": "Armure {armor}",
+    "recruit": {
+      "village": "Village",
+      "monastery": "Monastère",
+      "keep": "Donjon",
+      "mage_tower": "Tour de mage",
+      "city": "Cité"
+    },
+    "recruit_sites": "Recrutement : {list}",
+    "elite": "Élite",
+    "regular": "Régulière"
+  },
+  "units": {
+    "header": "Unités : {count}/{command}",
+    "line": "{name} · niveau {level}",
+    "ready": "Disponible",
+    "spent": "Épuisée",
+    "wounded": "Blessée ({wounds})",
+    "unsupported": "pas encore disponible",
+    "recruit": "Recruter : {name} ({cost})",
+    "disband_prompt": "Choisir l'unité à renvoyer",
+    "disband": "Renvoyer",
+    "choice_prompt": "{name} : {ability}",
+    "none": "Aucune unité"
+  },
+  "damage": {
+    "remaining": "{enemy} : {damage} dégâts à assigner",
+    "to_unit": "Sur {name} (armure {armor})",
+    "to_hero": "Sur le héros"
+  },
+  "healing": {
+    "points": "Soin : {points}",
+    "wound": "Jeter une Blessure (1)",
+    "unit": "Soigner {name} ({cost})"
+  },
+  "offers": {
+    "title": "Offres",
+    "advanced_actions": "Actions avancées",
+    "spells": "Sorts",
+    "units": "Unités",
+    "take": "Prendre",
+    "choose_advanced_action": "Niveau {level} : choisissez une action avancée",
+    "button": "Offres…",
+    "unsupported": "{text} (pas encore codé : se joue de côté)",
+    "spell_name": "{basic} / {strong}",
+    "close": "Fermer",
+    "monastery_card": "monastère",
+    "disabled": {
+      "combat": "Impossible pendant un combat"
+    },
+    "learn": "Apprendre ({cost} Influence)",
+    "cast": "Lancer",
+    "use": "Utiliser : {ability}",
+    "recruit_free": "Recruter (gratuit)"
+  },
+  "purchase": {
+    "healing": "Acheter un point de soin ({cost})",
+    "advanced_action": "Acheter : {name} ({cost})",
+    "spell": "Acheter : {name} ({cost} + mana {color})",
+    "artifact": "Acheter un artefact ({cost})",
+    "advanced_action_deck": "Acheter la carte du dessus de la pioche d'actions avancées ({cost})",
+    "elite_unit": "Ajouter une unité d'élite à l'offre ({cost})"
+  },
+  "burn": {
+    "button": "Incendier le monastère",
+    "lost_points": "Incendier fait perdre : {move} mouvement, {influence} influence",
+    "confirm": "Incendier le monastère ? Réputation −3, combat contre un ennemi violet, sans vos unités. Pas de retour en arrière.",
+    "confirm_yes": "Incendier",
+    "cancel": "Annuler",
+    "no_units": "Vos unités ne participent pas à ce combat"
+  },
+  "reward": {
+    "pending": "Récompense en fin de tour : {count} artefact(s)",
+    "choose_artifact": "Récompense : prenez un artefact",
+    "take": "Prendre",
+    "choose_spell": "Récompense : prenez un sort",
+    "pending_spell": "Récompense en fin de tour : {count} sort(s)",
+    "die": "Dé de récompense : {color}, {reward}",
+    "die_spell": "un sort",
+    "die_artifact": "un artefact",
+    "pending_crystals": "Récompense en fin de tour : {count} cristal(aux) aléatoire(s)",
+    "choose_crystal": "Récompense : choisissez la couleur du cristal (dé or)",
+    "pending_ruins": "Récompense en fin de tour : {list}",
+    "artifacts_count": "{count} artefact(s)",
+    "choose_unit": "Récompense : prenez une unité de l'offre",
+    "choose_advanced_action": "Récompense : prenez une action avancée",
+    "decline_unit": "Renoncer"
+  },
+  "plunder": {
+    "button": "Piller le village (2 cartes, Réputation −1)"
+  },
+  "assault": {
+    "withdrew": "Assaut repoussé : retour sur la case de départ"
+  },
+  "adventure": {
+    "enter": "Entrer dans : {site}",
+    "lost_points": "Entrer fait perdre : {move} mouvement, {influence} influence",
+    "confirm": {
+      "fight_drawn": "Combat contre {count} ennemi(s) {color}, tiré(s) au hasard.",
+      "fight_waiting": "Combat contre : {enemies}.",
+      "night_no_units": "Règles de Nuit, sans vos unités.",
+      "reward": "Récompense si vous gagnez : {reward}.",
+      "no_undo": "Pas de retour en arrière.",
+      "fight_colors": "Combat contre des ennemis tirés au hasard : {colors}."
+    },
+    "confirm_yes": "Entrer",
+    "cancel": "Annuler",
+    "reward": {
+      "dungeon": "un sort (dé or ou noir) ou un artefact",
+      "tomb": "un sort et un artefact",
+      "monster_den": "deux cristaux aléatoires",
+      "spawning_grounds": "un artefact et trois cristaux aléatoires",
+      "fame_only": "la gloire seulement"
+    }
+  },
+  "glade": {
+    "token": "Clairière magique : +1 jeton de mana {color}"
+  },
+  "ruins": {
+    "altar": {
+      "tribute": "Faire une offrande à l'autel",
+      "needs": "Il faut 3 mana {color}",
+      "window": "Offrande : 3 mana {color}, 7 Gloire",
+      "no_undo": "La gloire est gagnée aussitôt."
+    },
+    "payment": {
+      "die": "dé {color}",
+      "crystal": "cristal {color}",
+      "token": "jeton {color}"
+    },
+    "reward": {
+      "artifact": "un artefact",
+      "spell": "un sort",
+      "advanced_action": "une action avancée",
+      "crystal_set": "un cristal de chaque couleur",
+      "unit": "une unité de l'offre"
+    },
+    "revealed": "Ruines révélées : le trajet s'arrête"
+  },
+  "icon": {
+    "move": "Mouvement",
+    "influence": "Influence",
+    "armor": "Armure",
+    "fame": "Gloire",
+    "attack": {
+      "physical": "Attaque",
+      "fire": "Attaque de feu",
+      "ice": "Attaque de glace",
+      "cold_fire": "Attaque de feu glacé"
+    },
+    "ranged_attack": {
+      "physical": "Attaque à distance",
+      "fire": "Attaque à distance de feu",
+      "ice": "Attaque à distance de glace",
+      "cold_fire": "Attaque à distance de feu glacé"
+    },
+    "siege_attack": {
+      "physical": "Attaque de siège",
+      "fire": "Attaque de siège de feu",
+      "ice": "Attaque de siège de glace",
+      "cold_fire": "Attaque de siège de feu glacé"
+    },
+    "block": {
+      "physical": "Parade",
+      "fire": "Parade de feu",
+      "ice": "Parade de glace",
+      "cold_fire": "Parade de feu glacé"
+    },
+    "ranged_or_siege": "Attaque à distance ou de siège",
+    "resistance": {
+      "physical": "Résistance physique",
+      "fire": "Résistance au feu",
+      "ice": "Résistance à la glace"
+    },
+    "tile": {
+      "countryside": "Tuile de campagne",
+      "core": "Tuile royaume"
+    }
+  },
+  "shortcut": {
+    "hint": "Raccourci : {key}",
+    "key": {
+      "end": "Fin",
+      "enter": "Entrée",
+      "escape": "Échap",
+      "ctrl": "Ctrl+{key}",
+      "home": "Début"
+    }
+  },
+  "turn_fact": {
+    "explored": "Tuile révélée",
+    "defeated": "{enemies} vaincu(s) : +{fame} Gloire",
+    "fame": "+{fame} Gloire",
+    "reputation": "Réputation {change}",
+    "wounds": "{count} Blessure(s) reçue(s)",
+    "healed": "{count} Blessure(s) soignée(s)",
+    "crystal": "Cristal {color} gagné",
+    "card": "Carte gagnée : {card}",
+    "unit_gained": "Unité gagnée : {unit}",
+    "unit_lost": "Unité perdue : {unit}",
+    "unit_wounded": "Unité blessée : {unit}",
+    "unit_healed": "Unité soignée : {unit}",
+    "plundered": "Village pillé",
+    "burned": "Monastère incendié",
+    "card_destroyed": "{card} détruite",
+    "crystals_returned": "Cristaux rendus : {count}",
+    "enemy_destroyed": "{enemy} détruit"
+  },
+  "menu": {
+    "title": "Menu",
+    "round": "Manche {round}/{limit} (tour {number})",
+    "fullscreen": "Plein écran",
+    "quit": "Quitter",
+    "tiles": {
+      "countryside": "Pioche de tuiles de campagne : {count}",
+      "core": "Pioche de tuiles royaume : {count}",
+      "countryside_removed": "Pioche vide · tuiles de campagne écartées : {count}",
+      "core_removed": "Pioche vide · tuiles royaume écartées : {count}"
+    }
+  },
+  "preferences": {
+    "title": "Préférences",
+    "button": "Préférences…",
+    "language": "Langue",
+    "system_language": "Langue du système ({language})",
+    "fullscreen_at_launch": "Plein écran au lancement",
+    "fullscreen_hint": "F11 bascule la fenêtre sans changer ce réglage.",
+    "not_saved": "Préférences non enregistrées (voir les logs).",
+    "sound": "Son",
+    "volume_master": "Volume général",
+    "volume_music": "Musique",
+    "volume_ambience": "Ambiances",
+    "volume_effects": "Effets sonores",
+    "volume_value": "{percent} %",
+    "no_audio": "Aucune sortie audio : le jeu reste muet.",
+    "close": "Fermer"
+  },
+  "quit": {
+    "confirm": {
+      "title": "Quitter sans sauvegarder ?",
+      "text": "Ce qui a été joué depuis le début du tour sera perdu.",
+      "quit": "Quitter",
+      "cancel": "Annuler"
+    }
+  },
+  "modifier": {
+    "terrain_reduce": "{terrains} : −{by} (min. {min})",
+    "terrain_set": "{terrains} : {cost}",
+    "passable": "{terrain} franchissable",
+    "terrains_all": "tous les terrains",
+    "convert_attack": "{amount} Mouvement en Attaque {points}",
+    "convert_ranged": "{amount} Mouvement en Attaque à distance {points}",
+    "convert_block": "Influence en Parade",
+    "convert_block_element": "Influence en Parade de {element}",
+    "next_card_bonus": "prochaine carte : Attaque +{attack} ou Parade +{block}",
+    "end_of_turn_reputation": "réputation {change} à la fin du tour",
+    "return_under_deck": "sous le deck à la fin du tour",
+    "return_on_deck": "sur le deck à la fin du tour",
+    "unit_bonus": "unités : Attaque et Parade +{bonus}",
+    "no_damage_to_units": "pas de dégâts sur les unités",
+    "end_of_turn_per_recruit": "par unité recrutée ce tour : réputation +{reputation}",
+    "end_of_turn_per_recruit_fame": "par unité recrutée ce tour : gloire +{fame}, réputation +{reputation}",
+    "attacks_cold_fire": "attaques de feu glacé",
+    "attacks_siege": "attaques de siège en plus",
+    "units_all_resistances": "unités : toutes les résistances",
+    "armor_reduction": "Armure −{by} (min. {min})",
+    "return_spent_crystals": "cristaux dépensés rendus à la fin du tour",
+    "learning": "une fois : {cost} Influence pour une action avancée ({to})",
+    "return_spent_crystals_list": "cristaux dépensés rendus à la fin du tour : {colors}",
+    "ignore_site_fortifications": "fortifications des sites ignorées",
+    "deferred_attack": "{attack} en phase d'attaque",
+    "cast_from_offer": "un sort {color} de l'offre",
+    "by_fortification": "{plain} ({fortified} si fortifié)",
+    "space_bending": "cases à 2 comme voisines, sans provoquer",
+    "time_bending": "tour supplémentaire à la fin du tour",
+    "unit_from_offer": "une unité de l'offre ce tour",
+    "recruit_from_offer": "recruter gratuitement une unité de l'offre",
+    "draw_bonus": "{amount} cartes de plus à la pioche",
+    "mana_claim_per_turn": "un jeton {color} par tour",
+    "unit_armor_bonus": "unités Armure +{amount}",
+    "fame_per_unit_attack_or_block": "Gloire +1 par unité qui attaque ou pare",
+    "endless_mana": "mana {color} et noir illimité ; Gloire +1 par sort {color}",
+    "fame_per_enemy_defeated": "Gloire +1 par ennemi vaincu",
+    "double_physical_attacks": "Attaques physiques doublées en phase d'attaque",
+    "throw_away_received_wounds": "fin du tour : jeter les Blessures reçues",
+    "draw_per_wound_healed": "une carte par Blessure de la main soignée",
+    "day_rules": "règles de jour (forêts 3, or, révélations)",
+    "night_mana": "mana noir comme de nuit, déserts 3",
+    "grail_fame": "Gloire +1 par point de soin ({amount} restants)"
+  },
+  "destination": {
+    "hand": "en main",
+    "discard": "dans la défausse",
+    "space": "{place} ({q}, {r})"
+  },
+  "choice": {
+    "token_color": "Rituel de sang : couleur du jeton ({left} à choisir)",
+    "crystal": "Rituel de sang : payer un mana de base pour un cristal ?",
+    "decline": "Non merci"
+  },
+  "gain_choice": {
+    "prompt": "{card} : {effect}. Choisissez la carte dans la fenêtre Offres."
+  },
+  "die_choice": {
+    "prompt": "{card} : choisissez un dé de la Source."
+  },
+  "spell": {
+    "strong_needs_black": "Renforcé : mana noir, de nuit",
+    "prompt": "{card} : choisissez le mana et la cible.",
+    "destination_prompt": "{card} : cliquez l'arrivée sur le plateau."
+  },
+  "wings_of_night": {
+    "cost": "Mouvement : {points}"
+  },
+  "mana_claim": {
+    "die": "Dé {color}",
+    "kept_die": "Dé de mana {color} : gardé jusqu'à la fin de la manche (Puits de mana)."
+  },
+  "meditation": {
+    "title": "Méditation : où remettre ces cartes ?",
+    "top": "Sur le deck",
+    "bottom": "Sous le deck"
+  },
+  "set_aside": {
+    "title": "Écartées jusqu'à la fin de la manche : {cards}"
+  },
+  "banner": {
+    "choose_unit": "{card} : à quelle unité l'assigner ?",
+    "assign": "Assigner",
+    "on_unit": "Bannière : {card}",
+    "flipped": "retournée jusqu'à la prochaine manche",
+    "use_fear": "Annuler une attaque (Gloire +1)",
+    "use_fear_enemy": "Annuler l'attaque : {enemy} (Gloire +1)",
+    "use_courage": "Rendre disponible (une fois par manche)",
+    "reclaim_title": "Fin de manche : bannières à reprendre dans le deck",
+    "reclaim_line": "{card} ({unit})",
+    "reclaim_keep": "Garder sur l'unité",
+    "reclaim_take": "Reprendre",
+    "reclaim_confirm": "Valider"
+  },
+  "horn": {
+    "extra": "Corne de la colère : ajouter combien ? (un dé par point)",
+    "bonus": "+{amount} : Attaque de siège {total}"
+  },
+  "sword": {
+    "discard_prompt": "Épée de justice : cartes à défausser (Attaque 3 chacune)"
+  },
+  "artifact": {
+    "prompt": "{card} : {effect}",
+    "color": "Jeton {color}",
+    "play": "Jouer",
+    "throw_away": "Détruire"
+  },
+  "artifact_dice": {
+    "rolled": "Dés lancés : {faces}"
+  },
+  "skill": {
+    "dark_paths": {
+      "name": "Chemins ténébreux",
+      "text": "Mouvement 1 le jour, 2 la nuit."
+    },
+    "burning_power": {
+      "name": "Attaque brûlante",
+      "text": "Attaque de siège 1, ou Attaque de siège de feu 1."
+    },
+    "hot_swordsmanship": {
+      "name": "Bretteur de feu",
+      "text": "Attaque 2, ou Attaque de feu 2."
+    },
+    "dark_negotiation": {
+      "name": "Sombre négociation",
+      "text": "Influence 2 le jour, 3 la nuit."
+    },
+    "dark_fire_magic": {
+      "name": "Magie noire",
+      "text": "Retournée : un cristal rouge, et un jeton rouge ou noir."
+    },
+    "motivation_arythea": {
+      "name": "Motivation",
+      "text": "Retournée : piocher 2 cartes et gagner un jeton rouge. Pas d'autre Motivation avant la fin du tour suivant."
+    },
+    "power_of_pain": {
+      "name": "Souffrance sublimée",
+      "text": "Jouer une Blessure de côté, pour 2 points au lieu de 1."
+    },
+    "invocation": {
+      "name": "Invocation",
+      "text": "Défausser une carte pour un jeton de mana à dépenser aussitôt : rouge ou noir pour une Blessure, blanc ou vert sinon."
+    },
+    "polarization": {
+      "name": "Polarisation",
+      "text": "Utiliser un mana comme sa couleur opposée ; le jour, le noir comme une couleur de base, la nuit, l'or comme du noir."
+    },
+    "ritual_of_pain": {
+      "name": "Rituel de guérison",
+      "text": "Retournée : jeter jusqu'à 2 Blessures de la main, posée au centre ; au tour suivant, une Blessure jouée de côté vaut 3."
+    },
+    "freezing_power": {
+      "name": "Attaque givrante",
+      "text": "Attaque de siège 1, ou Attaque de siège de glace 1."
+    },
+    "potion_making": {
+      "name": "Potion de soin",
+      "text": "Retournée, hors combat : Soin 2."
+    },
+    "white_crystal_craft": {
+      "name": "Extraction blanche",
+      "text": "Retournée : un cristal bleu et un jeton blanc."
+    },
+    "green_crystal_craft": {
+      "name": "Extraction verte",
+      "text": "Retournée : un cristal bleu et un jeton vert."
+    },
+    "red_crystal_craft": {
+      "name": "Extraction rouge",
+      "text": "Retournée : un cristal bleu et un jeton rouge."
+    },
+    "motivation_goldyx": {
+      "name": "Motivation",
+      "text": "Retournée : piocher 2 cartes et gagner un jeton vert. Pas d'autre Motivation avant la fin du tour suivant."
+    },
+    "glittering_fortune": {
+      "name": "Fortune clinquante",
+      "text": "En interaction : Influence 1 par couleur de cristal possédée."
+    },
+    "flight": {
+      "name": "Vol",
+      "text": "Retournée : aller sur une case voisine sans payer, ou deux cases plus loin pour Mouvement 2, sans provoquer."
+    },
+    "universal_power": {
+      "name": "Pouvoir universel",
+      "text": "Un mana sur une carte jouée de côté : 3 points, ou 4 si elle est de sa couleur."
+    },
+    "source_opening": {
+      "name": "Embrasure de la Source",
+      "text": "Retournée : relancer un dé, posée au centre ; au tour suivant, un dé de plus et un cristal de sa couleur."
+    },
+    "day_sharpshooting": {
+      "name": "Œil de lynx",
+      "text": "Attaque à distance 2 le jour, 1 la nuit."
+    },
+    "bright_negotiation": {
+      "name": "Négociation brillante",
+      "text": "Influence 3 le jour, 2 la nuit."
+    },
+    "inspiration": {
+      "name": "Inspiration",
+      "text": "Retournée, hors combat : rendre disponible une unité, ou la soigner."
+    },
+    "leaves_in_the_wind": {
+      "name": "Au cœur du vent",
+      "text": "Retournée : un cristal vert et un jeton blanc."
+    },
+    "whisper_in_the_treetops": {
+      "name": "Murmure de la canopée",
+      "text": "Retournée : un cristal blanc et un jeton vert."
+    },
+    "motivation_norowas": {
+      "name": "Motivation",
+      "text": "Retournée : piocher 2 cartes et gagner un jeton blanc. Pas d'autre Motivation avant la fin du tour suivant."
+    },
+    "forward_march": {
+      "name": "Marche en avant",
+      "text": "Mouvement 1 par unité disponible et non blessée, 3 au plus."
+    },
+    "leadership": {
+      "name": "Charisme",
+      "text": "À l'activation d'une unité : +1 à son Attaque à distance, +2 à son Attaque ou +3 à sa Parade."
+    },
+    "bonds_of_loyalty": {
+      "name": "Loyauté sans faille",
+      "text": "Un jeton de commandement de plus ; l'unité recrutée dessous coûte 5 de moins."
+    },
+    "calming_the_weather": {
+      "name": "Temps calme",
+      "text": "Retournée : les terrains coûtent 2 de moins ce tour, posée au centre ; au tour suivant, 1 de moins."
+    },
+    "double_time": {
+      "name": "Marche forcée",
+      "text": "Mouvement 2 le jour, 1 la nuit."
+    },
+    "night_sharpshooting": {
+      "name": "Vision nocturne",
+      "text": "Attaque à distance 1 le jour, 2 la nuit."
+    },
+    "cold_swordsmanship": {
+      "name": "Bretteur de glace",
+      "text": "Attaque 2, ou Attaque de glace 2."
+    },
+    "shield_mastery": {
+      "name": "Maître bouclier",
+      "text": "Parade 3, ou Parade de glace 2, ou Parade de feu 2."
+    },
+    "motivation_tovak": {
+      "name": "Motivation",
+      "text": "Retournée : piocher 2 cartes et gagner un jeton bleu. Pas d'autre Motivation avant la fin du tour suivant."
+    },
+    "resistance_break": {
+      "name": "Botte secrète",
+      "text": "Un ennemi perd 1 d'Armure par résistance, 1 au moins."
+    },
+    "i_feel_no_pain": {
+      "name": "Même pas mal",
+      "text": "Hors combat : défausser une Blessure de la main pour piocher une carte."
+    },
+    "i_dont_give_a_damn": {
+      "name": "Flexibilité",
+      "text": "Une carte jouée de côté vaut 2, ou 3 pour une action avancée, un sort ou un artefact."
+    },
+    "who_needs_magic": {
+      "name": "Magie inutile",
+      "text": "Une carte jouée de côté vaut 2, ou 3 sans dé de la Source ce tour."
+    },
+    "mana_overload": {
+      "name": "Surcharge de mana",
+      "text": "Retournée : un jeton de mana non or, posée au centre ; plus tard, +4 sur une carte renforcée de cette couleur."
+    },
+    "title": "Compétences",
+    "once_a_turn": "Une fois par tour",
+    "once_a_round": "Une fois par manche",
+    "out_of_combat": "Hors combat",
+    "used_this_turn": "Utilisée ce tour",
+    "flipped": "Retournée jusqu'à la prochaine manche",
+    "motivation_blocked": "Une autre Motivation a servi : pas avant la fin du prochain tour",
+    "pile": "Pile : {count}",
+    "choice": {
+      "title": "Niveau {level} : choisir une compétence",
+      "revealed": "Compétences révélées",
+      "common": "Offre de compétences communes",
+      "common_note": "Prendre une compétence de l'offre commune impose l'action avancée en dernière place.",
+      "own": "Compétence de votre héros : pas prenable ici"
+    },
+    "choose_unit": "{skill} : choisir l'unité",
+    "pick_unit": "Choisir",
+    "in_center": "Au centre : avantage au prochain tour",
+    "advantage": "Avantage de {skill}",
+    "choose_card": "{skill} : choisir la carte à jouer de côté",
+    "choose_enemy": "{skill} : choisir l'ennemi",
+    "choose_space": "{skill} : choisir la case d'arrivée",
+    "choose_color": "{skill} : choisir la couleur",
+    "choose_die": "{skill} : choisir le dé",
+    "throw_wounds": "Jeter {count} Blessure(s)",
+    "reroll_die": "Relancer ce dé",
+    "no_reroll": "Ne rien relancer",
+    "keep_die": "Garder ce dé tel quel",
+    "no_dice": "Magie inutile : plus de dé de la Source ce tour",
+    "interaction_influence": "Influence d'interaction : {amount}",
+    "bonds_token": "Jeton de Loyauté : recrutement −5",
+    "bonds_recruit": "Recruter sous Loyauté : {name} ({cost})",
+    "sideways": "De côté : {value}",
+    "with_leadership": "Avec Charisme : {effect}"
+  },
+  "tactic": {
+    "early_bird": {
+      "name": "Lève-tôt",
+      "text": "Aucun effet."
+    },
+    "rethink": {
+      "name": "Faux départ",
+      "text": "En la prenant : défaussez jusqu'à 3 cartes (Blessures comprises), piochez-en autant, puis remélangez la défausse dans le deck."
+    },
+    "mana_steal": {
+      "name": "Vol de mana",
+      "text": "En la prenant : posez ici un dé de couleur de base de la Source. Ce Jour, il paie un mana en plus du dé du tour ; relancé et rendu à la fin du tour où il sert."
+    },
+    "planning": {
+      "name": "Planification",
+      "text": "Fin du tour : avec au moins 2 cartes en main avant de piocher, limite de main + 1."
+    },
+    "great_start": {
+      "name": "Départ flamboyant",
+      "text": "En la prenant : piochez 2 cartes."
+    },
+    "right_moment": {
+      "name": "Au bon moment",
+      "text": "Une fois ce Jour, pendant votre tour : annoncez un tour de plus, joué juste après celui-ci."
+    },
+    "from_the_dusk": {
+      "name": "Au crépuscule",
+      "text": "Aucun effet."
+    },
+    "long_night": {
+      "name": "Longue Nuit",
+      "text": "Une fois cette Nuit, deck vide : 3 cartes de la défausse, au hasard, retournent dans le deck."
+    },
+    "mana_search": {
+      "name": "Appel du mana",
+      "text": "Une fois par tour, avant de prendre un dé de la Source : relancez jusqu'à 2 dés, les dés or d'abord."
+    },
+    "midnight_meditation": {
+      "name": "Méditation nocturne",
+      "text": "Une fois cette Nuit, au début d'un tour : remélangez jusqu'à 5 cartes de la main dans le deck et piochez-en autant."
+    },
+    "preparation": {
+      "name": "Préparation",
+      "text": "En la prenant : prenez en main une carte de votre choix dans le deck, puis mélangez-le."
+    },
+    "sparing_power": {
+      "name": "Provisions",
+      "text": "Avant chaque tour : posez ici la carte du dessus du deck, ou retournez cette tactique et prenez en main les cartes posées."
+    },
+    "choose_title": "Choisir une tactique ({time})",
+    "take": "Prendre cette tactique",
+    "flipped": "Retournée : a servi",
+    "number": "N° {number}",
+    "rethink_prompt": "Faux départ : cochez jusqu'à 3 cartes à défausser",
+    "rethink_confirm": "Défausser et piocher {count} carte(s)",
+    "steal_prompt": "Vol de mana : choisissez un dé de couleur de base",
+    "stolen_die": "Dé volé : {color}",
+    "preparation_prompt": "Préparation : choisissez la carte à prendre en main",
+    "right_moment_button": "Jouer un tour de plus",
+    "right_moment_announced": "Au bon moment : un tour de plus après celui-ci",
+    "long_night_button": "Remettre 3 cartes dans le deck",
+    "long_night_prompt": "Deck épuisé : utiliser Longue Nuit pour continuer la pioche ?",
+    "long_night_decline": "Non, arrêter la pioche",
+    "mana_search_button": "Relancer des dés",
+    "mana_search_prompt": "Appel du mana : choisissez 1 ou 2 dés (or d'abord)",
+    "mana_search_confirm": "Relancer {count} dé(s)",
+    "meditation_button": "Remélanger des cartes",
+    "meditation_prompt": "Méditation nocturne : cochez jusqu'à 5 cartes",
+    "meditation_confirm": "Remélanger et piocher {count} carte(s)",
+    "stored": "Dessous : {count} carte(s)",
+    "sparing_prompt": "Provisions ({count} carte(s) dessous) : avant ce tour",
+    "sparing_store": "Poser la carte du dessus du deck",
+    "sparing_take": "Retourner et prendre {count} carte(s)"
+  },
+  "dummy": {
+    "title": "Joueur fantôme : {hero}",
+    "deck": "Deck : {count} carte(s)",
+    "discard": "Défausse : {count} carte(s)",
+    "discard_title": "Défausse du joueur fantôme",
+    "crystals": "Cristaux",
+    "crystal_count": "{color} : {count}",
+    "tactic": "Tactique : {number} {name}",
+    "last_turn": "Dernier tour : {cards}",
+    "last_turn_extra": "Dernier tour : {cards} ; {color} : {count} de plus",
+    "last_turn_none": "Dernier tour : aucune carte",
+    "announced": "A annoncé la fin de la manche : c'est votre dernier tour.",
+    "skills": "Compétences cachées : {count}"
+  },
+  "round_order": {
+    "player_first": "Vous jouez en premier",
+    "dummy_first": "Le joueur fantôme joue en premier"
+  }
+}

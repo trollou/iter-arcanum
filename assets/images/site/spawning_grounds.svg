@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="mud" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a5a34"/><stop offset=".5" stop-color="#4a3018"/><stop offset="1" stop-color="#2b1a0c"/></linearGradient>
+    <linearGradient id="egg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f0c8"/><stop offset=".5" stop-color="#a8b060"/><stop offset="1" stop-color="#5a6a2a"/></linearGradient>
+    <linearGradient id="slm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8e070"/><stop offset="1" stop-color="#5a8a2a"/></linearGradient>
+    <radialGradient id="gl"><stop offset="0" stop-color="#c8e070" stop-opacity=".6"/><stop offset="1" stop-color="#c8e070" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="92" ry="8" fill="url(#sh)"/>
+  <g id="nid" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <ellipse cx="100" cy="150" rx="88" ry="50" fill="url(#gl)" stroke="none"/>
+    <path d="M14,186 C14,160 40,148 100,146 C160,148 186,160 186,186 Z" fill="url(#mud)"/>
+    <path d="M24,170 C40,162 52,166 64,160 M136,160 C150,164 164,162 176,170" stroke-width="1.6" stroke-opacity=".5" fill="none"/>
+  </g>
+  <g id="oeufs" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M50,166 C50,127.6 60.0,118 70,118 C80.0,118 90,127.6 90,166 C90,173.2 50,173.2 50,166 Z" fill="url(#egg)"/>
+    <path d="M60.0,132.4 C62.0,125.2 68.0,121.6 72.0,121.6" stroke="#fff" stroke-opacity=".8" stroke-width="2" fill="none"/>
+    <path d="M112,164 C112,128.8 121.0,120 130,120 C139.0,120 148,128.8 148,164 C148,170.6 112,170.6 112,164 Z" fill="url(#egg)"/>
+    <path d="M121.0,133.2 C122.8,126.6 128.2,123.3 131.8,123.3" stroke="#fff" stroke-opacity=".8" stroke-width="2" fill="none"/>
+    <path d="M115.6,139.8 L122.8,146.4 L128.2,137.6 L135.4,146.4 L144.4,139.8" stroke-width="2" fill="none"/>
+    <circle cx="127.3" cy="143.1" r="2.4" fill="#ffd94a" stroke="none"/><circle cx="133.6" cy="143.1" r="2.4" fill="#ffd94a" stroke="none"/>
+    <path d="M74,182 C74,127.6 87.0,114 100,114 C113.0,114 126,127.6 126,182 C126,192.2 74,192.2 74,182 Z" fill="url(#egg)"/>
+    <path d="M87.0,134.4 C89.6,124.2 97.4,119.1 102.6,119.1" stroke="#fff" stroke-opacity=".8" stroke-width="2" fill="none"/>
+    <path d="M34,184 C34,161.6 40.0,156 46,156 C52.0,156 58,161.6 58,184 C58,188.2 34,188.2 34,184 Z" fill="url(#egg)"/>
+    <path d="M40.0,164.4 C41.2,160.2 44.8,158.1 47.2,158.1" stroke="#fff" stroke-opacity=".8" stroke-width="2" fill="none"/>
+    <path d="M145,186 C145,162.0 151.5,156 158,156 C164.5,156 171,162.0 171,186 C171,190.5 145,190.5 145,186 Z" fill="url(#egg)"/>
+    <path d="M151.5,165.0 C152.8,160.5 156.7,158.25 159.3,158.25" stroke="#fff" stroke-opacity=".8" stroke-width="2" fill="none"/>
+  </g>
+  <g id="bave" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M78,186 C80,178 86,180 88,186 Z M112,186 C114,176 122,178 122,186 Z" fill="url(#slm)"/>
+    <path d="M30,150 C26,132 36,120 32,104 M170,152 C176,134 166,124 172,108" stroke="#4a3018" stroke-width="4.4" fill="none" stroke-linecap="round"/>
+    <path d="M30,150 C26,132 36,120 32,104 M170,152 C176,134 166,124 172,108" stroke="#8a6a3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

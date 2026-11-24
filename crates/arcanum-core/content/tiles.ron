@@ -1,0 +1,258 @@
+// Les 21 tuiles du jeu de base (spec 010), dans l'orientation imposée (MKUE p. 7).
+// Valeurs reprises des tuiles physiques, vérifiées par Mathieu le 2026-10-24 ; sources et notes de lecture : docs/reference/tuiles.md.
+// Chaque case : (terrain, élément imprimé ou None). Côtés dans l'ordre de `Direction::ALL` : E, N-E, N-O, O, S-O, S-E.
+// Sea = Littoral de la tuile de départ, distinct du Lac.
+[
+    (
+        id: StartingA,
+        center: (Plains, Some(Site(Portal))),
+        sides: [
+            (Plains, None), // E
+            (Forest, None), // N-E
+            (Plains, None), // N-O
+            (Sea, None), // O
+            (Sea, None), // S-O
+            (Sea, None), // S-E
+        ],
+    ),
+    (
+        id: StartingB,
+        center: (Plains, Some(Site(Portal))),
+        sides: [
+            (Plains, None), // E
+            (Forest, None), // N-E
+            (Plains, None), // N-O
+            (Sea, None), // O
+            (Sea, None), // S-O
+            (Plains, None), // S-E
+        ],
+    ),
+    (
+        id: Countryside(1),
+        center: (Forest, Some(Site(MagicalGlade))),
+        sides: [
+            (Plains, Some(Site(Village))), // E
+            (Lake, None), // N-E
+            (Forest, Some(Rampaging(OrcMarauders))), // N-O
+            (Forest, None), // O
+            (Plains, None), // S-O
+            (Plains, None), // S-E
+        ],
+    ),
+    (
+        id: Countryside(2),
+        center: (Hills, None),
+        sides: [
+            (Plains, Some(Site(Village))), // E
+            (Forest, Some(Site(MagicalGlade))), // N-E
+            (Hills, Some(Rampaging(OrcMarauders))), // N-O
+            (Plains, None), // O
+            (Hills, Some(Site(Mine(Green)))), // S-O
+            (Plains, None), // S-E
+        ],
+    ),
+    (
+        id: Countryside(3),
+        center: (Forest, None),
+        sides: [
+            (Hills, None), // E
+            (Hills, Some(Site(Keep))), // N-E
+            (Plains, None), // N-O
+            (Plains, None), // O
+            (Plains, Some(Site(Village))), // S-O
+            (Hills, Some(Site(Mine(White)))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(4),
+        center: (Desert, Some(Site(MageTower))),
+        sides: [
+            (Mountain, None), // E
+            (Desert, None), // N-E
+            (Desert, None), // N-O
+            (Hills, Some(Rampaging(OrcMarauders))), // O
+            (Plains, None), // S-O
+            (Plains, Some(Site(Village))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(5),
+        center: (Lake, None),
+        sides: [
+            (Plains, Some(Rampaging(OrcMarauders))), // E
+            (Plains, Some(Site(Monastery))), // N-E
+            (Forest, None), // N-O
+            (Forest, Some(Site(MagicalGlade))), // O
+            (Forest, None), // S-O
+            (Hills, Some(Site(Mine(Blue)))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(6),
+        center: (Hills, Some(Site(Mine(Red)))),
+        sides: [
+            (Plains, None), // E
+            (Forest, None), // N-E
+            (Mountain, None), // N-O
+            (Hills, Some(Site(MonsterDen))), // O
+            (Hills, None), // S-O
+            (Forest, Some(Rampaging(OrcMarauders))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(7),
+        center: (Swamp, None),
+        sides: [
+            (Forest, Some(Site(MagicalGlade))), // E
+            (Forest, Some(Rampaging(OrcMarauders))), // N-E
+            (Lake, None), // N-O
+            (Plains, Some(Site(Monastery))), // O
+            (Plains, None), // S-O
+            (Plains, Some(Site(Dungeon))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(8),
+        center: (Swamp, Some(Rampaging(OrcMarauders))),
+        sides: [
+            (Plains, None), // E
+            (Forest, Some(Site(Ruins))), // N-E
+            (Forest, Some(Site(MagicalGlade))), // N-O
+            (Forest, None), // O
+            (Swamp, None), // S-O
+            (Swamp, Some(Site(Village))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(9),
+        center: (Mountain, None),
+        sides: [
+            (Wasteland, Some(Site(Keep))), // E
+            (Mountain, None), // N-E
+            (Wasteland, Some(Site(Dungeon))), // N-O
+            (Plains, None), // O
+            (Wasteland, Some(Site(MageTower))), // S-O
+            (Plains, None), // S-E
+        ],
+    ),
+    (
+        id: Countryside(10),
+        center: (Mountain, None),
+        sides: [
+            (Plains, None), // E
+            (Forest, None), // N-E
+            (Hills, Some(Site(MonsterDen))), // N-O
+            (Hills, None), // O
+            (Hills, Some(Site(Keep))), // S-O
+            (Hills, Some(Site(Ruins))), // S-E
+        ],
+    ),
+    (
+        id: Countryside(11),
+        center: (Plains, Some(Site(MageTower))),
+        sides: [
+            (Lake, None), // E
+            (Lake, None), // N-E
+            (Hills, None), // N-O
+            (Plains, Some(Site(Ruins))), // O
+            (Lake, None), // S-O
+            (Hills, Some(Rampaging(OrcMarauders))), // S-E
+        ],
+    ),
+    (
+        id: Core(1),
+        center: (Desert, Some(Site(Monastery))),
+        sides: [
+            (Desert, None), // E
+            (Desert, Some(Site(Tomb))), // N-E
+            (Mountain, None), // N-O
+            (Hills, Some(Site(SpawningGrounds))), // O
+            (Hills, None), // S-O
+            (Desert, None), // S-E
+        ],
+    ),
+    (
+        id: Core(2),
+        center: (Lake, None),
+        sides: [
+            (Hills, Some(Site(Mine(Green)))), // E
+            (Swamp, Some(Site(Ruins))), // N-E
+            (Lake, None), // N-O
+            (Forest, None), // O
+            (Swamp, Some(Site(MageTower))), // S-O
+            (Swamp, Some(Rampaging(Draconum))), // S-E
+        ],
+    ),
+    (
+        id: Core(3),
+        center: (Wasteland, None),
+        sides: [
+            (Hills, Some(Site(MageTower))), // E
+            (Wasteland, Some(Site(Ruins))), // N-E
+            (Mountain, None), // N-O
+            (Wasteland, Some(Site(Tomb))), // O
+            (Hills, Some(Site(Mine(White)))), // S-O
+            (Wasteland, None), // S-E
+        ],
+    ),
+    (
+        id: Core(4),
+        center: (Mountain, Some(Rampaging(Draconum))),
+        sides: [
+            (Wasteland, Some(Site(Keep))), // E
+            (Hills, None), // N-E
+            (Hills, Some(Site(Mine(Blue)))), // N-O
+            (Wasteland, None), // O
+            (Wasteland, Some(Site(Ruins))), // S-O
+            (Wasteland, None), // S-E
+        ],
+    ),
+    (
+        id: Core(5),
+        center: (Swamp, Some(Site(City(Green)))),
+        sides: [
+            (Swamp, Some(Rampaging(OrcMarauders))), // E
+            (Swamp, Some(Site(Village))), // N-E
+            (Forest, Some(Site(MagicalGlade))), // N-O
+            (Lake, None), // O
+            (Forest, Some(Rampaging(OrcMarauders))), // S-O
+            (Swamp, None), // S-E
+        ],
+    ),
+    (
+        id: Core(6),
+        center: (Plains, Some(Site(City(Blue)))),
+        sides: [
+            (Lake, None), // E
+            (Plains, Some(Site(Monastery))), // N-E
+            (Forest, None), // N-O
+            (Mountain, Some(Rampaging(Draconum))), // O
+            (Hills, None), // S-O
+            (Lake, None), // S-E
+        ],
+    ),
+    (
+        id: Core(7),
+        center: (Plains, Some(Site(City(White)))),
+        sides: [
+            (Forest, None), // E
+            (Plains, None), // N-E
+            (Wasteland, Some(Site(SpawningGrounds))), // N-O
+            (Wasteland, Some(Site(Keep))), // O
+            (Lake, None), // S-O
+            (Lake, Some(Rampaging(Draconum))), // S-E
+        ],
+    ),
+    (
+        id: Core(8),
+        center: (Desert, Some(Site(City(Red)))),
+        sides: [
+            (Desert, None), // E
+            (Hills, Some(Site(Mine(Red)))), // N-E
+            (Desert, Some(Site(Ruins))), // N-O
+            (Wasteland, Some(Rampaging(Draconum))), // O
+            (Wasteland, None), // S-O
+            (Desert, Some(Rampaging(Draconum))), // S-E
+        ],
+    ),
+]

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="700" viewBox="0 0 1260 700" font-family="Ubuntu, DejaVu Sans, sans-serif">
+<rect width="1260" height="700" fill="#202124"/>
+<text x="24" y="34" font-size="20" fill="#eee" text-anchor="start" font-weight="bold">Capacités des ennemis (phase de parade)</text>
+<text x="24" y="56" font-size="13" fill="#999" text-anchor="start" font-weight="normal">Spec 033, visuels provisoires. Vif (MKUE p. 9, Block Phase 6.a), Brutal (Assign Damage Phase 2.a), Invocation (Block Phase 2 ; p. 10, 6.c).</text>
+<rect x="24" y="74" width="1212" height="40" rx="8" fill="#2a2620" stroke="#c08a30" stroke-width="1.5"/>
+<text x="40" y="99" font-size="13" fill="#f0c060" text-anchor="start" font-weight="normal">Phase d'attaque à distance · Au début de la phase de parade, les Invocateurs orques invoquent une créature (pile marron) : pas de retour en arrière après.</text>
+<rect x="24" y="130" width="590" height="190" rx="10" fill="#2c2c2c" stroke="#e0a040" stroke-width="3"/>
+<circle cx="76" cy="190" r="36" fill="#3a7a3a" stroke="#111" stroke-width="3"/>
+<text x="76" y="195" font-size="12" fill="#eee" text-anchor="middle" font-weight="normal">orques</text>
+<text x="126" y="160" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Invocateurs orques</text>
+<text x="126" y="182" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 4 · invocation · gloire 4</text>
+<rect x="126" y="196" width="470" height="74" rx="8" fill="#3a2f24" stroke="#8a6a40" stroke-width="1.5"/>
+<circle cx="156" cy="233" r="22" fill="#6b4a2a" stroke="#111" stroke-width="3"/>
+<text x="156" y="238" font-size="12" fill="#eee" text-anchor="middle" font-weight="normal">invoqué</text>
+<text x="190" y="220" font-size="15" fill="#f0d0a0" text-anchor="start" font-weight="bold">Invoque : Loup-garou (créature invoquée)</text>
+<text x="190" y="242" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">attaque 7 · vif · retirée après les dégâts, sans gloire</text>
+<rect x="190" y="248" width="39" height="22" rx="11" fill="#1f1f1f" stroke="#d0b070" stroke-width="1"/>
+<text x="209.5" y="264" font-size="12" fill="#d0b070" text-anchor="middle" font-weight="bold">vif</text>
+<text x="126" y="292" font-size="13" fill="#e8e8e8" text-anchor="start" font-weight="normal">À parer : 14 (vif, 2 × 7) · Si non paré : 7 dégâts, 4 blessures</text>
+<text x="126" y="310" font-size="12" fill="#999" text-anchor="start" font-weight="normal">Dans la phase d'attaque, ce sont les Invocateurs (armure 4) qu'on attaque.</text>
+<rect x="640" y="130" width="596" height="190" rx="10" fill="#2c2c2c" stroke="#666" stroke-width="1.5"/>
+<circle cx="692" cy="190" r="36" fill="#3a7a3a" stroke="#111" stroke-width="3"/>
+<text x="692" y="195" font-size="12" fill="#eee" text-anchor="middle" font-weight="normal">orques</text>
+<text x="742" y="160" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Cogneurs</text>
+<text x="742" y="182" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 3 · attaque 4 · gloire 4</text>
+<rect x="742" y="196" width="60" height="22" rx="11" fill="#1f1f1f" stroke="#d07070" stroke-width="1"/>
+<text x="772.0" y="212" font-size="12" fill="#d07070" text-anchor="middle" font-weight="bold">brutal</text>
+<rect x="810" y="196" width="172" height="22" rx="11" fill="#1f1f1f" stroke="#9aa7b4" stroke-width="1"/>
+<text x="896.0" y="212" font-size="12" fill="#9aa7b4" text-anchor="middle" font-weight="bold">P  résistance physique</text>
+<text x="742" y="246" font-size="13" fill="#e8e8e8" text-anchor="start" font-weight="normal">À parer : 4 · Si non paré : 8 dégâts (brutal, 2 × 4), 4 blessures</text>
+<rect x="742" y="262" width="160" height="28" rx="4" fill="#3d6fb5" stroke="#5a5a5a" stroke-width="1"/>
+<text x="822" y="281" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Parer Cogneurs</text>
+<path d="M 300 320 L 300 344" stroke="#e0a040" stroke-width="2" fill="none"/>
+<rect x="24" y="344" width="760" height="330" rx="10" fill="#2e2a22" stroke="#e0a040" stroke-width="2"/>
+<text x="44" y="374" font-size="17" fill="#f0c060" text-anchor="start" font-weight="bold">Parade en cours : Loup-garou (invoqué par les Invocateurs orques)</text>
+<rect x="44" y="388" width="720" height="34" rx="8" fill="#2b2730" stroke="#d0b070" stroke-width="1.5"/>
+<text x="58" y="410" font-size="14" fill="#ddd" text-anchor="start" font-weight="normal">Vif : il faut parer le double de son attaque, 2 × 7 = 14</text>
+<rect x="44" y="436" width="230" height="64" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="60" cy="458" r="7" fill="#2f6db5"/>
+<text x="74" y="462" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Détermination renforcée</text>
+<text x="74" y="484" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Parade 5</text>
+<rect x="286" y="436" width="230" height="64" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="302" cy="458" r="7" fill="#3a8a3a"/>
+<text x="316" y="462" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Marche (de côté)</text>
+<text x="316" y="484" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Parade 1</text>
+<text x="44" y="536" font-size="22" fill="#f0c060" text-anchor="start" font-weight="bold">Parade : 6 / 14</text>
+<rect x="250" y="516" width="230" height="28" rx="4" fill="#3d6fb5" stroke="#5a5a5a" stroke-width="1"/>
+<text x="365" y="535" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Valider la parade (Entrée)</text>
+<text x="44" y="574" font-size="12" fill="#999" text-anchor="start" font-weight="normal">Ratée : la créature inflige ses 7 dégâts dans la phase suivante, puis retourne à la défausse marron.</text>
+<text x="44" y="594" font-size="12" fill="#999" text-anchor="start" font-weight="normal">Réussie : elle va aussitôt à la défausse marron, sans gloire ; les Invocateurs sont marqués « parés ».</text>
+<text x="44" y="624" font-size="12" fill="#999" text-anchor="start" font-weight="normal">L'élément compte comme dans la 032 : Vif double l'attaque à atteindre, les parades inefficaces</text>
+<text x="44" y="642" font-size="12" fill="#999" text-anchor="start" font-weight="normal">restent divisées par deux (Glaceurs, glace 3, vifs : il faut 6 en parades de feu, ou 12 en parades physiques).</text>
+<rect x="810" y="344" width="426" height="330" rx="10" fill="#262626" stroke="#555" stroke-width="1"/>
+<text x="828" y="374" font-size="16" fill="#ddd" text-anchor="start" font-weight="bold">Dans ce combat</text>
+<text x="828" y="404" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">Parade : Détermination, Marche, 6 / 14 ratée</text>
+<text x="828" y="428" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">Dégâts : Loup-garou (invoqué), 7 :</text>
+<text x="828" y="452" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">    4 blessures</text>
+<text x="828" y="476" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">Dégâts : Cogneurs, brutal 2 × 4 = 8 :</text>
+<text x="828" y="500" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">    4 blessures</text>
+<text x="828" y="524" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">Dégâts : Sorcières maudites, 3 : 2 blessures,</text>
+<text x="828" y="548" font-size="13" fill="#c0d890" text-anchor="start" font-weight="normal">    toxique : 2 de plus dans la défausse</text>
+<text x="828" y="572" font-size="13" fill="#ccc" text-anchor="start" font-weight="normal">Dégâts : Dragons de glace, 6 : 3 blessures,</text>
+<text x="828" y="596" font-size="13" fill="#b0c8e8" text-anchor="start" font-weight="normal">    paralysant : 2 cartes défaussées de la main</text>
+<text x="828" y="640" font-size="11" fill="#888" text-anchor="start" font-weight="normal">(exemples réunis pour la maquette)</text>
+</svg>

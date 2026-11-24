@@ -1,0 +1,52 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/arcanum-audio",
+    "crates/arcanum-core",
+    "crates/arcanum-i18n",
+    "crates/arcanum-persistance",
+    "crates/arcanum-ui",
+]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+publish = false
+# Code sous GPL v3 ou ultérieure ; visuels et libellés de assets/ sous CC BY-SA 4.0 (voir NOTICE).
+license = "GPL-3.0-or-later"
+
+[workspace.dependencies]
+# ChaCha8 : même graine, même suite sur Windows comme sur Linux.
+rand = { version = "0.10", default-features = false, features = ["std"] }
+rand_chacha = "0.10"
+thiserror = "2"
+serde = "1"
+serde_json = "1"
+# Spec 029 : fichiers de contenu du jeu (cartes, decks, tuiles), embarqués dans arcanum-core.
+ron = "0.12"
+# Renderer glow (OpenGL) : le plus léger, Windows et Linux. Sans `persistence` (rôle d'arcanum-persistance).
+eframe = { version = "0.37", default-features = false, features = ["default_fonts", "glow", "wayland", "x11"] }
+# Spec 043 : seulement pour activer les emojis monochromes des polices par défaut (« ⚔ » de l'assaut) ;
+# même version que celle d'eframe, rien de plus à télécharger (accord de Mathieu, 2026-11-05).
+egui = { version = "0.37", default-features = false, features = ["default_fonts", "monochrome_emoji_fonts"] }
+# Spec 011 : images SVG du plateau de jeu (resvg, Rust pur) chargées depuis le dossier des ressources.
+# Spec 072 : `image` pour les illustrations PNG des cartes et des unités (ADR 0009, Q2).
+egui_extras = { version = "0.37", default-features = false, features = ["svg", "file", "image"] }
+# Spec 072 : décodeur PNG seul, pour le chargeur d'egui_extras et le test des illustrations (ADR 0009, Q2).
+image = { version = "0.25", default-features = false, features = ["png"] }
+# Spec 003 : façade de logs commune à toutes les crates.
+log = "0.4"
+# Spec 003 : dossiers utilisateur Windows et Linux (ADR 0004).
+directories = "6"
+# Spec 003 : heure locale des logs, horloge seule.
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+tempfile = "3"
+# Spec 081 (ADR 0010) : son, sans les options par défaut (ni mp3, ni flac, ni wav, ni dbus sous Linux).
+# Sous Linux, cpal demande libasound2-dev (ALSA) pour compiler.
+kira = { version = "0.12", default-features = false, features = ["cpal", "ogg", "vorbis"] }
+# Spec 004 : lire et écrire l'icône .ico de l'exécutable Windows (tests et outil de génération).
+ico = "0.6"
+# Spec 004 : vérifier que iter-arcanum.exe contient la ressource icône (test Windows seulement).
+object = { version = "0.41", default-features = false, features = ["read_core", "pe", "std"] }
+# Spec 004 : embarquer l'icône dans iter-arcanum.exe (build.rs, Windows seulement), sans lecture de Cargo.toml.
+winresource = { version = "0.1", default-features = false }

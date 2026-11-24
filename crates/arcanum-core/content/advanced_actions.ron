@@ -1,0 +1,181 @@
+// Les 28 actions avancées du jeu de base (spec 050), texte dans ../mage-knight/docs/regles/cartes/actions-avancees.md, version Lost Legion quand
+// il y a un errata. number : numéro n/28 imprimé ; color : couleur de l'effet renforcé (MKUE p. 4, 3.a).
+// Mêmes effets que basic_actions.ron (spec 029) ; RangedFireAttack, RangedIceAttack : attaques à distance de feu, de glace.
+// Unsupported : effet que le moteur ne sait pas encore jouer ; la carte se joue alors de côté (MKUE p. 4, 3.e). cost : DestroyActionCard pour détruire une autre carte action de la main (spec 056).
+// Une option composée (« Mouvement 2 et Soin 1 ») ou conditionnelle n'est pas un effet existant : Unsupported.
+{
+    FireBolt: (number: 1, color: Red, basic: Options([GainCrystal(Red)]), strong: Options([RangedFireAttack(3)])),
+    IceBolt: (number: 2, color: Blue, basic: Options([GainCrystal(Blue)]), strong: Options([RangedIceAttack(3)])),
+    SwiftBolt: (number: 3, color: White, basic: Options([GainCrystal(White)]), strong: Options([RangedAttack(4)])),
+    CrushingBolt: (number: 4, color: Green, basic: Options([GainCrystal(Green)]), strong: Options([SiegeAttack(3)])),
+    // Spec 053 : la seconde option met une Blessure en main.
+    BloodRage: (
+        number: 5, color: Red,
+        basic: Options([Attack(2), AttackWithWound(5)]),
+        strong: Options([Attack(4), AttackWithWound(9)]),
+    ),
+    // Spec 053 : renforcé, l'armure de l'ennemi de la parade en cours −3, jamais sous 1.
+    IceShield: (
+        number: 6, color: Blue,
+        basic: Options([IceBlock(3)]),
+        strong: Options([With(IceBlock(3), [OnEnemy(ArmorReduction(by: 3, min: 1))])]),
+    ),
+    // Spec 052, version Lost Legion : en combat, le Mouvement en Attaque 1 pour 1 ; renforcé, aussi 2 pour 1 en Attaque à distance.
+    Agility: (
+        number: 7, color: White,
+        basic: Options([With(Move(2), [Convert(from: Move, to: Attack(element: Physical, kind: Melee), rate: 1)])]),
+        strong: Options([With(Move(4), [
+            Convert(from: Move, to: Attack(element: Physical, kind: Melee), rate: 1),
+            Convert(from: Move, to: Attack(element: Physical, kind: Ranged), rate: 2),
+        ])]),
+    ),
+    // Spec 053, version Lost Legion : en combat, le Mouvement seul.
+    RefreshingWalk: (
+        number: 8, color: Green,
+        basic: Options([MoveAndHeal(movement: 2, heal: 1)]),
+        strong: Options([MoveAndHeal(movement: 4, heal: 2)]),
+    ),
+    // Spec 052 : réputation −1 (renforcé −2) à la fin du tour, quelle que soit l'option.
+    Intimidate: (
+        number: 9, color: Red,
+        basic: Options([With(Influence(4), [EndOfTurnReputation(-1)]), With(Attack(3), [EndOfTurnReputation(-1)])]),
+        strong: Options([With(Influence(8), [EndOfTurnReputation(-2)]), With(Attack(7), [EndOfTurnReputation(-2)])]),
+    ),
+    // Spec 052 : marais à 1 ; renforcé : lacs et marais à 1, lacs franchissables (MKUE p. 7, 7.a et 7.b).
+    FrostBridge: (
+        number: 10, color: Blue,
+        basic: Options([With(Move(2), [TerrainCost(terrains: Only([Swamp]), change: SetTo(1))])]),
+        strong: Options([With(Move(4), [TerrainCost(terrains: Only([Lake, Swamp]), change: SetTo(1)), Passable(Lake)])]),
+    ),
+    // Spec 053 : plaine, désert, terre désolée moins chers ; renforcé avec un mana bleu en plus, lacs à 0 (Q3).
+    SongOfWind: (
+        number: 11, color: White,
+        basic: Options([With(Move(2), [TerrainCost(terrains: Only([Plains, Desert, Wasteland]), change: Reduce(by: 1, min: 0))])]),
+        strong: Options([
+            With(Move(2), [TerrainCost(terrains: Only([Plains, Desert, Wasteland]), change: Reduce(by: 2, min: 0))]),
+            Paying(Blue, With(Move(2), [
+                TerrainCost(terrains: Only([Plains, Desert, Wasteland]), change: Reduce(by: 2, min: 0)),
+                Passable(Lake),
+                TerrainCost(terrains: Only([Lake]), change: SetTo(0)),
+            ])),
+        ]),
+    ),
+    // Spec 052 : Mouvement et une réduction de coût de tous les terrains pour le tour (MKUE p. 7, 7.a).
+    PathFinding: (
+        number: 12, color: Green,
+        basic: Options([With(Move(2), [TerrainCost(terrains: All, change: Reduce(by: 1, min: 2))])]),
+        strong: Options([With(Move(4), [TerrainCost(terrains: All, change: SetTo(2))])]),
+    ),
+    // Spec 056, version Lost Legion : une Blessure en main ; cristal rouge et un jeton d'une des six couleurs (une option par
+    // couleur) ; renforcé, trois jetons choisis un par un, puis un cristal payé d'un mana de base (choix en attente).
+    BloodRitual: (
+        number: 13, color: Red,
+        basic: Options([
+            WoundCrystalAndToken(crystal: Red, token: Basic(Red)),
+            WoundCrystalAndToken(crystal: Red, token: Basic(Blue)),
+            WoundCrystalAndToken(crystal: Red, token: Basic(White)),
+            WoundCrystalAndToken(crystal: Red, token: Basic(Green)),
+            WoundCrystalAndToken(crystal: Red, token: Gold),
+            WoundCrystalAndToken(crystal: Red, token: Black),
+        ]),
+        strong: Options([WoundAndTokens(3)]),
+    ),
+    // Spec 053 : une option par couleur de mana payée.
+    PureMagic: (
+        number: 14, color: Blue,
+        basic: Options([Paying(Green, Move(4)), Paying(White, Influence(4)), Paying(Blue, Block(4)), Paying(Red, Attack(4))]),
+        strong: Options([Paying(Green, Move(7)), Paying(White, Influence(7)), Paying(Blue, Block(7)), Paying(Red, Attack(7))]),
+    ),
+    // Spec 053 : à la fin du tour, par unité recrutée ce tour.
+    HeroicTale: (
+        number: 15, color: White,
+        basic: Options([With(Influence(3), [EndOfTurnPerRecruit(fame: 0, reputation: 1)])]),
+        strong: Options([With(Influence(6), [EndOfTurnPerRecruit(fame: 1, reputation: 1)])]),
+    ),
+    // Spec 053 : jamais en combat (Q4).
+    Regeneration: (
+        number: 16, color: Green,
+        basic: Options([HealAndReady(heal: 1, level: 2)]),
+        strong: Options([HealAndReady(heal: 2, level: 3)]),
+        healing: true,
+    ),
+    // Spec 053 : au début du combat (Q6) ; bonus des unités pour le combat, pas de dégâts sur elles pour le tour.
+    IntoTheHeat: (
+        number: 17, color: Red,
+        basic: Options([With(Nothing, [UnitBonus(attack: 2, block: 2), NoDamageToUnits])]),
+        strong: Options([With(Nothing, [UnitBonus(attack: 3, block: 3), NoDamageToUnits])]),
+    ),
+    // Spec 052 : à la fin du tour, sous le deck (renforcé : sur le deck) au lieu de la défausse.
+    SteadyTempo: (
+        number: 18, color: Blue,
+        basic: Options([With(Move(2), [ReturnToDeck(top: false)])]),
+        strong: Options([With(Move(4), [ReturnToDeck(top: true)])]),
+    ),
+    // Spec 052 : l'Influence en Parade 1 pour 1 ; renforcé : de glace ou de feu, une option par élément.
+    Diplomacy: (
+        number: 19, color: White,
+        basic: Options([With(Influence(2), [Convert(from: Influence, to: Block(element: Physical), rate: 1)])]),
+        strong: Options([
+            With(Influence(4), [Convert(from: Influence, to: Block(element: Ice), rate: 1)]),
+            With(Influence(4), [Convert(from: Influence, to: Block(element: Fire), rate: 1)]),
+        ]),
+    ),
+    // Spec 053, version Lost Legion : plus par Blessure en main ou sur une unité.
+    InNeed: (
+        number: 20, color: Green,
+        basic: Options([InfluencePerWound(base: 3, per: 1)]),
+        strong: Options([InfluencePerWound(base: 5, per: 2)]),
+    ),
+    // Spec 056 : détruire une autre carte action de la main ; des cristaux selon sa couleur.
+    Decompose: (
+        number: 21, color: Red, cost: DestroyActionCard,
+        basic: Options([CrystalsFromDestroyed(2)]),
+        strong: Options([CrystalsOtherColors]),
+    ),
+    // Spec 056 : une option par couleur, permise avec un cristal de cette couleur ; renforcé, les cristaux dépensés ce tour
+    // reviennent à la fin du tour.
+    CrystalMastery: (
+        number: 22, color: Blue,
+        basic: Options([GainOwnedCrystal(Red), GainOwnedCrystal(Blue), GainOwnedCrystal(White), GainOwnedCrystal(Green)]),
+        strong: Options([With(Nothing, [ReturnSpentCrystals])]),
+    ),
+    // Spec 056 : un dé de couleur de base de la Source, choisi en jouant la carte, puis relancé ; renforcé, relancer la Source,
+    // trois dés de plus, noir et or de toute couleur de base.
+    ManaStorm: (
+        number: 23, color: White,
+        basic: Options([CrystalFromDie]),
+        strong: Options([RerollSource]),
+    ),
+    // Spec 052 : la prochaine carte d'Attaque ou de Parade reçoit le bonus.
+    Ambush: (
+        number: 24, color: Green,
+        basic: Options([With(Move(2), [NextCardBonus(attack: 1, block: 2)])]),
+        strong: Options([With(Move(4), [NextCardBonus(attack: 2, block: 4)])]),
+    ),
+    // Spec 056 : une autre carte action jouée avec elle (option répétable, Q1), répétée trois fois (renforcé : son effet
+    // renforcé deux fois, sans le payer), puis détruite.
+    MaximalEffect: (
+        number: 25, color: Red,
+        basic: Options([Repeat(3)]),
+        strong: Options([Repeat(2)]),
+    ),
+    // Spec 056 : l'effet de base (jouer un sort de l'offre) attend la spec 054 ; renforcé, une option par couleur payée.
+    // Spec 054 : de base, défausser une carte de couleur, puis lancer un sort de sa couleur de l'offre (version Lost Legion).
+    MagicTalent: (
+        number: 26, color: Blue,
+        basic: Options([CastFromOffer]),
+        strong: Options([Paying(Red, GainSpell(Red)), Paying(Blue, GainSpell(Blue)), Paying(White, GainSpell(White)), Paying(Green, GainSpell(Green))]),
+    ),
+    // Spec 056 : une fois dans le tour, l'Influence pour une action avancée de l'offre (LearnAdvancedAction).
+    Learning: (
+        number: 27, color: White,
+        basic: Options([With(Influence(2), [LearningDiscount(cost: 6, to: DiscardPile)])]),
+        strong: Options([With(Influence(4), [LearningDiscount(cost: 9, to: Hand)])]),
+    ),
+    // Spec 056 : détruire une autre carte action ; une action avancée de sa couleur de l'offre, dans la défausse (renforcé : en main).
+    Training: (
+        number: 28, color: Green, cost: DestroyActionCard,
+        basic: Options([TrainFromOffer(DiscardPile)]),
+        strong: Options([TrainFromOffer(Hand)]),
+    ),
+}

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="mb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e4dcf0"/><stop offset=".5" stop-color="#a89cc0"/><stop offset="1" stop-color="#6a5e88"/></linearGradient>
+    <linearGradient id="mbs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#857aa0"/><stop offset="1" stop-color="#4f4568"/></linearGradient>
+    <linearGradient id="rf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a5a90"/><stop offset="1" stop-color="#2f2448"/></linearGradient>
+    <linearGradient id="gs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8b0a4"/><stop offset="1" stop-color="#6f665b"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="92" ry="8" fill="url(#sh)"/>
+  <g id="mausolee" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M144,172 L162,161 L162,107 L144,118 Z" fill="url(#mbs)"/>
+    <path d="M56,118 L74,107 L162,107 L144,118 Z" fill="#c8bedc"/>
+    <rect x="56" y="118" width="88" height="54" fill="url(#mb)"/>
+    <path d="M50,118 L100,84 L150,118 Z" fill="url(#rf)"/>
+    <path d="M100,84 L150,118 L168,107 L118,73 Z" fill="url(#mbs)"/>
+    <circle cx="100" cy="106" r="6" fill="#8be8a0" stroke-width="1.6"/>
+  </g>
+  <g id="colonnes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <rect x="59" y="120" width="10" height="50" fill="url(#mb)"/>
+    <rect x="77" y="120" width="10" height="50" fill="url(#mb)"/>
+    <rect x="113" y="120" width="10" height="50" fill="url(#mb)"/>
+    <rect x="131" y="120" width="10" height="50" fill="url(#mb)"/>
+    <path d="M88,172 V136 C88,126 112,126 112,136 V172 Z" fill="#17120c"/>
+    <path d="M50,172 L150,172 L156,186 L44,186 Z" fill="url(#gs)"/>
+  </g>
+  <g id="tombes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M18,186 V164 C18,154 34,154 34,164 V186 Z" fill="url(#gs)"/>
+    <path d="M170,188 L168,168 C168,160 182,158 184,166 L186,186 Z" fill="url(#gs)"/>
+    <path d="M22,168 H30 M22,174 H30" stroke-width="1.6" stroke-opacity=".7" fill="none"/>
+    <path d="M36,146 C40,140 44,140 46,146 M156,140 C160,134 164,134 166,140" stroke="#8be8a0" stroke-width="2" fill="none" stroke-opacity=".8"/>
+  </g>
+</svg>

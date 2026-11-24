@@ -1,0 +1,121 @@
+// Les unités du jeu de base (spec 050), texte dans ../mage-knight/docs/regles/cartes/unites.md (version Lost Legion quand il y a un errata).
+// rank : Regular (dos argent) ou Elite (dos or) ; count : exemplaires, 20 par pioche (MKUE p. 3) ; influence : coût de
+// recrutement ; level : I à IV ; resistances : Physical, Fire, Ice ; recruit : lieux de recrutement (MKUE p. 8, 4.a).
+// abilities (spec 042), dans l'ordre de la carte : Options([...]) une option au choix ; Mana(couleur, [...]) idem après un mana ;
+// Wounding([...]) idem, l'unité reçoit une Blessure ; Priced([(effet, [mana en plus]), ...]) chaque option avec son mana en plus ;
+// TwoTokensAnyColors deux jetons de n'importe quelles couleurs ; Unsupported, UnsupportedMana(couleur) : pas encore jouée (Q2).
+// Effets : ceux de basic_actions.ron, plus IceAttack, ColdFireAttack, SiegeFireAttack, SiegeIceAttack, ColdFireBlock,
+// SwiftBlock(n) (parade qui compte double contre Vif, Lost Legion), ReadyUnit(niveau max), TokenAndCrystal(couleur).
+{
+    // --- Unités régulières ---
+    Peasants: (
+        rank: Regular, count: 3, influence: 4, level: 1, armor: 3, resistances: [], recruit: [Village],
+        abilities: [Options([Attack(2), Block(2)]), Options([Influence(2)]), Options([Move(2)])],
+    ),
+    Herbalists: (
+        rank: Regular, count: 2, influence: 3, level: 1, armor: 2, resistances: [], recruit: [Monastery, Village],
+        abilities: [Mana(Green, [Heal(2)]), Options([ReadyUnit(2)]), Options([GainToken(Green)])],
+    ),
+    Foresters: (
+        rank: Regular, count: 2, influence: 5, level: 1, armor: 4, resistances: [], recruit: [Village],
+        // Spec 052 : forêts, collines et marais −1 pour le tour, jamais sous 0.
+        abilities: [
+            Options([With(Move(2), [TerrainCost(terrains: Only([Forest, Hills, Swamp]), change: Reduce(by: 1, min: 0))])]),
+            Options([Block(3)]),
+        ],
+    ),
+    UtemCrossbowmen: (
+        rank: Regular, count: 2, influence: 6, level: 2, armor: 4, resistances: [], recruit: [Keep, Village],
+        abilities: [Options([Attack(3), Block(3)]), Options([RangedAttack(2)])],
+    ),
+    UtemGuardsmen: (
+        rank: Regular, count: 2, influence: 5, level: 2, armor: 5, resistances: [], recruit: [Keep, Village],
+        abilities: [Options([Attack(2)]), Options([SwiftBlock(4)])],
+    ),
+    UtemSwordsmen: (
+        rank: Regular, count: 2, influence: 6, level: 2, armor: 4, resistances: [], recruit: [Keep],
+        abilities: [Options([Attack(3), Block(3)]), Wounding([Attack(6), Block(6)])],
+    ),
+    GuardianGolems: (
+        rank: Regular, count: 2, influence: 7, level: 2, armor: 3, resistances: [Physical], recruit: [MageTower, Keep],
+        abilities: [Options([Attack(2), Block(2)]), Mana(Red, [FireBlock(4)]), Mana(Blue, [IceBlock(4)])],
+    ),
+    Illusionists: (
+        rank: Regular, count: 2, influence: 7, level: 2, armor: 2, resistances: [Physical], recruit: [MageTower, Monastery],
+        abilities: [
+            Options([Influence(4)]),
+            // Spec 053 : un ennemi non fortifié n'attaque pas ce combat.
+            Mana(White, [With(Nothing, [OnUnfortifiedEnemy(DoesNotAttack)])]),
+            Options([GainCrystal(White)]),
+        ],
+    ),
+    RedCapeMonks: (
+        rank: Regular, count: 1, influence: 7, level: 2, armor: 4, resistances: [], recruit: [Monastery],
+        abilities: [Options([Attack(3), Block(3)]), Mana(Red, [FireAttack(4), FireBlock(4)])],
+    ),
+    NorthernMonks: (
+        rank: Regular, count: 1, influence: 7, level: 2, armor: 4, resistances: [], recruit: [Monastery],
+        abilities: [Options([Attack(3), Block(3)]), Mana(Blue, [IceAttack(4), IceBlock(4)])],
+    ),
+    SavageMonks: (
+        rank: Regular, count: 1, influence: 7, level: 2, armor: 4, resistances: [], recruit: [Monastery],
+        abilities: [Options([Attack(3), Block(3)]), Mana(Green, [SiegeAttack(4)])],
+    ),
+
+    // --- Unités d'élite ---
+    FireGolems: (
+        rank: Elite, count: 2, influence: 8, level: 3, armor: 4, resistances: [Fire, Physical], recruit: [MageTower, Keep],
+        abilities: [Options([Attack(3), Block(3)]), Mana(Red, [RangedFireAttack(4)])],
+    ),
+    IceGolems: (
+        rank: Elite, count: 2, influence: 8, level: 3, armor: 4, resistances: [Ice, Physical], recruit: [MageTower, Keep],
+        abilities: [Options([Attack(3), Block(3)]), Mana(Blue, [IceAttack(6)])],
+    ),
+    FireMages: (
+        rank: Elite, count: 2, influence: 9, level: 3, armor: 4, resistances: [Fire], recruit: [MageTower, Monastery],
+        abilities: [Options([RangedFireAttack(3)]), Mana(Red, [FireAttack(6), FireBlock(6)]), Options([TokenAndCrystal(Red)])],
+    ),
+    IceMages: (
+        rank: Elite, count: 2, influence: 9, level: 3, armor: 4, resistances: [Ice], recruit: [MageTower, Monastery],
+        abilities: [Options([IceAttack(4), IceBlock(4)]), Mana(Blue, [SiegeIceAttack(4)]), Options([TokenAndCrystal(Blue)])],
+    ),
+    AmotepGunners: (
+        rank: Elite, count: 2, influence: 8, level: 3, armor: 6, resistances: [], recruit: [Keep, City],
+        abilities: [Options([Attack(5), Block(5)]), Mana(Red, [RangedFireAttack(6)])],
+    ),
+    AmotepFreezers: (
+        rank: Elite, count: 2, influence: 8, level: 3, armor: 6, resistances: [], recruit: [Keep, City],
+        abilities: [
+            Options([Attack(5), Block(5)]),
+            // Spec 053 : l'ennemi visé n'attaque pas ce combat, armure −3 (min. 1).
+            Mana(Blue, [With(Nothing, [OnEnemy(DoesNotAttack), OnEnemy(ArmorReduction(by: 3, min: 1))])]),
+        ],
+    ),
+    Catapults: (
+        rank: Elite, count: 3, influence: 9, level: 3, armor: 4, resistances: [], recruit: [Keep, City],
+        abilities: [Options([SiegeAttack(3)]), Mana(Red, [SiegeFireAttack(5)]), Mana(Blue, [SiegeIceAttack(5)])],
+    ),
+    AltemMages: (
+        rank: Elite, count: 2, influence: 12, level: 4, armor: 5, resistances: [Fire, Ice], recruit: [City],
+        abilities: [
+            TwoTokensAnyColors,
+            Priced([
+                (ColdFireAttack(5), []), (ColdFireBlock(5), []),
+                (ColdFireAttack(7), [Blue]), (ColdFireBlock(7), [Blue]),
+                (ColdFireAttack(7), [Red]), (ColdFireBlock(7), [Red]),
+                (ColdFireAttack(9), [Blue, Red]), (ColdFireBlock(9), [Blue, Red]),
+            ]),
+            // Spec 053 : de nuit, les attaques de ce combat deviennent de feu glacé, ou de siège en plus.
+            BlackMana([With(Nothing, [AttacksBecome(ColdFire)]), With(Nothing, [AttacksGainSiege])]),
+        ],
+    ),
+    AltemGuardians: (
+        rank: Elite, count: 3, influence: 11, level: 4, armor: 7, resistances: [], recruit: [City],
+        abilities: [
+            Options([Attack(5)]),
+            Options([SwiftBlock(8)]),
+            // Spec 053 : les unités ont toutes les résistances ce tour.
+            Mana(Green, [With(Nothing, [UnitsAllResistances])]),
+        ],
+    ),
+}

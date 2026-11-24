@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#c9d1da"/><stop offset="1" stop-color="#6c7886"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2d27a"/><stop offset=".5" stop-color="#d9b24a"/><stop offset="1" stop-color="#8a6524"/></linearGradient>
+    <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#e8e4d6"/><stop offset="1" stop-color="#a8a090"/></linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a8ad6"/><stop offset="1" stop-color="#1e3a7a"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a34"/><stop offset="1" stop-color="#553419"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="48" ry="8" fill="url(#shadow)"/>
+  <!-- cape : cape bleue -->
+  <g id="cape" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,60 C30,84 28,112 32,136 L92,136 C96,112 94,84 84,60 Z" fill="url(#cloth)"/>
+  </g>
+  <!-- jambes : jambières de plates, solerets dorés -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,104 L42,132 L56,134 L58,106 Z" fill="url(#plate)"/>
+    <path d="M62,106 L64,134 L78,132 L76,104 Z" fill="url(#plate)"/>
+    <circle cx="50" cy="118" r="4" fill="url(#gold)" stroke-width="1.6"/><circle cx="70" cy="118" r="4" fill="url(#gold)" stroke-width="1.6"/>
+    <path d="M38,128 L57,130 L57,146 L30,146 C30,138 33,132 38,128 Z" fill="url(#plate)"/>
+    <path d="M63,130 L82,128 C87,132 90,138 90,146 L63,146 Z" fill="url(#plate)"/>
+    <path d="M31,142 L57,142 M63,142 L89,142" stroke="#d9b24a" stroke-width="2.4" fill="none"/>
+  </g>
+  <!-- torse : cuirasse blanche bordée d'or -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,60 C36,80 36,96 40,110 L80,110 C84,96 84,80 82,60 C72,54 48,54 38,60 Z" fill="url(#plate)"/>
+    <path d="M40,62 C50,58 70,58 80,62" stroke="#d9b24a" stroke-width="3" fill="none"/>
+    <path d="M60,64 L60,96" stroke-opacity=".5" stroke-width="1.4" fill="none"/>
+    <path d="M40,98 L80,98 L80,106 L40,106 Z" fill="url(#gold)"/>
+    <path d="M44,106 L76,106 L74,120 L46,120 Z" fill="url(#plate)"/>
+  </g>
+  <!-- bras droit : hallebarde dressée -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M94,144 L96,10 L101,10 L100,144 Z" fill="url(#wood)"/>
+    <path d="M98.5,0 L102,14 L95,14 Z" fill="url(#plate)" stroke-width="1.8"/>
+    <path d="M101,16 C112,14 118,20 118,34 C112,30 106,30 101,32 Z" fill="url(#plate)"/>
+    <path d="M96,18 L88,22 L96,26 Z" fill="url(#plate)" stroke-width="1.8"/>
+    <path d="M94,34 L103,34 L102,38 L95,38 Z" fill="url(#gold)" stroke-width="1.6"/>
+    <path d="M80,62 C90,66 96,76 96,88 L84,90 C84,82 82,76 76,72 Z" fill="url(#plate)"/>
+    <circle cx="96" cy="92" r="7" fill="url(#plate)"/>
+  </g>
+  <!-- tête : heaume fermé à fente, crête dorée -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M52,16 C54,6 66,6 68,16 C66,12 54,12 52,16 Z" fill="url(#gold)"/>
+    <path d="M58,4 L62,4 L62,16 L58,16 Z" fill="url(#gold)" stroke-width="1.6"/>
+    <path d="M40,40 C38,22 48,14 60,14 C72,14 82,22 80,40 C80,56 72,66 60,66 C48,66 40,56 40,40 Z" fill="url(#plate)"/>
+    <path d="M44,42 L76,42 L76,48 L44,48 Z" fill="#17120c"/>
+    <path d="M60,48 L60,62" stroke-width="2.4" fill="none"/>
+    <path d="M52,54 L54,54 M52,58 L54,58 M66,54 L68,54 M66,58 L68,58" stroke-width="1.6" fill="none"/>
+    <ellipse cx="52" cy="45" rx="3" ry="1.8" fill="#ffd94a" stroke="none"/><ellipse cx="68" cy="45" rx="3" ry="1.8" fill="#ffd94a" stroke="none"/>
+    <path d="M42,36 L78,36" stroke="#d9b24a" stroke-width="2.4" fill="none"/>
+    <path d="M48,22 C51,18 54,17 58,17" stroke="#fff" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- bras gauche : grand pavois blanc au soleil d'or (fortifié, toutes résistances) -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M6,62 L54,62 L54,118 C54,132 40,142 30,146 C20,142 6,132 6,118 Z" fill="url(#shield)"/>
+    <path d="M11,67 L49,67 L49,117 C49,128 38,136 30,140 C22,136 11,128 11,117 Z" fill="none" stroke="#d9b24a" stroke-width="2.6"/>
+    <circle cx="30" cy="98" r="9" fill="url(#gold)" stroke-width="1.8"/>
+    <path d="M30,80 L30,85 M30,111 L30,116 M12,98 L17,98 M43,98 L48,98 M17,85 L21,89 M39,107 L43,111 M43,85 L39,89 M17,111 L21,107" stroke="#d9b24a" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+    <path d="M14,68 C22,66 30,66 38,66" stroke="#fff" stroke-opacity=".8" stroke-width="1.4" fill="none"/>
+  </g>
+</svg>

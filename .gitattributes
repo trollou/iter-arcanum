@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.pdf binary
+crates/arcanum-i18n/tests/fixtures/invalides/latin1.json binary
+*.ico binary
+*.png binary

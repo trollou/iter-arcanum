@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173.205 200.0" width="173.205" height="200.0">
+  <defs><clipPath id="c"><polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50"/></clipPath></defs>
+  <polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50" fill="#C9A15E"/>
+  <g clip-path="url(#c)">
+    <ellipse cx="137.6" cy="132.8" rx="12.8" ry="10" fill="#BE9454"/>
+    <ellipse cx="65.5" cy="135.2" rx="16.5" ry="7.4" fill="#BE9454"/>
+    <ellipse cx="123.3" cy="134" rx="18.5" ry="7.6" fill="#BE9454"/>
+    <ellipse cx="55.3" cy="35.6" rx="13.8" ry="9.2" fill="#BE9454"/>
+    <ellipse cx="129.7" cy="39.1" rx="15.2" ry="6.1" fill="#BE9454"/>
+    <ellipse cx="124.5" cy="103" rx="18.9" ry="9" fill="#BE9454"/>
+    <ellipse cx="60.1" cy="103.8" rx="10.5" ry="9" fill="#BE9454"/>
+    <ellipse cx="37.1" cy="38.3" rx="11.6" ry="8.8" fill="#BE9454"/>
+    <ellipse cx="35.2" cy="76.6" rx="15.3" ry="7.2" fill="#BE9454"/>
+    <ellipse cx="118.9" cy="191.9" rx="12" ry="9" fill="#BE9454"/>
+    <ellipse cx="68.8" cy="180.4" rx="18.2" ry="7.9" fill="#BE9454"/>
+    <ellipse cx="138.1" cy="58.4" rx="10.3" ry="8.1" fill="#BE9454"/>
+    <path d="M9.1,139.6 l-3,-6 M9.1,139.6 l0,-7 M9.1,139.6 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M103.5,168 l-3,-6 M103.5,168 l0,-7 M103.5,168 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M26,34.8 l-3,-6 M26,34.8 l0,-7 M26,34.8 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M91.9,71.1 l-3,-6 M91.9,71.1 l0,-7 M91.9,71.1 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M40.7,31.2 l-3,-6 M40.7,31.2 l0,-7 M40.7,31.2 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M16.7,91.7 l-3,-6 M16.7,91.7 l0,-7 M16.7,91.7 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M40.2,123.5 l-3,-6 M40.2,123.5 l0,-7 M40.2,123.5 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M30.9,150.7 l-3,-6 M30.9,150.7 l0,-7 M30.9,150.7 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M46.3,29.3 l-3,-6 M46.3,29.3 l0,-7 M46.3,29.3 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M105.3,181.3 l-3,-6 M105.3,181.3 l0,-7 M105.3,181.3 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M140.3,9.1 l-3,-6 M140.3,9.1 l0,-7 M140.3,9.1 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M40.7,48.6 l-3,-6 M40.7,48.6 l0,-7 M40.7,48.6 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M143.8,93.6 l-3,-6 M143.8,93.6 l0,-7 M143.8,93.6 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M22,25.3 l-3,-6 M22,25.3 l0,-7 M22,25.3 l3,-6" stroke="#7E8F3E" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="129.1" cy="186" rx="3.5" ry="2.5" fill="#8C6B3E"/>
+    <ellipse cx="108" cy="165.2" rx="3.5" ry="2.5" fill="#8C6B3E"/>
+    <ellipse cx="70.1" cy="147.5" rx="3.5" ry="2.5" fill="#8C6B3E"/>
+    <ellipse cx="108.6" cy="151.8" rx="3.5" ry="2.5" fill="#8C6B3E"/>
+    <ellipse cx="112.1" cy="133.4" rx="3.5" ry="2.5" fill="#8C6B3E"/>
+    <ellipse cx="16.2" cy="35.5" rx="3.5" ry="2.5" fill="#8C6B3E"/>
+  </g>
+</svg>

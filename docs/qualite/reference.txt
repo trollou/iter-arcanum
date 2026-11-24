@@ -1,0 +1,14 @@
+# Référence de scripts/qualite.sh : 34720d4 2026-11-20 ; une mesure par ligne.
+lignes_src 52944
+lignes_tests 88402
+plus_gros_fichier 2463
+fichiers_trop_longs 1
+fonctions_trop_longues 43
+fonctions_trop_complexes 7
+plus_longue_fonction 491
+plus_complexe_fonction 49
+couverture_arcanum_core 94.3
+couverture_arcanum_i18n 91.2
+couverture_arcanum_persistance 96.3
+couverture_arcanum_ui 74.5
+couverture_totale 84.1

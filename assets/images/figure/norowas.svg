@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbe6cf"/><stop offset="1" stop-color="#d7a981"/></linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf0b0"/><stop offset="1" stop-color="#c7a341"/></linearGradient>
+    <linearGradient id="cloak" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8fa9cf"/><stop offset=".55" stop-color="#5c7fb0"/><stop offset="1" stop-color="#34496b"/></linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6fae62"/><stop offset="1" stop-color="#27552b"/></linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fa"/><stop offset=".5" stop-color="#aab4bf"/><stop offset="1" stop-color="#5f6b78"/></linearGradient>
+    <linearGradient id="leather" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a34"/><stop offset="1" stop-color="#553419"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="40" ry="8" fill="url(#shadow)"/>
+  <!-- cape gris-bleu -->
+  <g id="cape">
+    <path d="M38,54 C24,74 18,112 22,142 L38,135 L47,146 L60,134 L73,146 L82,135 L98,142 C102,112 96,74 82,54 Z" fill="url(#cloak)" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M32,84 C28,104 28,122 31,136 M88,84 C92,104 92,122 89,136" stroke="#17120c" stroke-opacity=".5" stroke-width="1.6" fill="none"/>
+  </g>
+  <!-- longue queue de cheval blonde, sortie de la pointe du casque -->
+  <g id="cheveux" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M60,8 C42,2 22,14 18,38 C16,52 22,62 16,78 C28,72 34,60 32,46 C31,32 42,22 56,22 Z" fill="url(#hair)"/>
+    <path d="M54,12 C40,12 28,22 25,38 C23,50 26,58 23,68" stroke-width="1.4" stroke-opacity=".5" fill="none"/>
+  </g>
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M49,112 L46,132 L55,134 L58,114 Z" fill="#e6ebf0"/>
+    <path d="M62,114 L65,134 L74,132 L71,112 Z" fill="#c3ccd6"/>
+    <path d="M41,128 L56,130 L57,146 L35,146 C35,140 37,133 41,128 Z" fill="url(#leather)"/>
+    <path d="M64,130 L79,128 C83,133 85,140 85,146 L63,146 Z" fill="url(#leather)"/>
+    <path d="M40,134 L56,135 M64,135 L80,134" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+  </g>
+  <!-- tunique verte, plastron d'argent -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M45,100 L39,124 L50,121 L60,128 L70,121 L81,124 L75,100 Z" fill="url(#green)"/>
+    <path d="M42,117 L50,115 L60,121 L70,115 L78,117" stroke="#d9b24a" stroke-width="1.6" fill="none"/>
+    <path d="M42,62 C40,80 43,92 46,102 L74,102 C77,92 80,80 78,62 C70,57 50,57 42,62 Z" fill="url(#steel)"/>
+    <path d="M46,76 C52,82 57,82 60,77 C63,82 68,82 74,76" stroke-width="1.5" stroke-opacity=".5" fill="none"/>
+    <path d="M44,64 L74,94 L70,98 L43,72 Z" fill="url(#green)" stroke-width="1.8"/>
+    <path d="M45,96 L75,96 L74,104 L46,104 Z" fill="url(#leather)"/>
+    <rect x="56" y="95" width="8" height="10" rx="2" fill="#d9b24a"/>
+  </g>
+  <!-- bras gauche : longue épée fine, pointe au sol -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M31,104 C24,116 16,130 8,146 C20,134 30,120 37,108 Z" fill="url(#steel)"/>
+    <path d="M32,108 C26,118 20,128 13,139" stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none"/>
+    <path d="M25,98 L43,108" stroke="#d9b24a" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M40,62 C30,66 26,80 28,94 L38,96 C38,86 40,78 46,72 Z" fill="#e6ebf0"/>
+    <path d="M26,86 L40,87 L40,96 L26,95 Z" fill="url(#steel)"/>
+    <circle cx="34" cy="101" r="6.5" fill="url(#skin)"/>
+  </g>
+  <!-- bras droit : poing sur la hanche -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,62 C92,66 98,78 94,90 L84,100 L77,93 L84,85 C84,79 81,76 74,72 Z" fill="#e6ebf0"/>
+    <path d="M86,82 L96,88 L91,96 L81,90 Z" fill="url(#steel)"/>
+    <circle cx="80" cy="98" r="6.5" fill="url(#skin)"/>
+  </g>
+  <!-- visage d'elfe, casque pointu -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,44 L25,34 L45,57 Z M76,44 L95,34 L75,57 Z" fill="url(#skin)"/>
+    <path d="M43,46 C43,36 50,30 60,30 C70,30 77,36 77,46 C77,58 70,67 60,67 C50,67 43,58 43,46 Z" fill="url(#skin)"/>
+    <path d="M44,40 L42,58 L49,46 Z M76,40 L78,58 L71,46 Z" fill="url(#hair)" stroke-width="1.6"/>
+    <path d="M41,45 C39,28 50,16 60,3 C70,16 81,28 79,45 C73,39 66,38 60,43 C54,38 47,39 41,45 Z" fill="url(#steel)"/>
+    <path d="M60,3 L60,43" stroke-width="1.6" fill="none"/>
+    <path d="M50,24 C52,19 55,15 58,11" stroke="#fff" stroke-opacity=".8" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+    <path d="M60,29 L63,33 L60,37 L57,33 Z" fill="#5c7fb0" stroke-width="1.3"/>
+    <path d="M47,46 L56,47 M73,46 L64,47" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="52" cy="51" rx="3" ry="3.2" fill="#fff" stroke-width="1.2"/>
+    <ellipse cx="68" cy="51" rx="3" ry="3.2" fill="#fff" stroke-width="1.2"/>
+    <circle cx="52.5" cy="51.3" r="1.7" fill="#2f6f8f" stroke="none"/><circle cx="67.5" cy="51.3" r="1.7" fill="#2f6f8f" stroke="none"/>
+    <path d="M59,55 L60,58 L62,58" stroke-width="1.3" stroke-opacity=".6" stroke-linecap="round" fill="none"/>
+    <path d="M55,62 C58,63.5 62,63.5 65,62" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

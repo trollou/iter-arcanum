@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173.205 200.0" width="173.205" height="200.0">
+  <defs><clipPath id="c"><polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50"/></clipPath></defs>
+  <polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50" fill="#EAD58A"/>
+  <g clip-path="url(#c)">
+    <path d="M10,45 q20,-12 40,0 t40,0 t40,0 t40,0" stroke="#CDB062" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M30,75 q20,-12 40,0 t40,0 t40,0 t40,0" stroke="#CDB062" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M10,105 q20,-12 40,0 t40,0 t40,0 t40,0" stroke="#CDB062" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M30,135 q20,-12 40,0 t40,0 t40,0 t40,0" stroke="#CDB062" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M10,165 q20,-12 40,0 t40,0 t40,0 t40,0" stroke="#CDB062" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="100.5" cy="129.0" r="2.5" fill="#B89A50"/>
+    <circle cx="120.0" cy="153.1" r="2.5" fill="#B89A50"/>
+    <circle cx="33.3" cy="95.9" r="2.5" fill="#B89A50"/>
+    <circle cx="136.8" cy="117.9" r="2.5" fill="#B89A50"/>
+  </g>
+</svg>

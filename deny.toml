@@ -1,0 +1,45 @@
+# Règles de cargo-deny : licences des dépendances compatibles avec la GPL v3 (NOTICE).
+# Vérifier : `cargo deny check licenses` (outil : `cargo install --locked cargo-deny`).
+# Une dépendance refusée : vérifier sa licence et sa compatibilité avec la GPL v3 avant de l'ajouter ici.
+
+[graph]
+# Les cibles du jeu : Windows et Linux (CLAUDE.md), rien d'autre.
+targets = ["x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+all-features = false
+
+[licenses]
+# Licences permissives ou à copyleft faible, toutes compatibles avec la GPL v3.
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "MPL-2.0",
+    # Polices embarquées par egui (epaint_default_fonts).
+    "OFL-1.1",
+    "Ubuntu-font-1.0",
+]
+confidence-threshold = 0.9
+
+[licenses.private]
+# Nos crates ne sont pas publiées (publish = false) : leur licence est celle du workspace.
+ignore = true
+
+[bans]
+multiple-versions = "allow"
+wildcards = "deny"
+# Les dépendances internes (arcanum-core…) sont déclarées par chemin, sans version.
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+
+[advisories]
+# Vulnérabilités connues (base RustSec) : signalées par `cargo deny check advisories`.
+yanked = "warn"

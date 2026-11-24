@@ -1,0 +1,17 @@
+// Jetons de ruines du jeu de base (spec 045). Valeurs reprises de ../mage-knight/docs/regles/cartes/ennemis.md, *Jetons de ruines*.
+// Un exemplaire par jeton ; l'ordre du fichier est celui de la pile avant mélange.
+// Autel : la couleur des 3 mana de l'offrande. Ennemis : les couleurs des piles d'ennemis, puis la récompense.
+[
+    (id: GreenAltar, kind: Altar(Green)),
+    (id: BlueAltar, kind: Altar(Blue)),
+    (id: WhiteAltar, kind: Altar(White)),
+    (id: RedAltar, kind: Altar(Red)),
+    (id: BrownRed, kind: Enemies(colors: [Brown, Red], rewards: [Artifact, Artifact])),
+    (id: GreenRed, kind: Enemies(colors: [Green, Red], rewards: [Artifact, AdvancedAction])),
+    (id: GreyWhite, kind: Enemies(colors: [Grey, White], rewards: [Artifact, Spell])),
+    (id: GreyBrown, kind: Enemies(colors: [Grey, Brown], rewards: [Artifact])),
+    (id: GreyViolet, kind: Enemies(colors: [Grey, Violet], rewards: [Unit])),
+    (id: GreenBrown, kind: Enemies(colors: [Green, Brown], rewards: [Artifact])),
+    (id: GreenGreen, kind: Enemies(colors: [Green, Green], rewards: [CrystalSet])),
+    (id: BrownViolet, kind: Enemies(colors: [Brown, Violet], rewards: [Spell, CrystalSet])),
+]

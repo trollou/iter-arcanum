@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="721" height="457" viewBox="0 0 721 457" font-family="sans-serif">
+<rect width="100%" height="100%" fill="#1e2228"/>
+<polygon points="215.3,309.0 215.3,355.0 175.5,378.0 135.7,355.0 135.7,309.0 175.5,286.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="295.0,309.0 295.0,355.0 255.2,378.0 215.3,355.0 215.3,309.0 255.2,286.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="255.2,240.0 255.2,286.0 215.3,309.0 175.5,286.0 175.5,240.0 215.3,217.0" fill="#5f8f4e" stroke="#222" stroke-width="1.5"/>
+<polygon points="175.5,240.0 175.5,286.0 135.7,309.0 95.8,286.0 95.8,240.0 135.7,217.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="135.7,309.0 135.7,355.0 95.8,378.0 56.0,355.0 56.0,309.0 95.8,286.0" fill="#3f6f9f" stroke="#222" stroke-width="1.5"/>
+<polygon points="175.5,378.0 175.5,424.0 135.7,447.0 95.8,424.0 95.8,378.0 135.7,355.0" fill="#3f6f9f" stroke="#222" stroke-width="1.5"/>
+<polygon points="255.2,378.0 255.2,424.0 215.3,447.0 175.5,424.0 175.5,378.0 215.3,355.0" fill="#3f6f9f" stroke="#222" stroke-width="1.5"/>
+<polygon points="175.5,102.0 175.5,148.0 135.7,171.0 95.8,148.0 95.8,102.0 135.7,79.0" fill="#5f8f4e" stroke="#222" stroke-width="1.5"/>
+<polygon points="255.2,102.0 255.2,148.0 215.3,171.0 175.5,148.0 175.5,102.0 215.3,79.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="215.3,33.0 215.3,79.0 175.5,102.0 135.7,79.0 135.7,33.0 175.5,10.0" fill="#5b8fc7" stroke="#222" stroke-width="1.5"/>
+<polygon points="135.7,33.0 135.7,79.0 95.8,102.0 56.0,79.0 56.0,33.0 95.8,10.0" fill="#5f8f4e" stroke="#222" stroke-width="1.5"/>
+<polygon points="95.8,102.0 95.8,148.0 56.0,171.0 16.2,148.0 16.2,102.0 56.0,79.0" fill="#5f8f4e" stroke="#222" stroke-width="1.5"/>
+<polygon points="135.7,171.0 135.7,217.0 95.8,240.0 56.0,217.0 56.0,171.0 95.8,148.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="215.3,171.0 215.3,217.0 175.5,240.0 135.7,217.0 135.7,171.0 175.5,148.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="374.7,171.0 374.7,217.0 334.9,240.0 295.0,217.0 295.0,171.0 334.9,148.0" fill="#b9905a" stroke="#222" stroke-width="1.5"/>
+<polygon points="454.4,171.0 454.4,217.0 414.5,240.0 374.7,217.0 374.7,171.0 414.5,148.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="414.5,102.0 414.5,148.0 374.7,171.0 334.9,148.0 334.9,102.0 374.7,79.0" fill="#5f8f4e" stroke="#222" stroke-width="1.5"/>
+<polygon points="334.9,102.0 334.9,148.0 295.0,171.0 255.2,148.0 255.2,102.0 295.0,79.0" fill="#b9905a" stroke="#222" stroke-width="1.5"/>
+<polygon points="295.0,171.0 295.0,217.0 255.2,240.0 215.3,217.0 215.3,171.0 255.2,148.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<polygon points="334.9,240.0 334.9,286.0 295.0,309.0 255.2,286.0 255.2,240.0 295.0,217.0" fill="#b9905a" stroke="#222" stroke-width="1.5"/>
+<polygon points="414.5,240.0 414.5,286.0 374.7,309.0 334.9,286.0 334.9,240.0 374.7,217.0" fill="#d9d38a" stroke="#222" stroke-width="1.5"/>
+<text x="175.5" y="318.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<text x="175.5" y="332.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Portail</text>
+<polygon points="291.6,311.0 291.6,353.0 255.2,374.0 218.8,353.0 218.8,311.0 255.2,290.0" fill="#ffffff" fill-opacity="0.28" stroke="#fff6c0" stroke-width="4"/>
+<text x="255.2" y="318.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<circle cx="275.9" cy="348.1" r="13" fill="#fff6c0" stroke="#333"/><text x="275.9" y="353.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">2</text>
+<polygon points="251.7,242.0 251.7,284.0 215.3,305.0 179.0,284.0 179.0,242.0 215.3,221.0" fill="#ffffff" fill-opacity="0.28" stroke="#fff6c0" stroke-width="4"/>
+<text x="215.3" y="249.0" font-size="11" text-anchor="middle" fill="#111">Forêt</text>
+<circle cx="236.0" cy="279.1" r="13" fill="#fff6c0" stroke="#333"/><text x="236.0" y="284.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">3</text>
+<polygon points="172.0,242.0 172.0,284.0 135.7,305.0 99.3,284.0 99.3,242.0 135.7,221.0" fill="#ffffff" fill-opacity="0.28" stroke="#fff6c0" stroke-width="4"/>
+<text x="135.7" y="249.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<circle cx="156.4" cy="279.1" r="13" fill="#fff6c0" stroke="#333"/><text x="156.4" y="284.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">2</text>
+<text x="95.8" y="318.0" font-size="11" text-anchor="middle" fill="#111">Littoral</text>
+<text x="135.7" y="387.0" font-size="11" text-anchor="middle" fill="#111">Littoral</text>
+<text x="215.3" y="387.0" font-size="11" text-anchor="middle" fill="#111">Littoral</text>
+<text x="135.7" y="111.0" font-size="11" text-anchor="middle" fill="#111">Forêt</text>
+<text x="135.7" y="125.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Clairière</text>
+<text x="135.7" y="147.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(7)</text>
+<text x="215.3" y="111.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<text x="215.3" y="125.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Village</text>
+<text x="215.3" y="147.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(6)</text>
+<text x="175.5" y="42.0" font-size="11" text-anchor="middle" fill="#111">Lac</text>
+<text x="95.8" y="42.0" font-size="11" text-anchor="middle" fill="#111">Forêt</text>
+<text x="95.8" y="56.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Orques</text>
+<text x="95.8" y="78.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(10)</text>
+<text x="56.0" y="111.0" font-size="11" text-anchor="middle" fill="#111">Forêt</text>
+<text x="56.0" y="147.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(7)</text>
+<polygon points="132.2,173.0 132.2,215.0 95.8,236.0 59.5,215.0 59.5,173.0 95.8,152.0" fill="#ffffff" fill-opacity="0.28" stroke="none"/>
+<text x="95.8" y="180.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<circle cx="116.5" cy="210.1" r="13" fill="#fff6c0" stroke="#333"/><text x="116.5" y="215.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">4</text>
+<polygon points="211.9,173.0 211.9,215.0 175.5,236.0 139.1,215.0 139.1,173.0 175.5,152.0" fill="#ffffff" fill-opacity="0.28" stroke="none"/>
+<text x="175.5" y="180.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<circle cx="196.2" cy="210.1" r="13" fill="#fff6c0" stroke="#333"/><text x="196.2" y="215.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">4</text>
+<text x="334.9" y="180.0" font-size="11" text-anchor="middle" fill="#111">Colline</text>
+<text x="334.9" y="216.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(8)</text>
+<text x="414.5" y="180.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<text x="414.5" y="194.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Village</text>
+<text x="414.5" y="216.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(9)</text>
+<text x="374.7" y="111.0" font-size="11" text-anchor="middle" fill="#111">Forêt</text>
+<text x="374.7" y="125.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Clairière</text>
+<text x="374.7" y="147.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(11)</text>
+<text x="295.0" y="111.0" font-size="11" text-anchor="middle" fill="#111">Colline</text>
+<text x="295.0" y="125.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Orques</text>
+<text x="295.0" y="147.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(8)</text>
+<polygon points="291.6,173.0 291.6,215.0 255.2,236.0 218.8,215.0 218.8,173.0 255.2,152.0" fill="#ffffff" fill-opacity="0.28" stroke="none"/>
+<text x="255.2" y="180.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<circle cx="275.9" cy="210.1" r="13" fill="#fff6c0" stroke="#333"/><text x="275.9" y="215.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">5</text>
+<polygon points="331.4,242.0 331.4,284.0 295.0,305.0 258.6,284.0 258.6,242.0 295.0,221.0" fill="#ffffff" fill-opacity="0.28" stroke="none"/>
+<text x="295.0" y="249.0" font-size="11" text-anchor="middle" fill="#111">Colline</text>
+<text x="295.0" y="263.0" font-size="11" text-anchor="middle" fill="#111" font-weight="bold">Mine</text>
+<circle cx="315.7" cy="279.1" r="13" fill="#fff6c0" stroke="#333"/><text x="315.7" y="284.1" font-size="14" font-weight="bold" text-anchor="middle" fill="#111">5</text>
+<text x="374.7" y="249.0" font-size="11" text-anchor="middle" fill="#111">Plaine</text>
+<text x="374.7" y="285.0" font-size="12" text-anchor="middle" fill="#333" font-style="italic">(7)</text>
+<circle cx="175.5" cy="352.0" r="9" fill="#c0392b" stroke="#fff" stroke-width="2"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e74c3c"/></marker></defs>
+<polyline points="175.5,352.0 215.3,263.0 255.2,194.0" fill="none" stroke="#e74c3c" stroke-width="5" stroke-dasharray="10 6" marker-end="url(#a)"/>
+<text x="491" y="40" font-size="13" fill="#e8e8e8">Exemple : bac à sable, de jour,</text>
+<text x="491" y="58" font-size="13" fill="#e8e8e8">5 points de mouvement.</text>
+<text x="491" y="76" font-size="13" fill="#e8e8e8"></text>
+<text x="491" y="94" font-size="13" fill="#e8e8e8">Jeton : coût total du trajet le</text>
+<text x="491" y="112" font-size="13" fill="#e8e8e8">moins cher, case atteignable.</text>
+<text x="491" y="130" font-size="13" fill="#e8e8e8">Contour épais : voisines, seules</text>
+<text x="491" y="148" font-size="13" fill="#e8e8e8">cases où un clic déplace.</text>
+<text x="491" y="166" font-size="13" fill="#e8e8e8">Voile seul : cases lointaines.</text>
+<text x="491" y="184" font-size="13" fill="#e8e8e8"></text>
+<text x="491" y="202" font-size="13" fill="#e8e8e8">Pointillé rouge : trajet montré</text>
+<text x="491" y="220" font-size="13" fill="#e8e8e8">au survol de la Plaine (coût 5),</text>
+<text x="491" y="238" font-size="13" fill="#e8e8e8">par la Forêt (3 + 2).</text>
+<text x="491" y="256" font-size="13" fill="#e8e8e8"></text>
+<text x="491" y="274" font-size="13" fill="#e8e8e8">(n) en italique : coût total des</text>
+<text x="491" y="292" font-size="13" fill="#e8e8e8">cases trop chères, pour l'exemple ;</text>
+<text x="491" y="310" font-size="13" fill="#e8e8e8">pas dessiné dans le jeu (survol :</text>
+<text x="491" y="328" font-size="13" fill="#e8e8e8">« Il vous manque … »).</text>
+</svg>

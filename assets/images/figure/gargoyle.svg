@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8c0b4"/><stop offset=".55" stop-color="#7c8579"/><stop offset="1" stop-color="#454c44"/></linearGradient>
+    <linearGradient id="wing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f988b"/><stop offset="1" stop-color="#3c423b"/></linearGradient>
+    <linearGradient id="moss" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9cc25a"/><stop offset="1" stop-color="#4f7a2a"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="50" ry="8" fill="url(#shadow)"/>
+  <!-- ailes : ailes de pierre déployées, nervures -->
+  <g id="ailes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,66 C30,48 14,36 2,34 C6,50 4,66 2,84 C10,78 14,82 18,92 C22,84 28,84 32,90 C34,82 38,78 44,80 Z" fill="url(#wing)"/>
+    <path d="M76,66 C90,48 106,36 118,34 C114,50 116,66 118,84 C110,78 106,82 102,92 C98,84 92,84 88,90 C86,82 82,78 76,80 Z" fill="url(#wing)"/>
+    <path d="M44,68 L6,40 M40,74 L18,90 M42,72 L32,88 M76,68 L114,40 M80,74 L102,90 M78,72 L88,88" stroke-opacity=".55" stroke-width="1.4" fill="none"/>
+  </g>
+  <!-- queue : queue fourchue enroulée au sol -->
+  <g id="queue" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M70,124 C90,132 104,132 108,120 C110,112 104,108 100,112 C104,114 104,124 94,124 C84,124 76,118 72,116 Z" fill="url(#stone)"/>
+    <path d="M100,112 L104,102 L108,112 Z" fill="url(#stone)" stroke-width="1.6"/>
+  </g>
+  <!-- jambes : accroupie, pattes griffues -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M36,108 C26,114 26,128 34,136 L50,136 C50,128 48,120 54,112 Z" fill="url(#stone)"/>
+    <path d="M84,108 C94,114 94,128 86,136 L70,136 C70,128 72,120 66,112 Z" fill="url(#stone)"/>
+    <path d="M28,134 L54,134 L56,146 L24,146 C24,140 25,136 28,134 Z" fill="url(#stone)"/>
+    <path d="M66,134 L92,134 C95,136 96,140 96,146 L64,146 Z" fill="url(#stone)"/>
+    <path d="M26,146 L29,150 L32,146 M38,146 L41,150 M88,146 L91,150 L94,146 M76,146 L79,150" fill="#fbf6e6" stroke-width="1.4"/>
+  </g>
+  <!-- torse : buste voûté, pierre fendue, mousse -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,64 C32,80 34,98 40,114 L80,114 C86,98 88,80 82,64 C72,58 48,58 38,64 Z" fill="url(#stone)"/>
+    <path d="M52,72 L56,84 L50,94 M70,98 L66,106" stroke-opacity=".6" stroke-width="1.4" fill="none"/>
+    <path d="M44,104 C50,100 56,104 54,110 L42,112 Z" fill="url(#moss)" stroke-width="1.4"/>
+  </g>
+  <!-- bras : griffes posées en avant -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,66 C30,74 26,90 30,108 L42,108 C40,94 42,84 48,76 Z" fill="url(#stone)"/>
+    <circle cx="36" cy="114" r="8" fill="url(#stone)"/>
+    <path d="M30,118 L28,126 L33,121 M36,121 L36,129 L39,121 M41,118 L44,125" fill="#fbf6e6" stroke-width="1.4"/>
+  </g>
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,66 C90,74 94,90 90,108 L78,108 C80,94 78,84 72,76 Z" fill="url(#stone)"/>
+    <circle cx="84" cy="114" r="8" fill="url(#stone)"/>
+    <path d="M90,118 L92,126 L87,121 M84,121 L84,129 L81,121 M79,118 L76,125" fill="#fbf6e6" stroke-width="1.4"/>
+  </g>
+  <!-- tête : cornes recourbées, oreilles pointues, gueule de crocs -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,32 C36,24 36,12 44,4 C44,14 48,20 52,24 Z" fill="url(#stone)"/>
+    <path d="M76,32 C84,24 84,12 76,4 C76,14 72,20 68,24 Z" fill="url(#stone)"/>
+    <path d="M40,44 L24,34 L38,54 Z M80,44 L96,34 L82,54 Z" fill="url(#stone)"/>
+    <path d="M38,44 C38,28 48,20 60,20 C72,20 82,28 82,44 C82,58 74,68 60,68 C46,68 38,58 38,44 Z" fill="url(#stone)"/>
+    <path d="M46,40 L56,45 M74,40 L64,45" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="51" cy="48" rx="3.4" ry="2.6" fill="#ffd94a" stroke-width="1"/><ellipse cx="69" cy="48" rx="3.4" ry="2.6" fill="#ffd94a" stroke-width="1"/>
+    <path d="M58,50 L60,56 L62,50" fill="none" stroke-width="1.4"/>
+    <path d="M46,58 C52,64 68,64 74,58 C70,66 50,66 46,58 Z" fill="#2b1a0c"/>
+    <path d="M50,60 L52,65 L54,61 M66,61 L68,65 L70,60" fill="#fbf6e6" stroke-width="1.2"/>
+    <path d="M60,22 C58,28 62,32 58,36" stroke-opacity=".5" stroke-width="1.4" fill="none"/>
+    <path d="M70,22 C74,22 78,26 78,30 C74,30 70,28 70,22 Z" fill="url(#moss)" stroke-width="1.4"/>
+  </g>
+</svg>

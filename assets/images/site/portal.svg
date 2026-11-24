@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="st" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8d2c6"/><stop offset=".5" stop-color="#a39a8c"/><stop offset="1" stop-color="#6f665b"/></linearGradient>
+    <radialGradient id="vx"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#b494ff"/><stop offset=".75" stop-color="#6b3fd6"/><stop offset="1" stop-color="#2f1a70"/></radialGradient>
+    <radialGradient id="gl"><stop offset="0" stop-color="#b494ff" stop-opacity=".6"/><stop offset="1" stop-color="#b494ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="80" ry="8" fill="url(#sh)"/>
+  <g id="lueur" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <ellipse cx="100" cy="110" rx="80" ry="84" fill="url(#gl)" stroke="none"/>
+  </g>
+  <g id="socle" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M30,186 L38,172 L162,172 L170,186 Z" fill="url(#st)"/>
+    <path d="M38,172 L46,164 L154,164 L162,172 Z" fill="#e6e0d4"/>
+  </g>
+  <g id="vortex" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M62,164 V100 C62,52 138,52 138,100 V164 Z" fill="url(#vx)"/>
+    <path d="M100,112 C112,112 114,128 100,130 C84,132 80,110 96,102 C116,92 128,116 120,134 C110,154 76,146 74,118 C72,90 104,76 124,92" stroke="#fff" stroke-opacity=".75" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  </g>
+  <g id="arche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,164 V96 C44,30 156,30 156,96 V164 L138,164 V100 C138,52 62,52 62,100 V164 Z" fill="url(#st)"/>
+    <path d="M92,34 L100,22 L108,34 Z" fill="#b494ff"/>
+    <path d="M48,120 h10 M48,140 h10 M142,120 h10 M142,140 h10 M52,76 l8,4 M148,76 l-8,4" stroke="#b494ff" stroke-width="2.6" fill="none"/>
+  </g>
+</svg>

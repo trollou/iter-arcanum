@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="rk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8987e"/><stop offset=".5" stop-color="#6f604c"/><stop offset="1" stop-color="#463a2c"/></linearGradient>
+    <linearGradient id="bn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf6e6"/><stop offset="1" stop-color="#c8bc9c"/></linearGradient>
+    <linearGradient id="lf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a8a3a"/><stop offset="1" stop-color="#34501c"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="90" ry="8" fill="url(#sh)"/>
+  <g id="colline" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M16,186 C16,140 44,104 90,96 C140,90 182,124 186,186 Z" fill="url(#rk)"/>
+    <path d="M36,186 C30,170 34,152 40,140 C46,160 50,174 52,186 Z M160,186 C166,170 166,152 160,138 C152,158 150,174 150,186 Z" fill="url(#lf)"/>
+    <path d="M124,112 L132,128 M132,110 L140,126 M140,112 L146,124" stroke-width="2.4" stroke-opacity=".7" fill="none"/>
+  </g>
+  <g id="antre" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M56,186 C52,152 70,124 100,124 C130,124 148,152 144,186 Z" fill="#17120c"/>
+    <path d="M60,140 L66,152 L72,138 L78,148 L84,134 M116,134 L122,148 L128,138 L134,152 L140,140" fill="url(#bn)" stroke-width="1.6"/>
+    <path d="M82,158 L90,160 L82,164 Z M118,158 L110,160 L118,164 Z" fill="#ffd94a" stroke="none"/>
+  </g>
+  <g id="os" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M24,184 L54,176" stroke="#fbf6e6" stroke-width="4.4" stroke-linecap="round"/>
+    <circle cx="24" cy="184" r="4" fill="url(#bn)" stroke-width="1.6"/><circle cx="54" cy="176" r="4" fill="url(#bn)" stroke-width="1.6"/>
+    <path d="M146,186 C146,174 168,174 168,186 Z" fill="url(#bn)"/>
+    <circle cx="153" cy="181" r="2.2" fill="#17120c" stroke="none"/><circle cx="161" cy="181" r="2.2" fill="#17120c" stroke="none"/>
+  </g>
+</svg>

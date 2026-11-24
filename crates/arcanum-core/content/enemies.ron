@@ -1,0 +1,41 @@
+// Jetons d'ennemis (spec 030). Valeurs reprises de ../mage-knight/docs/regles/cartes/ennemis.md (fiche récapitulative et scans) ;
+// version Lost Legion pour Altem Guardsmen (attaque 5) et Altem Mages (pas Fortified).
+// Une entrée par ennemi : couleur du dos (sa pile), nombre d'exemplaires, armure, attaque (valeur et élément, ou Summon),
+// capacités, résistances, gloire.
+[
+    // Orques maraudeurs (vert)
+    (id: Prowlers, color: Green, count: 2, armor: 3, attack: Physical(4), abilities: [], resistances: [], fame: 2),
+    (id: Diggers, color: Green, count: 2, armor: 3, attack: Physical(3), abilities: [Fortified], resistances: [], fame: 2),
+    (id: CursedHags, color: Green, count: 2, armor: 5, attack: Physical(3), abilities: [Poison], resistances: [], fame: 3),
+    (id: WolfRiders, color: Green, count: 2, armor: 4, attack: Physical(3), abilities: [Swift], resistances: [], fame: 3),
+    (id: Ironclads, color: Green, count: 2, armor: 3, attack: Physical(4), abilities: [Brutal], resistances: [Physical], fame: 4),
+    (id: OrcSummoners, color: Green, count: 2, armor: 4, attack: Summon, abilities: [], resistances: [], fame: 4),
+    // Gardes des forteresses (gris)
+    (id: Crossbowmen, color: Grey, count: 3, armor: 4, attack: Physical(4), abilities: [Swift], resistances: [], fame: 3),
+    (id: Guardsmen, color: Grey, count: 3, armor: 7, attack: Physical(3), abilities: [Fortified], resistances: [], fame: 3),
+    (id: Swordsmen, color: Grey, count: 2, armor: 5, attack: Physical(6), abilities: [], resistances: [], fame: 4),
+    (id: Golems, color: Grey, count: 2, armor: 5, attack: Physical(2), abilities: [], resistances: [Physical], fame: 4),
+    // Tours de mage (violet)
+    (id: Monks, color: Violet, count: 2, armor: 5, attack: Physical(5), abilities: [Poison], resistances: [], fame: 4),
+    (id: Illusionists, color: Violet, count: 2, armor: 3, attack: Summon, abilities: [], resistances: [Physical], fame: 4),
+    (id: IceMages, color: Violet, count: 2, armor: 6, attack: Ice(5), abilities: [], resistances: [Ice], fame: 5),
+    (id: IceGolems, color: Violet, count: 1, armor: 4, attack: Ice(2), abilities: [Paralyze], resistances: [Ice, Physical], fame: 5),
+    (id: FireMages, color: Violet, count: 2, armor: 5, attack: Fire(6), abilities: [], resistances: [Fire], fame: 5),
+    (id: FireGolems, color: Violet, count: 1, armor: 4, attack: Fire(3), abilities: [Brutal], resistances: [Fire, Physical], fame: 5),
+    // Donjons et antres (marron)
+    (id: Minotaur, color: Brown, count: 2, armor: 5, attack: Physical(5), abilities: [Brutal], resistances: [], fame: 4),
+    (id: Gargoyle, color: Brown, count: 2, armor: 4, attack: Physical(5), abilities: [], resistances: [Physical], fame: 4),
+    (id: Medusa, color: Brown, count: 2, armor: 4, attack: Physical(6), abilities: [Paralyze], resistances: [], fame: 5),
+    (id: CryptWorm, color: Brown, count: 2, armor: 6, attack: Physical(6), abilities: [Fortified], resistances: [], fame: 5),
+    (id: Werewolf, color: Brown, count: 2, armor: 5, attack: Physical(7), abilities: [Swift], resistances: [], fame: 5),
+    // Draconiens (rouge)
+    (id: SwampDragon, color: Red, count: 2, armor: 9, attack: Physical(5), abilities: [Swift, Poison], resistances: [], fame: 7),
+    (id: FireDragon, color: Red, count: 2, armor: 7, attack: Fire(9), abilities: [], resistances: [Fire, Physical], fame: 8),
+    (id: IceDragon, color: Red, count: 2, armor: 7, attack: Ice(6), abilities: [Paralyze], resistances: [Ice, Physical], fame: 8),
+    (id: HighDragon, color: Red, count: 2, armor: 9, attack: ColdFire(6), abilities: [Brutal], resistances: [Fire, Ice], fame: 9),
+    // Cités (blanc)
+    (id: Freezers, color: White, count: 3, armor: 7, attack: Ice(3), abilities: [Fortified, Swift, Paralyze], resistances: [Fire], fame: 7),
+    (id: Gunners, color: White, count: 3, armor: 6, attack: Fire(6), abilities: [Brutal], resistances: [Ice], fame: 7),
+    (id: AltemGuardsmen, color: White, count: 2, armor: 7, attack: Physical(5), abilities: [Fortified], resistances: [Fire, Ice, Physical], fame: 8),
+    (id: AltemMages, color: White, count: 2, armor: 8, attack: ColdFire(4), abilities: [Brutal, Poison], resistances: [Physical], fame: 8),
+]

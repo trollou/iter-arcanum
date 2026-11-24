@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><defs><linearGradient id="cf_bow" x1="0" y1="1" x2="1" y2="0"><stop offset="0.15" stop-color="#E0452B"/><stop offset="0.85" stop-color="#4A9BE8"/></linearGradient></defs><g transform="rotate(-45 32 32) translate(32 32) scale(1.12) translate(-32 -32)" stroke-linecap="round" stroke-linejoin="round">
+<path d="M20,6 Q48,32 20,58" fill="none" stroke="#20242A" stroke-width="10"/>
+<path d="M20,6 Q48,32 20,58" fill="none" stroke="url(#cf_bow)" stroke-width="5.5"/>
+<path d="M20,6 L20,58" stroke="#E8E2D0" stroke-width="1.6"/>
+<path d="M8,32 L50,32" stroke="#20242A" stroke-width="5"/>
+<path d="M8,32 L50,32" stroke="#C9A97A" stroke-width="2.2"/>
+<path d="M60,32 L48,25 L48,39 Z" fill="url(#cf_bow)" stroke="#20242A" stroke-width="2.2"/>
+<path d="M6,26 L13,32 L6,38 M11,26 L18,32 L11,38" fill="none" stroke="#20242A" stroke-width="2.2"/></g></svg>

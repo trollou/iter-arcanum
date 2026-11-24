@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="sc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fa04a"/><stop offset=".5" stop-color="#4c6a2e"/><stop offset="1" stop-color="#26391a"/></linearGradient>
+    <linearGradient id="be" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8d68a"/><stop offset=".5" stop-color="#a9a85a"/><stop offset="1" stop-color="#6f6e34"/></linearGradient>
+    <linearGradient id="wi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6f7a4a"/><stop offset=".5" stop-color="#4a5232"/><stop offset="1" stop-color="#2a301c"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+<ellipse id="ombre" cx="60" cy="150" rx="54" ry="8" fill="url(#sh)"/>
+  <g id="ailes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,72 C34,50 18,32 4,14 C10,38 8,56 2,74 C10,72 16,76 18,84 C24,80 30,82 32,90 C36,86 42,88 44,94 Z" fill="url(#wi)"/>
+    <path d="M76,72 C86,50 102,32 116,14 C110,38 112,56 118,74 C110,72 104,76 102,84 C96,80 90,82 88,90 C84,86 78,88 76,94 Z" fill="url(#wi)"/>
+    <path d="M42,74 L6,18 M42,76 L4,72 M42,78 L18,84 M42,80 L32,90 M78,74 L114,18 M78,76 L116,72 M78,78 L102,84 M78,80 L88,90" stroke-width="1.6" stroke-opacity=".7" fill="none"/>
+    <path d="M4,14 L42,72 M116,14 L78,72" stroke="url(#sc)" stroke-width="3.4" fill="none"/>
+  </g>
+  <g id="queue" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,118 C96,130 106,138 110,128 C112,122 110,116 114,110 C118,116 120,124 118,132 C114,146 98,148 84,138 Z" fill="url(#sc)"/>
+    <path d="M112,112 L118,98 L118,116 Z" fill="#c9c08a"/>
+  </g>
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M30,106 C20,114 22,134 34,138 L50,138 C54,126 50,112 42,104 Z" fill="url(#sc)"/>
+    <path d="M90,106 C100,114 98,134 86,138 L70,138 C66,126 70,112 78,104 Z" fill="url(#sc)"/>
+    <path d="M28,134 L54,134 L56,146 L22,146 C22,140 24,136 28,134 Z" fill="url(#sc)"/>
+    <path d="M92,134 L66,134 L64,146 L98,146 C98,140 96,136 92,134 Z" fill="url(#sc)"/>
+    <path d="M22,146 L18,146 L24,141 Z M32,146 L28,146 L34,140 Z M42,146 L38,146 L44,140 Z M98,146 L102,146 L96,141 Z M88,146 L92,146 L86,140 Z M78,146 L82,146 L76,140 Z" fill="#fbf6e6" stroke-width="1.2"/>
+  </g>
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,74 C28,90 30,124 40,136 L80,136 C90,124 92,90 82,74 C74,64 46,64 38,74 Z" fill="url(#sc)"/>
+    <path d="M48,78 C42,96 44,120 50,134 L70,134 C76,120 78,96 72,78 C66,74 54,74 48,78 Z" fill="url(#be)"/>
+    <path d="M47,88 L73,88 M46,98 L74,98 M46,108 L74,108 M47,118 L73,118 M49,127 L71,127" stroke-width="1.4" stroke-opacity=".55" fill="none"/>
+  </g>
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,82 C32,88 30,98 34,106 L42,104 C40,98 42,92 46,88 Z" fill="url(#sc)"/>
+    <path d="M30,105 C30,100 44,100 44,105 L44,108 C44,112 30,112 30,108 Z" fill="url(#sc)" />
+    <path d="M31,110 L30,115 L34,110 Z M36,110 L36,115 L39,110 Z M41,110 L42,115 L44,110 Z" fill="#fbf6e6" stroke-width="1.1"/>
+  </g>
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,82 C88,88 90,98 86,106 L78,104 C80,98 78,92 74,88 Z" fill="url(#sc)"/>
+    <path d="M90,105 C90,100 76,100 76,105 L76,108 C76,112 90,112 90,108 Z" fill="url(#sc)"/>
+    <path d="M89,110 L90,115 L86,110 Z M84,110 L84,115 L81,110 Z M79,110 L78,115 L76,110 Z" fill="#fbf6e6" stroke-width="1.1"/>
+  </g>
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M48,76 C46,62 48,52 52,44 L68,44 C72,52 74,62 72,76 Z" fill="url(#sc)"/>
+    <path d="M54,50 L66,50 M53,58 L67,58 M53,66 L67,66" stroke-width="1.4" stroke-opacity=".5" fill="none"/>
+    <path d="M44,20 C38,12 32,6 26,1 C30,8 34,14 40,26 Z" fill="#c9c08a"/><path d="M76,20 C82,12 88,6 94,1 C90,8 86,14 80,26 Z" fill="#c9c08a"/>
+    <path d="M39,30 L26,30 L37,36 L26,42 L40,42 Z" fill="url(#wi)"/><path d="M81,30 L94,30 L83,36 L94,42 L80,42 Z" fill="url(#wi)"/>
+    <path d="M38,30 C38,16 48,10 60,10 C72,10 82,16 82,30 C82,38 78,42 74,46 L72,58 C70,64 50,64 48,58 L46,46 C42,42 38,38 38,30 Z" fill="url(#sc)"/>
+    <path d="M49,52 C54,55 66,55 71,52 L70,60 C64,64 56,64 50,60 Z" fill="#3a1a12"/>
+    <path d="M51,53 L53,58 L55,54 Z M65,54 L67,58 L69,53 Z M57,62 L58.5,58.5 L60,62.5 Z" fill="#fbf6e6" stroke-width="1"/>
+    <path d="M55,47 L56.5,49 M65,47 L63.5,49" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <path d="M44,28 L56,34 M76,28 L64,34" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+    <path d="M45,34 C47,31 53,31 55,35 C52,38 48,38 45,34 Z" fill="#c6ff4a" stroke-width="1"/>
+    <path d="M75,34 C73,31 67,31 65,35 C68,38 72,38 75,34 Z" fill="#c6ff4a" stroke-width="1"/>
+    <path d="M50,32 L50,37 M70,32 L70,37" stroke-width="1.6" fill="none"/>
+    <path d="M46,16 C50,13 54,12 58,12" stroke="#fff" stroke-opacity=".45" stroke-width="1.4" fill="none"/>
+    <path d="M52,61 C53,68 54,74 51,78 C47,76 48,68 52,61 Z M68,61 C70,70 71,76 69,82 C65,80 65,70 68,61 Z" fill="#9cff3a" stroke-width="1.4"/><path d="M52,12 L48,2 L56,10 L60,0 L64,10 L72,2 L68,12" fill="#6f7a4a"/>
+  </g>
+</svg>

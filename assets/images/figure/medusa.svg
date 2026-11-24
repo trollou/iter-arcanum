@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="scale" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fd27a"/><stop offset=".55" stop-color="#3f9a5a"/><stop offset="1" stop-color="#1d5a36"/></linearGradient>
+    <linearGradient id="belly" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2e7a6"/><stop offset="1" stop-color="#b9a45a"/></linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9e6b0"/><stop offset="1" stop-color="#7fae74"/></linearGradient>
+    <linearGradient id="snake" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6dbf4a"/><stop offset="1" stop-color="#2d6a22"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9b24a"/><stop offset="1" stop-color="#8a6524"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="48" ry="8" fill="url(#shadow)"/>
+  <!-- queue : corps de serpent lové au sol à la place des jambes -->
+  <g id="queue" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M14,140 C10,128 22,120 40,122 L80,122 C100,122 110,130 106,140 C104,146 92,148 60,148 C30,148 16,146 14,140 Z" fill="url(#scale)"/>
+    <path d="M20,138 C30,130 90,130 100,138" stroke-opacity=".45" stroke-width="1.4" fill="none"/>
+    <path d="M106,138 C114,134 116,124 110,116 C108,122 104,124 100,124" fill="url(#scale)"/>
+    <path d="M42,108 C38,118 38,126 44,132 L76,132 C82,126 82,118 78,108 Z" fill="url(#scale)"/>
+    <path d="M50,108 L50,132 L70,132 L70,108 Z" fill="url(#belly)" stroke-width="1.6"/>
+    <path d="M50,116 L70,116 M50,124 L70,124" stroke-opacity=".5" stroke-width="1.2" fill="none"/>
+  </g>
+  <!-- torse : buste écailleux, pectoral d'or -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M42,62 C38,78 40,96 42,110 L78,110 C80,96 82,78 78,62 C70,56 50,56 42,62 Z" fill="url(#skin)"/>
+    <path d="M44,64 C52,74 68,74 76,64 L74,60 C66,66 54,66 46,60 Z" fill="url(#gold)" stroke-width="1.6"/>
+    <path d="M44,98 L76,98 L76,106 L44,106 Z" fill="url(#gold)"/>
+    <circle cx="60" cy="102" r="3.6" fill="#ffd94a" stroke-width="1.4"/>
+  </g>
+  <!-- bras gauche : arc court -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,64 C34,70 28,80 26,92 L38,94 C38,86 42,80 48,76 Z" fill="url(#skin)"/>
+    <path d="M22,50 C10,70 10,104 22,124" fill="none" stroke-width="5.6"/>
+    <path d="M22,50 C10,70 10,104 22,124" fill="none" stroke="#8a5a34" stroke-width="2.6"/>
+    <path d="M22,50 L22,124" fill="none" stroke="#fbf6e6" stroke-width="1.2"/>
+    <circle cx="30" cy="96" r="7" fill="url(#skin)"/>
+  </g>
+  <!-- bras droit : main tendue, regard qui pétrifie (rayons) -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M76,64 C88,64 96,68 100,74 L94,84 C90,78 84,76 74,76 Z" fill="url(#skin)"/>
+    <path d="M100,74 L94,84" stroke="#d9b24a" stroke-width="3" fill="none"/>
+    <circle cx="101" cy="82" r="7" fill="url(#skin)"/>
+    <path d="M108,76 L115,71 M109,82 L117,82 M108,88 L115,93" stroke="#ffd94a" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- tête : chevelure de serpents, yeux qui luisent -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M46,34 C36,30 40,20 30,16 C24,13 22,8 26,4" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M46,34 C36,30 40,20 30,16 C24,13 22,8 26,4" fill="none" stroke="url(#snake)" stroke-width="4.6" stroke-linecap="round"/>
+    <path d="M54,28 C50,20 56,14 50,6" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M54,28 C50,20 56,14 50,6" fill="none" stroke="url(#snake)" stroke-width="4.6" stroke-linecap="round"/>
+    <path d="M66,28 C70,20 64,14 70,6" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M66,28 C70,20 64,14 70,6" fill="none" stroke="url(#snake)" stroke-width="4.6" stroke-linecap="round"/>
+    <path d="M74,34 C84,30 80,20 90,16 C96,13 98,8 94,4" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M74,34 C84,30 80,20 90,16 C96,13 98,8 94,4" fill="none" stroke="url(#snake)" stroke-width="4.6" stroke-linecap="round"/>
+    <path d="M42,44 C32,46 26,38 18,40 C12,42 10,36 12,30" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M42,44 C32,46 26,38 18,40 C12,42 10,36 12,30" fill="none" stroke="url(#snake)" stroke-width="4.6" stroke-linecap="round"/>
+    <path d="M78,44 C88,46 94,38 102,40 C108,42 110,36 108,30" fill="none" stroke-width="8" stroke-linecap="round"/>
+    <path d="M78,44 C88,46 94,38 102,40 C108,42 110,36 108,30" fill="none" stroke="url(#snake)" stroke-width="4.6" stroke-linecap="round"/>
+    <ellipse cx="26" cy="4" rx="4.6" ry="3.6" fill="url(#snake)"/><circle cx="26" cy="3.4" r="1" fill="#ffd94a" stroke="none"/>
+    <ellipse cx="50" cy="6" rx="4.6" ry="3.6" fill="url(#snake)"/><circle cx="50" cy="5.4" r="1" fill="#ffd94a" stroke="none"/>
+    <ellipse cx="70" cy="6" rx="4.6" ry="3.6" fill="url(#snake)"/><circle cx="70" cy="5.4" r="1" fill="#ffd94a" stroke="none"/>
+    <ellipse cx="94" cy="4" rx="4.6" ry="3.6" fill="url(#snake)"/><circle cx="94" cy="3.4" r="1" fill="#ffd94a" stroke="none"/>
+    <ellipse cx="12" cy="30" rx="4.6" ry="3.6" fill="url(#snake)"/><circle cx="12" cy="29.4" r="1" fill="#ffd94a" stroke="none"/>
+    <ellipse cx="108" cy="30" rx="4.6" ry="3.6" fill="url(#snake)"/><circle cx="108" cy="29.4" r="1" fill="#ffd94a" stroke="none"/>
+    <path d="M22,2 L19,-1 M54,4 L57,1 M66,4 L63,1 M98,2 L101,-1 M10,26 L7,23 M110,26 L113,23" stroke="#c0302a" stroke-width="1.6" fill="none"/>
+    <path d="M44,48 C44,34 50,26 60,26 C70,26 76,34 76,48 C76,60 70,66 60,66 C50,66 44,60 44,48 Z" fill="url(#skin)"/>
+    <path d="M42,42 C44,30 52,24 60,24 C68,24 76,30 78,42 C70,34 50,34 42,42 Z" fill="url(#snake)"/>
+    <path d="M47,42 L56,46 M73,42 L64,46" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="52" cy="50" rx="3.6" ry="2.8" fill="#ffd94a" stroke-width="1"/><ellipse cx="68" cy="50" rx="3.6" ry="2.8" fill="#ffd94a" stroke-width="1"/>
+    <path d="M52,48 L52,52 M68,48 L68,52" stroke-width="1.4"/>
+    <path d="M54,59 C57,61 63,61 66,59" fill="none" stroke-width="1.8"/>
+  </g>
+</svg>

@@ -1,0 +1,1996 @@
+{
+  "language": {
+    "name": "English"
+  },
+  "app": {
+    "title": "Iter Arcanum (prototype)"
+  },
+  "hand": {
+    "empty": "No card in hand",
+    "title": "Hand"
+  },
+  "deck": {
+    "count": "Deck: {count} card(s)"
+  },
+  "game": {
+    "finished": "Game over",
+    "last_round": "Game over: the last round has been played."
+  },
+  "error": {
+    "game_stopped": "The game stopped on an error."
+  },
+  "board": {
+    "recenter": "Recenter the board",
+    "hover": {
+      "hero": "Your hero",
+      "forbidden": "Beyond the coastline: no tile can be placed here",
+      "move_cost": "Move cost: {cost}",
+      "inaccessible": "Inaccessible",
+      "fortified": "City: neither conquered nor entered in this scenario",
+      "click_to_move": "Click to move there",
+      "click_to_follow": "Click to follow this route",
+      "missing_points": "You need {missing} more Move point(s)",
+      "movement_ended": "Movement is over for this turn",
+      "route": "Route: {steps} space(s), {cost} Move points",
+      "free_position": "Free tile position",
+      "explore_cost": "Explore: {cost} Move points",
+      "click_to_explore": {
+        "countryside": "Click to reveal a Countryside tile",
+        "core": "Click to reveal a Core tile",
+        "removed": "Click to reveal a random removed tile"
+      },
+      "explore_limit": {
+        "countryside": "A Countryside tile must touch two placed tiles, or a tile that touches two",
+        "core": "A Core tile must touch at least two placed tiles",
+        "removed": "A removed tile must touch at least three placed tiles"
+      },
+      "nothing_to_reveal": "No tile left to reveal",
+      "mine": {
+        "gain": "End your turn here: +1 {color} crystal",
+        "full": "You already have 3 crystals of this color: nothing to gain here."
+      },
+      "enemy_space": "Space occupied by a rampaging enemy",
+      "provokes": "Provokes: {enemies}",
+      "assault": "⚔ Assault: Reputation −1, mandatory combat",
+      "defender_fortified": "Fortified defender: siege only at range",
+      "defender_fortified_twice": "Defender fortified twice: no ranged attack",
+      "adventure": {
+        "enemies_waiting": "Waiting here: {enemies}",
+        "fight": "Enter: combat, reward: {reward}"
+      },
+      "glade": "Mana token at turn start (gold by day, black at night); end your turn here: throw away a Wound",
+      "ruins": {
+        "altar": "Altar: tribute of 3 {color} mana for 7 Fame",
+        "enemies": "Enemies: {colors}; reward: {reward}",
+        "face_down": "Face-down ruins token (revealed next Day, or when you enter)"
+      },
+      "unsafe_space": "Unsafe space: forced withdrawal if you end your turn here",
+      "city": {
+        "level": "{city}, level {level}",
+        "defenders": "Defenders: {enemies}",
+        "face_down": "Face-down defenders: {colors}",
+        "bonus_white": "Defenders' bonus: Armor +1",
+        "bonus_blue": "Defenders' bonus: Ice or Fire Attack +2, Cold Fire Attack +1",
+        "bonus_red": "Defenders' bonus: Brutal if their attack is physical",
+        "bonus_green": "Defenders' bonus: Poison if their attack is physical",
+        "shields": "Your Shields: {count}",
+        "leader": "Conquered: you are its Leader",
+        "offer_white": "Recruit any Unit here; add an Elite Unit to the offer for 2 Influence",
+        "offer_blue": "Buy Spells here: 7 Influence and one mana",
+        "offer_red": "Buy Artifacts here: 12 Influence",
+        "offer_green": "Buy Advanced Actions here: 6 Influence",
+        "hand_limit": "End your turn here or next to it: Hand limit +1, +2 for the Leader"
+      },
+      "core_on_coastline": "No core tile on the coastline: explore a space further inland"
+    },
+    "action": {
+      "challenge": "Challenge",
+      "start_combat": "Fight",
+      "interact": "Interact",
+      "plunder": "Plunder",
+      "burn": "Burn",
+      "enter": "Enter",
+      "tribute": "Tribute"
+    }
+  },
+  "tile": {
+    "starting_a": "Starting tile (side A)",
+    "starting_b": "Starting tile (side B)",
+    "countryside": "Countryside tile {number}",
+    "core": "Core tile {number}"
+  },
+  "terrain": {
+    "plains": {
+      "name": "Plains"
+    },
+    "hills": {
+      "name": "Hills"
+    },
+    "forest": {
+      "name": "Forest"
+    },
+    "wasteland": {
+      "name": "Wasteland"
+    },
+    "desert": {
+      "name": "Desert"
+    },
+    "swamp": {
+      "name": "Swamp"
+    },
+    "lake": {
+      "name": "Lake"
+    },
+    "mountain": {
+      "name": "Mountain"
+    },
+    "sea": {
+      "name": "Coast"
+    }
+  },
+  "site": {
+    "village": {
+      "name": "Village"
+    },
+    "monastery": {
+      "name": "Monastery",
+      "burned": "Burned monastery"
+    },
+    "keep": {
+      "name": "Keep"
+    },
+    "mage_tower": {
+      "name": "Mage Tower"
+    },
+    "dungeon": {
+      "name": "Dungeon"
+    },
+    "tomb": {
+      "name": "Tomb"
+    },
+    "monster_den": {
+      "name": "Monster Den"
+    },
+    "spawning_grounds": {
+      "name": "Spawning Grounds"
+    },
+    "ruins": {
+      "name": "Ruins"
+    },
+    "magical_glade": {
+      "name": "Magical Glade"
+    },
+    "portal": {
+      "name": "Portal"
+    },
+    "mine": {
+      "red": "Red Mine",
+      "blue": "Blue Mine",
+      "white": "White Mine",
+      "green": "Green Mine"
+    },
+    "city": {
+      "red": "Red City",
+      "blue": "Blue City",
+      "white": "White City",
+      "green": "Green City"
+    },
+    "conquered": {
+      "keep": "Conquered keep",
+      "mage_tower": "Conquered mage tower",
+      "adventure": "Conquered {site}",
+      "ruins": "Conquered ruins",
+      "city": "{site} conquered"
+    }
+  },
+  "enemy": {
+    "orc_marauders": {
+      "name": "Orc Marauders"
+    },
+    "draconum": {
+      "name": "Draconum"
+    },
+    "prowlers": {
+      "name": "Prowlers"
+    },
+    "diggers": {
+      "name": "Diggers"
+    },
+    "cursed_hags": {
+      "name": "Cursed Hags"
+    },
+    "wolf_riders": {
+      "name": "Wolf Riders"
+    },
+    "ironclads": {
+      "name": "Ironclads"
+    },
+    "orc_summoners": {
+      "name": "Orc Summoners"
+    },
+    "crossbowmen": {
+      "name": "Crossbowmen"
+    },
+    "guardsmen": {
+      "name": "Guardsmen"
+    },
+    "swordsmen": {
+      "name": "Swordsmen"
+    },
+    "golems": {
+      "name": "Golems"
+    },
+    "monks": {
+      "name": "Monks"
+    },
+    "illusionists": {
+      "name": "Illusionists"
+    },
+    "ice_mages": {
+      "name": "Ice Mages"
+    },
+    "ice_golems": {
+      "name": "Ice Golems"
+    },
+    "fire_mages": {
+      "name": "Fire Mages"
+    },
+    "fire_golems": {
+      "name": "Fire Golems"
+    },
+    "minotaur": {
+      "name": "Minotaur"
+    },
+    "gargoyle": {
+      "name": "Gargoyle"
+    },
+    "medusa": {
+      "name": "Medusa"
+    },
+    "crypt_worm": {
+      "name": "Crypt Worm"
+    },
+    "werewolf": {
+      "name": "Werewolf"
+    },
+    "swamp_dragon": {
+      "name": "Swamp Dragon"
+    },
+    "fire_dragon": {
+      "name": "Fire Dragon"
+    },
+    "ice_dragon": {
+      "name": "Ice Dragon"
+    },
+    "high_dragon": {
+      "name": "High Dragon"
+    },
+    "freezers": {
+      "name": "Freezers"
+    },
+    "gunners": {
+      "name": "Gunners"
+    },
+    "altem_guardsmen": {
+      "name": "Altem Guardsmen"
+    },
+    "altem_mages": {
+      "name": "Altem Mages"
+    },
+    "color": {
+      "green": "marauding orcs",
+      "grey": "keep",
+      "violet": "mage tower",
+      "brown": "dungeon",
+      "red": "draconum",
+      "white": "city"
+    },
+    "token": "{name} ({group})",
+    "values": "armor {armor}, attack {attack}, fame {fame}",
+    "description": "{token}: {values}",
+    "summon": "summon",
+    "abilities": "Abilities: {list}",
+    "resistances": "Resistances: {list}",
+    "ability": {
+      "fortified": "fortified",
+      "swift": "swift",
+      "brutal": "brutal",
+      "poison": "poison",
+      "paralyze": "paralyze"
+    },
+    "element": {
+      "physical": "physical",
+      "fire": "fire",
+      "ice": "ice",
+      "cold_fire": "cold fire"
+    },
+    "face_down": "{color} defender, face down",
+    "pile_color": {
+      "green": "green",
+      "grey": "grey",
+      "violet": "violet",
+      "brown": "brown",
+      "red": "red",
+      "white": "white"
+    }
+  },
+  "scenario": {
+    "sandbox": {
+      "name": "Sandbox",
+      "tagline": "Free practice, no score",
+      "flavor": "A practice ground with nothing at stake: move, explore and discover the cards at your own pace.",
+      "length": "4 rounds: Day, Night, Day, Night",
+      "players": "Solo",
+      "kind": "Free practice",
+      "objective": "None: learn the rules by playing.",
+      "special_rules": "No Fame for revealed tiles.",
+      "game_end": "After the 4th round.",
+      "scoring": "No final score."
+    },
+    "first_reconnaissance": {
+      "name": "First Reconnaissance",
+      "tagline": "Recommended for a first game",
+      "flavor": "An unexplored land lies before you. Your mission: cross it until you find its capital, and come back with all the fame and treasure you can win along the way.",
+      "length": "4 rounds: Day, Night, Day, Night",
+      "players": "Solo",
+      "kind": "Training",
+      "objective": "Explore the land until you reveal a city.\nGain as much Fame as you can on the way.",
+      "special_rules": "Each revealed tile gives 1 Fame.\nCities can be neither conquered nor entered.\nTactics: you choose yours first, the Dummy player draws one among the others; both are removed from the game at the end of the Round.\nDummy player: it flips cards from its deck each turn and announces the End of the Round when it is empty.",
+      "game_end": "A city is revealed: finish this turn, then play one last turn.\nOtherwise, the game ends after the 4th round.",
+      "scoring": "Your Fame, plus the Achievements.\nNo titles in solo play."
+    },
+    "last_turn_next": "City revealed: one last turn after this one.",
+    "last_turn": "Last turn",
+    "solo_conquest": {
+      "name": "Solo Conquest",
+      "tagline": "The reference solo scenario",
+      "flavor": "You are on your own, yet the Council still counts on you: find the two cities of the land and storm them before the third night is over.",
+      "length": "6 rounds: Day, Night, Day, Night, Day, Night",
+      "players": "Solo",
+      "kind": "Conquest",
+      "objective": "Find and conquer both cities: the first one revealed is level 5, the second one level 8.\nWith both conquered, the mission is accomplished.",
+      "special_rules": "No core tile on the coastline (the two edge lanes).\nTactics: you choose yours first, the Dummy player draws one among the others; both are removed from the game at the end of the Round.\nDummy player: it flips cards from its deck each turn and announces the End of the Round when it is empty.\nThe four Spells that target other players are removed.",
+      "game_end": "All cities conquered: finish this turn, then play one last turn, without the Dummy player.\nOtherwise, the game ends after the 6th round.",
+      "scoring": "Your Fame, plus the Achievements (no titles in solo play).\n+10 per conquered city, +15 if all of them are.\nMission accomplished: +30 per unplayed round, +1 per card in the Dummy player's deck, +5 if the End of the Round was not announced."
+    },
+    "cities_progress": "Cities conquered: {conquered}/{total}",
+    "last_turn_next_conquest": "All cities are conquered: one last turn after this one."
+  },
+  "score": {
+    "title": "Game over",
+    "reason": {
+      "city_revealed": "A city has been revealed and the last turn is played.",
+      "last_round": "The last round has been played.",
+      "all_cities_conquered": "All cities are conquered and the last turn is played."
+    },
+    "fame": "Fame: {fame}",
+    "knowledge": "The Greatest Knowledge: {points}",
+    "loot": "The Greatest Loot ({artifacts} Artifact(s), {crystals} crystals): {points}",
+    "leader": "The Greatest Leader: {points}",
+    "conqueror": "The Greatest Conqueror ({shields} Shield(s)): {points}",
+    "adventurer": "The Greatest Adventurer: {points}",
+    "beating": "The Greatest Beating ({wounds} Wound(s)): {points}",
+    "total": "Final score: {score}",
+    "no_titles": "Solo variant: no title bonuses.",
+    "show_board": "Show the board",
+    "reopen": "Final score",
+    "outcome": {
+      "success": "Mission accomplished!",
+      "failure": "Mission failed: some cities remain unconquered."
+    },
+    "cities": "Conquered cities ({count}): {points}",
+    "all_cities": "All cities conquered: {points}",
+    "unplayed_rounds": "Unplayed rounds ({rounds}): {points}",
+    "dummy_deck": "Dummy player's deck ({cards} card(s)): {points}",
+    "round_not_announced": "End of Round not announced: {points}",
+    "no_titles_solo": "Solo: no title bonuses."
+  },
+  "card": {
+    "rage": {
+      "name": "Rage"
+    },
+    "determination": {
+      "name": "Determination"
+    },
+    "swiftness": {
+      "name": "Swiftness"
+    },
+    "march": {
+      "name": "March"
+    },
+    "stamina": {
+      "name": "Stamina"
+    },
+    "tranquility": {
+      "name": "Tranquility"
+    },
+    "promise": {
+      "name": "Promise"
+    },
+    "threaten": {
+      "name": "Threaten"
+    },
+    "crystallize": {
+      "name": "Crystallize"
+    },
+    "mana_draw": {
+      "name": "Mana Draw"
+    },
+    "concentration": {
+      "name": "Concentration"
+    },
+    "improvisation": {
+      "name": "Improvisation"
+    },
+    "battle_versatility": {
+      "name": "Battle Versatility"
+    },
+    "mana_pull": {
+      "name": "Mana Pull"
+    },
+    "will_focus": {
+      "name": "Will Focus"
+    },
+    "crystal_joy": {
+      "name": "Crystal Joy"
+    },
+    "noble_manners": {
+      "name": "Noble Manners"
+    },
+    "rejuvenate": {
+      "name": "Rejuvenate"
+    },
+    "cold_toughness": {
+      "name": "Cold Toughness"
+    },
+    "instinct": {
+      "name": "Instinct"
+    },
+    "wound": {
+      "name": "Wound"
+    },
+    "strong": "Powered: {effect}",
+    "strong_unsupported": "Powered: not yet available",
+    "fire_bolt": {
+      "name": "Fire Bolt"
+    },
+    "ice_bolt": {
+      "name": "Ice Bolt"
+    },
+    "swift_bolt": {
+      "name": "Swift Bolt"
+    },
+    "crushing_bolt": {
+      "name": "Crushing Bolt"
+    },
+    "blood_rage": {
+      "name": "Blood Rage",
+      "basic_text": "Attack 2; take a Wound to make it 5",
+      "strong_text": "Attack 4; take a Wound to make it 9"
+    },
+    "ice_shield": {
+      "name": "Ice Shield",
+      "strong_text": "Ice Block 3; the blocked enemy gets Armor -3 (min. 1)"
+    },
+    "agility": {
+      "name": "Agility",
+      "basic_text": "Move 2; in combat, each Move point left gives Attack 1",
+      "strong_text": "Move 4; in combat, 1 Move = Attack 1, or 2 Move = Ranged Attack 1"
+    },
+    "refreshing_walk": {
+      "name": "Refreshing Walk",
+      "basic_text": "Move 2 and Heal 1; in combat, Move 2 only",
+      "strong_text": "Move 4 and Heal 2; in combat, Move 4 only"
+    },
+    "intimidate": {
+      "name": "Intimidate",
+      "basic_text": "Influence 4 or Attack 3; Reputation −1 at end of turn",
+      "strong_text": "Influence 8 or Attack 7; Reputation −2 at end of turn"
+    },
+    "frost_bridge": {
+      "name": "Frost Bridge",
+      "basic_text": "Move 2; swamps cost 1 this turn",
+      "strong_text": "Move 4; lakes can be crossed, lakes and swamps cost 1 this turn"
+    },
+    "song_of_wind": {
+      "name": "Song of Wind",
+      "basic_text": "Move 2; plains, deserts and wastelands cost 1 less (min. 0)",
+      "strong_text": "Move 2; those cost 2 less; pay blue mana: cross lakes for 0"
+    },
+    "path_finding": {
+      "name": "Path Finding",
+      "basic_text": "Move 2; every terrain costs 1 less (min. 2)",
+      "strong_text": "Move 4; every terrain costs 2"
+    },
+    "blood_ritual": {
+      "name": "Blood Ritual",
+      "basic_text": "Take a Wound; gain a red crystal and a mana token of any color",
+      "strong_text": "Take a Wound; gain three mana tokens of any colors; pay a basic mana to gain a crystal of that color"
+    },
+    "pure_magic": {
+      "name": "Pure Magic",
+      "basic_text": "Pay a mana: green Move 4, white Influence 4, blue Block 4, red Attack 4",
+      "strong_text": "Pay a mana: green Move 7, white Influence 7, blue Block 7, red Attack 7"
+    },
+    "heroic_tale": {
+      "name": "Heroic Tale",
+      "basic_text": "Influence 3; Reputation +1 per Unit recruited this turn",
+      "strong_text": "Influence 6; Fame +1 and Reputation +1 per Unit recruited this turn"
+    },
+    "regeneration": {
+      "name": "Regeneration",
+      "basic_text": "Heal 1; ready a level I or II Unit",
+      "strong_text": "Heal 2; ready a level I, II or III Unit"
+    },
+    "into_the_heat": {
+      "name": "Into the Heat",
+      "basic_text": "At combat start: Units get +2 Attack and Block; no damage to Units",
+      "strong_text": "At combat start: Units get +3 Attack and Block; no damage to Units"
+    },
+    "steady_tempo": {
+      "name": "Steady Tempo",
+      "basic_text": "Move 2; at end of turn, may go under the deck if it is not empty",
+      "strong_text": "Move 4; at end of turn, may go on top of the deck"
+    },
+    "diplomacy": {
+      "name": "Diplomacy",
+      "basic_text": "Influence 2; Influence counts as Block this turn",
+      "strong_text": "Influence 4; choose ice or fire: Influence counts as Block of that element"
+    },
+    "in_need": {
+      "name": "In Need",
+      "basic_text": "Influence 3, +1 per Wound in hand or on a Unit",
+      "strong_text": "Influence 5, +2 per Wound in hand or on a Unit"
+    },
+    "decompose": {
+      "name": "Decompose",
+      "basic_text": "Throw away an Action card: gain two crystals of its color",
+      "strong_text": "Throw away an Action card: gain a crystal of each basic color other than its color"
+    },
+    "crystal_mastery": {
+      "name": "Crystal Mastery",
+      "basic_text": "Gain a crystal of a color you already own",
+      "strong_text": "Crystals spent this turn return at end of turn"
+    },
+    "mana_storm": {
+      "name": "Mana Storm",
+      "basic_text": "Pick a basic-color Source die: gain that crystal, then reroll it",
+      "strong_text": "Reroll all dice; 3 extra dice; black and gold count as any basic color"
+    },
+    "ambush": {
+      "name": "Ambush",
+      "basic_text": "Move 2; first Attack +1 or first Block +2",
+      "strong_text": "Move 4; first Attack +2 or first Block +4"
+    },
+    "maximal_effect": {
+      "name": "Maximal Effect",
+      "basic_text": "With another Action card: its basic effect three times, then throw it away",
+      "strong_text": "With another Action card: its strong effect twice for free, then throw it away"
+    },
+    "magic_talent": {
+      "name": "Magic Talent",
+      "basic_text": "Discard a card: play a Spell of the same color from the offer as if in hand",
+      "strong_text": "Pay a mana: gain a Spell of that color from the offer into your discard pile"
+    },
+    "learning": {
+      "name": "Learning",
+      "basic_text": "Influence 2; once, pay Influence 6: gain an Advanced Action from the offer into discard",
+      "strong_text": "Influence 4; once, pay Influence 9: gain an Advanced Action from the offer into hand"
+    },
+    "training": {
+      "name": "Training",
+      "basic_text": "Throw away an Action card: gain an Advanced Action of that color into discard",
+      "strong_text": "Throw away an Action card: gain an Advanced Action of that color into hand"
+    },
+    "fireball": {
+      "name": "Fireball",
+      "strong_name": "Firestorm",
+      "basic_text": "Ranged Fire Attack 5",
+      "strong_text": "Take a Wound; Siege Fire Attack 8"
+    },
+    "snowstorm": {
+      "name": "Snowstorm",
+      "strong_name": "Blizzard",
+      "basic_text": "Ranged Ice Attack 5",
+      "strong_text": "Take a Wound; Siege Ice Attack 8"
+    },
+    "expose": {
+      "name": "Expose",
+      "strong_name": "Mass Expose",
+      "basic_text": "One enemy loses fortifications and resistances; Ranged Attack 2",
+      "strong_text": "All enemies lose fortifications, or all lose resistances; Ranged Attack 3"
+    },
+    "tremor": {
+      "name": "Tremor",
+      "strong_name": "Earthquake",
+      "basic_text": "One enemy Armor -3, or all Armor -2 (min. 1)",
+      "strong_text": "One enemy Armor -3 (-6 if fortified), or all -2 (-4 if fortified) (min. 1)"
+    },
+    "flame_wall": {
+      "name": "Flame Wall",
+      "strong_name": "Flame Wave",
+      "basic_text": "Fire Attack 5 or Fire Block 7",
+      "strong_text": "Fire Attack 5 or Fire Block 7, +2 per enemy token faced"
+    },
+    "mana_bolt": {
+      "name": "Mana Bolt",
+      "strong_name": "Mana Thunderbolt",
+      "basic_text": "Pay a mana: blue Ice Attack 8, red Cold Fire 7, white Ranged Ice 6, green Siege Ice 5",
+      "strong_text": "Pay a mana: blue Ice Attack 11, red Cold Fire 10, white Ranged Ice 9, green Siege Ice 8"
+    },
+    "whirlwind": {
+      "name": "Whirlwind",
+      "strong_name": "Tornado",
+      "basic_text": "One enemy does not attack this combat",
+      "strong_text": "Attack phase only: destroy one enemy"
+    },
+    "underground_travel": {
+      "name": "Underground Travel",
+      "strong_name": "Underground Attack",
+      "basic_text": "Move up to 3 revealed spaces, not through swamps or lakes, ending on a safe space; provokes nothing",
+      "strong_text": "Same, but end on a fortified site: assault ignoring its fortifications"
+    },
+    "burning_shield": {
+      "name": "Burning Shield",
+      "strong_name": "Exploding Shield",
+      "basic_text": "Fire Block 4; if it blocks successfully, Fire Attack 4 in the Attack phase",
+      "strong_text": "Fire Block 4; if it blocks successfully, destroy the blocked enemy"
+    },
+    "chill": {
+      "name": "Chill",
+      "strong_name": "Lethal Chill",
+      "basic_text": "One enemy does not attack; it loses Fire Resistance this turn",
+      "strong_text": "One enemy does not attack and gets Armor -4 (min. 1) this turn"
+    },
+    "wings_of_wind": {
+      "name": "Wings of Wind",
+      "strong_name": "Wings of Night",
+      "basic_text": "Spend 1-5 Move: that many revealed spaces, ending on a safe space; provokes nothing",
+      "strong_text": "One enemy does not attack; extra enemies cost 1, 2, etc. Move"
+    },
+    "restoration": {
+      "name": "Restoration",
+      "strong_name": "Rebirth",
+      "basic_text": "Heal 3 (5 in a forest)",
+      "strong_text": "Heal 3 (5 in a forest); ready up to 3 levels of Units (5 in a forest)"
+    },
+    "demolish": {
+      "name": "Demolish",
+      "strong_name": "Disintegrate",
+      "basic_text": "Ignore site fortifications this turn; enemies Armor -1 (min. 1)",
+      "strong_text": "Attack phase only: destroy one enemy; others Armor -1 (min. 1)"
+    },
+    "space_bending": {
+      "name": "Space Bending",
+      "strong_name": "Time Bending",
+      "basic_text": "This turn, spaces 2 away count as adjacent; provokes nothing",
+      "strong_text": "At end of turn, take the other played cards back; take another turn"
+    },
+    "call_to_arms": {
+      "name": "Call to Arms",
+      "strong_name": "Call to Glory",
+      "basic_text": "Use one Unit's ability from the offer this turn; it takes no damage",
+      "strong_text": "Recruit any Unit from the offer for free (disband one if at limit)"
+    },
+    "meditation": {
+      "name": "Meditation",
+      "strong_name": "Trance",
+      "basic_text": "Two random discards go on top or bottom of the deck; draw 2 extra cards at end of turn",
+      "strong_text": "Same, but you choose the cards"
+    },
+    "mana_meltdown": {
+      "name": "Mana Meltdown",
+      "strong_name": "Mana Radiance",
+      "basic_text": "Others lose a random crystal (you may take one); with none, a Wound",
+      "strong_text": "Basic color: everyone takes a Wound per crystal of it; you gain 2 crystals"
+    },
+    "mana_claim": {
+      "name": "Mana Claim",
+      "strong_name": "Mana Curse",
+      "basic_text": "Keep a basic die until round end: 3 tokens now, or 1 token per turn",
+      "strong_text": "Same; other players using that color take a Wound"
+    },
+    "mind_read": {
+      "name": "Mind Read",
+      "strong_name": "Mind Steal",
+      "basic_text": "Pick a color: gain its crystal; others discard a Spell or Action of it",
+      "strong_text": "Same; you may steal one of the Action cards discarded"
+    },
+    "energy_flow": {
+      "name": "Energy Flow",
+      "strong_name": "Energy Steal",
+      "basic_text": "Ready a Unit; you may spend an opposing Unit of level II or less",
+      "strong_text": "Ready and heal a Unit; you may spend an opposing Unit of level III or less"
+    },
+    "banner_of_glory": {
+      "name": "Banner of Glory",
+      "basic_text": "Assign to a Unit: Armor +1, +1 to attacks and blocks, Fame +1 when it attacks or blocks",
+      "strong_text": "Units get Armor +1 and +1 to attacks and blocks this turn; Fame +1 per Unit that attacks or blocks"
+    },
+    "banner_of_fear": {
+      "name": "Banner of Fear",
+      "basic_text": "Assign to a Unit: when blocking, spend it to cancel one attack, Fame +1",
+      "strong_text": "Up to 3 enemies do not attack this combat"
+    },
+    "banner_of_protection": {
+      "name": "Banner of Protection",
+      "basic_text": "Assign to a Unit: Armor +1, Fire and Ice Resistance",
+      "strong_text": "At end of turn, throw away the Wounds received this turn"
+    },
+    "banner_of_courage": {
+      "name": "Banner of Courage",
+      "basic_text": "Assign to a Unit: once a round, outside combat, flip it to ready the Unit",
+      "strong_text": "Outside combat: ready all your Units"
+    },
+    "ruby_ring": {
+      "name": "Ruby Ring",
+      "basic_text": "Red mana token and red crystal; Fame +1",
+      "strong_text": "Unlimited red and black mana this turn; Fame +1 per red Spell cast"
+    },
+    "sapphire_ring": {
+      "name": "Sapphire Ring",
+      "basic_text": "Blue mana token and blue crystal; Fame +1",
+      "strong_text": "Unlimited blue and black mana this turn; Fame +1 per blue Spell cast"
+    },
+    "diamond_ring": {
+      "name": "Diamond Ring",
+      "basic_text": "White mana token and white crystal; Fame +1",
+      "strong_text": "Unlimited white and black mana this turn; Fame +1 per white Spell cast"
+    },
+    "emerald_ring": {
+      "name": "Emerald Ring",
+      "basic_text": "Green mana token and green crystal; Fame +1",
+      "strong_text": "Unlimited green and black mana this turn; Fame +1 per green Spell cast"
+    },
+    "sword_of_justice": {
+      "name": "Sword of Justice",
+      "basic_text": "Discard cards: Attack 3 each; Fame +1 per enemy defeated",
+      "strong_text": "Physical attacks doubled; enemies lose physical resistance; Fame +1 per enemy defeated"
+    },
+    "horn_of_wrath": {
+      "name": "Horn of Wrath",
+      "basic_text": "Siege Attack 5; roll a mana die: black or red, take a Wound",
+      "strong_text": "Siege Attack 5, up to +5; roll a die per +1, a Wound per black or red"
+    },
+    "endless_bag_of_gold": {
+      "name": "Endless Bag of Gold",
+      "basic_text": "Influence 4, Fame +2",
+      "strong_text": "Influence 9, Fame +3"
+    },
+    "endless_gem_pouch": {
+      "name": "Endless Gem Pouch",
+      "basic_text": "Roll two mana dice: a crystal per color (gold: your choice); black: Fame +1",
+      "strong_text": "One token of each basic color, plus gold (day) or black (night)"
+    },
+    "golden_grail": {
+      "name": "Golden Grail",
+      "basic_text": "Heal 2; Fame +1 per Heal point from this card spent",
+      "strong_text": "Heal 6; draw a card each time you heal a Wound from hand this turn"
+    },
+    "book_of_wisdom": {
+      "name": "Book of Wisdom",
+      "basic_text": "Throw away an Action card: gain an Advanced Action of that color into hand",
+      "strong_text": "Throw away an Action card: gain a Spell of that color into hand, plus a crystal of it"
+    },
+    "amulet_of_sun": {
+      "name": "Amulet of Sun",
+      "basic_text": "Gold mana token; at night: forests cost 3, gold mana usable, garrisons revealed as by day",
+      "strong_text": "As the basic effect, with three gold tokens"
+    },
+    "amulet_of_darkness": {
+      "name": "Amulet of Darkness",
+      "basic_text": "Mana token of any color; by day: deserts cost 3, black mana usable",
+      "strong_text": "As the basic effect, with three mana tokens"
+    }
+  },
+  "effect": {
+    "move": "Move {amount}",
+    "influence": "Influence {amount}",
+    "attack": "Attack {amount}",
+    "ranged_attack": "Ranged Attack {amount}",
+    "block": "Block {amount}",
+    "ice_attack": "Ice Attack {amount}",
+    "ice_block": "Ice Block {amount}",
+    "or": "{first} or {second}",
+    "discard_another": "Discard another card: {effects}",
+    "unsupported": "Not available yet",
+    "gain_token": "{color} mana token",
+    "gain_crystal": "{color} crystal",
+    "pay_for_crystal": "Pay {color}: {color} crystal",
+    "extra_die": "One more die this turn",
+    "extra_die_black": "One more die this turn; black: any color",
+    "set_dice": "Set {amount} die/dice to a color, gain tokens",
+    "boost": "Power another card for free, +{amount}",
+    "fire_attack": "Fire Attack {amount}",
+    "cold_fire_attack": "Cold Fire Attack {amount}",
+    "ranged_fire_attack": "Ranged Fire Attack {amount}",
+    "ranged_ice_attack": "Ranged Ice Attack {amount}",
+    "ranged_cold_fire_attack": "Ranged Cold Fire Attack {amount}",
+    "siege_attack": "Siege Attack {amount}",
+    "siege_fire_attack": "Siege Fire Attack {amount}",
+    "siege_ice_attack": "Siege Ice Attack {amount}",
+    "siege_cold_fire_attack": "Siege Cold Fire Attack {amount}",
+    "fire_block": "Fire Block {amount}",
+    "cold_fire_block": "Cold Fire Block {amount}",
+    "cold_toughness_strong": "Ice Block {base} + {bonus} (blocked enemy's abilities)",
+    "ice_block_per_ability": "Ice Block {amount}, +1 per ability of the blocked enemy",
+    "swift_block": "Block {amount}, counts twice against Swiftness",
+    "ready_unit": "Ready a Unit of level {level} or less",
+    "token_and_crystal": "{color} mana token and crystal",
+    "gain_tokens": "{first} and {second} mana tokens",
+    "heal": "Heal {amount}",
+    "draw_cards": "Draw {count} card(s)",
+    "not_in_combat": "Healing: not in combat",
+    "influence_reputation": "Influence {amount}; Reputation {reputation}",
+    "influence_in_interaction": "Influence {amount}; during interaction: {bonus}",
+    "fame": "Fame +{amount}",
+    "reputation": "Reputation {amount}",
+    "move_and_heal": "Move {movement} and Heal {heal}",
+    "heal_and_ready": "Heal {heal}; ready a Unit of level {level} or less",
+    "influence_per_wound": "Influence {base}, +{per} per Wound",
+    "crystal_and_token": "{crystal} crystal and {token} token",
+    "draw_and_token": "Draw {cards} cards; {token} token",
+    "heal_unit": "Heal a Unit",
+    "wound_crystal_and_token": "Wound; {crystal} crystal and {token} token",
+    "wound_and_tokens": "Wound; {count} tokens of your choice",
+    "crystals_from_destroyed": "Throw away an Action card: {count} crystals of its color",
+    "crystals_other_colors": "Throw away an Action card: a crystal of each other color",
+    "gain_owned_crystal": "{color} crystal (already owned)",
+    "crystal_from_die": "Source die: crystal of its color, then reroll the die",
+    "reroll_source": "Reroll the Source; 3 extra dice",
+    "repeat": "Another Action card, {times} times",
+    "gain_spell": "Pay {color}: a {color} Spell from the offer",
+    "train": "Throw away an Action card: Advanced Action of the same color",
+    "on_all_enemies": "all enemies: {effect}",
+    "destroy_enemy": "destroy an enemy",
+    "attack_with_wound": "{attack} and a Wound",
+    "wounds_per_crystal": "a Wound per {color} crystal, then two {color} crystals",
+    "others_only": "nothing in solo (targets other players)",
+    "heal_by_terrain": "Heal {heal} ({forest} in a forest)",
+    "heal_and_ready_levels": "Heal {heal} ({forest_heal} in a forest); ready up to {levels} levels of Units ({forest_levels} in a forest)",
+    "ready_any_unit": "ready a spent Unit",
+    "ready_and_heal_any_unit": "ready a spent Unit, and heal it",
+    "underground": "Up to 3 spaces, without provoking",
+    "underground_attack": "Up to 3 spaces, assault a fortified site",
+    "fly": "Flight: up to {max} spaces, 1 Move per space",
+    "does_not_attack_per_move": "targeted enemies do not attack (extra Move per enemy)",
+    "meditation": "two random cards from the discard pile on top of or under the deck; draw 2 more cards",
+    "trance": "two chosen cards from the discard pile on top of or under the deck; draw 2 more cards",
+    "claim_die": "Keep a Source die: 3 tokens of its color",
+    "claim_die_each_turn": "Keep a Source die: 1 token of its color each turn",
+    "amulet": "{amount} mana token(s)",
+    "cancel_attacks": "Up to {amount} enemies do not attack",
+    "ready_all_units": "Ready all units",
+    "sword_discard": "Attack 3 per discarded card",
+    "horn_of_wrath": "Siege Attack {amount} and mana dice",
+    "gem_pouch_dice": "Roll two mana dice: crystals",
+    "tokens_each_color": "One token of each basic color, and gold by day or black by night",
+    "spell_and_crystal": "A spell from the offer to hand and a crystal",
+    "move_per_unit": "Move 1 per ready, unwounded Unit (max {max})",
+    "crystal_color_influence": "Interaction Influence 1 per crystal color",
+    "discard_wound_to_draw": "Discard a Wound, draw a card",
+    "flight": "Flight: {spaces} space(s)",
+    "flight_cost": "Flight: {spaces} space(s) for {cost} Move",
+    "resistance_break": "One enemy: Armor −1 per resistance",
+    "source_opening": "Reroll a Source die",
+    "calm_weather": "Terrain costs −2 this turn (min 1)",
+    "mana_overload": "A mana token of the chosen color"
+  },
+  "play": {
+    "basic": "Play: {effect}",
+    "basic_discarding": "Play: {effect}…",
+    "sideways": "Play sideways",
+    "sideways_effect": "Play sideways: {effect}",
+    "strong": "Power: {effect}",
+    "strong_discarding": "Power: {effect}…",
+    "strong_no_mana": "You need {color} mana: a {color} or gold die from the Source, a {color} crystal or a {color} token.",
+    "strong_die_taken": "Die already taken this turn: you need a {color} crystal or token.",
+    "throw_away": "Throw away: {effect}",
+    "assign_banner": "Assign to a unit"
+  },
+  "discard_choice": {
+    "prompt": "{card}: {effect}. Choose the card to discard.",
+    "pick": "Discard this card",
+    "cancel": "Cancel",
+    "destroy_prompt": "{card}: {effect}. Choose the card to throw away.",
+    "destroy": "Throw away this card"
+  },
+  "play_area": {
+    "title": "Play area",
+    "empty": "No card played",
+    "line": "{card}: {effect}",
+    "line_from_offer": "{card} (from the offer): {effect}",
+    "line_sideways": "{card}: {effect} (sideways)",
+    "line_discarding": "{card}: {effect}, {discarded} discarded",
+    "line_strong_die": "{card} (powered, {color} die): {effect}",
+    "line_strong_crystal": "{card} (powered, {color} crystal): {effect}",
+    "line_strong_token": "{card} (powered, {color} token): {effect}",
+    "line_boosted": "{card} (powered for free): {effect}",
+    "tokens": "Tokens:",
+    "token_tooltip": "{color} mana token: use it this turn, returned to the bank at the end of the turn.",
+    "token_spent": "{color} mana token: spent this turn",
+    "modifiers": "Active effects",
+    "modifier_line": "{source}: {effect}",
+    "line_destroying": "{card}: {effect}, {discarded} thrown away",
+    "repeated": "{target} {times} times ({effect}), thrown away"
+  },
+  "discard": {
+    "count": "Discard pile: {count} card(s)",
+    "title": "Discard pile"
+  },
+  "time_of_day": {
+    "day": "Day",
+    "night": "Night",
+    "icon": {
+      "day": "Day",
+      "night": "Night"
+    }
+  },
+  "turn": {
+    "line": "Round {round}/{limit} · {time_of_day} (turn {number})",
+    "extra": "Extra turn"
+  },
+  "round": {
+    "announce": {
+      "button": "Announce the end of the round",
+      "optional": "Your deck is empty: you may announce the end of the round instead of playing this turn.",
+      "mandatory": "Your deck and hand are empty: announce the end of the round.",
+      "confirm_prompt": "Announce the end of the round? Your {count} card(s) in hand will be reshuffled without being played.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "button_short": "End the round…"
+    },
+    "new": "New round: the Source was rerolled and your deck reshuffled."
+  },
+  "end_turn": {
+    "button": "End turn…",
+    "prompt": "End of turn: choose the cards to discard before drawing.",
+    "draw": "You will draw {count} card(s).",
+    "draw_none": "You will draw no card.",
+    "must_discard": "You played no card this turn: discard at least one.",
+    "discard": "Discard",
+    "confirm": "End turn",
+    "cancel": "Cancel",
+    "reclaim": "Take {card} back by discarding:",
+    "reclaim_none": "(do not take back)",
+    "rest_standard": "Standard Rest: discard one non-Wound card and any number of Wounds.",
+    "rest_slow": "Slow Recovery: your hand holds only Wounds, discard one of them.",
+    "no_rest": "No rest: you moved or fought this turn, Wounds stay in hand.",
+    "glade": "Magical glade: throw away a Wound",
+    "glade_hand": "from your hand",
+    "glade_discard": "from your discard pile",
+    "glade_none": "keep it",
+    "disabled": {
+      "combat": "Finish the combat first",
+      "choice": "Finish the current choice first",
+      "game_over": "The game is over"
+    },
+    "forced_withdrawal": "Forced withdrawal: {count} space(s), {count} Wound(s) in hand",
+    "steady_tempo": "Keep Steady Tempo under the deck",
+    "steady_tempo_strong": "Keep Steady Tempo on top of the deck"
+  },
+  "mana": {
+    "red": "red",
+    "blue": "blue",
+    "white": "white",
+    "green": "green",
+    "gold": "gold",
+    "black": "black"
+  },
+  "source": {
+    "title": "Source",
+    "depleted": "depleted:",
+    "by_day": "during the Day",
+    "by_night": "at Night",
+    "die": {
+      "basic": "{color} mana die",
+      "gold_day": "Gold mana die: can be used as mana of any basic color, during the Day.",
+      "black_night": "Black mana die: powers some effects, at Night.",
+      "depleted": "{color} mana die: depleted, unusable {time_of_day_lower}.",
+      "taken": "{color} mana die: taken this turn, rerolled at the end of the turn.",
+      "set": "{color} mana die: set to {color} this turn, returned without reroll."
+    },
+    "taken": "taken:"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "crystals": {
+      "red": "Red crystals: {count} of {limit}",
+      "blue": "Blue crystals: {count} of {limit}",
+      "white": "White crystals: {count} of {limit}",
+      "green": "Green crystals: {count} of {limit}"
+    }
+  },
+  "mana_choice": {
+    "prompt": "{card} powered: {effect}. Choose the mana to pay.",
+    "die": "{color} die",
+    "gold_die": "Gold die (as {color})",
+    "crystal": "{color} crystal ({count} of {limit})",
+    "cancel": "Cancel",
+    "prompt_basic": "{card}: {effect}. Choose the mana to pay.",
+    "token": "{color} token",
+    "endless": "endless ({color})",
+    "invocation": "Invocation: discard {card} ({color})",
+    "polarization": "Polarization: {from} as {color}"
+  },
+  "set_die": {
+    "prompt": "Choose a die from the Source, then its color."
+  },
+  "concentration": {
+    "prompt": "{card}: choose the card to power for free (+{amount}).",
+    "button": "Power with {card}: {effect}",
+    "no_target": "No other card to power outside combat.",
+    "maximal_prompt": "{card}: choose another Action card, its effect {times} times."
+  },
+  "hero": {
+    "arythea": {
+      "name": "Arythea",
+      "tagline": "Fire, siege and night",
+      "description": "Her cult is whispered to have caused the Breaking. Back from the chaos stronger than ever, she lends her blade to the Council of the Void, as long as blood flows for her god.",
+      "style": "Offensive: fire and siege attacks, ideal to assault fortified sites.\nStronger at night: moves and negotiates better in the dark, makes use of black mana.\nTurns pain to her advantage: her Wounds can help instead of clogging her hand.\nLess at ease recruiting or healing: for players who like risk."
+    },
+    "goldyx": {
+      "name": "Goldyx",
+      "tagline": "Crystals and mana",
+      "description": "Out of the Surge stronger than any of his kind, he trusts no one. The Council of the Void sent him on a mission, but only treasures and worthy foes interest him.",
+      "style": "Master of mana: gains crystals and tokens at will, and powers almost all his cards.\nExcellent with Spells, which he fuels with ease.\nCan fly over the terrain and block the Source for others.\nOften considered the strongest, but his mana needs careful planning."
+    },
+    "norowas": {
+      "name": "Norowas",
+      "tagline": "Units and diplomacy",
+      "description": "Once the leader of the elven armies, he joined the Council of the Void to impose his order on the kingdoms born of the Breaking, without mercy or hesitation.",
+      "style": "Warlord: his Units attack and block harder, and help him move faster.\nDiplomat: high Influence by day, extra Fame and Reputation when he recruits.\nKeeps his troops fit: heals or readies a Unit, recruits for less.\nWeaker alone in combat early on: he must surround himself quickly."
+    },
+    "tovak": {
+      "name": "Tovak",
+      "tagline": "Combat without magic, for beginners",
+      "description": "The Ninth Circle sold its swords to the highest bidder; under his grip, it became a power. He embraces the Council of the Void's conquests as long as they strike the factions that scorn his people.",
+      "style": "Solid warrior: attacks, blocks and shoots without relying on mana.\nBreaks enemy resistances and takes Wounds without weakening.\nGets the most out of cards played sideways: little mana, lots of effect.\nThe easiest to learn: recommended for a first game."
+    }
+  },
+  "undo": {
+    "button": "Undo",
+    "hint": "Take back your last action",
+    "blocked": {
+      "turn_start": "Nothing to take back since the start of the turn.",
+      "revealed": "Information was revealed (tile, card or die): you cannot go back before it."
+    }
+  },
+  "save": {
+    "button": "Save",
+    "hint": "Save the game",
+    "done": "Game saved: {name}",
+    "failed": "Could not save (see the logs).",
+    "auto_failed": "Autosave failed (see the logs)."
+  },
+  "load": {
+    "button": "Load…",
+    "hint": "Load a game",
+    "title": "Load a game",
+    "empty": "No saved game.",
+    "auto": "Autosave",
+    "entry": "{date} · {scenario} · {hero} · {line}",
+    "load": "Load",
+    "close": "Close",
+    "failed": "Could not load (see the logs).",
+    "error": {
+      "unreadable": "Unreadable file.",
+      "other_version": "Saved by another version of the game.",
+      "invalid": "Invalid save."
+    },
+    "unreadable": "{name} · {reason}"
+  },
+  "combat": {
+    "start": "Start the combat",
+    "next_phase": "Next phase",
+    "end": "End the combat",
+    "challenge": "Challenge {enemy}",
+    "to_fight": "To fight: {enemies}",
+    "phase": {
+      "ranged": "Ranged and siege attack phase",
+      "block": "Block phase",
+      "damage": "Assign damage phase",
+      "attack": "Attack phase"
+    },
+    "enemy": {
+      "blocked": "blocked",
+      "defeated": "defeated",
+      "siege_only": "fortified: siege only",
+      "summons": "Summons: {monster}",
+      "summoned_note": "removed after damage, no Fame",
+      "stakes_block": "To block: {block}",
+      "stakes_damage": "If unblocked: {damage} damage, {wounds} wound(s)",
+      "swift_block": "{block} (swift, 2 × {attack})",
+      "brutal_damage": "{damage} (brutal, 2 × {attack})",
+      "site_fortified": "fortified (site)",
+      "fortified_twice": "fortified twice: no ranged target",
+      "armor_reduced": "Armor {armor} (instead of {printed})",
+      "does_not_attack": "does not attack",
+      "no_fortification": "no longer fortified",
+      "no_resistances": "no resistances",
+      "no_fire_resistance": "no Fire resistance",
+      "destroyed": "destroyed",
+      "attack_increased": "Attack {attack} (instead of {printed})",
+      "city_ability": "{ability} (city)"
+    },
+    "attack": "Attack",
+    "block": "Block",
+    "resolve_attack": "Resolve the attack",
+    "resolve_block": "Resolve the block",
+    "cancel": "Cancel",
+    "wounds": "{enemy}: {count} wound(s)",
+    "title": "Combat",
+    "show_board": "Show the map",
+    "back": "Back to combat",
+    "target": "target",
+    "needed_armor": "Total armor needed: {sum}",
+    "history": {
+      "count": "In this combat ({count})",
+      "attack": "{phase}: {cards}, {total} / {needed} {result}",
+      "success": "succeeded",
+      "failure": "failed",
+      "damage_enemy": "Damage: {enemy}, {damage}: {count} wound(s)",
+      "brutal": "brutal 2 × {attack} = {damage}",
+      "poison": "poison: {count} more in the discard pile",
+      "paralyze": "paralyze: {count} card(s) discarded from hand",
+      "knocked_out": "Knocked out: {count} card(s) discarded from hand",
+      "reputation": "Reputation {amount}",
+      "unit_damage": "{name}: {wounds} Wound(s)",
+      "unit_destroyed": "{name} destroyed"
+    },
+    "knocked_out": "Knocked out: {limit} Wounds taken in this combat.",
+    "shared": {
+      "title": "The group shares:",
+      "physical": "physical resistance ({enemies})",
+      "fire": "fire resistance ({enemies})",
+      "ice": "ice resistance ({enemies})",
+      "fortified": "fortified ({enemies}): siege attacks only"
+    },
+    "block_efficient": {
+      "fire": "Against a Fire attack, blocks other than Ice and Cold Fire are halved",
+      "ice": "Against an Ice attack, blocks other than Fire and Cold Fire are halved",
+      "cold_fire": "Against a Cold Fire attack, blocks other than Cold Fire are halved"
+    },
+    "mark": {
+      "halved": "÷2",
+      "siege_only": "siege only"
+    },
+    "calculation": "Halved: {halved} ÷ 2 = {halved_sum} · Others: {full}",
+    "summon_warning": "At the start of the Block phase, {enemies} summon a creature (brown pile): no undo past that point.",
+    "swift_line": "Swift: you must block twice its attack, 2 × {attack} = {block}",
+    "night_rules": "Night rules: gold mana pays nothing",
+    "move_as_attack": "Move as Attack ({move} left)",
+    "move_as_ranged": "2 Move as Ranged Attack ({move} left)",
+    "influence_as_block": "Influence as Block ({influence} left)",
+    "use_deferred_attack": "Add {attack}"
+  },
+  "fame": {
+    "pending": "Level {level} at the end of the turn"
+  },
+  "reputation": {
+    "line": "Reputation: {reputation} · interaction bonus {bonus}",
+    "line_x": "Reputation: X · no interaction"
+  },
+  "interaction": {
+    "button": "Interact with the locals",
+    "lost_points": "Interacting loses: {move} move, {influence} influence",
+    "header": "Interaction: {site}",
+    "city_shields": "Shields in the city: Influence +{bonus}"
+  },
+  "level": {
+    "stats": "Hand limit {hand_limit} · Command tokens {command}",
+    "gained": "Level {level}: armor {armor}, hand limit {hand_limit}, one more Command token",
+    "gained_even": "Level {level}: a Skill and an Advanced Action gained",
+    "hand_limit_keep": "Hand limit: {limit} (+{bonus} keep)",
+    "hand_limit_city": "Hand limit: {limit} (+{bonus} city)"
+  },
+  "new_game": {
+    "title": "New game",
+    "button": "New game…",
+    "hint": "Start another game",
+    "hero": "Hero",
+    "scenario": "Scenario",
+    "seed": "Seed (optional)",
+    "seed_hint": "Empty: a random game. The same seed with the same hero and scenario replays the same game.",
+    "seed_invalid": "The seed is a whole number from 0 to 18446744073709551615.",
+    "start": "Start",
+    "cancel": "Cancel",
+    "continue": "Continue: {summary}",
+    "load": "Load…",
+    "abandon_warning": "The current game will be saved, then replaced.",
+    "previous_saved": "Previous game saved: {name}",
+    "recap": "Your game:",
+    "recap_choice": "{scenario} · {hero}",
+    "scenarios": "Scenarios",
+    "heroes": "Heroes",
+    "next": "Next: choose your hero",
+    "advanced": "Advanced",
+    "advanced_filled": "Advanced (seed entered)",
+    "fact_length": "Length",
+    "fact_players": "Players",
+    "fact_kind": "Type",
+    "objective": "Goal",
+    "special_rules": "Special rules",
+    "game_end": "Game end",
+    "scoring": "Scoring",
+    "style": "Play style",
+    "own_cards_title": "Own cards",
+    "card_replaces": "instead of {card}",
+    "card_basic": "Basic",
+    "card_strong": "Powered ({color} mana)",
+    "step_options": "Options",
+    "options": {
+      "dummy": "Dummy player",
+      "dummy_help": "It sets the pace of the Round. Without it, you play at your own pace: recommended for a very first game.",
+      "none": "No option for this scenario.",
+      "dummy_hero": "Dummy player's Hero",
+      "dummy_hero_random": "Random",
+      "dummy_required": "This scenario is played with the Dummy player."
+    },
+    "recap_no_dummy": "without Dummy player",
+    "recap_dummy_hero": "Dummy player: {hero}"
+  },
+  "panel": {
+    "level": "Level {level}",
+    "fame": "{fame} / {next}",
+    "strong": "Powered",
+    "this_turn": "This turn",
+    "nothing_this_turn": "Nothing notable"
+  },
+  "unit": {
+    "peasants": {
+      "name": "Peasants",
+      "ability_1": "Attack or Block 2",
+      "ability_2": "Influence 2",
+      "ability_3": "Move 2"
+    },
+    "herbalists": {
+      "name": "Herbalists",
+      "ability_1": "(green mana) Heal 2",
+      "ability_2": "Ready a level I or II Unit",
+      "ability_3": "Green mana token"
+    },
+    "foresters": {
+      "name": "Foresters",
+      "ability_1": "Move 2; forests, hills and swamps cost 1 less (min. 0)",
+      "ability_2": "Block 3"
+    },
+    "utem_crossbowmen": {
+      "name": "Utem Crossbowmen",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "Ranged Attack 2"
+    },
+    "utem_guardsmen": {
+      "name": "Utem Guardsmen",
+      "ability_1": "Attack 2",
+      "ability_2": "Block 4; counts twice against a Swift enemy"
+    },
+    "utem_swordsmen": {
+      "name": "Utem Swordsmen",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "Attack or Block 6; the Unit is Wounded"
+    },
+    "guardian_golems": {
+      "name": "Guardian Golems",
+      "ability_1": "Attack or Block 2",
+      "ability_2": "(red mana) Fire Block 4",
+      "ability_3": "(blue mana) Ice Block 4"
+    },
+    "illusionists": {
+      "name": "Illusionists",
+      "ability_1": "Influence 4",
+      "ability_2": "(white mana) One unfortified enemy does not attack",
+      "ability_3": "White crystal"
+    },
+    "red_cape_monks": {
+      "name": "Red Cape Monks",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "(red mana) Fire Attack or Fire Block 4"
+    },
+    "northern_monks": {
+      "name": "Northern Monks",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "(blue mana) Ice Attack or Ice Block 4"
+    },
+    "savage_monks": {
+      "name": "Savage Monks",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "(green mana) Siege Attack 4"
+    },
+    "fire_golems": {
+      "name": "Fire Golems",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "(red mana) Ranged Fire Attack 4"
+    },
+    "ice_golems": {
+      "name": "Ice Golems",
+      "ability_1": "Attack or Block 3",
+      "ability_2": "(blue mana) Ice Attack 6"
+    },
+    "fire_mages": {
+      "name": "Fire Mages",
+      "ability_1": "Ranged Fire Attack 3",
+      "ability_2": "(red mana) Fire Attack or Fire Block 6",
+      "ability_3": "Red token and red crystal"
+    },
+    "ice_mages": {
+      "name": "Ice Mages",
+      "ability_1": "Ice Attack or Ice Block 4",
+      "ability_2": "(blue mana) Siege Ice Attack 4",
+      "ability_3": "Blue token and blue crystal"
+    },
+    "amotep_gunners": {
+      "name": "Amotep Gunners",
+      "ability_1": "Attack or Block 5",
+      "ability_2": "(red mana) Ranged Fire Attack 6"
+    },
+    "amotep_freezers": {
+      "name": "Amotep Freezers",
+      "ability_1": "Attack or Block 5",
+      "ability_2": "(blue mana) One enemy does not attack and gets Armor -3 (min. 1)"
+    },
+    "catapults": {
+      "name": "Catapults",
+      "ability_1": "Siege Attack 3",
+      "ability_2": "(red mana) Siege Fire Attack 5",
+      "ability_3": "(blue mana) Siege Ice Attack 5"
+    },
+    "altem_mages": {
+      "name": "Altem Mages",
+      "ability_1": "Two mana tokens of any colors",
+      "ability_2": "Cold Fire Attack or Block 5 (7 with blue or red mana, 9 with both)",
+      "ability_3": "(black mana) Your attacks become Cold Fire, or also Siege"
+    },
+    "altem_guardians": {
+      "name": "Altem Guardians",
+      "ability_1": "Attack 5",
+      "ability_2": "Block 8; counts twice against a Swift enemy",
+      "ability_3": "(green mana) Your Units gain all resistances this turn"
+    },
+    "cost": "Cost: Influence {influence}",
+    "level": "Level {level}",
+    "armor": "Armor {armor}",
+    "recruit": {
+      "village": "Village",
+      "monastery": "Monastery",
+      "keep": "Keep",
+      "mage_tower": "Mage Tower",
+      "city": "City"
+    },
+    "recruit_sites": "Recruit: {list}",
+    "elite": "Elite",
+    "regular": "Regular"
+  },
+  "units": {
+    "header": "Units: {count}/{command}",
+    "line": "{name} · level {level}",
+    "ready": "Ready",
+    "spent": "Spent",
+    "wounded": "Wounded ({wounds})",
+    "unsupported": "not available yet",
+    "recruit": "Recruit: {name} ({cost})",
+    "disband_prompt": "Choose a Unit to disband",
+    "disband": "Disband",
+    "choice_prompt": "{name}: {ability}",
+    "none": "No units"
+  },
+  "damage": {
+    "remaining": "{enemy}: {damage} damage to assign",
+    "to_unit": "To {name} (armor {armor})",
+    "to_hero": "To the hero"
+  },
+  "healing": {
+    "points": "Healing: {points}",
+    "wound": "Throw away a Wound (1)",
+    "unit": "Heal {name} ({cost})"
+  },
+  "offers": {
+    "title": "Offers",
+    "advanced_actions": "Advanced Actions",
+    "spells": "Spells",
+    "units": "Units",
+    "take": "Take",
+    "choose_advanced_action": "Level {level}: choose an Advanced Action",
+    "button": "Offers…",
+    "unsupported": "{text} (not coded yet: play it sideways)",
+    "spell_name": "{basic} / {strong}",
+    "close": "Close",
+    "monastery_card": "monastery",
+    "disabled": {
+      "combat": "Not during a combat"
+    },
+    "learn": "Learn ({cost} Influence)",
+    "cast": "Cast",
+    "use": "Use: {ability}",
+    "recruit_free": "Recruit (free)"
+  },
+  "purchase": {
+    "healing": "Buy a Healing point ({cost})",
+    "advanced_action": "Buy: {name} ({cost})",
+    "spell": "Buy: {name} ({cost} + {color} mana)",
+    "artifact": "Buy an Artifact ({cost})",
+    "advanced_action_deck": "Buy the top card of the Advanced Action deck ({cost})",
+    "elite_unit": "Add an Elite Unit to the offer ({cost})"
+  },
+  "burn": {
+    "button": "Burn the monastery",
+    "lost_points": "Burning loses: {move} move, {influence} influence",
+    "confirm": "Burn the monastery? Reputation −3, combat against a violet enemy, without your Units. This cannot be undone.",
+    "confirm_yes": "Burn",
+    "cancel": "Cancel",
+    "no_units": "Your Units do not take part in this combat"
+  },
+  "reward": {
+    "pending": "Reward at end of turn: {count} Artifact(s)",
+    "choose_artifact": "Reward: take one Artifact",
+    "take": "Take",
+    "choose_spell": "Reward: take one Spell",
+    "pending_spell": "Reward at end of turn: {count} Spell(s)",
+    "die": "Reward die: {color}, {reward}",
+    "die_spell": "a Spell",
+    "die_artifact": "an Artifact",
+    "pending_crystals": "Reward at end of turn: {count} random crystal(s)",
+    "choose_crystal": "Reward: choose the crystal's color (gold die)",
+    "pending_ruins": "Reward at end of turn: {list}",
+    "artifacts_count": "{count} Artifact(s)",
+    "choose_unit": "Reward: take a Unit from the offer",
+    "choose_advanced_action": "Reward: take an Advanced Action",
+    "decline_unit": "Decline"
+  },
+  "plunder": {
+    "button": "Plunder the village (2 cards, Reputation −1)"
+  },
+  "assault": {
+    "withdrew": "Assault repelled: back to the starting space"
+  },
+  "adventure": {
+    "enter": "Enter: {site}",
+    "lost_points": "Entering loses: {move} Move, {influence} Influence",
+    "confirm": {
+      "fight_drawn": "Fight {count} {color} enemy(ies), drawn at random.",
+      "fight_waiting": "Fight: {enemies}.",
+      "night_no_units": "Night rules, without your Units.",
+      "reward": "Reward if you win: {reward}.",
+      "no_undo": "No undo.",
+      "fight_colors": "Fight enemies drawn at random: {colors}."
+    },
+    "confirm_yes": "Enter",
+    "cancel": "Cancel",
+    "reward": {
+      "dungeon": "a Spell (gold or black die) or an Artifact",
+      "tomb": "a Spell and an Artifact",
+      "monster_den": "two random crystals",
+      "spawning_grounds": "an Artifact and three random crystals",
+      "fame_only": "Fame only"
+    }
+  },
+  "glade": {
+    "token": "Magical glade: +1 {color} mana token"
+  },
+  "ruins": {
+    "altar": {
+      "tribute": "Pay tribute at the altar",
+      "needs": "You need 3 {color} mana",
+      "window": "Tribute: 3 {color} mana, 7 Fame",
+      "no_undo": "Fame is gained at once."
+    },
+    "payment": {
+      "die": "{color} die",
+      "crystal": "{color} crystal",
+      "token": "{color} token"
+    },
+    "reward": {
+      "artifact": "an Artifact",
+      "spell": "a Spell",
+      "advanced_action": "an Advanced Action",
+      "crystal_set": "one crystal of each color",
+      "unit": "a Unit from the offer"
+    },
+    "revealed": "Ruins revealed: the route stops"
+  },
+  "icon": {
+    "move": "Move",
+    "influence": "Influence",
+    "armor": "Armor",
+    "fame": "Fame",
+    "attack": {
+      "physical": "Attack",
+      "fire": "Fire Attack",
+      "ice": "Ice Attack",
+      "cold_fire": "Cold Fire Attack"
+    },
+    "ranged_attack": {
+      "physical": "Ranged Attack",
+      "fire": "Ranged Fire Attack",
+      "ice": "Ranged Ice Attack",
+      "cold_fire": "Ranged Cold Fire Attack"
+    },
+    "siege_attack": {
+      "physical": "Siege Attack",
+      "fire": "Siege Fire Attack",
+      "ice": "Siege Ice Attack",
+      "cold_fire": "Siege Cold Fire Attack"
+    },
+    "block": {
+      "physical": "Block",
+      "fire": "Fire Block",
+      "ice": "Ice Block",
+      "cold_fire": "Cold Fire Block"
+    },
+    "ranged_or_siege": "Ranged or Siege Attack",
+    "resistance": {
+      "physical": "Physical Resistance",
+      "fire": "Fire Resistance",
+      "ice": "Ice Resistance"
+    },
+    "tile": {
+      "countryside": "Countryside tile",
+      "core": "Core tile"
+    }
+  },
+  "shortcut": {
+    "hint": "Shortcut: {key}",
+    "key": {
+      "end": "End",
+      "enter": "Enter",
+      "escape": "Esc",
+      "ctrl": "Ctrl+{key}",
+      "home": "Home"
+    }
+  },
+  "turn_fact": {
+    "explored": "Tile revealed",
+    "defeated": "{enemies} defeated: +{fame} Fame",
+    "fame": "+{fame} Fame",
+    "reputation": "Reputation {change}",
+    "wounds": "{count} Wound(s) taken",
+    "healed": "{count} Wound(s) healed",
+    "crystal": "{color} crystal gained",
+    "card": "Card gained: {card}",
+    "unit_gained": "Unit gained: {unit}",
+    "unit_lost": "Unit lost: {unit}",
+    "unit_wounded": "Unit wounded: {unit}",
+    "unit_healed": "Unit healed: {unit}",
+    "plundered": "Village plundered",
+    "burned": "Monastery burned",
+    "card_destroyed": "{card} thrown away",
+    "crystals_returned": "Crystals returned: {count}",
+    "enemy_destroyed": "{enemy} destroyed"
+  },
+  "menu": {
+    "title": "Menu",
+    "round": "Round {round}/{limit} (turn {number})",
+    "fullscreen": "Full screen",
+    "quit": "Quit",
+    "tiles": {
+      "countryside": "Countryside tile deck: {count}",
+      "core": "Core tile deck: {count}",
+      "countryside_removed": "Deck empty · removed Countryside tiles: {count}",
+      "core_removed": "Deck empty · removed Core tiles: {count}"
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "button": "Preferences…",
+    "language": "Language",
+    "system_language": "System language ({language})",
+    "fullscreen_at_launch": "Full screen at launch",
+    "fullscreen_hint": "F11 toggles the window without changing this setting.",
+    "not_saved": "Preferences not saved (see the logs).",
+    "sound": "Sound",
+    "volume_master": "Master volume",
+    "volume_music": "Music",
+    "volume_ambience": "Ambience",
+    "volume_effects": "Sound effects",
+    "volume_value": "{percent}%",
+    "no_audio": "No audio output: the game stays silent.",
+    "close": "Close"
+  },
+  "quit": {
+    "confirm": {
+      "title": "Quit without saving?",
+      "text": "What was played since the start of the turn will be lost.",
+      "quit": "Quit",
+      "cancel": "Cancel"
+    }
+  },
+  "modifier": {
+    "terrain_reduce": "{terrains}: −{by} (min. {min})",
+    "terrain_set": "{terrains}: {cost}",
+    "passable": "{terrain} passable",
+    "terrains_all": "all terrains",
+    "convert_attack": "{amount} Move as Attack {points}",
+    "convert_ranged": "{amount} Move as Ranged Attack {points}",
+    "convert_block": "Influence as Block",
+    "convert_block_element": "Influence as {element} Block",
+    "next_card_bonus": "next card: Attack +{attack} or Block +{block}",
+    "end_of_turn_reputation": "reputation {change} at end of turn",
+    "return_under_deck": "under the deck at end of turn",
+    "return_on_deck": "on top of the deck at end of turn",
+    "unit_bonus": "units: Attack and Block +{bonus}",
+    "no_damage_to_units": "no damage to units",
+    "end_of_turn_per_recruit": "per unit recruited this turn: reputation +{reputation}",
+    "end_of_turn_per_recruit_fame": "per unit recruited this turn: fame +{fame}, reputation +{reputation}",
+    "attacks_cold_fire": "cold fire attacks",
+    "attacks_siege": "attacks are also siege",
+    "units_all_resistances": "units: all resistances",
+    "armor_reduction": "Armor −{by} (min. {min})",
+    "return_spent_crystals": "spent crystals return at end of turn",
+    "learning": "once: {cost} Influence for an Advanced Action ({to})",
+    "return_spent_crystals_list": "spent crystals return at end of turn: {colors}",
+    "ignore_site_fortifications": "site fortifications ignored",
+    "deferred_attack": "{attack} in the Attack phase",
+    "cast_from_offer": "a {color} Spell from the offer",
+    "by_fortification": "{plain} ({fortified} if fortified)",
+    "space_bending": "spaces 2 away count as adjacent, no provoking",
+    "time_bending": "an extra turn at the end of the turn",
+    "unit_from_offer": "a Unit from the offer this turn",
+    "recruit_from_offer": "recruit a Unit from the offer for free",
+    "draw_bonus": "draw {amount} more cards",
+    "mana_claim_per_turn": "a {color} token each turn",
+    "unit_armor_bonus": "units Armor +{amount}",
+    "fame_per_unit_attack_or_block": "Fame +1 per unit that attacks or blocks",
+    "endless_mana": "endless {color} and black mana; Fame +1 per {color} spell",
+    "fame_per_enemy_defeated": "Fame +1 per enemy defeated",
+    "double_physical_attacks": "Physical attacks doubled in the Attack phase",
+    "throw_away_received_wounds": "end of turn: throw away the Wounds received",
+    "draw_per_wound_healed": "one card per Wound healed from hand",
+    "day_rules": "day rules (forests 3, gold, revealed)",
+    "night_mana": "black mana as at night, deserts 3",
+    "grail_fame": "Fame +1 per Healing point ({amount} left)"
+  },
+  "destination": {
+    "hand": "into hand",
+    "discard": "into discard pile",
+    "space": "{place} ({q}, {r})"
+  },
+  "choice": {
+    "token_color": "Blood Ritual: token color ({left} left)",
+    "crystal": "Blood Ritual: pay a basic mana for a crystal?",
+    "decline": "No thanks"
+  },
+  "gain_choice": {
+    "prompt": "{card}: {effect}. Choose the card in the Offers window."
+  },
+  "die_choice": {
+    "prompt": "{card}: choose a die from the Source."
+  },
+  "spell": {
+    "strong_needs_black": "Powered: black mana, at night",
+    "prompt": "{card}: choose the mana and the target.",
+    "destination_prompt": "{card}: click the destination on the board."
+  },
+  "wings_of_night": {
+    "cost": "Move: {points}"
+  },
+  "mana_claim": {
+    "die": "{color} die",
+    "kept_die": "{color} mana die: kept until the end of the Round (Mana Claim)."
+  },
+  "meditation": {
+    "title": "Meditation: where do these cards go?",
+    "top": "On top of the deck",
+    "bottom": "Under the deck"
+  },
+  "set_aside": {
+    "title": "Set aside until the end of the Round: {cards}"
+  },
+  "banner": {
+    "choose_unit": "{card}: assign it to which unit?",
+    "assign": "Assign",
+    "on_unit": "Banner: {card}",
+    "flipped": "face down until the next round",
+    "use_fear": "Cancel an attack (Fame +1)",
+    "use_fear_enemy": "Cancel the attack: {enemy} (Fame +1)",
+    "use_courage": "Ready (once per round)",
+    "reclaim_title": "End of round: banners to take back into the deck",
+    "reclaim_line": "{card} ({unit})",
+    "reclaim_keep": "Keep on the unit",
+    "reclaim_take": "Take back",
+    "reclaim_confirm": "Confirm"
+  },
+  "horn": {
+    "extra": "Horn of Wrath: add how much? (one die per point)",
+    "bonus": "+{amount}: Siege Attack {total}"
+  },
+  "sword": {
+    "discard_prompt": "Sword of Justice: cards to discard (Attack 3 each)"
+  },
+  "artifact": {
+    "prompt": "{card}: {effect}",
+    "color": "{color} token",
+    "play": "Play",
+    "throw_away": "Throw away"
+  },
+  "artifact_dice": {
+    "rolled": "Dice rolled: {faces}"
+  },
+  "skill": {
+    "dark_paths": {
+      "name": "Dark Paths",
+      "text": "Move 1 by day, 2 by night."
+    },
+    "burning_power": {
+      "name": "Burning Power",
+      "text": "Siege Attack 1, or Fire Siege Attack 1."
+    },
+    "hot_swordsmanship": {
+      "name": "Hot Swordsmanship",
+      "text": "Attack 2, or Fire Attack 2."
+    },
+    "dark_negotiation": {
+      "name": "Dark Negotiation",
+      "text": "Influence 2 by day, 3 by night."
+    },
+    "dark_fire_magic": {
+      "name": "Dark Fire Magic",
+      "text": "Flip it: a red crystal, and a red or black mana token."
+    },
+    "motivation_arythea": {
+      "name": "Motivation",
+      "text": "Flip it: draw 2 cards and gain a red mana token. No other Motivation until the end of your next turn."
+    },
+    "power_of_pain": {
+      "name": "Power of Pain",
+      "text": "Play a Wound sideways, for 2 points instead of 1."
+    },
+    "invocation": {
+      "name": "Invocation",
+      "text": "Discard a card for a mana token to spend at once: red or black for a Wound, white or green otherwise."
+    },
+    "polarization": {
+      "name": "Polarization",
+      "text": "Use one mana as its opposite color; by day, black as any basic color; at night, gold as black."
+    },
+    "ritual_of_pain": {
+      "name": "Ritual of Pain",
+      "text": "Flip it: throw away up to 2 Wounds from your hand, put it in the center; on your next turn, a Wound played sideways is worth 3."
+    },
+    "freezing_power": {
+      "name": "Freezing Power",
+      "text": "Siege Attack 1, or Ice Siege Attack 1."
+    },
+    "potion_making": {
+      "name": "Potion Making",
+      "text": "Flip it, not in combat: Heal 2."
+    },
+    "white_crystal_craft": {
+      "name": "White Crystal Craft",
+      "text": "Flip it: a blue crystal and a white mana token."
+    },
+    "green_crystal_craft": {
+      "name": "Green Crystal Craft",
+      "text": "Flip it: a blue crystal and a green mana token."
+    },
+    "red_crystal_craft": {
+      "name": "Red Crystal Craft",
+      "text": "Flip it: a blue crystal and a red mana token."
+    },
+    "motivation_goldyx": {
+      "name": "Motivation",
+      "text": "Flip it: draw 2 cards and gain a green mana token. No other Motivation until the end of your next turn."
+    },
+    "glittering_fortune": {
+      "name": "Glittering Fortune",
+      "text": "During an interaction: Influence 1 per crystal color you have."
+    },
+    "flight": {
+      "name": "Flight",
+      "text": "Flip it: move to an adjacent space for free, or two spaces for Move 2, without provoking."
+    },
+    "universal_power": {
+      "name": "Universal Power",
+      "text": "One mana on a card played sideways: 3 points, or 4 if it matches its color."
+    },
+    "source_opening": {
+      "name": "Source Opening",
+      "text": "Flip it: reroll a die, put it in the center; on your next turn, one more die and a crystal of its color."
+    },
+    "day_sharpshooting": {
+      "name": "Day Sharpshooting",
+      "text": "Ranged Attack 2 by day, 1 at night."
+    },
+    "bright_negotiation": {
+      "name": "Bright Negotiation",
+      "text": "Influence 3 by day, 2 at night."
+    },
+    "inspiration": {
+      "name": "Inspiration",
+      "text": "Flip it, not in combat: ready a unit, or heal it."
+    },
+    "leaves_in_the_wind": {
+      "name": "Leaves in the Wind",
+      "text": "Flip it: a green crystal and a white mana token."
+    },
+    "whisper_in_the_treetops": {
+      "name": "Whisper in the Treetops",
+      "text": "Flip it: a white crystal and a green mana token."
+    },
+    "motivation_norowas": {
+      "name": "Motivation",
+      "text": "Flip it: draw 2 cards and gain a white mana token. No other Motivation until the end of your next turn."
+    },
+    "forward_march": {
+      "name": "Forward March",
+      "text": "Move 1 per ready, unwounded unit, 3 at most."
+    },
+    "leadership": {
+      "name": "Leadership",
+      "text": "When you activate a unit: +1 to its Ranged Attack, +2 to its Attack or +3 to its Block."
+    },
+    "bonds_of_loyalty": {
+      "name": "Bonds of Loyalty",
+      "text": "One more command token; the unit recruited under it costs 5 less."
+    },
+    "calming_the_weather": {
+      "name": "Calming the Weather",
+      "text": "Flip it: terrains cost 2 less this turn, put it in the center; on your next turn, 1 less."
+    },
+    "double_time": {
+      "name": "Double Time",
+      "text": "Move 2 by day, 1 at night."
+    },
+    "night_sharpshooting": {
+      "name": "Night Sharpshooting",
+      "text": "Ranged Attack 1 by day, 2 at night."
+    },
+    "cold_swordsmanship": {
+      "name": "Cold Swordsmanship",
+      "text": "Attack 2, or Ice Attack 2."
+    },
+    "shield_mastery": {
+      "name": "Shield Mastery",
+      "text": "Block 3, or Ice Block 2, or Fire Block 2."
+    },
+    "motivation_tovak": {
+      "name": "Motivation",
+      "text": "Flip it: draw 2 cards and gain a blue mana token. No other Motivation until the end of your next turn."
+    },
+    "resistance_break": {
+      "name": "Resistance Break",
+      "text": "One enemy loses 1 Armor per resistance, down to 1."
+    },
+    "i_feel_no_pain": {
+      "name": "I Feel No Pain",
+      "text": "Not in combat: discard a Wound from your hand to draw a card."
+    },
+    "i_dont_give_a_damn": {
+      "name": "I Don't Give a Damn",
+      "text": "A card played sideways is worth 2, or 3 for an Advanced Action, Spell or Artifact."
+    },
+    "who_needs_magic": {
+      "name": "Who Needs Magic?",
+      "text": "A card played sideways is worth 2, or 3 if you use no Source die this turn."
+    },
+    "mana_overload": {
+      "name": "Mana Overload",
+      "text": "Flip it: a non-gold mana token, put it in the center; later, +4 on a card powered with that color."
+    },
+    "title": "Skills",
+    "once_a_turn": "Once a turn",
+    "once_a_round": "Once a Round",
+    "out_of_combat": "Not in combat",
+    "used_this_turn": "Used this turn",
+    "flipped": "Flipped until next Round",
+    "motivation_blocked": "Another Motivation was used: not before the end of your next turn",
+    "pile": "Pile: {count}",
+    "choice": {
+      "title": "Level {level}: choose a Skill",
+      "revealed": "Revealed Skills",
+      "common": "Common Skill offer",
+      "common_note": "Taking a Skill from the common offer means taking the lowest Advanced Action.",
+      "own": "Your Hero's Skill: cannot be taken here"
+    },
+    "choose_unit": "{skill}: choose the unit",
+    "pick_unit": "Choose",
+    "in_center": "In the center: advantage on your next turn",
+    "advantage": "{skill} advantage",
+    "choose_card": "{skill}: choose the card to play sideways",
+    "choose_enemy": "{skill}: choose the enemy",
+    "choose_space": "{skill}: choose the destination space",
+    "choose_color": "{skill}: choose the color",
+    "choose_die": "{skill}: choose the die",
+    "throw_wounds": "Throw away {count} Wound(s)",
+    "reroll_die": "Reroll this die",
+    "no_reroll": "Reroll nothing",
+    "keep_die": "Keep this die as it is",
+    "no_dice": "Who Needs Magic: no Source die this turn",
+    "interaction_influence": "Interaction Influence: {amount}",
+    "bonds_token": "Loyalty token: recruit for 5 less",
+    "bonds_recruit": "Recruit under Loyalty: {name} ({cost})",
+    "sideways": "Sideways: {value}",
+    "with_leadership": "With Leadership: {effect}"
+  },
+  "tactic": {
+    "early_bird": {
+      "name": "Early Bird",
+      "text": "No effect."
+    },
+    "rethink": {
+      "name": "Rethink",
+      "text": "When taken: discard up to 3 cards (Wounds included), draw as many, then shuffle the discard pile into your deck."
+    },
+    "mana_steal": {
+      "name": "Mana Steal",
+      "text": "When taken: put a basic-color Source die here. This Day, it pays one mana besides your Source die; rerolled and returned at the end of the turn you use it."
+    },
+    "planning": {
+      "name": "Planning",
+      "text": "End of turn: with at least 2 cards in hand before drawing, Hand limit + 1."
+    },
+    "great_start": {
+      "name": "Great Start",
+      "text": "When taken: draw 2 cards."
+    },
+    "right_moment": {
+      "name": "The Right Moment",
+      "text": "Once this Day, during your turn: announce another turn, played right after this one."
+    },
+    "from_the_dusk": {
+      "name": "From the Dusk",
+      "text": "No effect."
+    },
+    "long_night": {
+      "name": "Long Night",
+      "text": "Once this Night, with an empty deck: 3 random cards from your discard pile go back into your deck."
+    },
+    "mana_search": {
+      "name": "Mana Search",
+      "text": "Once per turn, before taking a Source die: reroll up to 2 dice, gold dice first."
+    },
+    "midnight_meditation": {
+      "name": "Midnight Meditation",
+      "text": "Once this Night, at the start of a turn: shuffle up to 5 cards from your hand into your deck and draw as many."
+    },
+    "preparation": {
+      "name": "Preparation",
+      "text": "When taken: put any card from your deck into your hand, then shuffle it."
+    },
+    "sparing_power": {
+      "name": "Sparing Power",
+      "text": "Before each turn: put the top card of your deck here, or flip this Tactic and take the cards here into your hand."
+    },
+    "choose_title": "Choose a Tactic ({time})",
+    "take": "Take this Tactic",
+    "flipped": "Flipped: used",
+    "number": "No. {number}",
+    "rethink_prompt": "Rethink: check up to 3 cards to discard",
+    "rethink_confirm": "Discard and draw {count} card(s)",
+    "steal_prompt": "Mana Steal: choose a basic-color die",
+    "stolen_die": "Stolen die: {color}",
+    "preparation_prompt": "Preparation: choose the card to take into your hand",
+    "right_moment_button": "Take another turn",
+    "right_moment_announced": "The Right Moment: another turn after this one",
+    "long_night_button": "Put 3 cards back into the deck",
+    "long_night_prompt": "Deck empty: use Long Night to keep drawing?",
+    "long_night_decline": "No, stop drawing",
+    "mana_search_button": "Reroll dice",
+    "mana_search_prompt": "Mana Search: choose 1 or 2 dice (gold first)",
+    "mana_search_confirm": "Reroll {count} die/dice",
+    "meditation_button": "Shuffle cards back",
+    "meditation_prompt": "Midnight Meditation: check up to 5 cards",
+    "meditation_confirm": "Shuffle back and draw {count} card(s)",
+    "stored": "Under it: {count} card(s)",
+    "sparing_prompt": "Sparing Power ({count} card(s) under it): before this turn",
+    "sparing_store": "Put the top card of the deck here",
+    "sparing_take": "Flip and take {count} card(s)"
+  },
+  "dummy": {
+    "title": "Dummy player: {hero}",
+    "deck": "Deck: {count} card(s)",
+    "discard": "Discard pile: {count} card(s)",
+    "discard_title": "Dummy player's discard pile",
+    "crystals": "Crystals",
+    "crystal_count": "{color}: {count}",
+    "tactic": "Tactic: {number} {name}",
+    "last_turn": "Last turn: {cards}",
+    "last_turn_extra": "Last turn: {cards}; {color}: {count} more",
+    "last_turn_none": "Last turn: no card",
+    "announced": "Announced the End of the Round: this is your last turn.",
+    "skills": "Hidden Skills: {count}"
+  },
+  "round_order": {
+    "player_first": "You play first",
+    "dummy_first": "The Dummy player plays first"
+  }
+}

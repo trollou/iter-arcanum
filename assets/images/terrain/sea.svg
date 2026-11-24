@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173.205 200.0" width="173.205" height="200.0">
+  <defs><clipPath id="c"><polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50"/></clipPath></defs>
+  <polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50" fill="#1E4A86"/>
+  <g clip-path="url(#c)">
+    <path d="M69.5,81.8 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M25.0,152.8 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M6.9,100.4 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M129.3,39.6 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M82.0,116.8 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M102.5,93.1 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M105.5,50.6 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M38.7,44.0 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M87.0,139.5 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M58.6,135.4 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M19.9,69.9 q6,-6 12,0 t12,0" stroke="#3F72B5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,3 @@
+// Piste de réputation (spec 040) : bonus ou malus d'influence à l'interaction de chaque case, de -7 à +7, lu sur le scan
+// misc/fame_board.jpg (MKUE p. 3 et p. 8, 2.a). X : la case du bas, sans interaction possible.
+[X, Bonus(-5), Bonus(-3), Bonus(-2), Bonus(-1), Bonus(-1), Bonus(0), Bonus(0), Bonus(0), Bonus(1), Bonus(1), Bonus(2), Bonus(2), Bonus(3), Bonus(5)]

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="rk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b0a08a"/><stop offset=".5" stop-color="#7a6a58"/><stop offset="1" stop-color="#4f4338"/></linearGradient>
+    <linearGradient id="cl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc0b0"/><stop offset="1" stop-color="#c8322a"/></linearGradient>
+    <linearGradient id="cd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8322a"/><stop offset="1" stop-color="#17120c"/></linearGradient>
+    <linearGradient id="wd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a5a34"/><stop offset="1" stop-color="#553419"/></linearGradient>
+    <radialGradient id="gl"><stop offset="0" stop-color="#ffc0b0" stop-opacity=".7"/><stop offset="1" stop-color="#ffc0b0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="90" ry="8" fill="url(#sh)"/>
+  <g id="colline" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M12,186 C14,156 30,130 54,124 C74,120 90,132 96,150 L100,186 Z" fill="url(#rk)"/>
+    <path d="M120,186 C124,170 140,160 160,160 C176,160 188,172 190,186 Z" fill="url(#rk)"/>
+    <path d="M28,152 C36,140 44,134 54,132" stroke-width="1.6" stroke-opacity=".5" fill="none"/>
+  </g>
+  <g id="entree" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M30,186 V162 C30,148 58,148 58,162 V186 Z" fill="#17120c"/>
+    <path d="M30,186 V158 M58,186 V158 M25,158 H63" stroke="#553419" stroke-width="7" stroke-linecap="square"/>
+    <path d="M30,186 V158 M58,186 V158 M25,158 H63" stroke="#8a5a34" stroke-width="3" fill="none"/>
+  </g>
+  <g id="lueur" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <ellipse cx="112" cy="110" rx="70" ry="78" fill="url(#gl)" stroke="none"/>
+  </g>
+  <g id="cristaux" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M82.0,172 L80.0,136.0 L96,112.0 L96,176.0 Z" fill="url(#cl)"/>
+    <path d="M96,112.0 L112.0,136.0 L110.0,172 L96,176.0 Z" fill="url(#cd)"/>
+    <path d="M88.0,138.0 L92.0,124.0" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" fill="none"/>
+    <path d="M126.0,178 L124.0,142.0 L140,118.0 L140,182.0 Z" fill="url(#cl)"/>
+    <path d="M140,118.0 L156.0,142.0 L154.0,178 L140,182.0 Z" fill="url(#cd)"/>
+    <path d="M132.0,144.0 L136.0,130.0" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" fill="none"/>
+    <path d="M92.8,168 L89.2,103.2 L118,60.0 L118,175.2 Z" fill="url(#cl)"/>
+    <path d="M118,60.0 L146.8,103.2 L143.2,168 L118,175.2 Z" fill="url(#cd)"/>
+    <path d="M103.6,106.8 L110.8,81.6" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" fill="none"/>
+    <path d="M71.6,182 L70.4,160.4 L80,146.0 L80,184.4 Z" fill="url(#cl)"/>
+    <path d="M80,146.0 L89.6,160.4 L88.4,182 L80,184.4 Z" fill="url(#cd)"/>
+    <path d="M75.2,161.6 L77.6,153.2" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" fill="none"/>
+    <path d="M151.6,186 L150.4,164.4 L160,150.0 L160,188.4 Z" fill="url(#cl)"/>
+    <path d="M160,150.0 L169.6,164.4 L168.4,186 L160,188.4 Z" fill="url(#cd)"/>
+    <path d="M155.2,165.6 L157.6,157.2" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" fill="none"/>
+  </g>
+  <g id="wagonnet" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,170 L76,170 L72,186 L42,186 Z" fill="url(#wd)"/>
+    <path d="M44,170 L50,160 L56,168 L62,158 L70,170 Z" fill="url(#cl)"/>
+    <circle cx="48" cy="188" r="5" fill="#5f6b78"/><circle cx="68" cy="188" r="5" fill="#5f6b78"/>
+  </g>
+  <g id="cailloux" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M181,190 C181,184.5 191,184.5 191,190 Z" fill="url(#rk)"/>
+  </g>
+</svg>

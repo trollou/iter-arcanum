@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173.205 200.0" width="173.205" height="200.0">
+  <defs><clipPath id="c"><polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50"/></clipPath></defs>
+  <polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50" fill="#A5D36A"/>
+  <g clip-path="url(#c)">
+    <path d="M28.5,155.8 l3,-7 M33.5,155.8 l0,-9 M38.5,155.8 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M119.9,65.8 l3,-7 M124.9,65.8 l0,-9 M129.9,65.8 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M80.9,95.3 l3,-7 M85.9,95.3 l0,-9 M90.9,95.3 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M103.6,146.9 l3,-7 M108.6,146.9 l0,-9 M113.6,146.9 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M22.6,31.3 l3,-7 M27.6,31.3 l0,-9 M32.6,31.3 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M130.4,92.8 l3,-7 M135.4,92.8 l0,-9 M140.4,92.8 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M73.7,136.7 l3,-7 M78.7,136.7 l0,-9 M83.7,136.7 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M139.9,31.6 l3,-7 M144.9,31.6 l0,-9 M149.9,31.6 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M12.7,109.3 l3,-7 M17.7,109.3 l0,-9 M22.7,109.3 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M40.5,91.2 l3,-7 M45.5,91.2 l0,-9 M50.5,91.2 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M13.2,60.7 l3,-7 M18.2,60.7 l0,-9 M23.2,60.7 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M42.8,62.1 l3,-7 M47.8,62.1 l0,-9 M52.8,62.1 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M153.1,157.7 l3,-7 M158.1,157.7 l0,-9 M163.1,157.7 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <path d="M129.5,128.9 l3,-7 M134.5,128.9 l0,-9 M139.5,128.9 l-3,-7" stroke="#7FB04A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="60" cy="130" rx="30" ry="14" fill="#B5DD7E" opacity="0.6"/>
+    <ellipse cx="120" cy="70" rx="24" ry="11" fill="#B5DD7E" opacity="0.6"/>
+  </g>
+</svg>

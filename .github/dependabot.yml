@@ -1,0 +1,51 @@
+# Mises à jour automatiques des dépendances (Dependabot).
+# Économe en minutes GitHub Actions (issue privée 48) : chaque PR Dependabot lance la CI
+# Linux et Windows (elle touche Cargo.lock ou un workflow), donc on regroupe les
+# mises à jour en peu de PR, une fois par semaine. Dependabot ouvre les PR le
+# dimanche soir ; la routine du lundi matin les trouve avec leur CI terminée.
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "22:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "Dépendances"
+    groups:
+      # egui, eframe et egui_extras montent ensemble (même version requise).
+      # En 0.x, une version « mineure » (0.37 → 0.38) peut casser l'API : PR à part.
+      egui:
+        patterns:
+          - "egui*"
+          - "eframe"
+          - "epaint*"
+          - "emath"
+          - "ecolor"
+      # Montées compatibles (correctifs et mineures) : une seule PR par semaine.
+      compatibles:
+        update-types:
+          - minor
+          - patch
+      # Montées majeures, possiblement cassantes : une PR à part, relue avant fusion.
+      majeures:
+        update-types:
+          - major
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      # Le 1er du mois.
+      interval: monthly
+      time: "22:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 1
+    commit-message:
+      prefix: "CI"
+    groups:
+      actions:
+        patterns:
+          - "*"

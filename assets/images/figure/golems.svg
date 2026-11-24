@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="rk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4beb2"/><stop offset=".5" stop-color="#8f897d"/><stop offset="1" stop-color="#5a554c"/></linearGradient>
+    <linearGradient id="dk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9a948a"/><stop offset=".5" stop-color="#6b665d"/><stop offset="1" stop-color="#3e3a34"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="52" ry="8" fill="url(#sh)"/>
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M36,106 L32,128 L28,146 L56,146 L56,126 L54,106 Z" fill="url(#dk)"/>
+    <path d="M84,106 L88,128 L92,146 L64,146 L64,126 L66,106 Z" fill="url(#dk)"/>
+    <path d="M36,140 L36,146 M46,140 L46,146 M84,140 L84,146 M74,140 L74,146" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+  </g>
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M30,58 L44,48 L76,48 L90,58 L94,84 L86,112 L34,112 L26,84 Z" fill="url(#rk)"/>
+    <path d="M44,48 L50,62 L44,74 M76,48 L72,58 M34,112 L42,98 L40,90 M86,112 L80,100 M90,58 L82,70" stroke="#3e3a34" stroke-width="2" fill="none"/>
+    <path d="M40,54 C46,51 54,50 60,50" stroke="#fff" stroke-opacity=".45" stroke-width="1.4" fill="none"/>
+    <circle cx="60" cy="78" r="9" fill="none" stroke="#ffb02e" stroke-width="2.4"/><path d="M60,70 L60,86 M53,74 L67,82" stroke="#ffb02e" stroke-width="2" fill="none"/>
+  </g>
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M32,56 L16,58 L8,74 L12,90 L28,92 L34,74 Z" fill="url(#rk)"/>
+    <path d="M4,96 L12,88 L28,90 L32,104 L24,116 L8,116 L2,106 Z" fill="url(#dk)"/>
+    <path d="M10,104 L20,104 M14,110 L24,110" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+    <path d="M16,58 C20,54 28,54 32,57 L26,60 Z" fill="#6f8f3a" stroke-width="1.4"/>
+  </g>
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M88,56 L104,58 L112,74 L108,90 L92,92 L86,74 Z" fill="url(#rk)"/>
+    <path d="M116,96 L108,88 L92,90 L88,104 L96,116 L112,116 L118,106 Z" fill="url(#dk)"/>
+    <path d="M110,104 L100,104 M106,110 L96,110" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+    <path d="M104,58 C100,54 92,54 88,57 L94,60 Z" fill="#6f8f3a" stroke-width="1.4"/>
+  </g>
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M46,34 L52,24 L68,24 L74,34 L74,50 L66,56 L54,56 L46,50 Z" fill="url(#rk)"/>
+    <path d="M48,38 L58,42 L48,44 Z M72,38 L62,42 L72,44 Z" fill="#17120c" stroke-width="1.4"/>
+    <path d="M50,44 L57,46 L50,47 Z M70,44 L63,46 L70,47 Z" fill="#ffd94a" stroke="none"/>
+    <path d="M54,52 L66,52" stroke-width="2" fill="none"/>
+    <path d="M52,24 C56,20 64,20 68,24 L62,27 Z" fill="#6f8f3a" stroke-width="1.4"/>
+  </g>
+</svg>

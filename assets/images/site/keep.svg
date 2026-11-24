@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="st" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8d2c6"/><stop offset=".5" stop-color="#a39a8c"/><stop offset="1" stop-color="#6f665b"/></linearGradient>
+    <linearGradient id="sts" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8c8476"/><stop offset="1" stop-color="#5a534a"/></linearGradient>
+    <linearGradient id="tp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6e0d4"/><stop offset="1" stop-color="#b9b1a3"/></linearGradient>
+    <linearGradient id="wd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a5a34"/><stop offset="1" stop-color="#553419"/></linearGradient>
+    <radialGradient id="sh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="100" cy="184" rx="88" ry="8" fill="url(#sh)"/>
+  <g id="donjon" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M130,150 L144,141 L144,65 L130,74 Z" fill="url(#sts)"/>
+    <path d="M78,74 L92,65 L144,65 L130,74 Z" fill="url(#tp)"/>
+    <rect x="78" y="74" width="52" height="76" fill="url(#st)"/>
+    <path d="M78.0,74 v-7 h7.4 v7 Z M92.9,74 v-7 h7.4 v7 Z M107.7,74 v-7 h7.4 v7 Z M122.6,74 v-7 h7.4 v7 Z " fill="url(#st)"/>
+    <path d="M130,74 L144,65 L144,58 L130,67 Z" fill="url(#sts)"/>
+    <path d="M110,67 L110,33" stroke-width="2.6"/>
+    <path d="M110,33 L130,38 L122,41 L130,45 L110,47 Z" fill="#5f6b78"/>
+  </g>
+  <g id="remparts" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M158,184 L176,172 L176,132 L158,144 Z" fill="url(#sts)"/>
+    <path d="M42,144 L60,132 L176,132 L158,144 Z" fill="url(#tp)"/>
+    <rect x="42" y="144" width="116" height="40" fill="url(#st)"/>
+    <path d="M42.0,144 v-7 h6.8 v7 Z M55.6,144 v-7 h6.8 v7 Z M69.3,144 v-7 h6.8 v7 Z M82.9,144 v-7 h6.8 v7 Z M96.6,144 v-7 h6.8 v7 Z M110.2,144 v-7 h6.8 v7 Z M123.9,144 v-7 h6.8 v7 Z M137.5,144 v-7 h6.8 v7 Z M151.2,144 v-7 h6.8 v7 Z " fill="url(#st)"/>
+    <path d="M158,144 L176,132 L176,125 L158,137 Z" fill="url(#sts)"/>
+    <path d="M88,184 V164 C88,150 112,150 112,164 V184 Z" fill="#2b1a0c"/>
+    <path d="M92,184 V166 M100,184 V158 M108,184 V166 M89,170 H111 M89,178 H111" stroke="#8a5a34" stroke-width="2" fill="none"/>
+    <path d="M98,104 v-10 a3,3 0 0 1 6,0 v10 z M112,104 v-10 a3,3 0 0 1 6,0 v10 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M38,150 v-9 a4,4 0 0 1 8,0 v9 z M154,150 v-9 a4,4 0 0 1 8,0 v9 z" fill="#2b1a0c" stroke-width="1.4"/>
+    <path d="M56,166 L70,164 M126,170 L142,168 M64,178 L76,177" stroke-width="1.4" stroke-opacity=".5" fill="none"/>
+  </g>
+  <g id="tours" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M57,186 L66,180 L66,118 L57,124 Z" fill="url(#sts)"/>
+    <path d="M27,124 L36,118 L66,118 L57,124 Z" fill="url(#tp)"/>
+    <rect x="27" y="124" width="30" height="62" fill="url(#st)"/>
+    <path d="M27.0,124 v-7 h10.0 v7 Z M47.0,124 v-7 h10.0 v7 Z " fill="url(#st)"/>
+    <path d="M57,124 L66,118 L66,111 L57,117 Z" fill="url(#sts)"/>
+    <path d="M173,186 L182,180 L182,118 L173,124 Z" fill="url(#sts)"/>
+    <path d="M143,124 L152,118 L182,118 L173,124 Z" fill="url(#tp)"/>
+    <rect x="143" y="124" width="30" height="62" fill="url(#st)"/>
+    <path d="M143.0,124 v-7 h10.0 v7 Z M163.0,124 v-7 h10.0 v7 Z " fill="url(#st)"/>
+    <path d="M173,124 L182,118 L182,111 L173,117 Z" fill="url(#sts)"/>
+  </g>
+</svg>

@@ -1,0 +1,4 @@
+# Seuils de scripts/qualite.sh (rapport, jamais bloquant). Lu seulement par ce script,
+# via CLIPPY_CONF_DIR : le clippy habituel (verifier.sh, CI) garde ses réglages.
+too-many-lines-threshold = 100
+cognitive-complexity-threshold = 25

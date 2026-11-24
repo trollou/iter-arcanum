@@ -1,0 +1,31 @@
+{
+  "titre": "Planche d'écoute, début de combat",
+  "intro": "Spec 081 : lames qui s'entrechoquent pour le début de combat. Candidats d'OpenGameArt, tous en CC0.",
+  "besoins": [
+    {
+      "groupe": "Effets",
+      "cle": "effects/combat_start",
+      "libelle": "Début de combat (lames qui s'entrechoquent)",
+      "candidats": [
+        {
+          "titre": "Sword-knife clash 06",
+          "page": "fantasy-weapons-and-apparel-sfx-library",
+          "auteur": "Vehicle",
+          "licence": "CC0",
+          "fichier": "https://opengameart.org/sites/default/files/weapons-apparel.zip",
+          "membres": "sword-knife-clash-06.wav",
+          "duree": 3
+        },
+        {
+          "titre": "Sword Clash 1 à 3 (trois variantes)",
+          "page": "20-sword-sound-effects-attacks-and-clashes",
+          "auteur": "StarNinjas",
+          "licence": "CC0",
+          "fichier": "https://opengameart.org/sites/default/files/sword_clash_-_starninjas_0.zip",
+          "membres": "sword_clash.[1-3].ogg",
+          "duree": 3
+        }
+      ]
+    }
+  ]
+}

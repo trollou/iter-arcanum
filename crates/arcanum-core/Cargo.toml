@@ -1,0 +1,16 @@
+[package]
+name = "arcanum-core"
+description = "Règles, état et contenu du jeu : pur, sans UI ni I/O."
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+log.workspace = true
+rand.workspace = true
+rand_chacha.workspace = true
+thiserror.workspace = true
+# Spec 029 : lecture des fichiers de contenu embarqués (content/*.ron).
+ron.workspace = true
+serde = { workspace = true, features = ["derive"] }

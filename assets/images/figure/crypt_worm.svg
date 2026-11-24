@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="flesh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ead0c4"/><stop offset=".55" stop-color="#b98a86"/><stop offset="1" stop-color="#6e4a52"/></linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a49c"/><stop offset="1" stop-color="#5a3a42"/></linearGradient>
+    <linearGradient id="earth" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a6a4a"/><stop offset="1" stop-color="#4a3420"/></linearGradient>
+    <linearGradient id="bone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf6e6"/><stop offset="1" stop-color="#b9ad8a"/></linearGradient>
+    <radialGradient id="maw"><stop offset="0" stop-color="#3a0c14"/><stop offset="1" stop-color="#8a2a36"/></radialGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="54" ry="8" fill="url(#shadow)"/>
+  <!-- sol : terre retournée et dalles brisées d'où il sort (fortifié) -->
+  <g id="sol" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M8,146 C8,134 20,128 34,130 L86,130 C100,128 112,134 112,146 Z" fill="url(#earth)"/>
+    <path d="M10,146 L14,132 L30,134 L28,146 Z M90,146 L92,134 L108,132 L110,146 Z" fill="#9aa0a8"/>
+    <path d="M16,140 L26,140 M96,140 L106,140" stroke-opacity=".5" stroke-width="1.4" fill="none"/>
+  </g>
+  <!-- torse : corps annelé dressé, penché en avant -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M34,138 C30,110 30,84 38,62 C44,46 76,46 82,62 C90,84 90,110 86,138 Z" fill="url(#flesh)"/>
+    <path d="M34,120 C50,126 70,126 86,120 M33,102 C50,108 70,108 87,102 M35,84 C50,90 70,90 85,84 M38,68 C50,72 70,72 82,68" fill="none" stroke="url(#ring)" stroke-width="3.2"/>
+    <path d="M34,120 C50,126 70,126 86,120 M33,102 C50,108 70,108 87,102 M35,84 C50,90 70,90 85,84" fill="none" stroke-width="1.2" stroke-opacity=".6"/>
+    <path d="M44,74 C42,90 42,108 44,126" stroke="#fff" stroke-opacity=".45" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <circle cx="74" cy="96" r="2.6" fill="#6e4a52" stroke="none"/><circle cx="50" cy="112" r="2" fill="#6e4a52" stroke="none"/>
+  </g>
+  <!-- tête : gueule ronde ouverte, couronne de crocs, petits yeux aveugles -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M22,44 C18,22 38,6 60,6 C82,6 102,22 98,44 C96,62 78,72 60,72 C42,72 24,62 22,44 Z" fill="url(#flesh)"/>
+    <ellipse cx="60" cy="40" rx="28" ry="24" fill="url(#maw)"/>
+    <path d="M36,28 L44,30 L40,22 Z M46,18 L52,24 L52,16 Z M60,15 L64,22 L56,22 Z M74,18 L68,24 L68,16 Z M84,28 L76,30 L80,22 Z M88,42 L80,40 L86,34 Z M32,42 L40,40 L34,34 Z M38,54 L44,50 L44,58 Z M82,54 L76,50 L76,58 Z M52,62 L56,56 L58,63 Z M68,62 L64,56 L62,63 Z" fill="url(#bone)" stroke-width="1.4"/>
+    <ellipse cx="60" cy="42" rx="12" ry="10" fill="#1a0408" stroke="none"/>
+    <path d="M24,34 C26,26 30,20 36,16" stroke="#fff" stroke-opacity=".6" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+    <circle cx="26" cy="56" r="2.8" fill="#ffd94a" stroke-width="1"/><circle cx="94" cy="56" r="2.8" fill="#ffd94a" stroke-width="1"/>
+  </g>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6d6b0"/><stop offset="1" stop-color="#b9805a"/></linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e4f2fa"/><stop offset=".55" stop-color="#8fb9d6"/><stop offset="1" stop-color="#3f6f94"/></linearGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c6d2dc"/></linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fa"/><stop offset=".5" stop-color="#aab4bf"/><stop offset="1" stop-color="#5f6b78"/></linearGradient>
+    <linearGradient id="ice" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#9ff0ff"/><stop offset="1" stop-color="#2fb6d6"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="44" ry="8" fill="url(#shadow)"/>
+  <!-- cape : pelisse de fourrure blanche -->
+  <g id="cape" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M36,60 C26,84 24,112 28,132 L92,132 C96,112 94,84 84,60 Z" fill="url(#fur)"/>
+    <path d="M32,100 L30,126 M88,100 L90,126" stroke-opacity=".35" stroke-width="1.4" fill="none"/>
+  </g>
+  <!-- jambes : bottes fourrées -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,104 L42,132 L56,134 L58,106 Z" fill="url(#coat)"/>
+    <path d="M62,106 L64,134 L78,132 L76,104 Z" fill="url(#coat)"/>
+    <path d="M38,126 L57,126 L57,146 L30,146 C30,138 33,132 38,126 Z" fill="#2b1a0c"/>
+    <path d="M63,126 L82,126 C87,132 90,138 90,146 L63,146 Z" fill="#2b1a0c"/>
+    <path d="M37,124 L58,124 L58,132 L35,132 Z M62,124 L83,124 L85,132 L62,132 Z" fill="url(#fur)" stroke-width="1.6"/>
+  </g>
+  <!-- torse : manteau bleu glacier à brandebourgs, cuirasse -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,60 C36,80 36,96 40,110 L80,110 C84,96 84,80 82,60 C72,54 48,54 38,60 Z" fill="url(#coat)"/>
+    <path d="M46,64 C46,78 50,88 60,92 C70,88 74,78 74,64 C66,60 54,60 46,64 Z" fill="url(#steel)"/>
+    <path d="M60,70 L60,86 M53,76 L67,80 M67,76 L53,80" stroke="#2fb6d6" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M40,98 L80,98 L80,106 L40,106 Z" fill="#2b1a0c"/>
+    <rect x="55" y="97" width="10" height="10" rx="2" fill="#d9b24a"/>
+  </g>
+  <!-- bras gauche : poing ganté -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,62 C30,68 26,80 26,94 L38,96 C38,86 40,80 46,74 Z" fill="url(#coat)"/>
+    <path d="M25,90 L39,92 L38,98 L25,96 Z" fill="url(#fur)" stroke-width="1.6"/>
+  </g>
+  <!-- arme : lance de givre tenue à deux mains, pointe de glace d'où sort le froid -->
+  <g id="arme" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M18,132 L94,40 L99,44 L23,136 Z" fill="url(#steel)"/>
+    <path d="M94,40 L108,14 L102,44 Z" fill="url(#ice)"/>
+    <path d="M90,40 L100,30 L104,46 Z" fill="url(#ice)" stroke-width="1.6"/>
+    <path d="M110,22 L116,18 M112,28 L118,30 M106,8 L108,2" stroke="#e8fbff" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <circle cx="114" cy="10" r="2" fill="#e8fbff" stroke="none"/><circle cx="118" cy="24" r="1.6" fill="#e8fbff" stroke="none"/>
+    <circle cx="32" cy="100" r="7" fill="#5f6b78"/>
+  </g>
+  <!-- bras droit : main qui serre la hampe -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M80,62 C88,66 88,74 82,80 L72,74 C74,70 76,66 76,62 Z" fill="url(#coat)"/>
+    <circle cx="78" cy="78" r="7" fill="#5f6b78"/>
+  </g>
+  <!-- tête : chapka de fourrure, écharpe, visage rougi de froid -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,40 C44,56 50,64 60,64 C70,64 76,56 76,40 Z" fill="url(#skin)"/>
+    <path d="M42,58 C48,66 72,66 78,58 L80,66 C72,72 48,72 40,66 Z" fill="#2fb6d6"/>
+    <path d="M48,46 L56,48 M72,46 L64,48" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <circle cx="52" cy="51" r="2.2" fill="#17120c" stroke="none"/><circle cx="68" cy="51" r="2.2" fill="#17120c" stroke="none"/>
+    <circle cx="48" cy="56" r="2.6" fill="#e88a8a" stroke="none" opacity=".7"/><circle cx="72" cy="56" r="2.6" fill="#e88a8a" stroke="none" opacity=".7"/>
+    <path d="M42,44 C38,26 46,12 60,12 C74,12 82,26 78,44 Z" fill="url(#coat)"/>
+    <path d="M38,46 C36,38 40,34 46,34 L74,34 C80,34 84,38 82,46 C70,42 50,42 38,46 Z" fill="url(#fur)"/>
+    <path d="M56,24 L60,18 L64,24 L60,30 Z" fill="url(#ice)" stroke-width="1.6"/>
+    <path d="M48,20 C51,16 54,14 58,14" stroke="#fff" stroke-opacity=".7" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

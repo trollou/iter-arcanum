@@ -1,0 +1,72 @@
+// Les compétences du solo (spec 051), texte dans ../mage-knight/docs/regles/cartes/heros-et-competences.md : dix par héros, la coopérative
+// gardée et la compétitive retirée (Compendium, Skill Tokens S5).
+// usage : Turn (une fois par tour), Round (une fois par manche, ou au centre pour une coopérative), Permanent.
+// cooperative : casque blanc (une par héros) ; out_of_combat : « sauf pendant un combat » (icône de la main).
+// effect : Options([...]) une option au choix ; DayNight([(jour, nuit), ...]) idem, valeur selon le moment de la journée ;
+// Sideways : une carte jouée de côté vaut plus (spec 058, valeurs en Rust) ; Payment : un mana payé autrement
+// (Invocation, Polarisation : proposés dans les paiements) ; Leadership : un bonus porté par
+// l'activation d'une unité (Charisme) ; Permanent : sans bouton (Loyauté sans faille) ; Unsupported : second lot, spec 058
+// (se gagne sans servir).
+// Effets : ceux de basic_actions.ron et units.ron, plus CrystalAndToken(crystal, token), DrawAndToken(cards, token),
+// Flight(spaces, cost) (Vol : voler jusqu'à `spaces` cases pour `cost` Mouvement), ResistanceBreak
+// (Botte secrète : l'ennemi visé), SourceOpening (relancer un dé, ou aucun), CalmWeather (terrains −2),
+// ManaOverload (un jeton de la couleur choisie) ; avantages du centre codés en Rust.
+// HealUnit (une Blessure d'une unité, sans Soin), ReadyAnyUnit(heal) (une unité de tout niveau) ; spec 058 :
+// CrystalColorInfluence (Influence d'interaction par couleur de cristal), MovePerUnit(max) (Mouvement par unité
+// disponible et non blessée), DiscardWoundToDraw (défausser une Blessure, piocher),
+// ThrowWounds(n) (jeter n Blessures de la main ; avantage du centre codé en Rust).
+{
+    // --- Arythea ---
+    DarkPaths: (hero: Arythea, usage: Turn, effect: DayNight([(Move(1), Move(2))])),
+    BurningPower: (hero: Arythea, usage: Turn, effect: Options([SiegeAttack(1), SiegeFireAttack(1)])),
+    HotSwordsmanship: (hero: Arythea, usage: Turn, effect: Options([Attack(2), FireAttack(2)])),
+    DarkNegotiation: (hero: Arythea, usage: Turn, effect: DayNight([(Influence(2), Influence(3))])),
+    DarkFireMagic: (
+        hero: Arythea, usage: Round,
+        effect: Options([CrystalAndToken(crystal: Red, token: Basic(Red)), CrystalAndToken(crystal: Red, token: Black)]),
+    ),
+    MotivationArythea: (hero: Arythea, usage: Round, effect: Options([DrawAndToken(cards: 2, token: Red)])),
+    PowerOfPain: (hero: Arythea, usage: Turn, effect: Sideways),
+    Invocation: (hero: Arythea, usage: Turn, effect: Payment),
+    Polarization: (hero: Arythea, usage: Turn, effect: Payment),
+    RitualOfPain: (
+        hero: Arythea, usage: Round, cooperative: true, out_of_combat: true,
+        effect: Options([ThrowWounds(0), ThrowWounds(1), ThrowWounds(2)]),
+    ),
+    // --- Goldyx ---
+    FreezingPower: (hero: Goldyx, usage: Turn, effect: Options([SiegeAttack(1), SiegeIceAttack(1)])),
+    PotionMaking: (hero: Goldyx, usage: Round, out_of_combat: true, effect: Options([Heal(2)])),
+    WhiteCrystalCraft: (hero: Goldyx, usage: Round, effect: Options([CrystalAndToken(crystal: Blue, token: Basic(White))])),
+    GreenCrystalCraft: (hero: Goldyx, usage: Round, effect: Options([CrystalAndToken(crystal: Blue, token: Basic(Green))])),
+    RedCrystalCraft: (hero: Goldyx, usage: Round, effect: Options([CrystalAndToken(crystal: Blue, token: Basic(Red))])),
+    MotivationGoldyx: (hero: Goldyx, usage: Round, effect: Options([DrawAndToken(cards: 2, token: Green)])),
+    GlitteringFortune: (hero: Goldyx, usage: Turn, effect: Options([CrystalColorInfluence])),
+    Flight: (hero: Goldyx, usage: Round, effect: Options([Flight(spaces: 1, cost: 0), Flight(spaces: 2, cost: 2)])),
+    UniversalPower: (hero: Goldyx, usage: Turn, effect: Sideways),
+    SourceOpening: (hero: Goldyx, usage: Round, cooperative: true, effect: Options([SourceOpening])),
+    // --- Norowas ---
+    DaySharpshooting: (hero: Norowas, usage: Turn, effect: DayNight([(RangedAttack(2), RangedAttack(1))])),
+    BrightNegotiation: (hero: Norowas, usage: Turn, effect: DayNight([(Influence(3), Influence(2))])),
+    Inspiration: (
+        hero: Norowas, usage: Round, out_of_combat: true,
+        effect: Options([ReadyAnyUnit(heal: false), HealUnit]),
+    ),
+    LeavesInTheWind: (hero: Norowas, usage: Round, effect: Options([CrystalAndToken(crystal: Green, token: Basic(White))])),
+    WhisperInTheTreetops: (hero: Norowas, usage: Round, effect: Options([CrystalAndToken(crystal: White, token: Basic(Green))])),
+    MotivationNorowas: (hero: Norowas, usage: Round, effect: Options([DrawAndToken(cards: 2, token: White)])),
+    ForwardMarch: (hero: Norowas, usage: Turn, effect: Options([MovePerUnit(max: 3)])),
+    Leadership: (hero: Norowas, usage: Turn, effect: Leadership),
+    BondsOfLoyalty: (hero: Norowas, usage: Permanent, effect: Permanent),
+    CalmingTheWeather: (hero: Norowas, usage: Round, cooperative: true, effect: Options([CalmWeather])),
+    // --- Tovak ---
+    DoubleTime: (hero: Tovak, usage: Turn, effect: DayNight([(Move(2), Move(1))])),
+    NightSharpshooting: (hero: Tovak, usage: Turn, effect: DayNight([(RangedAttack(1), RangedAttack(2))])),
+    ColdSwordsmanship: (hero: Tovak, usage: Turn, effect: Options([Attack(2), IceAttack(2)])),
+    ShieldMastery: (hero: Tovak, usage: Turn, effect: Options([Block(3), IceBlock(2), FireBlock(2)])),
+    MotivationTovak: (hero: Tovak, usage: Round, effect: Options([DrawAndToken(cards: 2, token: Blue)])),
+    ResistanceBreak: (hero: Tovak, usage: Turn, effect: Options([ResistanceBreak])),
+    IFeelNoPain: (hero: Tovak, usage: Turn, out_of_combat: true, effect: Options([DiscardWoundToDraw])),
+    IDontGiveADamn: (hero: Tovak, usage: Turn, effect: Sideways),
+    WhoNeedsMagic: (hero: Tovak, usage: Turn, effect: Sideways),
+    ManaOverload: (hero: Tovak, usage: Round, cooperative: true, effect: Options([ManaOverload])),
+}

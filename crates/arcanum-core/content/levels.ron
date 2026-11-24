@@ -1,0 +1,15 @@
+// Piste de gloire et jetons de niveau (spec 035). Une entrée par niveau, du niveau 1 au niveau 10 :
+// gloire à atteindre (scan misc/fame_board.jpg), puis le jeton de niveau en vigueur (armure, limite de main,
+// jetons de commandement ; scans misc/level_token_*.png) et la récompense du niveau (MKUE p. 11, 6.a et 6.b).
+[
+    (fame: 0, armor: 2, hand_limit: 5, command_tokens: 1, reward: Start),
+    (fame: 3, armor: 2, hand_limit: 5, command_tokens: 1, reward: SkillAndAdvancedAction),
+    (fame: 8, armor: 3, hand_limit: 5, command_tokens: 2, reward: LevelToken),
+    (fame: 15, armor: 3, hand_limit: 5, command_tokens: 2, reward: SkillAndAdvancedAction),
+    (fame: 24, armor: 3, hand_limit: 6, command_tokens: 3, reward: LevelToken),
+    (fame: 35, armor: 3, hand_limit: 6, command_tokens: 3, reward: SkillAndAdvancedAction),
+    (fame: 48, armor: 4, hand_limit: 6, command_tokens: 4, reward: LevelToken),
+    (fame: 63, armor: 4, hand_limit: 6, command_tokens: 4, reward: SkillAndAdvancedAction),
+    (fame: 80, armor: 4, hand_limit: 7, command_tokens: 5, reward: LevelToken),
+    (fame: 99, armor: 4, hand_limit: 7, command_tokens: 5, reward: SkillAndAdvancedAction),
+]

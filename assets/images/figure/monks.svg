@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2cfa2"/><stop offset="1" stop-color="#b07a50"/></linearGradient>
+    <linearGradient id="robe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5a640"/><stop offset=".55" stop-color="#d0701e"/><stop offset="1" stop-color="#7a3a0c"/></linearGradient>
+    <linearGradient id="sash" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8322a"/><stop offset="1" stop-color="#6e1712"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b08452"/><stop offset="1" stop-color="#553419"/></linearGradient>
+    <radialGradient id="poison"><stop offset="0" stop-color="#f0ffb0"/><stop offset=".5" stop-color="#8fe03a"/><stop offset="1" stop-color="#3f8a1a"/></radialGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="42" ry="8" fill="url(#shadow)"/>
+  <!-- jambes : pantalon bouffant serré aux chevilles, sandales, jambes fléchies -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,104 C34,112 30,124 34,136 L52,136 C52,124 56,114 58,108 Z" fill="url(#robe)"/>
+    <path d="M62,108 C64,114 68,124 68,136 L86,136 C90,124 86,112 76,104 Z" fill="url(#robe)"/>
+    <path d="M34,134 L52,134 L54,146 L26,146 C26,140 30,136 34,134 Z" fill="url(#skin)"/>
+    <path d="M68,134 L86,134 C90,136 94,140 94,146 L66,146 Z" fill="url(#skin)"/>
+    <path d="M27,143 L54,143 M66,143 L93,143" stroke="#553419" stroke-width="3" fill="none"/>
+  </g>
+  <!-- torse : tunique safran, écharpe rouge en travers, chapelet -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,62 C38,80 40,94 42,108 L78,108 C80,94 82,80 80,62 C70,56 50,56 40,62 Z" fill="url(#robe)"/>
+    <path d="M44,60 L56,60 L80,100 L72,106 Z" fill="url(#sash)"/>
+    <path d="M42,98 L78,98 L78,106 L42,106 Z" fill="url(#sash)"/>
+    <path d="M48,64 C50,78 58,84 64,82" stroke="#553419" stroke-width="3.6" stroke-dasharray="2 2.6" fill="none"/>
+    <circle cx="65" cy="83" r="3" fill="#d9b24a" stroke-width="1.4"/>
+  </g>
+  <!-- arme : bâton ferré tenu en diagonale, à deux mains -->
+  <g id="arme" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M10,134 L104,20 L109,24 L15,138 Z" fill="url(#wood)"/>
+    <path d="M100,24 L106,17 L112,22 L106,29 Z M8,131 L14,124 L20,129 L14,136 Z" fill="#d9b24a" stroke-width="1.6"/>
+  </g>
+  <!-- bras gauche : poing bas sur le bâton -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,62 C30,70 28,84 32,96 L42,94 C40,86 42,78 48,72 Z" fill="url(#robe)"/>
+    <circle cx="36" cy="102" r="7.5" fill="url(#skin)"/>
+  </g>
+  <!-- bras droit : poing haut, nimbé de poison -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M78,60 C88,64 96,64 100,58 L94,50 C90,54 84,54 76,52 Z" fill="url(#robe)"/>
+    <circle cx="101" cy="56" r="13" fill="url(#poison)" fill-opacity=".55" stroke="#3f8a1a" stroke-width="1.6"/>
+    <circle cx="100" cy="56" r="7.5" fill="url(#skin)"/>
+    <path d="M92,42 C94,36 90,32 94,28 M108,44 C112,38 108,34 112,30 M101,40 C103,34 99,30 103,24" stroke="#8fe03a" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- tête : crâne rasé, marque au front, regard fermé -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <ellipse cx="41" cy="48" rx="4" ry="6" fill="url(#skin)"/><ellipse cx="79" cy="48" rx="4" ry="6" fill="url(#skin)"/>
+    <path d="M42,44 C42,28 50,20 60,20 C70,20 78,28 78,44 C78,58 70,66 60,66 C50,66 42,58 42,44 Z" fill="url(#skin)"/>
+    <circle cx="60" cy="32" r="2.6" fill="#b8322a" stroke-width="1"/>
+    <path d="M48,42 L56,45 M72,42 L64,45" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="52" cy="49" rx="2.4" ry="2.2" fill="#17120c" stroke="none"/><ellipse cx="68" cy="49" rx="2.4" ry="2.2" fill="#17120c" stroke="none"/>
+    <path d="M58,54 L60,57 L62,54" fill="none" stroke-width="1.4"/>
+    <path d="M54,60 L66,60" fill="none" stroke-width="1.8"/>
+    <path d="M48,30 C51,25 55,23 59,23" stroke="#fff" stroke-opacity=".7" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

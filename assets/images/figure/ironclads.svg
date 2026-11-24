@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9cc267"/><stop offset="1" stop-color="#55773a"/></linearGradient>
+    <linearGradient id="iron" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9aa4ae"/><stop offset=".5" stop-color="#5d6670"/><stop offset="1" stop-color="#2f353c"/></linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fa"/><stop offset=".5" stop-color="#aab4bf"/><stop offset="1" stop-color="#5f6b78"/></linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8322a"/><stop offset="1" stop-color="#6e1712"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a34"/><stop offset="1" stop-color="#553419"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="44" ry="8" fill="url(#shadow)"/>
+  <!-- jambes : grèves et solerets de fer -->
+  <g id="jambes" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M44,104 L40,132 L56,134 L58,106 Z" fill="url(#iron)"/>
+    <path d="M62,106 L64,134 L80,132 L76,104 Z" fill="url(#iron)"/>
+    <path d="M40,116 L57,118 M63,118 L79,116" stroke-width="1.6" stroke-opacity=".7" fill="none"/>
+    <path d="M36,128 L58,130 L58,146 L28,146 C28,138 31,132 36,128 Z" fill="url(#iron)"/>
+    <path d="M62,130 L84,128 C89,132 92,138 92,146 L62,146 Z" fill="url(#iron)"/>
+    <path d="M32,138 L58,138 M62,138 L90,138" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+  </g>
+  <!-- torse : cuirasse, tabard rouge, ceinture -->
+  <g id="torse" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M36,60 C34,80 36,96 40,108 L80,108 C84,96 86,80 84,60 C72,54 48,54 36,60 Z" fill="url(#iron)"/>
+    <path d="M48,66 C54,72 66,72 72,66 M46,80 C54,86 66,86 74,80" stroke-width="1.6" stroke-opacity=".6" fill="none"/>
+    <path d="M50,92 L70,92 L72,124 L60,118 L48,124 Z" fill="url(#cloth)"/>
+    <path d="M38,96 L82,96 L81,104 L39,104 Z" fill="#2b1a0c"/>
+    <rect x="54" y="94" width="12" height="12" rx="2" fill="#d9b24a"/>
+    <circle cx="44" cy="70" r="1.8" fill="#d9b24a" stroke-width="1"/><circle cx="76" cy="70" r="1.8" fill="#d9b24a" stroke-width="1"/>
+  </g>
+  <!-- bras gauche : épaulière, gantelet fermé -->
+  <g id="bras-gauche" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M38,66 C30,72 26,84 28,98 L40,98 C40,88 42,80 48,76 Z" fill="url(#iron)"/>
+    <path d="M20,72 C18,58 30,50 46,54 L48,66 C40,64 30,68 20,72 Z" fill="url(#iron)"/>
+    <path d="M24,62 C32,58 40,58 46,60" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+    <path d="M22,62 L12,54 L26,57 Z" fill="#fbf6e6" stroke-width="1.6"/>
+    <circle cx="33" cy="104" r="8" fill="url(#iron)"/>
+    <path d="M27,101 L39,101 M27,106 L39,106" stroke-width="1.2" stroke-opacity=".6" fill="none"/>
+  </g>
+  <!-- bras droit : épaulière, grande hache dressée -->
+  <g id="bras-droit" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M92,140 L96,22 L102,22 L99,140 Z" fill="url(#wood)"/>
+    <path d="M99,14 C108,4 118,10 118,22 C118,34 108,42 99,34 Z" fill="url(#steel)"/>
+    <path d="M99,16 C90,8 80,12 80,22 C80,32 90,38 99,32 Z" fill="url(#steel)"/>
+    <path d="M114,14 C117,20 117,28 113,34" stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none"/>
+    <path d="M96,8 L99,0 L102,8 Z" fill="url(#steel)"/>
+    <path d="M82,66 C90,70 94,78 94,88 L84,92 C82,84 80,80 74,76 Z" fill="url(#iron)"/>
+    <path d="M100,72 C102,58 92,50 76,54 L72,66 C82,64 92,68 100,72 Z" fill="url(#iron)"/>
+    <path d="M96,62 C88,58 80,58 74,60" stroke-width="1.4" stroke-opacity=".6" fill="none"/>
+    <path d="M98,62 L108,54 L94,57 Z" fill="#fbf6e6" stroke-width="1.6"/>
+    <rect x="86" y="84" width="18" height="14" rx="5" fill="url(#iron)"/>
+    <path d="M88,90 L102,90" stroke-width="1.2" stroke-opacity=".6" fill="none"/>
+  </g>
+  <!-- tête : heaume cornu à visière, mâchoire et crocs dessous -->
+  <g id="tete" stroke="#17120c" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M40,36 C30,30 24,20 28,8 C32,18 38,24 46,26 Z M80,36 C90,30 96,20 92,8 C88,18 82,24 74,26 Z" fill="#fbf6e6"/>
+    <path d="M44,56 C44,64 52,68 60,68 C68,68 76,64 76,56 Z" fill="url(#skin)"/>
+    <path d="M50,62 C56,64 64,64 70,62" fill="none" stroke-width="2"/>
+    <path d="M51,63 L52,54 L56,62 Z M69,63 L68,54 L64,62 Z" fill="#fbf6e6" stroke-width="1.3"/>
+    <path d="M40,58 C36,36 46,18 60,18 C74,18 84,36 80,58 L74,58 L72,54 L48,54 L46,58 Z" fill="url(#iron)"/>
+    <path d="M44,40 L76,40 L76,46 L64,46 L64,54 L56,54 L56,46 L44,46 Z" fill="#17120c"/>
+    <circle cx="51" cy="43" r="2" fill="#ff7a3a" stroke="none"/><circle cx="69" cy="43" r="2" fill="#ff7a3a" stroke="none"/>
+    <path d="M60,18 L60,38" stroke-width="1.6" stroke-opacity=".6" fill="none"/>
+    <path d="M46,26 C50,22 54,20 58,20" stroke="#fff" stroke-opacity=".5" stroke-width="1.4" fill="none"/>
+  </g>
+</svg>

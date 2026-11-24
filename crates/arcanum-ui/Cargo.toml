@@ -1,0 +1,38 @@
+[package]
+name = "arcanum-ui"
+description = "Client eframe/egui : affichage et saisie uniquement."
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+# Spec 082 : l'exécutable porte le nom du jeu.
+[[bin]]
+name = "iter-arcanum"
+path = "src/main.rs"
+
+[dependencies]
+log.workspace = true
+directories.workspace = true
+chrono.workspace = true
+arcanum-audio = { path = "../arcanum-audio" }
+arcanum-core = { path = "../arcanum-core" }
+arcanum-i18n = { path = "../arcanum-i18n" }
+arcanum-persistance = { path = "../arcanum-persistance" }
+eframe.workspace = true
+egui.workspace = true
+egui_extras.workspace = true
+image.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+ico.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dev-dependencies]
+object.workspace = true
+
+# Spec 004 : icône de iter-arcanum.exe. `cfg(windows)` désigne ici la machine qui compile.
+[target.'cfg(windows)'.build-dependencies]
+winresource.workspace = true

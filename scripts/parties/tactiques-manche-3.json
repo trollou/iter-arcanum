@@ -1,0 +1,681 @@
+{
+  "version": 1,
+  "summary": {
+    "saved_at": "2026-01-01T00:00:00+00:00",
+    "scenario": "FirstReconnaissance",
+    "hero": "Tovak",
+    "round": 3,
+    "round_limit": 4,
+    "time_of_day": "Day",
+    "turn": 1
+  },
+  "rng_positions": {
+    "tiles": "3",
+    "source": "3",
+    "deck/0": "3",
+    "enemy_pile/green": "1",
+    "enemy_pile/grey": "1",
+    "enemy_pile/violet": "1",
+    "enemy_pile/brown": "1",
+    "enemy_pile/red": "1",
+    "enemy_pile/white": "1",
+    "common_deck/advanced_actions": "4",
+    "common_deck/spells": "4",
+    "common_deck/artifacts": "3",
+    "common_deck/regular_units": "3",
+    "common_deck/elite_units": "4",
+    "ruin_pile": "1",
+    "skill_pile/0": "1"
+  },
+  "events": [
+    {
+      "decision": 0,
+      "event": {
+        "GameStarted": {
+          "config": {
+            "seed": 0,
+            "scenario": {
+              "id": "FirstReconnaissance",
+              "shape": "Wedge",
+              "tile_deck": {
+                "countryside": 8,
+                "countryside_order": "ByNumber",
+                "core_city": 1,
+                "core_non_city": 2
+              },
+              "rounds": 4,
+              "fame_per_tile": 1,
+              "end": "CityRevealed",
+              "scoring": "AchievementsWithoutTitles",
+              "elite_units": false,
+              "advanced_actions": "FirstSixteen",
+              "village_unit_at_setup": true,
+              "tactics": {
+                "Chosen": {
+                  "order": "PlayerFirst",
+                  "removal": "AllTaken"
+                }
+              },
+              "dummy": "None",
+              "cities": "Closed",
+              "spells": "All"
+            },
+            "hero": "Tovak",
+            "dummy_hero": "Random"
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "TilePlaced": {
+          "tile": "StartingA",
+          "position": {
+            "center": {
+              "q": 0,
+              "r": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "TileDeckFormed": {
+          "order": [
+            {
+              "Countryside": 1
+            },
+            {
+              "Countryside": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "TileRevealed": {
+          "tile": {
+            "Countryside": 1
+          },
+          "position": {
+            "center": {
+              "q": 1,
+              "r": -3
+            }
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "TileRevealed": {
+          "tile": {
+            "Countryside": 2
+          },
+          "position": {
+            "center": {
+              "q": 3,
+              "r": -2
+            }
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "RoundStarted": {
+          "round": 3,
+          "time_of_day": "Day"
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "TacticsRemoved": {
+          "tactics": [
+            "Planning",
+            "Preparation"
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "HeroFigurePlaced": {
+          "player": 0,
+          "hex": {
+            "q": 2,
+            "r": -3
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "DeckShuffled": {
+          "player": 0,
+          "order": [
+            {
+              "card": {
+                "Basic": "March"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "March"
+              },
+              "copy": 2
+            },
+            {
+              "card": {
+                "Basic": "Stamina"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Rage"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Promise"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Rage"
+              },
+              "copy": 2
+            },
+            {
+              "card": {
+                "Basic": "ColdToughness"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Swiftness"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Swiftness"
+              },
+              "copy": 2
+            },
+            {
+              "card": {
+                "Basic": "Stamina"
+              },
+              "copy": 2
+            },
+            {
+              "card": {
+                "Basic": "Tranquility"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Threaten"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Crystallize"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "ManaDraw"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Concentration"
+              },
+              "copy": 1
+            },
+            {
+              "card": {
+                "Basic": "Instinct"
+              },
+              "copy": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "CardDrawn": {
+          "player": 0,
+          "card": {
+            "card": {
+              "Basic": "March"
+            },
+            "copy": 1
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "CardDrawn": {
+          "player": 0,
+          "card": {
+            "card": {
+              "Basic": "March"
+            },
+            "copy": 2
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "CardDrawn": {
+          "player": 0,
+          "card": {
+            "card": {
+              "Basic": "Stamina"
+            },
+            "copy": 1
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "CardDrawn": {
+          "player": 0,
+          "card": {
+            "card": {
+              "Basic": "Rage"
+            },
+            "copy": 1
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "CardDrawn": {
+          "player": 0,
+          "card": {
+            "card": {
+              "Basic": "Promise"
+            },
+            "copy": 1
+          }
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "SourceRolled": {
+          "dice": [
+            {
+              "Basic": "Green"
+            },
+            {
+              "Basic": "Red"
+            },
+            {
+              "Basic": "Blue"
+            },
+            {
+              "Basic": "White"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "EnemyPileShuffled": {
+          "color": "Green",
+          "order": [
+            {
+              "enemy": "Prowlers",
+              "copy": 1
+            },
+            {
+              "enemy": "Prowlers",
+              "copy": 2
+            },
+            {
+              "enemy": "Diggers",
+              "copy": 1
+            },
+            {
+              "enemy": "Diggers",
+              "copy": 2
+            },
+            {
+              "enemy": "CursedHags",
+              "copy": 1
+            },
+            {
+              "enemy": "CursedHags",
+              "copy": 2
+            },
+            {
+              "enemy": "WolfRiders",
+              "copy": 1
+            },
+            {
+              "enemy": "WolfRiders",
+              "copy": 2
+            },
+            {
+              "enemy": "Ironclads",
+              "copy": 1
+            },
+            {
+              "enemy": "Ironclads",
+              "copy": 2
+            },
+            {
+              "enemy": "OrcSummoners",
+              "copy": 1
+            },
+            {
+              "enemy": "OrcSummoners",
+              "copy": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "EnemyPileShuffled": {
+          "color": "Grey",
+          "order": [
+            {
+              "enemy": "Crossbowmen",
+              "copy": 1
+            },
+            {
+              "enemy": "Crossbowmen",
+              "copy": 2
+            },
+            {
+              "enemy": "Crossbowmen",
+              "copy": 3
+            },
+            {
+              "enemy": "Guardsmen",
+              "copy": 1
+            },
+            {
+              "enemy": "Guardsmen",
+              "copy": 2
+            },
+            {
+              "enemy": "Guardsmen",
+              "copy": 3
+            },
+            {
+              "enemy": "Swordsmen",
+              "copy": 1
+            },
+            {
+              "enemy": "Swordsmen",
+              "copy": 2
+            },
+            {
+              "enemy": "Golems",
+              "copy": 1
+            },
+            {
+              "enemy": "Golems",
+              "copy": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "EnemyPileShuffled": {
+          "color": "Violet",
+          "order": [
+            {
+              "enemy": "Monks",
+              "copy": 1
+            },
+            {
+              "enemy": "Monks",
+              "copy": 2
+            },
+            {
+              "enemy": "Illusionists",
+              "copy": 1
+            },
+            {
+              "enemy": "Illusionists",
+              "copy": 2
+            },
+            {
+              "enemy": "IceMages",
+              "copy": 1
+            },
+            {
+              "enemy": "IceMages",
+              "copy": 2
+            },
+            {
+              "enemy": "IceGolems",
+              "copy": 1
+            },
+            {
+              "enemy": "FireMages",
+              "copy": 1
+            },
+            {
+              "enemy": "FireMages",
+              "copy": 2
+            },
+            {
+              "enemy": "FireGolems",
+              "copy": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "EnemyPileShuffled": {
+          "color": "Brown",
+          "order": [
+            {
+              "enemy": "Minotaur",
+              "copy": 1
+            },
+            {
+              "enemy": "Minotaur",
+              "copy": 2
+            },
+            {
+              "enemy": "Gargoyle",
+              "copy": 1
+            },
+            {
+              "enemy": "Gargoyle",
+              "copy": 2
+            },
+            {
+              "enemy": "Medusa",
+              "copy": 1
+            },
+            {
+              "enemy": "Medusa",
+              "copy": 2
+            },
+            {
+              "enemy": "CryptWorm",
+              "copy": 1
+            },
+            {
+              "enemy": "CryptWorm",
+              "copy": 2
+            },
+            {
+              "enemy": "Werewolf",
+              "copy": 1
+            },
+            {
+              "enemy": "Werewolf",
+              "copy": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "EnemyPileShuffled": {
+          "color": "Red",
+          "order": [
+            {
+              "enemy": "SwampDragon",
+              "copy": 1
+            },
+            {
+              "enemy": "SwampDragon",
+              "copy": 2
+            },
+            {
+              "enemy": "FireDragon",
+              "copy": 1
+            },
+            {
+              "enemy": "FireDragon",
+              "copy": 2
+            },
+            {
+              "enemy": "IceDragon",
+              "copy": 1
+            },
+            {
+              "enemy": "IceDragon",
+              "copy": 2
+            },
+            {
+              "enemy": "HighDragon",
+              "copy": 1
+            },
+            {
+              "enemy": "HighDragon",
+              "copy": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "EnemyPileShuffled": {
+          "color": "White",
+          "order": [
+            {
+              "enemy": "Freezers",
+              "copy": 1
+            },
+            {
+              "enemy": "Freezers",
+              "copy": 2
+            },
+            {
+              "enemy": "Freezers",
+              "copy": 3
+            },
+            {
+              "enemy": "Gunners",
+              "copy": 1
+            },
+            {
+              "enemy": "Gunners",
+              "copy": 2
+            },
+            {
+              "enemy": "Gunners",
+              "copy": 3
+            },
+            {
+              "enemy": "AltemGuardsmen",
+              "copy": 1
+            },
+            {
+              "enemy": "AltemGuardsmen",
+              "copy": 2
+            },
+            {
+              "enemy": "AltemMages",
+              "copy": 1
+            },
+            {
+              "enemy": "AltemMages",
+              "copy": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "decision": 0,
+      "event": {
+        "RuinPileShuffled": {
+          "order": [
+            "GreenAltar",
+            "BlueAltar",
+            "WhiteAltar",
+            "RedAltar",
+            "BrownRed",
+            "GreenRed",
+            "GreyWhite",
+            "GreyBrown",
+            "GreyViolet",
+            "GreenBrown",
+            "GreenGreen",
+            "BrownViolet"
+          ]
+        }
+      }
+    }
+  ]
+}

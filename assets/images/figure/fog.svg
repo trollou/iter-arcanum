@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <defs>
+    <radialGradient id="puff"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".6" stop-color="#f0f0f0" stop-opacity=".7"/><stop offset="1" stop-color="#e6e6e6" stop-opacity="0"/></radialGradient>
+    <radialGradient id="veil"><stop offset="0" stop-color="#e0e0e0" stop-opacity=".6"/><stop offset="1" stop-color="#d0d0d0" stop-opacity="0"/></radialGradient>
+    <linearGradient id="shape" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5c5c5c" stop-opacity=".9"/><stop offset=".7" stop-color="#7a7a7a" stop-opacity=".7"/><stop offset="1" stop-color="#9a9a9a" stop-opacity=".2"/></linearGradient>
+    <radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse id="ombre" cx="60" cy="150" rx="46" ry="8" fill="url(#shadow)"/>
+  <!-- nappe de fond -->
+  <g id="voile">
+    <ellipse cx="60" cy="92" rx="56" ry="64" fill="url(#veil)"/>
+    <ellipse cx="34" cy="60" rx="26" ry="22" fill="url(#puff)" opacity=".55"/>
+    <ellipse cx="88" cy="52" rx="24" ry="20" fill="url(#puff)" opacity=".5"/>
+  </g>
+  <!-- silhouette sans visage : en gris, le code la teinte à la couleur de la pile -->
+  <g id="torse">
+    <path d="M36,62 C24,80 22,116 26,146 L94,146 C98,116 96,80 84,62 C76,56 44,56 36,62 Z" fill="url(#shape)"/>
+  </g>
+  <g id="tete">
+    <path d="M38,56 C32,34 44,18 60,18 C76,18 88,34 82,56 C76,66 44,66 38,56 Z" fill="url(#shape)"/>
+    <ellipse cx="52" cy="46" rx="4" ry="2.4" fill="#fff" opacity=".9"/>
+    <ellipse cx="68" cy="46" rx="4" ry="2.4" fill="#fff" opacity=".9"/>
+  </g>
+  <!-- volutes devant : elles cachent les pieds et les mains -->
+  <g id="brume">
+    <ellipse cx="22" cy="104" rx="22" ry="17" fill="url(#puff)" opacity=".8"/>
+    <ellipse cx="98" cy="96" rx="22" ry="18" fill="url(#puff)" opacity=".8"/>
+    <ellipse cx="60" cy="112" rx="26" ry="15" fill="url(#puff)" opacity=".6"/>
+    <ellipse cx="30" cy="134" rx="28" ry="17" fill="url(#puff)"/>
+    <ellipse cx="90" cy="134" rx="28" ry="17" fill="url(#puff)"/>
+    <ellipse cx="60" cy="138" rx="30" ry="15" fill="url(#puff)"/>
+    <ellipse cx="74" cy="76" rx="16" ry="9" fill="url(#puff)" opacity=".5"/>
+    <ellipse cx="42" cy="84" rx="15" ry="8" fill="url(#puff)" opacity=".45"/>
+  </g>
+</svg>

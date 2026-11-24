@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="760" viewBox="0 0 1260 760" font-family="Ubuntu, DejaVu Sans, sans-serif">
+<rect width="1260" height="760" fill="#202124"/>
+<text x="24" y="34" font-size="20" fill="#eee" text-anchor="start" font-weight="bold">Ce que le groupe partage (phase d'attaque)</text>
+<text x="24" y="56" font-size="13" fill="#999" text-anchor="start" font-weight="normal">Proposition pour la spec 032 (résistances). Seules la fortification et les résistances se partagent (Compendium, Combat S12 et S13).</text>
+<rect x="24" y="80" width="390" height="130" rx="10" fill="#2c2c2c" stroke="#e0a040" stroke-width="3"/>
+<circle cx="80" cy="145" r="40" fill="#2E5E2E" stroke="#1a3a1a" stroke-width="3"/>
+<text x="80" y="151" font-size="14" fill="#cfe8cf" text-anchor="middle" font-weight="normal">orc</text>
+<text x="134" y="112" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Rôdeurs</text>
+<text x="134" y="136" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 3 · attaque 4 · gloire 2</text>
+<rect x="376" y="90" width="26" height="26" rx="4" fill="#e0a040" stroke="#e0a040" stroke-width="1"/>
+<text x="389" y="110" font-size="18" fill="#222" text-anchor="middle" font-weight="bold">✓</text>
+<rect x="434" y="80" width="390" height="130" rx="10" fill="#2c2c2c" stroke="#e0a040" stroke-width="3"/>
+<circle cx="490" cy="145" r="40" fill="#2E5E2E" stroke="#1a3a1a" stroke-width="3"/>
+<text x="490" y="151" font-size="14" fill="#cfe8cf" text-anchor="middle" font-weight="normal">orc</text>
+<text x="544" y="112" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Cuirassés</text>
+<text x="544" y="136" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 3 · attaque 4 · gloire 4</text>
+<path d="M 554 159 L 564 163 L 564 172 Q 564 180 554 183 Q 544 180 544 172 L 544 163 Z" fill="#9aa7b4" stroke="#111" stroke-width="1"/>
+<text x="554" y="175" font-size="11" fill="#111" text-anchor="middle" font-weight="bold">P</text>
+<text x="570" y="175" font-size="13" fill="#9aa7b4" text-anchor="start" font-weight="normal">résistance physique</text>
+<rect x="714" y="158" width="64" height="24" rx="12" fill="#1f1f1f" stroke="#777" stroke-width="1"/>
+<text x="722" y="175" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Brutal</text>
+<rect x="786" y="90" width="26" height="26" rx="4" fill="#e0a040" stroke="#e0a040" stroke-width="1"/>
+<text x="799" y="110" font-size="18" fill="#222" text-anchor="middle" font-weight="bold">✓</text>
+<rect x="844" y="80" width="390" height="130" rx="10" fill="#2c2c2c" stroke="#555" stroke-width="1"/>
+<circle cx="900" cy="145" r="40" fill="#2E5E2E" stroke="#1a3a1a" stroke-width="3"/>
+<text x="900" y="151" font-size="14" fill="#cfe8cf" text-anchor="middle" font-weight="normal">orc</text>
+<text x="954" y="112" font-size="18" fill="#eee" text-anchor="start" font-weight="bold">Chevaucheurs</text>
+<text x="954" y="136" font-size="14" fill="#ccc" text-anchor="start" font-weight="normal">armure 4 · attaque 3 · gloire 3</text>
+<rect x="954" y="158" width="64" height="24" rx="12" fill="#1f1f1f" stroke="#777" stroke-width="1"/>
+<text x="962" y="175" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Rapide</text>
+<rect x="1196" y="90" width="26" height="26" rx="4" fill="#1f1f1f" stroke="#e0a040" stroke-width="1"/>
+<path d="M 554 186 C 554 240, 330 230, 330 286" stroke="#9aa7b4" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<path d="M 219 212 L 219 262 L 629 262 L 629 212 M 424 262 L 424 276" stroke="#e0a040" stroke-width="2" fill="none"/>
+<rect x="24" y="276" width="800" height="330" rx="10" fill="#2e2a22" stroke="#e0a040" stroke-width="2"/>
+<text x="44" y="306" font-size="17" fill="#f0c060" text-anchor="start" font-weight="bold">Attaque en cours : Rôdeurs + Cuirassés</text>
+<text x="44" y="328" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Il faut la somme des armures : 3 + 3 = 6</text>
+<rect x="44" y="340" width="760" height="52" rx="8" fill="#252a30" stroke="#9aa7b4" stroke-width="1.5"/>
+<text x="58" y="362" font-size="14" fill="#ddd" text-anchor="start" font-weight="bold">Le groupe partage :</text>
+<path d="M 222 354 L 232 358 L 232 367 Q 232 375 222 378 Q 212 375 212 367 L 212 358 Z" fill="#9aa7b4" stroke="#111" stroke-width="1"/>
+<text x="222" y="370" font-size="11" fill="#111" text-anchor="middle" font-weight="bold">P</text>
+<text x="240" y="362" font-size="14" fill="#9aa7b4" text-anchor="start" font-weight="bold">Résistance physique</text>
+<text x="240" y="381" font-size="12" fill="#bbb" text-anchor="start" font-weight="normal">de Cuirassés : les attaques physiques contre tout le groupe sont divisées par deux</text>
+<text x="58" y="410" font-size="12" fill="#999" text-anchor="start" font-weight="normal">Ne se partagent pas : Brutal reste propre aux Cuirassés (dégâts), Rapide aux Chevaucheurs (parade).</text>
+<rect x="44" y="424" width="245" height="70" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="60" cy="446" r="7" fill="#c0392b"/>
+<text x="74" y="450" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Rage</text>
+<text x="74" y="472" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Attaque 2</text>
+<rect x="223" y="458" width="54" height="22" rx="11" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="250" y="474" font-size="12" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<text x="74" y="488" font-size="11" fill="#9aa7b4" text-anchor="start" font-weight="normal">physique ÷2</text>
+<rect x="301" y="424" width="245" height="70" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="317" cy="446" r="7" fill="#2f6db5"/>
+<text x="331" y="450" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Endurance (de côté)</text>
+<text x="331" y="472" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Attaque 1</text>
+<rect x="480" y="458" width="54" height="22" rx="11" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="507" y="474" font-size="12" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<text x="331" y="488" font-size="11" fill="#9aa7b4" text-anchor="start" font-weight="normal">physique ÷2</text>
+<rect x="558" y="424" width="245" height="70" rx="6" fill="#3a352b" stroke="#6b5a35" stroke-width="1"/>
+<circle cx="574" cy="446" r="7" fill="#c0392b"/>
+<text x="588" y="450" font-size="14" fill="#eee" text-anchor="start" font-weight="normal">Polyvalence renforcée</text>
+<text x="588" y="472" font-size="13" fill="#ddd" text-anchor="start" font-weight="normal">Attaque de feu 3</text>
+<rect x="737" y="458" width="54" height="22" rx="11" fill="#1f2328" stroke="#aaa" stroke-width="1"/>
+<text x="764" y="474" font-size="12" fill="#aaa" text-anchor="middle" font-weight="bold">plein</text>
+<text x="588" y="488" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal">feu : pas concerné</text>
+<text x="44" y="530" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Physique : (2 + 1) ÷ 2 = 1 (arrondi en dessous) · Feu : 3</text>
+<text x="44" y="562" font-size="22" fill="#f0c060" text-anchor="start" font-weight="bold">Attaque : 4 / 6</text>
+<rect x="250" y="542" width="230" height="28" rx="4" fill="#3d6fb5" stroke="#5a5a5a" stroke-width="1"/>
+<text x="365.0" y="561" font-size="14" fill="#eee" text-anchor="middle" font-weight="normal">Valider l'attaque (Entrée)</text>
+<text x="44" y="592" font-size="12" fill="#999" text-anchor="start" font-weight="normal">La division se fait sur la somme des attaques inefficaces (MKUE p. 9, 4.a), d'où une ligne de calcul.</text>
+<text x="850" y="306" font-size="15" fill="#ddd" text-anchor="start" font-weight="bold">Main : repères sur les cartes</text>
+<rect x="850" y="322" width="380" height="64" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<text x="864" y="348" font-size="15" fill="#eee" text-anchor="start" font-weight="bold">Marche</text>
+<text x="864" y="370" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">De côté : Attaque 1</text>
+<rect x="1170" y="332" width="48" height="24" rx="12" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="1194" y="349" font-size="13" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<rect x="850" y="396" width="380" height="64" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<text x="864" y="422" font-size="15" fill="#eee" text-anchor="start" font-weight="bold">Détermination</text>
+<text x="864" y="444" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">Attaque 2</text>
+<rect x="1170" y="406" width="48" height="24" rx="12" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="1194" y="423" font-size="13" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<rect x="850" y="470" width="380" height="64" rx="8" fill="#2b2b2b" stroke="#555" stroke-width="1"/>
+<text x="864" y="496" font-size="15" fill="#eee" text-anchor="start" font-weight="bold">Célérité</text>
+<text x="864" y="518" font-size="13" fill="#bbb" text-anchor="start" font-weight="normal">renforcée : Attaque à distance 3</text>
+<rect x="1170" y="480" width="48" height="24" rx="12" fill="#1f2328" stroke="#9aa7b4" stroke-width="1"/>
+<text x="1194" y="497" font-size="13" fill="#9aa7b4" text-anchor="middle" font-weight="bold">÷2</text>
+<text x="850" y="558" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">Le repère dit, avant de jouer, ce que la carte</text>
+<text x="850" y="576" font-size="13" fill="#aaa" text-anchor="start" font-weight="normal">vaudra contre le groupe ciblé.</text>
+<rect x="24" y="628" width="1206" height="110" rx="10" fill="#262320" stroke="#b08a5a" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="44" y="656" font-size="15" fill="#ddd" text-anchor="start" font-weight="bold">Même principe pour Fortifié, en phase d'attaque à distance, dès qu'une carte donne une attaque de siège (052) :</text>
+<path d="M 60 679 L 70 683 L 70 692 Q 70 700 60 703 Q 50 700 50 692 L 50 683 Z" fill="#b08a5a" stroke="#111" stroke-width="1"/>
+<text x="60" y="695" font-size="11" fill="#111" text-anchor="middle" font-weight="bold">F</text>
+<text x="80" y="686" font-size="13" fill="#b08a5a" text-anchor="start" font-weight="normal">Fortifié (Fouisseurs) dans le groupe : le bandeau dit « Le groupe partage : Fortifié, de Fouisseurs : attaques de siège</text>
+<text x="80" y="706" font-size="13" fill="#b08a5a" text-anchor="start" font-weight="normal">seulement ». Les cartes d'attaque à distance de la main sont grisées avec le repère « siège seulement ». En 031, sans carte de</text>
+<text x="80" y="726" font-size="13" fill="#b08a5a" text-anchor="start" font-weight="normal">siège, un ennemi fortifié n'a pas de case « cible » dans cette phase ; sa carte dit « fortifié : siège seulement ».</text>
+</svg>

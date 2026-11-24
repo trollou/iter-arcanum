@@ -1,0 +1,49 @@
+name: CI
+
+# Dépôt public : minutes illimitées, Windows compris (spec 082, Q6).
+# - PR : Linux et Windows au complet, sans filtre de chemins, une fois la PR prête (un brouillon ne
+#   lance rien) ;
+# - main : à chaque fusion, Linux et Windows, ce qui enregistre aussi le cache ;
+# - à la main (onglet Actions) : tout, sur les deux OS.
+on:
+  pull_request:
+    # ready_for_review : le passage de brouillon à prête lance la CI.
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Cache (issue : quota de 10 Go plein, éditions de liens en « Bus error ») :
+# - seul main enregistre le cache ; les PR le lisent sans en créer, au lieu d'un cache de
+#   plusieurs Go par branche qui évince tout le reste ;
+# - symboles de débogage réduits aux numéros de ligne : target/ bien plus petit, liens plus rapides
+#   (le disque du runner Linux ne suffisait plus : PR privée 222, « No space left on device »).
+env:
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verifier:
+    name: ${{ matrix.os }}
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      # Spec 081 : le son (cpal, ALSA) demande libasound2-dev pour compiler sous Linux.
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev pkg-config
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      # fmt ne dépend pas de l'OS : vérifié sous Linux seulement.
+      - if: runner.os == 'Linux'
+        run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      # Garde-fou du dépôt public compris (crates/arcanum-core/tests/depot_public.rs, spec 082).
+      - run: cargo test --workspace

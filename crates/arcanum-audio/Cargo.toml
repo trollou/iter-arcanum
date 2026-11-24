@@ -1,0 +1,16 @@
+[package]
+name = "arcanum-audio"
+description = "Son du jeu (spec 081) : directeur pur, banque de sons et lecteur (Kira)."
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+log.workspace = true
+arcanum-core = { path = "../arcanum-core" }
+kira.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

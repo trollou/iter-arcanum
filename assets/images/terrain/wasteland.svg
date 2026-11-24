@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 173.205 200.0" width="173.205" height="200.0">
+  <defs><clipPath id="c"><polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50"/></clipPath></defs>
+  <polygon points="86.603,0 173.205,50 173.205,150 86.603,200 0,150 0,50" fill="#9A9580"/>
+  <g clip-path="url(#c)">
+    <path d="M50.7,52.4 L47.8,44.1 L35.6,41.7 L47.3,48.9 L54.8,42.3" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M89.8,73.2 L80.6,63.8 L72.6,74.0 L81.8,81.4 L90.2,74.0" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M60.3,115.2 L66.8,123.7 L77.4,113.8 L80.4,118.0 L80.5,110.2" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M81.6,50.7 L93.7,59.5 L95.1,54.7 L106.5,56.4 L117.2,64.8" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M86.1,89.7 L88.9,88.0 L79.4,83.3 L88.1,72.4 L75.4,75.4" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M56.5,104.2 L55.7,100.4 L69.6,93.1 L67.1,85.9 L70.8,80.6" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M66.3,129.6 L61.2,131.0 L72.6,121.5 L60.3,115.0 L67.7,117.7" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M50.9,79.7 L41.8,78.7 L29.0,83.5 L40.1,94.4 L46.7,105.4" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M22.4,74.7 L35.4,81.3 L32.9,91.9 L36.3,99.6 L30.5,92.1" stroke="#6F6A58" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <ellipse cx="22.3" cy="51.1" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="126.7" cy="79.7" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="154.6" cy="88.7" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="45.4" cy="34.8" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="111.6" cy="48.1" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="21.8" cy="98.6" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="50.2" cy="86.8" rx="5" ry="3.5" fill="#7D7865"/>
+    <ellipse cx="51.1" cy="157.6" rx="5" ry="3.5" fill="#7D7865"/>
+  </g>
+</svg>

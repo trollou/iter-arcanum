@@ -1,0 +1,83 @@
+// Les 20 cartes d'action de base du jeu de base (specs 013 et 022) : effets lus sur les scans de ../mage-knight/docs/regles/scans/deed/.
+// color : couleur de l'effet renforcé (MKUE p. 4, 3.a), payé d'un mana de cette couleur.
+// basic / strong : Options([...]) = une des options au choix du joueur ; Unsupported = effet que le moteur ne sait pas encore jouer.
+// cost : ce qu'il faut payer en plus, pour les deux effets (MKUE p. 4) ; None si absent.
+// Effets : Move, Influence, Attack (physique, mêlée), RangedAttack (physique, à distance), SiegeAttack (physique, siège), FireAttack
+// (feu, mêlée), Block (physique), FireBlock, IceBlock (spec 032), IceBlockPerAbility (Parade de glace + 1 par capacité de l'ennemi
+// paré, spec 033) ;
+// mana (spec 025) : GainToken(couleur), GainCrystal(couleur), PayForCrystal(couleur) (payer un mana de cette couleur, effet de base
+// seulement), ExtraDie (un dé de plus ce tour), ExtraDieBlackAnyColor (idem ; noir : toute couleur), SetDice(dice: n, tokens: t)
+// (prendre n dés, les mettre chacun sur une couleur de base, t jetons par dé, sans les relancer). Une option par couleur quand la
+// carte laisse choisir la couleur. Boost(n) (spec 025) : jouer une autre carte d'action renforcée sans payer, +n sur ses points.
+// InfluenceReputation(amount: n, reputation: r) : Influence n et réputation r ; InfluenceInInteraction(amount: n, fame: f,
+// reputation: r) : Influence n, et pendant une interaction gloire f et réputation r (r vaut 0 par défaut ; spec 040).
+// Heal(n) : Soin n, jeter n Blessures de la main ; DrawCards(n) : piocher n cartes (spec 034) ; ReadyUnit(n) : rendre disponible
+// une unité de niveau n au plus (spec 042). healing : true pour une carte de
+// soin, dont aucun effet ne se joue en combat (spec 034, Q3).
+// reclaim : true si la carte jouée pour son effet peut être reprise en main à la fin du tour (spec 025).
+{
+    // --- Deck standard ---
+    Rage: (color: Red, basic: Options([Attack(2), Block(2)]), strong: Options([Attack(4)])),
+    Determination: (color: Blue, basic: Options([Attack(2), Block(2)]), strong: Options([Block(5)])),
+    Swiftness: (color: White, basic: Options([Move(2)]), strong: Options([RangedAttack(3)])),
+    March: (color: Green, basic: Options([Move(2)]), strong: Options([Move(4)])),
+    Stamina: (color: Blue, basic: Options([Move(2)]), strong: Options([Move(4)])),
+    Tranquility: (color: Green, basic: Options([Heal(1), DrawCards(1)]), strong: Options([Heal(2), DrawCards(2)]), healing: true),
+    Promise: (color: White, basic: Options([Influence(2)]), strong: Options([Influence(4)])),
+    // Renforcée, Menace fait perdre de la réputation, aussitôt (spec 040).
+    Threaten: (color: Red, basic: Options([Influence(2)]), strong: Options([InfluenceReputation(amount: 5, reputation: -1)])),
+    Crystallize: (
+        color: Blue,
+        basic: Options([PayForCrystal(Red), PayForCrystal(Blue), PayForCrystal(White), PayForCrystal(Green)]),
+        strong: Options([GainCrystal(Red), GainCrystal(Blue), GainCrystal(White), GainCrystal(Green)]),
+    ),
+    ManaDraw: (color: White, basic: Options([ExtraDie]), strong: Options([SetDice(dice: 1, tokens: 2)])),
+    Concentration: (color: Green, basic: Options([GainToken(Blue), GainToken(White), GainToken(Red)]), strong: Options([Boost(2)])),
+    Improvisation: (
+        color: Red,
+        cost: DiscardAnotherCard,
+        basic: Options([Move(3), Influence(3), Attack(3), Block(3)]),
+        strong: Options([Move(5), Influence(5), Attack(5), Block(5)]),
+    ),
+
+    // --- Cartes propres aux héros ---
+    BattleVersatility: (
+        color: Red,
+        basic: Options([Attack(2), Block(2), RangedAttack(1)]),
+        strong: Options([Attack(4), Block(4), FireAttack(3), FireBlock(3), RangedAttack(3), SiegeAttack(2)]),
+    ),
+    ManaPull: (color: White, basic: Options([ExtraDieBlackAnyColor]), strong: Options([SetDice(dice: 2, tokens: 1)])),
+    WillFocus: (
+        color: Green,
+        basic: Options([GainToken(Blue), GainToken(White), GainToken(Red), GainCrystal(Green)]),
+        strong: Options([Boost(3)]),
+    ),
+    // Reprise : sans Blessure pour l'effet de base, Blessure permise pour le renforcé (spec 034, dans le moteur).
+    CrystalJoy: (
+        color: Blue,
+        basic: Options([PayForCrystal(Red), PayForCrystal(Blue), PayForCrystal(White), PayForCrystal(Green)]),
+        strong: Options([GainCrystal(Red), GainCrystal(Blue), GainCrystal(White), GainCrystal(Green)]),
+        reclaim: true,
+    ),
+    // Gloire (et réputation, renforcée) en plus, seulement pendant une interaction (spec 040).
+    NobleManners: (
+        color: White,
+        basic: Options([InfluenceInInteraction(amount: 2, fame: 1)]),
+        strong: Options([InfluenceInInteraction(amount: 4, fame: 1, reputation: 1)]),
+    ),
+    // Rendre disponible une unité de niveau II au plus, III renforcé (spec 042).
+    Rejuvenate: (
+        color: Green,
+        basic: Options([Heal(1), DrawCards(1), GainToken(Green), ReadyUnit(2)]),
+        strong: Options([Heal(2), DrawCards(2), GainCrystal(Green), ReadyUnit(3)]),
+        healing: true,
+    ),
+    // Version révisée (Lost Legion, reprise par l'Ultimate) : Attaque 2 physique, plus de glace (Mathieu, 2026-10-25).
+    // Renforcée : Parade de glace 5, +1 par capacité ou couleur d'attaque de l'ennemi paré (spec 033).
+    ColdToughness: (color: Blue, basic: Options([Attack(2), IceBlock(3)]), strong: Options([IceBlockPerAbility(5)])),
+    Instinct: (
+        color: Red,
+        basic: Options([Move(2), Influence(2), Attack(2), Block(2)]),
+        strong: Options([Move(4), Influence(4), Attack(4), Block(4)]),
+    ),
+}
