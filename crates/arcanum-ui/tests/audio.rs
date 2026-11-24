@@ -229,6 +229,24 @@ fn situation_in_combat_and_after_game_end() {
 }
 
 #[test]
+fn situation_returns_to_exploration_once_combat_ended() {
+    // C11, issue #18 : le combat fini reste dans la vue jusqu'à la fin du tour, mais l'écran
+    // est revenu au plateau : la musique de combat doit laisser place à celle du moment.
+    let started = Event::CombatStarted {
+        player: PlayerId::SOLO,
+        enemies: vec![(ORCS_2, prowlers())],
+    };
+    let ended = Event::CombatEnded {
+        player: PlayerId::SOLO,
+    };
+    let client = sandbox_with(TimeOfDay::Night, vec![started, ended]);
+    assert_eq!(
+        client.sound_situation(),
+        SoundSituation::Exploration(TimeOfDay::Night)
+    );
+}
+
+#[test]
 fn game_over_tells_victory_or_defeat() {
     // C28 : une ligne par case du tableau de la spec.
     use GameEndReason::*;
