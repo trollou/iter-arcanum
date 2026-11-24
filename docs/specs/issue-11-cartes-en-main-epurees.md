@@ -1,6 +1,6 @@
 # #11 — Cartes en main épurées
 
-- Statut : à valider (Q1 à Q3 tranchées par Mathieu le 2026-11-24 ; reste à voir l'icône « i »)
+- Statut : validée (Mathieu, 2026-11-24 : Q1 à Q3 tranchées, icône « i » validée)
 - Issue : #11 (Epic #31 Finitions v0.1.0, milestone v0.1.0) ; répond aussi à #12 (Lecture d'esprit) et corrige #13 (cartes
   tronquées), fermées par la PR d'implémentation
 - Dépend de : spec 073 (panneaux, boutons d'effet), spec 077 (cartes agrandies) ; implémentées. Après la spec #10 (Source dans
@@ -235,4 +235,4 @@ Tranchées par Mathieu (2026-11-24) :
 - **Q2. Options payantes de base** (Cristallisation, Magie pure de base) : pas d'exception pour ces cartes, le formalisme
   général s'applique : dans le bloc de base, au format « pastille : effet » (C11 ; spec 073 C17 remplacée).
 - **Q3. Nom tronqué** : accepté, le nom entier se lit dans la fenêtre du « i » (L1).
-- **Icône « i »** : en SVG, dans le style du modèle fourni (section Icône « i ») ; dessin à valider.
+- **Icône « i »** : en SVG, dans le style du modèle fourni (section Icône « i ») ; dessin validé.
