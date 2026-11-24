@@ -6,9 +6,10 @@ chercher (`grep -rn "Forced Withdrawal" ../mage-knight/docs/regles/livret/`).
 
 - Une référence `p. 7, 5.e` renvoie à `livret/p07.md`, paragraphe `5.`, sous-paragraphe `e.` ; la numérotation repart de 1 à chaque
   section (`###`), d'où le nom de la section quand une page en a plusieurs.
-- La colonne **Spec** donne la spec qui a implémenté la notion, ou celle qui est prévue dans `docs/specs/PLAN.md` (en italique).
-  **À tenir à jour** dans la PR qui rédige, renumérote ou implémente une spec : passer son numéro en romain une fois implémentée,
-  l'ajouter aux notions qu'elle couvre, et suivre les changements de `PLAN.md`.
+- La colonne **Spec** donne la spec qui a implémenté la notion, ou celle qui est prévue (en italique) : « 042 » pour une spec d'avant
+  le 2026-11-24, « #N » pour une spec nommée d'après son issue (`docs/issues.md`).
+  **À tenir à jour** dans la PR qui rédige ou implémente une spec : passer son numéro en romain une fois implémentée,
+  et l'ajouter aux notions qu'elle couvre.
 - Ce n'est qu'un index : la règle fait foi dans la page citée, jamais ici.
 - Quand le livret ne tranche pas, ou qu'une règle semble en contredire une autre : la FAQ officielle (`faq/README.md`, tableau
   « Ce qui sert déjà »), puis le compendium de BGG via le tableau **Compendium** en fin de page (mode d'emploi :

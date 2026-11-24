@@ -17,11 +17,11 @@ Jeu PC **Iter Arcanum**, inspiré du jeu de plateau **Mage Knight** (édition Ul
 
 À lire avant d'explorer le code ou le livret, pour ne pas tout redécouvrir :
 
-- `docs/specs/PLAN.md` : jalons et **index des specs avec leur statut** (à rédiger, brouillon, à valider, validée, implémentée) : le reste à faire se lit là. **Tenir sa colonne Statut à jour** dans la PR qui rédige une spec, change son statut ou l'implémente (`docs/specs/README.md` n'est qu'un renvoi).
-- `docs/reference/index-par-notion.md` : quelles pages et quels paragraphes du livret lire pour une notion (mana, combat, fin du tour…), quelle spec la couvre, et quelle section du compendium FAQ consulter. **Tenir sa colonne Spec à jour** dans la PR qui rédige, renumérote ou implémente une spec (et quand `PLAN.md` change).
+- **Planification dans GitHub** (depuis le 2026-11-24) : versions = milestones, grandes fonctionnalités = issues `Epic`, puis `Feature`, `Bug` et `Task` en sous-issues ; le reste à faire se lit dans les issues ouvertes du milestone en cours, par Rang (`docs/issues.md`, Planification). `docs/specs/PLAN.md` est archivé : il ne sert plus qu'à retrouver les jalons et les specs d'avant cette date.
+- `docs/reference/index-par-notion.md` : quelles pages et quels paragraphes du livret lire pour une notion (mana, combat, fin du tour…), quelle spec la couvre, et quelle section du compendium FAQ consulter. **Tenir sa colonne Spec à jour** dans la PR qui rédige ou implémente une spec.
 - `docs/architecture.md` : crates, modules, types clés, recettes « ajouter une action / un événement / un élément d'écran ». **La mettre à jour** dans la PR qui change ce qu'elle décrit.
 - `docs/reference/bac-a-sable.md` : coordonnées `(q, r)` des cases et `(i, j)` des emplacements du bac à sable, avec terrain et site. **La lire au lieu de recalculer** depuis `tiles.ron` (page générée et vérifiée par un test).
-- `docs/issues.md` : ouvrir, classer (labels), traiter et fermer une issue. **À lire au début d'un fil d'issue.** Une issue `réservé` n'est pas traitée par Claude.
+- `docs/issues.md` : planifier (milestones, Epics, champs Priority, Effort et Rang), ouvrir, classer (type, labels), traiter et fermer une issue, et lier une spec à son issue. **À lire au début d'un fil d'issue ou de spec.** Une issue `réservé` n'est pas traitée par Claude.
 - `docs/verification-manuelle.md` : vérifier l'UI à l'œil sous Linux sans écran avec `scripts/verif-manuelle.sh` (Xvfb, clics, captures), au besoin depuis une partie préparée (`charger <nom>` : combat, Blessures…).
 - `docs/qualite/README.md` : rapport de qualité du code (`scripts/qualite.sh`) pour le bilan de fin de spec, et sa référence.
 
@@ -29,12 +29,12 @@ Jeu PC **Iter Arcanum**, inspiré du jeu de plateau **Mage Knight** (édition Ul
 
 Le cycle est toujours le même :
 
-1. **Spec d'abord.** Une spec dans `docs/specs/` décrit le comportement attendu : règles concernées, cas nominaux, cas limites, hors périmètre. Les règles **renvoient au livret** (`MKUE p. 7, 5.b`) au lieu de le recopier : la spec ne dit que ce qu'elle en fait (voir `docs/specs/_gabarit.md`). Elle est **validée par Mathieu** avant toute suite.
+1. **Spec d'abord.** Une spec dans `docs/specs/`, nommée d'après son issue `Feature` (`issue-<N>-<sujet>.md`, « spec #N » ; `docs/issues.md`), décrit le comportement attendu : règles concernées, cas nominaux, cas limites, hors périmètre. Les règles **renvoient au livret** (`MKUE p. 7, 5.b`) au lieu de le recopier : la spec ne dit que ce qu'elle en fait (voir `docs/specs/_gabarit.md`). Elle est **validée par Mathieu** avant toute suite.
 2. **Tests (TDD).** Écrire les tests qui traduisent la spec, les lancer, **vérifier qu'ils échouent** pour la bonne raison : sur une assertion, pas à la compilation (types nouveaux : signatures seules, `todo!()`, d'abord). Commit local `Tests rouges : …` avec les tests en échec, nommés et comptés par `scripts/verifier.sh --rouge`, avant le code.
 3. **Code minimal** pour les faire passer.
 4. **Refactor** avec les tests au vert.
 5. **Vérifier** avant de déclarer une tâche terminée : `fmt`, `clippy` et `test` (voir Commandes), tous au vert.
-6. **Rétrospective** Bilan de fin de spec, avant de clore le fil d'implémentation : points à améliorer (méthode, optimisation du code et ses tests, optimisation contexte et tokens…), en s'appuyant sur `scripts/qualite.sh` (taille, complexité, duplication comparées à la référence, puis `--enregistrer` ; `--couverture` en fin de jalon : `docs/qualite/README.md`). Une issue GitHub par point réel, confirmé avec Mathieu, avec le label `bilan` (`docs/issues.md`) ; s'il n'y a rien, le dire explicitement dans le compte rendu.
+6. **Rétrospective** Bilan de fin de spec, avant de clore le fil d'implémentation : points à améliorer (méthode, optimisation du code et ses tests, optimisation contexte et tokens…), en s'appuyant sur `scripts/qualite.sh` (taille, complexité, duplication comparées à la référence, puis `--enregistrer` ; `--couverture` en fin de milestone : `docs/qualite/README.md`). Une issue GitHub par point réel, confirmé avec Mathieu, avec le label `bilan` (`docs/issues.md`) ; s'il n'y a rien, le dire explicitement dans le compte rendu.
 
 Règles qui en découlent :
 
@@ -43,9 +43,10 @@ Règles qui en découlent :
 - Rien qui ne soit pas dans la spec. Un besoin nouveau → on le signale et on met la spec à jour d'abord.
 - Petites étapes, une spec à la fois. Proposer un plan avant une tâche de plus de quelques fichiers (gabarit `docs/specs/plans/_gabarit.md`, qui dit aussi quelles étapes confier à un modèle moins cher).
 - Toute nouvelle dépendance externe est proposée et justifiée avant d'être ajoutée. Sa licence doit passer `cargo deny check licenses` (`deny.toml`, licences compatibles avec la GPL v3).
-- Rédaction et implémentation d'une spec dans deux fils distincts : le fil de rédaction s'arrête quand Mathieu valide la spec (poussée, marquée validée, décisions consignées dans la spec) ; un fil neuf l'implémente sur la même branche, à partir de la spec et de `PLAN.md` seulement. Une grosse spec (plan de plus de 8 étapes, ou moteur et écran à la fois) s'implémente en deux fils successifs sur la même branche : moteur, contenu et persistance, puis libellés, écran, partie préparée, vérification à l'œil et docs (issue privée 118, découpage dans le plan).
-- Issues : traitées entre deux specs quand un bilan en a ouvert, une à la fois et une par fil, sauf si certaines se regroupent naturellement car touchant le même code par exemple (`docs/issues.md`).
-- **Points ouverts dans des issues, pas dans le Markdown** : tout point qui reste ouvert au-delà de son fil (sujet reporté, décision provisoire, lecture à vérifier, idée pas encore planifiée) devient une issue avec les labels `question ouverte` et `réservé` ; la spec ou la doc n'en garde qu'un renvoi (« issue #N »). Seules les questions d'une spec en cours de rédaction restent dans sa section « Questions ouvertes » jusqu'à la validation (`docs/issues.md`, Points ouverts).
+- Rédaction et implémentation d'une spec dans deux fils distincts : le fil de rédaction s'arrête quand Mathieu valide la spec (poussée, marquée validée, décisions consignées dans la spec) ; un fil neuf l'implémente sur la même branche, à partir de la spec et de son issue seulement. Une grosse spec (plan de plus de 8 étapes, ou moteur et écran à la fois) s'implémente en deux fils successifs sur la même branche : moteur, contenu et persistance, puis libellés, écran, partie préparée, vérification à l'œil et docs (issue privée 118, découpage dans le plan).
+- Issues : traitées dans l'ordre du milestone en cours (Rang), celles d'un bilan juste après la fusion de la spec, une à la fois et une par fil, sauf si certaines se regroupent naturellement car touchant le même code par exemple (`docs/issues.md`).
+- Claude remplit les champs d'issue Effort (s'il est vide) et Rang de chaque issue qu'il crée ou trouve sans eux dans un milestone. Il ne peut ni lire ni écrire le projet GitHub lui-même : tout ce qui guide le travail est porté par l'issue (type, milestone, parent, « blocked by », labels, champs).
+- **Points ouverts dans des issues, pas dans le Markdown** : tout point qui reste ouvert au-delà de son fil (sujet reporté, décision provisoire, lecture à vérifier, idée pas encore planifiée) devient une issue (son type, labels `question ouverte` et `réservé`, sans milestone) ; la spec ou la doc n'en garde qu'un renvoi (« issue #N »). Seules les questions d'une spec en cours de rédaction restent dans sa section « Questions ouvertes » jusqu'à la validation (`docs/issues.md`, Points ouverts).
 
 ## Architecture
 
@@ -68,7 +69,7 @@ iter-arcanum/
 │   ├── architecture.md # carte du code et recettes
 │   ├── issues-privees.md # titres des issues et PR du dépôt privé citées (« issue privée N »)
 │   ├── reference/      # nos pages de référence : index-par-notion.md, bac-a-sable.md (généré), tuiles.md, decks-de-depart.md
-│   ├── specs/          # une spec par fonctionnalité ; jalons, index et statuts dans PLAN.md
+│   ├── specs/          # une spec par fonctionnalité (issue-<N>-<sujet>.md) ; PLAN.md archivé
 │   ├── decisions/      # décisions d'architecture (ADR)
 │   └── glossaire.md
 └── .claude/rules/      # règles propres à chaque crate, chargées à la demande
@@ -117,11 +118,11 @@ Dans un fil, vérifier avec `scripts/verifier.sh` (bash, donc Git Bash sous Wind
 - Dépôt de travail : `trollou/iter-arcanum` sur GitHub, **public** depuis la spec 082 (code, assets, nos documents, issues). Le dépôt privé `trollou/mage-knight` n'est plus qu'une bibliothèque en lecture seule (matériel de tiers) et l'archive de l'historique : un renvoi « issue privée N » ou « PR privée N » y désigne une issue ou une PR, dont le titre est dans `docs/issues-privees.md`.
 - **Jamais de matériel de tiers ici** : rien de `../mage-knight/docs/regles/` ne se copie dans ce dépôt (ni page du livret, ni scan, ni extrait long de la FAQ ou du compendium) ; on y renvoie (`MKUE p. 7, 5.b`, `Compendium, Combat S34`). Deux barrières : `.gitignore` (`docs/regles/`, `*.pdf`) et le test `crates/arcanum-core/tests/depot_public.rs`, lancé avant chaque push et par la CI. Une fuite poussée resterait dans l'historique public.
 - Jamais de commit direct sur `main`. Une branche par spec ou par tâche, puis une pull request vers `main`.
-- Nom de branche parlant, en minuscules et sans accents, créé avant le premier commit (jamais le nom automatique `claude/…`) : `spec/<numéro>-<sujet>` pour une spec (rédaction et implémentation sur la même branche, ex. `spec/029-contenu-en-donnees`), `fix/<n° issue>-<sujet>` pour une issue (ex. `fix/25-defausse-main-vide`), `docs/<sujet>` ou `chore/<sujet>` pour la doc ou l'outillage.
+- Nom de branche parlant, en minuscules et sans accents, créé avant le premier commit (jamais le nom automatique `claude/…`) : `feature/<n° issue>-<sujet>` pour une spec (rédaction et implémentation sur la même branche, ex. `feature/32-cartes-des-fenetres`), `fix/<n° issue>-<sujet>` pour une issue (ex. `fix/25-defausse-main-vide`), `docs/<sujet>` ou `chore/<sujet>` pour la doc ou l'outillage.
 - Ouvrir la PR **en brouillon** une fois `scripts/verifier.sh` vert en local, et ne la passer « prête » qu'à la toute fin (dernier fil d'une spec en plusieurs fils) : un brouillon ne lance pas la CI.
 - Seul Mathieu fusionne une pull request, et seulement si la CI est verte, sauf la PR d'une issue sans question ouverte, que le fil fusionne lui-même (`docs/issues.md`). Pas de `push --force` ni de réécriture d'historique sur `main`.
 - La CI (`.github/workflows/ci.yml`) tourne sous Linux et Windows sur chaque PR prête, sans filtre de chemins, et sur `main` à chaque fusion ; un brouillon ne lance rien. Détail (déclencheurs, cache, Dependabot, suppression des branches à la fusion) : `docs/ci.md`, à mettre à jour dans la PR qui change `.github/`.
-- Messages de commit en français, à l'impératif, une première ligne courte qui cite la spec concernée (ex. `Implémente la spec 001 Libellés`).
+- Messages de commit en français, à l'impératif, une première ligne courte qui cite la spec ou l'issue concernée (ex. `Implémente la spec #32 Cartes des fenêtres`).
 - Un commit = une étape cohérente (spec, tests, implémentation, refactor). Ne pas mélanger plusieurs specs dans un même commit. Les commits locaux peuvent être rouges (tests en phase TDD) ; on ne pousse que du vert.
 - Fins de ligne en LF, imposées par `.gitattributes`. `target/` n'est jamais versionné.
 
