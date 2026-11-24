@@ -1,11 +1,11 @@
-//! Panneau latéral : bandeaux, Source, héros, zone de jeu et boutons.
+//! Panneau latéral : bandeaux, héros, zone de jeu et boutons.
 
 use super::bottom_panel::bottom_hint;
 use super::widgets::shortcut_button;
 use eframe::egui::{self, Color32, Sense, Vec2};
 
 use super::board::standing_image_rect;
-use super::widgets::{color_swatch, source_line};
+use super::widgets::color_swatch;
 use super::windows::{
     altar_window, artifact_window, crystal_window, meditation_window, offers_window,
     preparation_window, reclaim_window, score_window, skill_choice_window, tactic_decision_window,
@@ -43,7 +43,7 @@ fn banners(ui: &mut egui::Ui, screen: &GameScreen) {
 }
 
 impl IterArcanumApp {
-    /// Le milieu du panneau de droite (spec 073) : bandeaux, Source, joueur, zone de jeu et ce
+    /// Le milieu du panneau de droite (spec 073) : bandeaux, joueur, zone de jeu et ce
     /// tour ; la section Ici est remplacée par les boutons du plateau (spec 075).
     fn right_panel_body(&mut self, ui: &mut egui::Ui, screen: &GameScreen) -> Option<Command> {
         let mut clicked = None;
@@ -59,10 +59,7 @@ impl IterArcanumApp {
         if let Some(reopen) = &screen.reopen_score {
             clicked = button(self, ui, reopen).or(clicked);
         }
-        ui.separator();
-        if let Some(command) = source_line(ui, &screen.source) {
-            clicked = Some(command);
-        }
+        // Spec #10, C8 : la Source est dans la barre de menu ; un seul trait avant le joueur.
         ui.separator();
         // Joueur (C23, C24).
         if let Some(portrait) = &screen.portrait {

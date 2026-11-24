@@ -67,7 +67,7 @@ chercher (`grep -rn "Forced Withdrawal" ../mage-knight/docs/regles/livret/`).
 |---|---|---|
 | Couleurs de mana (base, or, noir), Jour et Nuit | p. 5 *Using Mana*, 1 et 2 | 020 |
 | Mana fondamental (dé, jeton de mana) et cristaux | p. 5 *Using Mana*, 1.a et 1.b | 021, 022 |
-| Source : lancer, au moins la moitié de couleurs de base | p. 3 *Day/Night board* ; p. 4, 2.b | 020 |
+| Source : lancer, au moins la moitié de couleurs de base | p. 3 *Day/Night board* ; p. 4, 2.b | 020, [#10](../specs/issue-10-source-barre-du-haut.md) (Source dans la barre de menu) |
 | Prendre un dé de la Source (un par tour), le relancer | p. 5 *Using Mana*, 3.a et 3.b ; p. 6, 8.a ; p. 11, 1 | 022, 025 (dés de plus, dés mis sur une couleur), [056](../specs/056-actions-avancees-mana.md) (Tempête de mana) |
 | Dés épuisés (noir de jour, or de nuit) | p. 5 *Using Mana*, 3.c | 020 |
 | Inventaire : 3 cristaux par couleur au plus | p. 5 *Using Mana*, 1.b ; p. 5 *"Gain" Effects*, 2 | 021 |
