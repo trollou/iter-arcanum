@@ -439,6 +439,7 @@ Pas de terme correspondant dans le livret. Introduits par la spec 000.
 | Dossier de configuration | `config_dir` | Dossier du fichier des préférences : `ARCANUM_CONFIG_DIR`, `config/` du dépôt lancé par cargo, sinon le dossier de configuration de l'utilisateur. |
 | Fenêtre des préférences | `PreferencesWindow` (UI) | Fenêtre ouverte par Préférences… (Menu, pied de l'écran de lancement, Ctrl+,). |
 | Langue des préférences | `Preferences::language` | `None` = langue du système ; sinon un code (`fr`, `en`). |
+| Animations (préférence) | `Preferences::animations` | Case de la section Affichage qui permet les animations du plateau (spec #5) ; cochée par défaut. |
 
 ### Audio (spec 081)
 
@@ -464,6 +465,7 @@ Pas de terme correspondant dans le livret. Introduits par la spec 000.
 | Élément debout | `Overlay` (UI) | Ce qui est dessiné droit sur une case, le pied dans la case : décor de relief, site, drapeau, figurine. Dessinés de l'arrière vers l'avant. |
 | Décor de relief | `OverlayKind::Relief` (UI) | Arbres, buttes ou pics d'une forêt, de collines ou d'une montagne. |
 | Figurine | `OverlayKind::Figure`, `Rampaging`, `Defender`, `SiteEnemy` (UI) | Héros ou monstre debout sur le plateau. |
+| Disparition | `Departure` (UI) | Les figurines des ennemis vaincus par le dernier combat, que le plateau efface à son retour (spec #5). Pas un terme du livret. |
 | Brouillard | `FOG_IMAGE` (UI) | Silhouette d'un ennemi face cachée, teintée à la couleur de sa pile. |
 | Bouton d'action du plateau | `BoardAction` (UI) | Bouton rond à icône posé sur la case concernée : défier, engager le combat, interagir, piller, incendier, entrer, offrande. |
 | Menu du site | (UI) | Options d'une interaction en cours (recruter, acheter), ouvertes à côté de la case du site. |
