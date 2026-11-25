@@ -369,6 +369,9 @@ fn departing_figure_sinks_and_fades() {
     assert_eq!(departing.rect.width(), stood.rect.width());
     assert!((departing.rect.height() - stood.rect.height() / 4.0).abs() < 0.01);
     assert!((f32::from(departing.tint.a()) / 255.0 - 0.25).abs() < 0.01);
+    // L'image garde sa largeur et s'écrase (affaissement), au lieu de rapetisser.
+    assert!((departing.sink - 0.25).abs() < 0.01);
+    assert_eq!(stood.sink, 1.0);
 
     let done = board_at(&after, STARTED + DEPARTURE_SECONDS, &enemies, true);
     assert!(of_kind(&done, OverlayKind::Departing).is_empty());

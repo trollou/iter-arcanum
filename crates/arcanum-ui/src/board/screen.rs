@@ -260,6 +260,9 @@ pub struct Overlay {
     /// Socle d'un ennemi, à la couleur de sa catégorie, peint à plat sous ses pieds (spec #14, C9
     /// à C12) ; aucun pour les autres éléments.
     pub base: Option<Color32>,
+    /// Part de la hauteur de l'image qui reste debout (spec #5) : 1, sauf un ennemi vaincu qui
+    /// s'affaisse ; l'image garde sa largeur et s'écrase dans `rect`.
+    pub sink: f32,
 }
 
 impl Overlay {
@@ -280,6 +283,7 @@ impl Overlay {
             fallback,
             tint: Color32::WHITE,
             base: None,
+            sink: 1.0,
         }
     }
 
@@ -583,6 +587,7 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     fallback: terrain_color(content.terrain),
                     tint: Color32::WHITE,
                     base: None,
+                    sink: 1.0,
                 });
             }
         }
