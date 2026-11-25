@@ -94,6 +94,11 @@ pub struct BoardInput<'a> {
     pub time: f64,
     /// Dernier déplacement de la figurine, qu'elle suit en glissant (C35).
     pub walk: Option<HeroWalk<'a>>,
+    /// Spec #5 : les ennemis vaincus par le dernier combat, que le plateau efface.
+    pub departure: Option<BoardDeparture<'a>>,
+    /// Spec #5 : la préférence « Animations » ; fausse, ni respiration, ni glissement, ni
+    /// effacement (C14).
+    pub animations: bool,
     /// Arrivées d'un déplacement par effet payé (spec 057, issue privée 257) : en évidence, un clic y
     /// joue le sort ; vides hors de ce choix.
     pub destinations: &'a [CastDestination],
@@ -117,6 +122,16 @@ pub struct DepartingEnemy {
     pub place: usize,
     pub of: usize,
 }
+
+/// Les ennemis vaincus que le plateau efface, et l'instant où l'effacement a commencé (spec #5).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct BoardDeparture<'a> {
+    pub enemies: &'a [DepartingEnemy],
+    pub started: f64,
+}
+
+/// Durée de l'effacement d'un ennemi vaincu (spec #5, Q1).
+pub const DEPARTURE_SECONDS: f64 = 0.8;
 
 /// Respiration de la figurine du héros : ± 2 % de sa hauteur, période 3 s (spec 075, C34).
 pub const BREATHING_AMPLITUDE: f32 = 0.02;
@@ -225,6 +240,8 @@ pub enum OverlayKind {
     Defender,
     /// Jeton d'ennemi resté sur un site d'aventure (spec 044, C41) : pas un ennemi errant.
     SiteEnemy,
+    /// Ennemi vaincu qui s'efface au retour sur le plateau (spec #5).
+    Departing,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -712,6 +729,12 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
 /// quand le plateau est affiché avec le héros et que la fenêtre a le focus (spec 075, L7).
 pub fn animation_repaint(animated: bool, focused: bool) -> Option<std::time::Duration> {
     (animated && focused).then(|| std::time::Duration::from_millis(34))
+}
+
+/// Le plateau s'anime : figurine du héros (respiration, glissement) ou effacement en cours
+/// (spec #5, C11), et animations permises (C14).
+pub fn board_animated(input: &BoardInput<'_>) -> bool {
+    input.hero.is_some() && input.figure.is_some()
 }
 
 /// Où est la figurine pendant son glissement, en unités du plateau (spec 075, C35) : entre deux

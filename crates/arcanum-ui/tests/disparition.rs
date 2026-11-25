@@ -2,8 +2,13 @@
 //! session à la fin d'un combat. Aucune règle du livret ici : chaque test cite le cas de la spec ;
 //! les combats suivent les règles des specs 031, 043 et 044.
 
-use arcanum_core::{Action, BasicAction, EnemyToken, GameState, Hex, legal_actions};
-use arcanum_ui::{Command, DepartingEnemy, GameSession};
+use arcanum_core::{Action, BasicAction, EnemyToken, GameState, Hex, PlayerView, legal_actions};
+use arcanum_ui::{
+    BoardCamera, BoardDeparture, BoardInput, BoardScreen, Command, DEPARTURE_SECONDS,
+    DepartingEnemy, GameSession, HeroWalk, Overlay, OverlayKind, animation_repaint, board_animated,
+    board_screen, hex_center,
+};
+use eframe::egui::{Rect, pos2, vec2};
 
 // L'arène des tests d'arcanum-core, partagée plutôt que recopiée.
 #[path = "../../arcanum-core/tests/arene/mod.rs"]
@@ -14,7 +19,7 @@ use arene::{
 };
 
 mod support;
-use support::{play, session_of};
+use support::{board_input, play, session_of};
 
 use BasicAction::{Determination, March, Promise, Rage, Stamina, Threaten};
 
@@ -244,4 +249,219 @@ fn departure_is_dropped_on_undo() {
     session.command(Command::Undo);
     session.run_frame();
     assert_eq!(departure(&session), None);
+}
+
+// --- Effacement sur le plateau (C8 à C11, C14) ---
+
+fn camera() -> BoardCamera {
+    BoardCamera {
+        center: hex_center(ORCS_2),
+        zoom: 60.0,
+    }
+}
+
+fn area() -> Rect {
+    Rect::from_min_size(pos2(0.0, 0.0), vec2(1000.0, 700.0))
+}
+
+/// Le village et les Rôdeurs voisins, tels que la vue les donne.
+fn village_view() -> PlayerView {
+    session_of(village().events()).view()
+}
+
+/// La même vue sans les Rôdeurs : le plateau après leur défaite.
+fn without_prowlers(view: &PlayerView) -> PlayerView {
+    let mut after = view.clone();
+    after.enemy_tokens.remove(&ORCS_2);
+    after
+}
+
+const STARTED: f64 = 10.0;
+
+fn prowlers_departing() -> [DepartingEnemy; 1] {
+    [departing(ORCS_2, prowlers())]
+}
+
+/// Le plateau de `view` à l'instant `time`, avec l'effacement des Rôdeurs commencé à `STARTED`.
+fn board_at(
+    view: &PlayerView,
+    time: f64,
+    enemies: &[DepartingEnemy],
+    animations: bool,
+) -> BoardScreen {
+    board_screen(
+        &BoardInput {
+            time,
+            departure: Some(BoardDeparture {
+                enemies,
+                started: STARTED,
+            }),
+            animations,
+            ..board_input(view, &[], camera(), area(), None)
+        },
+        &french(),
+    )
+}
+
+fn of_kind(screen: &BoardScreen, kind: OverlayKind) -> Vec<Overlay> {
+    screen
+        .overlays
+        .iter()
+        .filter(|overlay| overlay.kind == kind)
+        .cloned()
+        .collect()
+}
+
+fn french() -> arcanum_i18n::Catalog {
+    arcanum_i18n::Catalog::load(
+        &arcanum_ui::repository_assets_dir().join("i18n"),
+        &arcanum_i18n::Language("fr".into()),
+    )
+    .expect("fr.json du dépôt")
+}
+
+/// La figurine des Rôdeurs avant le combat.
+fn prowlers_figure(view: &PlayerView) -> Overlay {
+    let before = board_screen(
+        &BoardInput {
+            time: STARTED,
+            ..board_input(view, &[], camera(), area(), None)
+        },
+        &french(),
+    );
+    let [figure] = of_kind(&before, OverlayKind::Rampaging)
+        .try_into()
+        .expect("les Rôdeurs sur le plateau");
+    figure
+}
+
+// C8 — Au début, à la place et à la taille de sa figurine d'avant le combat, opaque.
+#[test]
+fn departing_figure_starts_where_it_stood() {
+    let view = village_view();
+    let stood = prowlers_figure(&view);
+    let after = without_prowlers(&view);
+    let enemies = prowlers_departing();
+    let screen = board_at(&after, STARTED, &enemies, true);
+    let [departing] = of_kind(&screen, OverlayKind::Departing)
+        .try_into()
+        .expect("les Rôdeurs s'effacent");
+    assert_eq!(departing.rect, stood.rect);
+    assert_eq!(departing.foot, stood.foot);
+    assert_eq!(departing.image, stood.image);
+    assert_eq!(departing.tint.a(), 255);
+}
+
+// C9 — Le mouvement ralentit à la fin (Q1) : au milieu de la durée, la hauteur et l'opacité sont au
+// quart, les pieds posés au même endroit ; à la fin, plus rien.
+#[test]
+fn departing_figure_sinks_and_fades() {
+    let view = village_view();
+    let stood = prowlers_figure(&view);
+    let after = without_prowlers(&view);
+    let enemies = prowlers_departing();
+    let middle = board_at(&after, STARTED + DEPARTURE_SECONDS / 2.0, &enemies, true);
+    let [departing] = of_kind(&middle, OverlayKind::Departing)
+        .try_into()
+        .expect("en cours");
+    assert_eq!(departing.foot, stood.foot);
+    assert_eq!(departing.rect.bottom(), stood.rect.bottom());
+    assert_eq!(departing.rect.width(), stood.rect.width());
+    assert!((departing.rect.height() - stood.rect.height() / 4.0).abs() < 0.01);
+    assert!((f32::from(departing.tint.a()) / 255.0 - 0.25).abs() < 0.01);
+
+    let done = board_at(&after, STARTED + DEPARTURE_SECONDS, &enemies, true);
+    assert!(of_kind(&done, OverlayKind::Departing).is_empty());
+}
+
+// C10 — Les autres éléments debout ne changent pas pendant l'effacement.
+#[test]
+fn departure_leaves_other_overlays_alone() {
+    let view = without_prowlers(&village_view());
+    let time = STARTED + DEPARTURE_SECONDS / 3.0;
+    let with = board_at(&view, time, &prowlers_departing(), true);
+    let without = board_at(&view, time, &[], true);
+    let others: Vec<Overlay> = with
+        .overlays
+        .iter()
+        .filter(|overlay| overlay.kind != OverlayKind::Departing)
+        .cloned()
+        .collect();
+    assert_eq!(others, without.overlays);
+}
+
+// C11 — Une image suivante tant que l'effacement dure, plus après (ici sans figurine du héros).
+#[test]
+fn departure_requests_repaints_until_done() {
+    let view = without_prowlers(&village_view());
+    let enemies = prowlers_departing();
+    let input = |time| BoardInput {
+        figure: None,
+        time,
+        departure: Some(BoardDeparture {
+            enemies: &enemies,
+            started: STARTED,
+        }),
+        ..board_input(&view, &[], camera(), area(), None)
+    };
+    assert!(board_animated(&input(STARTED + 0.1)));
+    assert!(animation_repaint(board_animated(&input(STARTED + 0.1)), true).is_some());
+    assert!(!board_animated(&input(STARTED + DEPARTURE_SECONDS)));
+    assert_eq!(
+        animation_repaint(board_animated(&input(STARTED + DEPARTURE_SECONDS)), true),
+        None
+    );
+}
+
+// C14 — Animations décochées : hauteur du héros constante, déplacement aussitôt fini, rien ne
+// s'efface, aucune image suivante.
+#[test]
+fn no_board_animation_when_disabled() {
+    let view = without_prowlers(&village_view());
+    let enemies = prowlers_departing();
+    let figure = view.figure.expect("figurine");
+    let path = [PLAIN_W, figure];
+    let board = |time: f64, animations| {
+        board_screen(
+            &BoardInput {
+                time,
+                walk: Some(HeroWalk {
+                    path: &path,
+                    started: STARTED,
+                }),
+                departure: Some(BoardDeparture {
+                    enemies: &enemies,
+                    started: STARTED,
+                }),
+                animations,
+                ..board_input(&view, &[], camera(), area(), None)
+            },
+            &french(),
+        )
+    };
+    let hero = |screen: &BoardScreen| -> Overlay {
+        let [hero] = of_kind(screen, OverlayKind::Figure)
+            .try_into()
+            .expect("la figurine");
+        hero
+    };
+    // Au repos, longtemps après : la place de la figurine sur sa case.
+    let resting = hero(&board(STARTED + 100.0, false));
+    for time in [STARTED, STARTED + 0.05, STARTED + 0.4, STARTED + 0.75] {
+        let screen = board(time, false);
+        assert_eq!(hero(&screen).rect, resting.rect, "à {time}");
+        assert!(of_kind(&screen, OverlayKind::Departing).is_empty());
+        let input = BoardInput {
+            time,
+            departure: Some(BoardDeparture {
+                enemies: &enemies,
+                started: STARTED,
+            }),
+            animations: false,
+            ..board_input(&view, &[], camera(), area(), None)
+        };
+        assert!(!board_animated(&input));
+    }
+    // Avec les animations, la même figurine bouge.
+    assert_ne!(hero(&board(STARTED + 0.05, true)).rect, resting.rect);
 }

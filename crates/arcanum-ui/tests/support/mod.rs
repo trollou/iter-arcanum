@@ -148,6 +148,8 @@ pub fn board_input<'a>(
         site_anchor: None,
         time: 0.0,
         walk: None,
+        departure: None,
+        animations: true,
         destinations: &[],
     }
 }
@@ -190,6 +192,8 @@ pub fn map_input(
         site_anchor: None,
         time: 0.0,
         walk: None,
+        departure: None,
+        animations: true,
         destinations: &[],
     }
 }

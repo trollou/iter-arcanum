@@ -19,9 +19,10 @@ pub use images::{
     terrain_image, time_of_day_image,
 };
 pub use screen::{
-    BOARD_ACTION_DIAMETER, BREATHING_AMPLITUDE, BREATHING_PERIOD, BoardAction, BoardInput,
-    BoardMovement, BoardScreen, DepartingEnemy, EnemyAlert, ExploreGhost, HeroWalk, HexDrawing,
-    Hovered, MoveMark, OVERLAY_MIN_ZOOM, Overlay, OverlayKind, RuinPip, RuinTokenMark, SLAB_DEPTH,
-    Slab, TileOutline, WALK_STEP_SECONDS, animation_repaint, board_screen,
+    BOARD_ACTION_DIAMETER, BREATHING_AMPLITUDE, BREATHING_PERIOD, BoardAction, BoardDeparture,
+    BoardInput, BoardMovement, BoardScreen, DEPARTURE_SECONDS, DepartingEnemy, EnemyAlert,
+    ExploreGhost, HeroWalk, HexDrawing, Hovered, MoveMark, OVERLAY_MIN_ZOOM, Overlay, OverlayKind,
+    RuinPip, RuinTokenMark, SLAB_DEPTH, Slab, TileOutline, WALK_STEP_SECONDS, animation_repaint,
+    board_animated, board_screen,
 };
 pub(crate) use screen::{feature_key, terrain_key};

@@ -170,6 +170,8 @@ impl IterArcanumApp {
                 site_anchor: site_anchor.filter(|_| with_actions),
                 time,
                 walk,
+                departure: None,
+                animations: true,
                 destinations: &game_screen.cast_destinations,
             },
             &self.catalog,

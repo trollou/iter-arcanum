@@ -87,10 +87,7 @@ impl DepartureTracker {
         for index in self.scanned..entries.len() {
             match &entries[index].event {
                 Event::CombatStarted { player, .. } if *player == PlayerId::SOLO => {
-                    self.combat = self
-                        .board
-                        .as_ref()
-                        .map(|(_, board)| (index, board.clone()));
+                    self.combat = self.board.as_ref().map(|(_, board)| (index, board.clone()));
                 }
                 Event::CombatEnded { player } if *player == PlayerId::SOLO => {
                     self.finish(&entries[..index]);
@@ -106,16 +103,23 @@ impl DepartureTracker {
         let Some((start, board)) = self.combat.take() else {
             return;
         };
-        let Event::CombatStarted { enemies: fought, .. } = &entries[start].event else {
+        let Event::CombatStarted {
+            enemies: fought, ..
+        } = &entries[start].event
+        else {
             return;
         };
-        let defeated = entries[start..].iter().flat_map(|entry| match &entry.event {
-            Event::EnemiesDefeated {
-                player, enemies, ..
-            } if *player == PlayerId::SOLO => enemies.clone(),
-            Event::EnemyDestroyed { player, enemy } if *player == PlayerId::SOLO => vec![*enemy],
-            _ => Vec::new(),
-        });
+        let defeated = entries[start..]
+            .iter()
+            .flat_map(|entry| match &entry.event {
+                Event::EnemiesDefeated {
+                    player, enemies, ..
+                } if *player == PlayerId::SOLO => enemies.clone(),
+                Event::EnemyDestroyed { player, enemy } if *player == PlayerId::SOLO => {
+                    vec![*enemy]
+                }
+                _ => Vec::new(),
+            });
         let departing: Vec<DepartingEnemy> = defeated
             .filter_map(|token| {
                 let (hex, _) = fought.iter().find(|(_, fought)| *fought == token)?;
