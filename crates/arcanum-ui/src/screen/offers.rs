@@ -1,6 +1,6 @@
 //! Fenêtre Offres (spec 050) : les trois offres et le choix de l'action avancée d'un niveau pair.
 
-use arcanum_core::{CommonCard, DeedCard, Offer, UnitCard, UnitRank};
+use arcanum_core::{CommonCard, Offer, UnitCard, UnitRank};
 
 use super::*;
 use crate::enemy_text::resistance_key;
@@ -316,17 +316,6 @@ pub(super) fn choosing_level(view: &PlayerView) -> Option<u8> {
 fn offer_card(card: CommonCard, legal_actions: &[Action], catalog: &Catalog) -> OfferCardView {
     match card {
         CommonCard::Deed(deed) => {
-            let (basic, strong) = card_effect_texts(deed, catalog);
-            let name = match deed.card() {
-                DeedCard::Spell(spell) => catalog.format(
-                    "offers.spell_name",
-                    &[
-                        ("basic", &catalog.text(spell.label_key())),
-                        ("strong", &catalog.text(spell.strong_name_key())),
-                    ],
-                ),
-                _ => card_name(deed, catalog),
-            };
             let take = legal_actions
                 .iter()
                 .position(|action| *action == Action::GainAdvancedAction { card: deed })
@@ -342,15 +331,8 @@ fn offer_card(card: CommonCard, legal_actions: &[Action], catalog: &Catalog) -> 
                     ),
                 });
             OfferCardView {
-                name,
-                color: deed.card().definition().map(|definition| definition.color),
-                lines: vec![basic, strong],
                 take,
-                mark: None,
-                illustration: crate::card_illustration(deed.card()),
-                uses: Vec::new(),
-                strong_heading: String::new(),
-                strong_colors: Vec::new(),
+                ..super::hand::window_card(deed, catalog)
             }
         }
         CommonCard::Unit(unit) => unit_card(unit, catalog),

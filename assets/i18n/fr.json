@@ -1396,7 +1396,6 @@
     "choose_advanced_action": "Niveau {level} : choisissez une action avancée",
     "button": "Offres…",
     "unsupported": "{text} (pas encore codé : se joue de côté)",
-    "spell_name": "{basic} / {strong}",
     "close": "Fermer",
     "monastery_card": "monastère",
     "disabled": {

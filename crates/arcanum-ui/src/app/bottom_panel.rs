@@ -42,8 +42,9 @@ const CARD_FILL: Color32 = Color32::from_rgb(0x2A, 0x2B, 0x2F);
 const CARD_MARGIN: f32 = 6.0;
 const CARD_STROKE: f32 = 1.0;
 
-/// Le cadre d'une carte posée, dans le panneau du bas comme dans la fenêtre de la défausse.
-fn card_frame() -> Frame {
+/// Le cadre d'une carte posée, dans le panneau du bas, la fenêtre de la défausse et les fenêtres
+/// des offres et des choix (spec #32).
+pub(super) fn card_frame() -> Frame {
     Frame::new()
         .fill(CARD_FILL)
         .stroke(Stroke::new(CARD_STROKE, SWATCH_STROKE))
@@ -52,12 +53,12 @@ fn card_frame() -> Frame {
 }
 
 /// Taille du contenu d'une carte, cadre déduit.
-fn card_content_size() -> Vec2 {
+pub(super) fn card_content_size() -> Vec2 {
     vec2(CARD_WIDTH, CARD_HEIGHT) - Vec2::splat(2.0 * (CARD_MARGIN + CARD_STROKE))
 }
 
 /// L'illustration en bande sur toute la largeur de la carte, recadrée au milieu (spec 077, C2).
-fn art_band(ui: &mut egui::Ui, texture: egui::TextureId) {
+pub(super) fn art_band(ui: &mut egui::Ui, texture: egui::TextureId) {
     let width = ui.available_width();
     let (top, bottom) = band_uv(width, ART_BAND_HEIGHT);
     ui.add(
@@ -387,7 +388,12 @@ impl IterArcanumApp {
         }
         if !card.strong_text.is_empty() && (card.color.is_some() || card.card.card().is_artifact())
         {
-            strong_separator(ui, card);
+            strong_separator(
+                ui,
+                card.card.card().is_spell(),
+                &card.strong_heading,
+                &card.strong_colors,
+            );
             if card.show_text {
                 ui.add(egui::Label::new(egui::RichText::new(&card.strong_text).weak()).wrap());
             }
@@ -851,22 +857,27 @@ impl IterArcanumApp {
 
 /// Le titre du bloc renforcé (spec #11, C7). Un sort : un trait, puis ses pastilles et son nom
 /// renforcé en gras. Une action : « —— pastille Renforcé —— » centré ; un artefact, « —— si
-/// détruit —— », sans pastille.
-fn strong_separator(ui: &mut egui::Ui, card: &HandCard) {
-    if card.card.card().is_spell() {
+/// détruit —— », sans pastille. Partagé par la main et les fenêtres (spec #32).
+pub(super) fn strong_separator(
+    ui: &mut egui::Ui,
+    spell: bool,
+    heading: &str,
+    colors: &[ManaColor],
+) {
+    if spell {
         ui.separator();
         ui.horizontal(|ui| {
-            for color in &card.strong_colors {
+            for color in colors {
                 mana_swatch(ui, *color);
             }
-            ui.add(egui::Label::new(egui::RichText::new(&card.strong_heading).strong()).truncate());
+            ui.add(egui::Label::new(egui::RichText::new(heading).strong()).truncate());
         });
         return;
     }
     let row = ui.available_width();
     let spacing = ui.spacing().item_spacing.x;
-    let label = text_width(ui, &card.strong_heading, egui::TextStyle::Body);
-    let swatches = card.strong_colors.len() as f32 * (icon_size(ui) * 0.6 + spacing);
+    let label = text_width(ui, heading, egui::TextStyle::Body);
+    let swatches = colors.len() as f32 * (icon_size(ui) * 0.6 + spacing);
     let side = ((row - label - swatches) / 2.0 - spacing).max(4.0);
     let stroke = ui.visuals().widgets.noninteractive.bg_stroke;
     let line = |ui: &mut egui::Ui, width: f32| {
@@ -879,10 +890,10 @@ fn strong_separator(ui: &mut egui::Ui, card: &HandCard) {
         Layout::left_to_right(Align::Center),
         |ui| {
             line(ui, side);
-            for color in &card.strong_colors {
+            for color in colors {
                 mana_swatch(ui, *color);
             }
-            ui.weak(&card.strong_heading);
+            ui.weak(heading);
             let rest = ui.available_width();
             line(ui, rest);
         },

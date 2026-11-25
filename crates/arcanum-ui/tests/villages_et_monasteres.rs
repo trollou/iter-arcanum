@@ -182,12 +182,18 @@ fn panel_offers_advanced_actions_at_monastery() {
     let text = {
         let window = offers_window(&view(&at_monastery(), SOLO), &[], &catalog);
         let units = window.columns.last().expect("colonne des unités");
-        units
+        let lines = &units
             .cards
             .last()
             .expect("Bouclier de glace dans l'offre d'unités")
-            .lines
-            .join("\n")
+            .lines;
+        // Spec #32 : la carte de l'offre n'a plus « Renforcé : », que l'infobulle garde (test
+        // modifié).
+        format!(
+            "{}\n{}",
+            lines[0],
+            catalog.format("card.strong", &[("effect", &lines[1])])
+        )
     };
     let poor = interacting(&at_monastery(), Site::Monastery, 5);
     let purchases = screen_of(&poor, &catalog).purchases;

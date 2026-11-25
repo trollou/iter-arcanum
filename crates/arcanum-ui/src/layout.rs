@@ -26,8 +26,8 @@ pub fn row_width(n: usize) -> f32 {
 /// Nombre de cartes de `CARD_WIDTH`, écart `CARD_GAP`, qui tiennent côte à côte dans `width`, au
 /// moins une (spec #32, C8).
 pub fn cards_per_row(width: f32) -> usize {
-    let _ = width;
-    todo!()
+    // n cartes tiennent si n × (carte + écart) ≤ largeur + écart.
+    (((width + CARD_GAP) / (CARD_WIDTH + CARD_GAP)).floor() as usize).max(1)
 }
 
 /// Largeur de chaque section, à partir de leurs largeurs naturelles et de la largeur disponible :

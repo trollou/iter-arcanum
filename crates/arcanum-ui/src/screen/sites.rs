@@ -282,24 +282,14 @@ pub(super) fn artifact_choice(
         cards: view
             .drawn_artifacts
             .iter()
-            .map(|&card| {
-                let (basic, strong) = card_effect_texts(card, catalog);
-                OfferCardView {
-                    name: card_name(card, catalog),
-                    color: None,
-                    lines: vec![basic, strong],
-                    take: take_button(
-                        legal_actions,
-                        &Action::TakeArtifact { card },
-                        |action| matches!(action, Action::TakeArtifact { .. }),
-                        catalog,
-                    ),
-                    mark: None,
-                    illustration: crate::card_illustration(card.card()),
-                    uses: Vec::new(),
-                    strong_heading: String::new(),
-                    strong_colors: Vec::new(),
-                }
+            .map(|&card| OfferCardView {
+                take: take_button(
+                    legal_actions,
+                    &Action::TakeArtifact { card },
+                    |action| matches!(action, Action::TakeArtifact { .. }),
+                    catalog,
+                ),
+                ..super::hand::window_card(card, catalog)
             })
             .collect(),
     })
@@ -427,24 +417,14 @@ pub(super) fn spell_choice(
         title: catalog.text("reward.choose_spell"),
         cards: offered_spells(view)
             .into_iter()
-            .map(|card| {
-                let (basic, strong) = card_effect_texts(card, catalog);
-                OfferCardView {
-                    name: card_name(card, catalog),
-                    color: None,
-                    lines: vec![basic, strong],
-                    take: take_button(
-                        legal_actions,
-                        &Action::TakeSpell { card },
-                        |action| matches!(action, Action::TakeSpell { .. }),
-                        catalog,
-                    ),
-                    mark: None,
-                    illustration: crate::card_illustration(card.card()),
-                    uses: Vec::new(),
-                    strong_heading: String::new(),
-                    strong_colors: Vec::new(),
-                }
+            .map(|card| OfferCardView {
+                take: take_button(
+                    legal_actions,
+                    &Action::TakeSpell { card },
+                    |action| matches!(action, Action::TakeSpell { .. }),
+                    catalog,
+                ),
+                ..super::hand::window_card(card, catalog)
             })
             .collect(),
     })
