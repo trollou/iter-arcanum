@@ -1,6 +1,6 @@
 # #33 — Mécanisme de release
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-25 : Q1, Q2 et Q4 comme recommandé ; Q3 : « (prototype) » retiré du titre)
 - Issue : #33 (Epic #31 Finitions v0.1.0, milestone v0.1.0) ; décisions D1 à D10 de Mathieu (2026-11-25) dans l'issue
 - Dépend de : spec #7 (macOS, fusionnée : PR #45), spec 080 (fenêtre des préférences, modèle de la fenêtre « À propos »),
   spec 074 (Menu), spec 002 (recherche des ressources), spec 004 (icône), spec 082 (dépôt public, garde-fou)
@@ -78,7 +78,7 @@ Déclencheurs :
 - `workflow_dispatch` (onglet Actions, depuis `main`) : essai à blanc ;
 - `pull_request` qui touche l'empaquetage (`release.yml`, `scripts/empaqueter.sh`, `packaging/**`, `crates/arcanum-ui/build.rs`),
   PR prête seulement : essai à blanc. Sans lui, la PR d'implémentation ne pourrait pas essayer le workflow, GitHub
-  refusant `workflow_dispatch` tant que le fichier n'est pas sur `main` (constaté avec `capture-macos.yml`, spec #7) (Q1).
+  refusant `workflow_dispatch` tant que le fichier n'est pas sur `main` (constaté avec `capture-macos.yml`, spec #7) (D11).
 
 Jobs :
 
@@ -109,7 +109,7 @@ actions `actions/*` par version majeure, comme dans `ci.yml`. Pas de cache enreg
   option `--iconset <dossier>` qui écrit les PNG d'un `.iconset` (16 à 1024 px, `@2x` compris) depuis le SVG, puis
   `iconutil -c icns`. L'`.ico` de Windows reste commité et embarqué par `build.rs`, comme aujourd'hui.
 - **`Info.plist`** : modèle `packaging/macos/Info.plist`, où `empaqueter.sh` remplace la version. Clés : `CFBundleName` et
-  `CFBundleDisplayName` « Iter Arcanum », `CFBundleIdentifier` `io.github.trollou.iter-arcanum` (Q2), `CFBundleExecutable`
+  `CFBundleDisplayName` « Iter Arcanum », `CFBundleIdentifier` `io.github.trollou.iter-arcanum` (D12), `CFBundleExecutable`
   `iter-arcanum`, `CFBundleIconFile` `iter-arcanum`, `CFBundleShortVersionString` et `CFBundleVersion` = `X.Y.Z`,
   `CFBundlePackageType` `APPL`, `LSMinimumSystemVersion` `11.0`, `NSHighResolutionCapable` vrai.
 - **Signature** : `codesign --force --deep -s - "Iter Arcanum.app"` (ad hoc, D6), sans quoi un binaire universel ne se lance
@@ -141,7 +141,7 @@ tête sur le brouillon (D3).
 Deux familles de cas. Les cas **C** sont du comportement du jeu : chacun devient un test `cargo test`, rouge avant le code
 (nom indicatif entre parenthèses). Les cas **E** sont ceux du workflow et du script : ils ne se testent pas par
 `cargo test` ; chacun est une étape du workflow qui échoue si le cas n'est pas tenu, vérifiée par un essai à blanc dans la
-PR d'implémentation (Q1), puis par le tag de test de #49. Leur vérification est notée dans la PR (section « Essai à blanc » :
+PR d'implémentation (D11), puis par le tag de test de #49. Leur vérification est notée dans la PR (section « Essai à blanc » :
 lien de l'exécution, archives produites, ou l'étape rouge quand le cas est un refus).
 
 ### Version et fenêtre « À propos »
@@ -165,6 +165,8 @@ lien de l'exécution, archives produites, ou l'étape rouge quand le cas est un 
   comme derrière les préférences (spec 080 L4) (`about_window_blocks_game_commands`).
 - **C7** — Une seule des deux fenêtres à la fois : ouvrir « À propos » ferme les préférences et inversement ; Échap ferme
   celle qui est ouverte (`about_and_preferences_are_exclusive`).
+- **C11** — Le titre de la fenêtre du jeu est « Iter Arcanum », sans « (prototype) » (D13) : **test existant modifié**,
+  `boucle_et_fenetre.rs:262` (`screen.title`).
 - **C8** — En anglais, la fenêtre a ses libellés (`about_window_in_english`) ; la parité des clés `about.*` entre `fr.json`
   et `en.json` est déjà gardée par `all_languages_have_the_same_keys` (`arcanum-i18n/tests/fichiers_de_langue.rs:57`).
 
@@ -182,7 +184,8 @@ lien de l'exécution, archives produites, ou l'étape rouge quand le cas est un 
 - **E1** — Un tag dont la version diffère de `Cargo.toml` (`v0.1.1` avec `0.1.0`), ou posé sur une version `-dev`, arrête le
   workflow au job `controles`, avant toute construction, avec un message qui dit les deux versions. Vérifié en local
   (fonction bash du job lancée sur les deux cas) et noté dans la PR, sans pousser de faux tag.
-- **E2** — `cargo deny check` (licences, interdits, sources, avis de sécurité) est bloquant (D5). `deny.toml` déclare les
+- **E2** — `cargo deny check` (licences, interdits, sources, avis de sécurité) est bloquant (D5), et passe : l'avis
+  `RUSTSEC-2026-0543` (`chrono` non maintenu) est ignoré dans `deny.toml` avec sa justification et le renvoi à l'issue #55 (D14). `deny.toml` déclare les
   cibles macOS (`aarch64-apple-darwin`, `x86_64-apple-darwin`) en plus de Linux et Windows : sans elles, les dépendances
   propres à macOS (CoreFoundation, objc2) ne sont pas vérifiées. Essai pendant la rédaction : voir « Essai de faisabilité ».
 - **E3** — `fmt`, `clippy` et `test` tournent sur les trois OS par `ci.yml` appelé ; un échec arrête la release.
@@ -223,8 +226,8 @@ lien de l'exécution, archives produites, ou l'étape rouge quand le cas est un 
   interdits et sources **passent** ; avis de sécurité **échoue** sur un seul avis, `RUSTSEC-2026-0543` « chrono is
   unmaintained » (aucune faille connue, aucune version corrigée). `chrono` est une dépendance directe d'`arcanum-ui`
   (horodatage des logs, des sauvegardes et de la session : `logging/mod.rs`, `saves.rs`, `client.rs`, `session.rs`). Avec D5
-  tel quel, le premier tag échouerait (Q4).
-- Le workflow lui-même ne peut pas s'essayer avant la PR d'implémentation (Q1) ; `empaqueter.sh linux` s'essaie en local
+  tel quel, le premier tag échouerait (D14).
+- Le workflow lui-même ne peut pas s'essayer avant la PR d'implémentation (D11) ; `empaqueter.sh linux` s'essaie en local
   dans le fil d'implémentation.
 
 ## Information cachée
@@ -254,8 +257,9 @@ Avec les paramètres prévus : `about.version`, `{version}` = « 0.1.0 (a1b2c3d)
 `about.sounds`, `{file}` = `assets/sounds/LICENSES.md` (constante du code) → « Crédits des sons : assets/sounds/LICENSES.md,
 livré avec le jeu ».
 
-`app.title` (« Iter Arcanum (prototype) », relu dans `fr.json` et `en.json`) n'est pas réutilisé pour le nom : la fenêtre dit
-le nom seul, la version en dessous (Q3).
+Clé modifiée (D13) : `app.title`, titre de la fenêtre du jeu, passe de « Iter Arcanum (prototype) » à « Iter Arcanum » en
+fr et en en (relu dans `fr.json` et `en.json`, l. 6). `about.name` reste à part : le titre de la fenêtre pourrait un jour
+porter autre chose que le nom.
 
 ## Interface
 
@@ -281,6 +285,8 @@ ligne Échap à compléter).
 Cherchés là où c'est utilisé (`grep` des lecteurs du Menu et de `assets_candidates`) :
 
 - `crates/arcanum-ui/tests/boucle_et_fenetre.rs` `assets_candidates_are_in_priority_order` : nouveau candidat (C9).
+- `crates/arcanum-ui/tests/boucle_et_fenetre.rs:262` : `screen.title` vaut « Iter Arcanum » (C11, D13). Aucun script ne
+  cherche la fenêtre par ce titre (`grep prototype` sur `scripts/`, vide).
 - `crates/arcanum-ui/tests/barre_de_menu.rs` (liste des libellés et des commandes du Menu, l. 85-110) : « À propos… » et
   `Command::OpenAbout` ajoutés.
 - `crates/arcanum-ui/tests/icones.rs` `bar_stays_during_combat` : `bar.items.len()` passe de 12 à 13.
@@ -303,10 +309,10 @@ Cherchés là où c'est utilisé (`grep` des lecteurs du Menu et de `assets_cand
 
 Deux fils sur `feature/33-release` (issue #33, « Mise en œuvre ») :
 
-1. **Empaquetage** : C9, C10 (rouges d'abord), `deny.toml`, `release.yml`, `ci.yml` appelable, `empaqueter.sh`,
+1. **Empaquetage** : C9, C10 (rouges d'abord), `deny.toml` (cibles macOS, exception D14), `release.yml`, `ci.yml` appelable, `empaqueter.sh`,
    `packaging/macos/Info.plist`, option `--iconset`, `windows_subsystem`, `docs/release.md`, `docs/ci.md` ; essai à blanc
    vert dans la PR (E1 à E9).
-2. **« À propos »** : C1 à C8 (rouges d'abord), `build.rs` (commit), libellés, fenêtre, vérification à l'œil, autres docs ;
+2. **« À propos »** : C1 à C8 et C11 (rouges d'abord), `build.rs` (commit), libellés, fenêtre, vérification à l'œil, autres docs ;
    PR passée prête, bilan.
 
 ## Hors périmètre
@@ -315,19 +321,17 @@ Celui de l'issue #33 : migration des sauvegardes (#52), signature payante et not
 `.deb`, Flatpak, Snap, magasins (D9), mise à jour automatique, ressources embarquées dans l'exécutable, Linux et Windows ARM.
 Aussi : le README et les contournements SmartScreen et Gatekeeper (#49), le contrôle de la branche d'un tag (L3).
 
+## Décisions (Mathieu, 2026-11-25)
+
+Les décisions D1 à D10 sont dans l'issue #33. Celles de la relecture de la spec suivent la même numérotation.
+
+- **D11 (Q1) — Essai à blanc dans les PR** : oui. `release.yml` se lance aussi, sans rien publier, sur une PR prête qui touche
+  l'empaquetage (chemins listés dans « Workflow ») ; une PR ordinaire ne le lance pas.
+- **D12 (Q2) — Identifiant macOS** : `io.github.trollou.iter-arcanum`, définitif dès la première release.
+- **D13 (Q3) — Titre de la fenêtre** : « (prototype) » retiré ; `app.title` devient « Iter Arcanum » (C11).
+- **D14 (Q4) — `chrono` non maintenu** : avis `RUSTSEC-2026-0543` ignoré dans `deny.toml`, justifié (non maintenu, pas une
+  faille) ; remplacement par `jiff` ou `time` dans l'issue #55 (Task, milestone v0.2.0, avant #52).
+
 ## Questions ouvertes
 
-- **Q1 — Essai à blanc dans les PR** : `workflow_dispatch` ne marche qu'une fois `release.yml` sur `main`. Proposé : le
-  workflow se lance aussi, en essai à blanc, sur une PR prête qui touche l'empaquetage (chemins listés plus haut) ; une PR
-  ordinaire ne le lance pas. Sinon, le premier essai réel serait le tag `-rc` de #49. **Recommandé : oui.**
-- **Q2 — Identifiant macOS** : `CFBundleIdentifier` doit être un nom de domaine inversé unique ; il range aussi les réglages
-  système du jeu. Proposé : `io.github.trollou.iter-arcanum` (domaine des pages GitHub du compte, public). Il ne change plus
-  après la première release. **Recommandé : celui-ci.**
-- **Q3 — « (prototype) » dans le titre de la fenêtre** : `app.title` vaut « Iter Arcanum (prototype) ». Proposé : le garder
-  pour la v0.1.0 (la version dans « À propos » ne le remplace pas, le mot prévient le joueur), et l'ôter quand Mathieu jugera
-  le jeu complet ; la fenêtre « À propos » dit « Iter Arcanum » seul. **Recommandé : garder.**
-- **Q4 — `chrono` non maintenu** (essai de faisabilité) : D5 rend l'avis bloquant. Proposé : l'ignorer dans `deny.toml` avec
-  sa justification (avis « non maintenu », pas une faille ; remplacement suivi par une issue) dans le premier fil
-  d'implémentation, et ouvrir une issue `Task` (milestone v0.2.0) pour remplacer `chrono` par `jiff` ou `time`, qui touche
-  le format des dates des sauvegardes et se croise donc avec #52. Autre voie : remplacer `chrono` avant la v0.1.0, dans
-  une issue à part qui bloquerait #49. **Recommandé : ignorer avec justification, remplacer en v0.2.0.**
+Aucune.
