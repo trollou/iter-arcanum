@@ -257,6 +257,7 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
         (effect, strong_effect, card_strong_text(card, catalog))
     };
     let (basic_effects, strong_effects) = idle_effects(card, None, catalog);
+    let info = card_info(card, &effect, &strong_text, catalog);
     HandCard {
         card,
         name: card_name(card, catalog),
@@ -275,6 +276,69 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
         strong_text,
         strong_effects,
         unit_plays: Vec::new(),
+        info,
+        show_text: card.card().is_artifact(),
+        strong_heading: strong_heading(card, catalog),
+        strong_colors: strong_colors(card),
+    }
+}
+
+/// Le texte complet derrière « i » (spec #11, C1 à C5) : le texte écrit de la carte quand elle en
+/// a un (actions avancées, sorts), sinon les textes calculés ; rien pour une Blessure ni un
+/// artefact, qui écrit le sien sur lui (Q1).
+fn card_info(card: CardId, effect: &str, strong_text: &str, catalog: &Catalog) -> Option<CardInfo> {
+    if card.card().is_wound() || card.card().is_artifact() {
+        return None;
+    }
+    // Une carte aux effets tous codés peut n'avoir aucun texte écrit (issue privée 276) : le texte
+    // calculé la remplace, effet par effet.
+    let written = |key: Option<&str>, computed: &str| match key {
+        Some(key) if catalog.parameters(key).is_some() => catalog.text(key),
+        _ => computed.to_owned(),
+    };
+    let keys = card.card().unsupported_text_keys();
+    let basic = written(keys.map(|(basic, _)| basic), effect);
+    let strong = written(keys.map(|(_, strong)| strong), strong_text);
+    Some(CardInfo {
+        name: card_name(card, catalog),
+        basic,
+        strong_title: strong_title(card, catalog),
+        strong,
+    })
+}
+
+/// « Renforcé », ou le nom renforcé d'un sort (« Vol d'esprit »).
+fn strong_title(card: CardId, catalog: &Catalog) -> String {
+    if card.card().is_spell() {
+        spell_name(card, true, catalog)
+    } else {
+        catalog.text("panel.strong")
+    }
+}
+
+/// Le titre du bloc renforcé (spec #11, C7) : « si détruit » pour un artefact.
+fn strong_heading(card: CardId, catalog: &Catalog) -> String {
+    if card.card().is_artifact() {
+        catalog.text("card.if_destroyed")
+    } else {
+        strong_title(card, catalog)
+    }
+}
+
+/// Le mana du renforcé, en pastilles devant son titre (spec #11, C7 ; MKUE p. 4, 3.d ; p. 5,
+/// 2.a) : la couleur de la carte, puis le noir pour un sort ; aucun pour un artefact, détruit
+/// sans mana.
+fn strong_colors(card: CardId) -> Vec<ManaColor> {
+    let Some(definition) = card.card().definition() else {
+        return Vec::new();
+    };
+    let color = ManaColor::Basic(definition.color);
+    if card.card().is_artifact() {
+        Vec::new()
+    } else if card.card().is_spell() {
+        vec![color, ManaColor::Black]
+    } else {
+        vec![color]
     }
 }
 

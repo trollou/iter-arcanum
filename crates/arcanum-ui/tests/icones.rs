@@ -24,8 +24,9 @@ fn every_icon_image_exists() {
     let images_dir = repository_assets_dir().join("images");
     let images = ui_images();
     // 26 icônes nommées (spec 074, C8 : les deux dos de tuile), 6 cristaux pleins et
-    // l'emplacement vide, 4 emblèmes de héros.
-    assert_eq!(images.len(), 37);
+    // l'emplacement vide, 4 emblèmes de héros ; le « i » des cartes de la main (spec #11).
+    assert_eq!(images.len(), 38);
+    assert!(images.contains(&Icon::Info.image()));
     for icon in Icon::all() {
         assert!(
             images.contains(&icon.image()),

@@ -1,6 +1,6 @@
 # #11 — Cartes en main épurées
 
-- Statut : validée (Mathieu, 2026-11-24 : Q1 à Q3 tranchées, icône « i » validée)
+- Statut : implémentée (2026-11-25) ; validée par Mathieu le 2026-11-24 (Q1 à Q3 tranchées, icône « i » validée)
 - Issue : #11 (Epic #31 Finitions v0.1.0, milestone v0.1.0) ; répond aussi à #12 (Lecture d'esprit) et corrige #13 (cartes
   tronquées), fermées par la PR d'implémentation
 - Dépend de : spec 073 (panneaux, boutons d'effet), spec 077 (cartes agrandies) ; implémentées. Après la spec #10 (Source dans

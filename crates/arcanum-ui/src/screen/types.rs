@@ -532,6 +532,27 @@ pub struct HandCard {
     pub strong_effects: Vec<EffectButton>,
     /// Rajeunissement : « Jouer : Rendre disponible … · Paysans », sous les blocs (spec 042).
     pub unit_plays: Vec<Button>,
+    /// Spec #11 : le texte complet de la carte, derrière le bouton « i » ; `None` pour une
+    /// Blessure et un artefact.
+    pub info: Option<CardInfo>,
+    /// Spec #11 (Q1) : la carte écrit son texte sur elle (un artefact seulement).
+    pub show_text: bool,
+    /// Spec #11 : le titre du bloc renforcé, « Renforcé », le nom renforcé d'un sort, ou « si
+    /// détruit » pour un artefact.
+    pub strong_heading: String,
+    /// Spec #11 : les pastilles de ce titre, la couleur de la carte (puis le noir pour un sort).
+    pub strong_colors: Vec<ManaColor>,
+}
+
+/// Le texte complet d'une carte de la main, montré par son bouton « i » (spec #11).
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct CardInfo {
+    /// Le nom de base.
+    pub name: String,
+    pub basic: String,
+    /// « Renforcé », ou le nom renforcé d'un sort.
+    pub strong_title: String,
+    pub strong: String,
 }
 
 /// Le visage d'un bouton d'effet (spec 073) : une icône et sa valeur, un cristal, ou le texte de

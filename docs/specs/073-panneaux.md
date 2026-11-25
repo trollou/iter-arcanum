@@ -259,16 +259,19 @@ Carte de la main :
 
 - **C13** — Rage (basic_actions.ron, Rage) hors combat : effet de base « Attaque 2 ou Parade 2 » avec deux boutons d'effet
   grisés, épée « 2 » et rondache « 2 » ; effet renforcé « Attaque 4 » avec un bouton épée « 4 » grisé, pastille rouge
-  (`hand_card_shows_every_option`).
+  (`hand_card_shows_every_option`). Depuis la spec [#11](issue-11-cartes-en-main-epurees.md) : plus de texte d'effet sur la
+  carte (bouton « i ») ni de pastille sur le bouton renforcé, le mana est dans la séparation « Renforcé ».
 - **C14** — En phase de parade contre les Rôdeurs, le bouton rondache « 2 » de Rage est actif et joue la carte pour Parade 2
   (même action légale qu'aujourd'hui « Jouer : Parade 2 »), l'épée reste grisée (`effect_button_plays_legal_option`).
 - **C15** — Marche : bouton Mouvement « 2 », infobulle « Jouer : Mouvement 2 » ; renforcée sans mana vert disponible, le
   bouton Mouvement « 4 » est grisé avec l'infobulle « Renforcer : Mouvement 4 » puis la raison d'aujourd'hui
-  (`play.strong_no_mana`) (`effect_button_tooltips`).
+  (`play.strong_no_mana`) (`effect_button_tooltips`). Sans pastille verte depuis la spec [#11](issue-11-cartes-en-main-epurees.md).
 - **C16** — Tranquillité : boutons texte « Soin 1 » et « Piocher 1 carte(s) », renforcés « Soin 2 » et « Piocher 2 carte(s) » ;
-  Concentration : trois boutons cristal (bleu, blanc, rouge) sans valeur (`effect_buttons_without_icon`).
+  Concentration : trois boutons cristal (bleu, blanc, rouge) sans valeur (`effect_buttons_without_icon`). Renforcés sans
+  pastille depuis la spec [#11](issue-11-cartes-en-main-epurees.md).
 - **C17** — Une option payante (Cristallisation, spec 025) a son bouton dans le bloc renforcé, avec la pastille de la couleur
-  à payer, comme aujourd'hui le bouton « Payer … » (`paid_option_in_strong_block`).
+  à payer, comme aujourd'hui le bouton « Payer … » (`paid_option_in_strong_block`). **Remplacé** par la spec
+  [#11](issue-11-cartes-en-main-epurees.md), C11 : dans le bloc de base, « pastille : effet » (`paid_option_in_basic_block`).
 - **C18** — Une Blessure n'a ni bouton d'effet ni encart de côté (`wound_card_has_no_button`), comme aujourd'hui (spec 071 C17).
 - **C19** — En mode fin du tour, chaque carte a sa case « Défausser » ; en mode choix de la carte à défausser, « Défausser
   cette carte » remplace les boutons d'effet (`modes_keep_their_card_buttons`), comme aujourd'hui (tests
