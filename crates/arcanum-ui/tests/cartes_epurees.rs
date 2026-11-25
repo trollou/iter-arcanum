@@ -179,3 +179,42 @@ fn strong_heading_names_its_mana() {
     assert_eq!(ring.strong_heading, "si détruit");
     assert!(ring.strong_colors.is_empty());
 }
+
+// --- Le mana de la carte n'est plus répété ---
+
+// Spec #11 C8 : les boutons renforcés d'une action n'ont plus la pastille de la carte.
+#[test]
+fn strong_buttons_omit_card_mana() {
+    let catalog = french();
+    for action in [Rage, March, Tranquility] {
+        let held = held_alone(card(action, 1), &catalog);
+        assert!(!held.strong_effects.is_empty(), "{action:?}");
+        assert!(
+            held.strong_effects
+                .iter()
+                .all(|button| button.color.is_none()),
+            "{action:?}"
+        );
+    }
+}
+
+// Spec #11 C10 : un mana en plus garde sa pastille, même de la couleur de la carte.
+#[test]
+fn extra_mana_keeps_its_swatch() {
+    let catalog = french();
+    let pure_magic = held_alone(advanced(AdvancedAction::PureMagic), &catalog);
+    let colors: Vec<Option<ManaColor>> = pure_magic.strong_effects[..4]
+        .iter()
+        .map(|button| button.color)
+        .collect();
+    let basic = |color| Some(ManaColor::Basic(color));
+    assert_eq!(
+        colors,
+        [
+            basic(BasicColor::Green),
+            basic(BasicColor::White),
+            basic(BasicColor::Blue),
+            basic(BasicColor::Red),
+        ]
+    );
+}

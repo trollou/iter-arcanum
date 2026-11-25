@@ -301,7 +301,8 @@ fn hand_card_shows_every_option() {
     assert_eq!(rage.strong_text, "Attaque 4");
     assert_eq!(
         summary(&rage.strong_effects),
-        expected(&[(Face::Icon(sword(), "4"), RED, false)])
+        // Spec #11 C8 : le mana de la carte est dans le titre du bloc, plus sur le bouton.
+        expected(&[(Face::Icon(sword(), "4"), None, false)])
     );
     assert_eq!(screen.strong_title, "Renforcé");
 }
@@ -344,11 +345,8 @@ fn effect_button_tooltips() {
     assert_eq!(march.basic_effects[0].tooltip, "Jouer : Mouvement 2");
     assert_eq!(
         summary(&march.strong_effects),
-        expected(&[(
-            Face::Icon(Icon::Move, "4"),
-            Some(ManaColor::Basic(BasicColor::Green)),
-            false
-        )])
+        // Spec #11 C8 : plus de pastille verte sur le bouton renforcé.
+        expected(&[(Face::Icon(Icon::Move, "4"), None, false)])
     );
     assert_eq!(
         march.strong_effects[0].tooltip,
@@ -364,7 +362,6 @@ fn effect_buttons_without_icon() {
     let concentration = card(Concentration, 1);
     let state = state_with(&[tranquility, concentration]);
     let screen = screen_of(&state, &catalog);
-    let green = Some(ManaColor::Basic(BasicColor::Green));
     let tranquility = held(&screen, tranquility);
     assert_eq!(
         summary(&tranquility.basic_effects),
@@ -377,8 +374,9 @@ fn effect_buttons_without_icon() {
     assert_eq!(
         summary(&tranquility.strong_effects),
         expected(&[
-            (Face::Text("Soin 2"), green, false),
-            (Face::Text("Piocher 2 carte(s)"), green, false),
+            // Spec #11 C8 : plus de pastille verte sur les boutons renforcés.
+            (Face::Text("Soin 2"), None, false),
+            (Face::Text("Piocher 2 carte(s)"), None, false),
         ])
     );
     let concentration = held(&screen, concentration);

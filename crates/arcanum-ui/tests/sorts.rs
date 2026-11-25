@@ -257,7 +257,8 @@ fn strong_spell_at_night_pays_color_then_black() {
     };
     // Cristal ou jeton rouge (le dé or ne paie rien de nuit) : le bandeau du choix.
     assert_eq!(strong[0].command, Some(Command::ChooseCast(choice)));
-    assert_eq!(strong[0].color, Some(ManaColor::Black));
+    // Spec #11 C9 : le noir est dans le titre du bloc, plus sur le bouton.
+    assert_eq!(strong[0].color, None);
     let labels = cast_labels(&state, choice, &catalog);
     assert!(
         labels
