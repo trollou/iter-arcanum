@@ -46,7 +46,7 @@ chercher (`grep -rn "Forced Withdrawal" ../mage-knight/docs/regles/livret/`).
 | Notion | Où | Spec |
 |---|---|---|
 | Cartes : actions de base et avancées, sorts, artefacts, blessures | p. 4 *Deed Cards*, 1 à 3 | 013 |
-| Effet de base, effet renforcé (payer la couleur) | p. 4 *Deed Cards*, 3.a à 3.c | 013, 022, [073](../specs/073-panneaux.md) (blocs séparés sur la carte) |
+| Effet de base, effet renforcé (payer la couleur) | p. 4 *Deed Cards*, 3.a à 3.c | 013, 022, [073](../specs/073-panneaux.md) (blocs séparés sur la carte), [#11](../specs/issue-11-cartes-en-main-epurees.md) (texte derrière « i », séparation « Renforcé » et son mana) |
 | Jouer une carte de côté (Mouvement, Influence, Attaque, Parade 1) | p. 4 *Deed Cards*, 3.e ; p. 7, 2.c ; p. 8, 2.d ; p. 9 *Block Phase*, 4.b ; p. 10 *Attack Phase*, 1.b || 013, [071](../specs/071-icones-et-raccourcis.md) (boutons-icônes) |
 | Cumul des effets semblables | p. 4 *Deed Cards*, 4 | 013 |
 | Coût d'une carte : payer une mana, défausser ou écarter une autre carte | p. 4 *Deed Cards*, 6 | 013 |

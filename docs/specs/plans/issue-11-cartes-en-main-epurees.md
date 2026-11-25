@@ -1,6 +1,6 @@
 # Plan de développement — spec #11 Cartes en main épurées
 
-- Statut : accepté (fil d'implémentation, 2026-11-24 ; Effort High : deux fils).
+- Statut : fait (fil 1 vue et fil 2 écran, 2026-11-25 ; Effort High : deux fils).
 - Spec : [`issue-11-cartes-en-main-epurees.md`](../issue-11-cartes-en-main-epurees.md). Branche :
   `feature/11-cartes-en-main-epurees`.
 - Méthode : celle de `CLAUDE.md` (tests rouges, code minimal, refactor ; `scripts/verifier.sh` vert avant chaque push).

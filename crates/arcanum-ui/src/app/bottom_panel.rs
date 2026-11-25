@@ -15,6 +15,7 @@ use crate::{
     GameScreen, HandCard, SECTION_GAP, SKILLS_WIDTH, SkillsSection, UnitLine, band_uv,
     bottom_section_widths, card_height, crystal_image, fan_layout, hover_text, row_width,
 };
+use crate::{CardInfo, Icon};
 use arcanum_core::ManaColor;
 
 /// Durée du glissement d'une carte vers sa place (spec 073, « Animation »).
@@ -23,6 +24,13 @@ const SLIDE_SECONDS: f32 = 0.15;
 const EMPTY_UNITS_WIDTH: f32 = 120.0;
 /// Icône d'un bouton d'effet, à la hauteur du texte d'un bouton.
 const EFFECT_ICON: f32 = 16.0;
+/// Marge horizontale d'un bouton d'effet, et écart entre sa pastille, « : » et le bouton.
+const EFFECT_PADDING: f32 = 3.0;
+const EFFECT_GAP: f32 = 1.0;
+/// Le « i » d'une carte, à la taille des icônes de côté (spec #11).
+const INFO_ICON: f32 = 16.0;
+/// Largeur maximale de la fenêtre du texte d'une carte (spec #11).
+const INFO_WIDTH: f32 = 260.0;
 /// Hauteur de la bande d'illustration d'une carte posée, sur toute sa largeur (spec 077).
 const ART_BAND_HEIGHT: f32 = 84.0;
 /// Côté de l'image d'une Blessure, seule sous son nom (spec 077).
@@ -116,12 +124,7 @@ impl IterArcanumApp {
                     let hand = &screen.hand;
                     let command =
                         self.fan_row(ui, "hand_row", hand.len(), widths[1], |app, ui, i| {
-                            app.card_tile(
-                                ui,
-                                &hand[i],
-                                &screen.sideways_title,
-                                &screen.strong_title,
-                            )
+                            app.card_tile(ui, &hand[i], &screen.sideways_title)
                         });
                     clicked = clicked.or(command);
                 }
@@ -285,14 +288,14 @@ impl IterArcanumApp {
         (command, height)
     }
 
-    /// Une carte de la main posée (spec 073, « Carte de la main ») : en-tête et encart de côté,
-    /// bande d'illustration (spec 077), effet de base et ses boutons, effet renforcé et les siens.
+    /// Une carte de la main posée (spec 073, « Carte de la main ») : en-tête, « i » et encart de
+    /// côté, bande d'illustration (spec 077), boutons de base, séparation du renforcé et ses
+    /// boutons (spec #11).
     pub(super) fn card_tile(
         &mut self,
         ui: &mut egui::Ui,
         card: &HandCard,
         sideways_title: &str,
-        strong_title: &str,
     ) -> Option<Command> {
         let mut clicked = None;
         ui.spacing_mut().item_spacing.y = 3.0;
@@ -315,17 +318,32 @@ impl IterArcanumApp {
                 if let Some(color) = card.color {
                     mana_swatch(ui, ManaColor::Basic(color));
                 }
+                // Spec #11 : le « i » juste après le nom, qui se tronque avant lui (L1) ; posé à
+                // droite, il serait caché par la carte voisine qui chevauche.
+                let reserved = if card.info.is_some() {
+                    INFO_ICON + 2.0 * ui.spacing().button_padding.x + ui.spacing().item_spacing.x
+                } else {
+                    0.0
+                };
                 // Une Blessure ne se joue pas : grisée (spec 031).
                 let name = egui::RichText::new(&card.name);
-                ui.add(
-                    // Spec 055 : un artefact n'a pas de couleur, mais se joue.
-                    egui::Label::new(if card.color.is_some() || card.card.card().is_artifact() {
-                        name.strong()
-                    } else {
-                        name.weak()
-                    })
-                    .truncate(),
-                );
+                ui.scope(|ui| {
+                    ui.set_max_width((ui.available_width() - reserved).max(0.0));
+                    ui.add(
+                        // Spec 055 : un artefact n'a pas de couleur, mais se joue.
+                        egui::Label::new(
+                            if card.color.is_some() || card.card.card().is_artifact() {
+                                name.strong()
+                            } else {
+                                name.weak()
+                            },
+                        )
+                        .truncate(),
+                    );
+                });
+                if let Some(info) = &card.info {
+                    self.info_button(ui, card, info);
+                }
             });
         });
         // Spec 077 : l'image en bande sous le nom ; celle d'une Blessure, seule, en grand.
@@ -341,7 +359,8 @@ impl IterArcanumApp {
                 art_band(ui, texture);
             }
         }
-        if !card.effect.is_empty() {
+        // Spec #11 : seul un artefact écrit son texte ; les boutons portent celui des autres (Q1).
+        if card.show_text && !card.effect.is_empty() {
             ui.add(egui::Label::new(&card.effect).wrap());
         }
         if let Some(note) = &card.combat_note {
@@ -368,14 +387,10 @@ impl IterArcanumApp {
         }
         if !card.strong_text.is_empty() && (card.color.is_some() || card.card.card().is_artifact())
         {
-            ui.separator();
-            ui.horizontal(|ui| {
-                if let Some(color) = card.color {
-                    mana_swatch(ui, ManaColor::Basic(color));
-                }
-                ui.weak(strong_title);
-            });
-            ui.add(egui::Label::new(egui::RichText::new(&card.strong_text).weak()).wrap());
+            strong_separator(ui, card);
+            if card.show_text {
+                ui.add(egui::Label::new(egui::RichText::new(&card.strong_text).weak()).wrap());
+            }
             clicked = self.effect_buttons(ui, &card.strong_effects).or(clicked);
         }
         // Rajeunissement : une unité à rendre disponible par bouton (spec 042).
@@ -385,6 +400,36 @@ impl IterArcanumApp {
             }
         }
         clicked
+    }
+
+    /// Le « i » d'une carte et la fenêtre de son texte complet (spec #11, C1 à C3, L2) : au clic,
+    /// au-dessus du bouton ; une seule ouverte à la fois, fermée par un clic ailleurs, Échap ou un
+    /// second clic.
+    fn info_button(&mut self, ui: &mut egui::Ui, card: &HandCard, info: &CardInfo) {
+        let tooltip = self.catalog.text(Icon::Info.name_key());
+        let widget = match self.icon_texture(ui, Icon::Info.image(), INFO_ICON) {
+            Some(texture) => egui::Button::image(egui::Image::from_texture(SizedTexture::new(
+                texture,
+                Vec2::splat(INFO_ICON),
+            )))
+            .frame(false),
+            None => egui::Button::new(tooltip.as_str()),
+        };
+        let response = ui.add(widget).on_hover_text(&tooltip);
+        // Un identifiant par carte, pas par widget : la fenêtre reste ouverte quand la carte
+        // agrandie au survol retombe dans la rangée (spec 073, C12 bis).
+        egui::Popup::from_toggle_button_response(&response)
+            .id(Id::unique(("card_info", card.card)))
+            .align(egui::RectAlign::TOP_START)
+            .close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside)
+            .show(|ui| {
+                ui.set_max_width(INFO_WIDTH);
+                ui.strong(&info.name);
+                ui.add(egui::Label::new(&info.basic).wrap());
+                ui.separator();
+                ui.strong(&info.strong_title);
+                ui.add(egui::Label::new(&info.strong).wrap());
+            });
     }
 
     /// Une unité posée (spec 073, « Unité ») : en-tête, bande d'illustration (spec 077), armure et
@@ -540,35 +585,20 @@ impl IterArcanumApp {
             .as_deref()
             .map(|mark| format!(" {mark}"))
             .unwrap_or_default();
-        // Un bouton texte qui ne tient pas au bout de la ligne passe à la ligne suivante, plutôt
-        // que de s'écraser en colonne (remarque de Mathieu : Cristallisation).
-        if let EffectFace::Text(_) = &button.face {
-            let swatch = if button.color.is_some() {
-                icon_size(ui) * 0.6 + 1.0
-            } else {
-                0.0
-            };
-            let padding = 2.0 * 3.0 + swatch;
-            let natural = ui
-                .painter()
-                .layout_no_wrap(
-                    button.fallback_text(),
-                    egui::TextStyle::Button.resolve(ui.style()),
-                    Color32::PLACEHOLDER,
-                )
-                .size()
-                .x
-                + padding;
-            let row_started = ui.cursor().min.x > ui.max_rect().min.x + 1.0;
-            if row_started && natural > ui.available_size_before_wrap().x {
-                ui.end_row();
-            }
+        // Un bouton qui ne tient pas au bout de la ligne passe à la ligne suivante, plutôt que de
+        // s'écraser en colonne ou de sortir de la carte, pastille comprise (spec #11, #13).
+        let natural = effect_button_width(ui, button, &mark);
+        let row_started = ui.cursor().min.x > ui.max_rect().min.x + 1.0;
+        if row_started && natural > ui.available_size_before_wrap().x {
+            ui.end_row();
         }
         ui.horizontal(|ui| {
-            ui.spacing_mut().item_spacing.x = 1.0;
-            ui.spacing_mut().button_padding = Vec2::new(3.0, 1.0);
+            ui.spacing_mut().item_spacing.x = EFFECT_GAP;
+            ui.spacing_mut().button_padding = Vec2::new(EFFECT_PADDING, 1.0);
+            // Spec #11 : le mana en plus, « pastille : effet ».
             if let Some(color) = button.color {
                 mana_swatch(ui, color);
+                ui.label(":");
             }
             let image = |texture| {
                 egui::Image::from_texture(SizedTexture::new(texture, Vec2::splat(EFFECT_ICON)))
@@ -774,7 +804,7 @@ impl IterArcanumApp {
         screen: &GameScreen,
     ) {
         let mut clicked = None;
-        let (sideways, strong) = (screen.sideways_title.clone(), screen.strong_title.clone());
+        let sideways = screen.sideways_title.clone();
         egui::Window::new(&window.title)
             .id(Id::unique("discard_window"))
             .collapsible(false)
@@ -795,7 +825,7 @@ impl IterArcanumApp {
                                     ui.set_width(size.x);
                                     ui.set_min_height(size.y);
                                     ui.vertical(|ui| {
-                                        self.card_tile(ui, card, &sideways, &strong);
+                                        self.card_tile(ui, card, &sideways);
                                     });
                                 });
                             }
@@ -817,6 +847,82 @@ impl IterArcanumApp {
             ctx.request_repaint();
         }
     }
+}
+
+/// Le titre du bloc renforcé (spec #11, C7). Un sort : un trait, puis ses pastilles et son nom
+/// renforcé en gras. Une action : « —— pastille Renforcé —— » centré ; un artefact, « —— si
+/// détruit —— », sans pastille.
+fn strong_separator(ui: &mut egui::Ui, card: &HandCard) {
+    if card.card.card().is_spell() {
+        ui.separator();
+        ui.horizontal(|ui| {
+            for color in &card.strong_colors {
+                mana_swatch(ui, *color);
+            }
+            ui.add(egui::Label::new(egui::RichText::new(&card.strong_heading).strong()).truncate());
+        });
+        return;
+    }
+    let row = ui.available_width();
+    let spacing = ui.spacing().item_spacing.x;
+    let label = text_width(ui, &card.strong_heading, egui::TextStyle::Body);
+    let swatches = card.strong_colors.len() as f32 * (icon_size(ui) * 0.6 + spacing);
+    let side = ((row - label - swatches) / 2.0 - spacing).max(4.0);
+    let stroke = ui.visuals().widgets.noninteractive.bg_stroke;
+    let line = |ui: &mut egui::Ui, width: f32| {
+        let (rect, _) = ui.allocate_exact_size(vec2(width, 1.0), Sense::hover());
+        ui.painter().hline(rect.x_range(), rect.center().y, stroke);
+    };
+    let height = ui.spacing().interact_size.y;
+    ui.allocate_ui_with_layout(
+        vec2(row, height),
+        Layout::left_to_right(Align::Center),
+        |ui| {
+            line(ui, side);
+            for color in &card.strong_colors {
+                mana_swatch(ui, *color);
+            }
+            ui.weak(&card.strong_heading);
+            let rest = ui.available_width();
+            line(ui, rest);
+        },
+    );
+}
+
+/// Largeur d'un texte sur une ligne, dans ce style.
+fn text_width(ui: &egui::Ui, text: &str, style: egui::TextStyle) -> f32 {
+    ui.painter()
+        .layout_no_wrap(
+            text.to_owned(),
+            style.resolve(ui.style()),
+            Color32::PLACEHOLDER,
+        )
+        .size()
+        .x
+}
+
+/// Largeur d'un bouton d'effet posé, pastille et « : » compris (spec #11) : de quoi savoir s'il
+/// tient au bout de la ligne, quel que soit son visage.
+fn effect_button_width(ui: &egui::Ui, button: &EffectButton, mark: &str) -> f32 {
+    let face = match &button.face {
+        EffectFace::Icon(value) => {
+            EFFECT_ICON
+                + ui.spacing().icon_spacing
+                + text_width(
+                    ui,
+                    &format!("{}{mark}", value.value),
+                    egui::TextStyle::Button,
+                )
+        }
+        EffectFace::Crystal { .. } => EFFECT_ICON,
+        EffectFace::Text(_) => text_width(ui, &button.fallback_text(), egui::TextStyle::Button),
+    };
+    let swatch = if button.color.is_some() {
+        icon_size(ui) * 0.6 + text_width(ui, ":", egui::TextStyle::Body) + 2.0 * EFFECT_GAP
+    } else {
+        0.0
+    };
+    swatch + face + 2.0 * EFFECT_PADDING
 }
 
 /// Pastille d'une couleur de mana : celle d'une carte, du bloc renforcé, d'un bouton d'effet.
