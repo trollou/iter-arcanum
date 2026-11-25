@@ -68,13 +68,19 @@ pub use illustrations::{
     Illustration, IllustrationFamily, IllustrationIndex, card_illustration, hero_illustration,
     known_illustrations, unit_illustration,
 };
-pub use keys::{KEY_BINDINGS, KeyBinding, KeyModifier, hover_text, key_label, shortcut_label};
+pub use keys::{
+    KEY_BINDINGS, KeyBinding, KeyModifier, KeyPlatform, hover_text, key_label, key_label_on,
+    shortcut_label,
+};
 #[cfg(windows)]
 pub use language::windows_system_language;
 pub use language::{
-    FALLBACK_LANGUAGE, UNIX_LOCALE_VARIABLES, launch_catalog, locale_to_code, requested_language,
-    system_language, unix_system_language, windows_language_id_to_code,
+    FALLBACK_LANGUAGE, UNIX_LOCALE_VARIABLES, apple_system_language, launch_catalog,
+    locale_to_code, requested_language, system_language, unix_system_language,
+    windows_language_id_to_code,
 };
+#[cfg(target_os = "macos")]
+pub use language::{macos_preferred_language, macos_system_language};
 pub use layout::{
     BandUv, CARD_GAP, CARD_HEIGHT, CARD_WIDTH, FanLayout, MIN_SECTION_WIDTH, SECTION_GAP,
     SKILLS_WIDTH, band_uv, bottom_section_widths, card_height, cards_per_row, fan_layout,
@@ -83,8 +89,8 @@ pub use layout::{
 pub use logging::{
     ArcanumLogger, KEPT_PREVIOUS_LOGS, LOG_DIR_ENV_VAR, LOG_FILE_NAME, LOG_LEVEL_ENV_VAR,
     LevelChoice, LogDirChoice, LogDirSource, PreparedLogFile, choose_logs_dir, format_line,
-    init_logging, install_panic_hook, is_enabled, parse_level, prepare_log_file, rotate_log_files,
-    startup_message, user_logs_dir,
+    init_logging, install_panic_hook, is_enabled, macos_logs_dir, parse_level, prepare_log_file,
+    rotate_log_files, startup_message, user_base_dir, user_logs_dir,
 };
 pub use menu_bar::{MenuBar, MenuEntry, MenuItem, MenuState, menu_bar};
 pub use new_game::{

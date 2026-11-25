@@ -336,3 +336,14 @@ pub fn to_fight_banner(screen: &GameScreen) -> Option<String> {
         .filter(|button| button.tooltip.len() > 1)
         .map(|button| button.tooltip[0].clone())
 }
+
+/// Libellé d'une touche avec modificateur sur le système de compilation : « Ctrl+Z », « Cmd+Z » sous
+/// macOS (spec #7, C7).
+pub fn ctrl(key: &str) -> String {
+    let modifier = if cfg!(target_os = "macos") {
+        "Cmd"
+    } else {
+        "Ctrl"
+    };
+    format!("{modifier}+{key}")
+}

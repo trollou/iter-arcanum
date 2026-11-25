@@ -1,0 +1,52 @@
+name: Capture macOS
+
+# Spec #7, Q3 : vérification à l'œil sans Mac. Lancé à la main seulement (onglet Actions, « Run workflow »,
+# sur une branche) : compile le jeu, règle la langue préférée du runner, lance le jeu sans --lang ni variable
+# de dossier, prend une capture d'écran et publie en artefact la capture, les logs et la liste des dossiers.
+# Si le runner refuse l'enregistrement de l'écran, la capture sort noire : les logs et les dossiers restent
+# probants.
+on:
+  workflow_dispatch:
+    inputs:
+      langue:
+        description: Langue préférée de macOS pendant la capture
+        type: choice
+        options: [fr-FR, en-US]
+        default: fr-FR
+
+# Lecture seule : le workflow ne fait que compiler et publier un artefact.
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0
+        with:
+          save-if: false
+      - run: cargo build -p arcanum-ui --release
+      - name: Langue préférée
+        env:
+          LANGUE: ${{ inputs.langue }}
+        run: defaults write -g AppleLanguages -array "$LANGUE"
+      - name: Lancer le jeu et capturer l'écran
+        run: |
+          mkdir -p capture
+          # Hors du dépôt et sans cargo : le jeu se comporte comme un jeu déployé (logs dans ~/Library/Logs).
+          env -u CARGO_MANIFEST_DIR -u ARCANUM_LOG_DIR -u ARCANUM_CONFIG_DIR -u ARCANUM_SAVE_DIR \
+            "$GITHUB_WORKSPACE/target/release/iter-arcanum" &
+          sleep 20
+          screencapture -x capture/ecran.png || echo "capture d'écran refusée" > capture/ecran.txt
+          kill %1 || true
+          sleep 2
+          cp -R "$HOME/Library/Logs/iter-arcanum" capture/logs || echo "aucun log" > capture/logs.txt
+          ls -laR "$HOME/Library/Application Support/iter-arcanum" > capture/application-support.txt 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: capture-macos-${{ inputs.langue }}
+          path: capture/

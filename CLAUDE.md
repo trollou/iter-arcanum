@@ -5,7 +5,7 @@ Jeu PC **Iter Arcanum**, inspiré du jeu de plateau **Mage Knight** (édition Ul
 ## Le projet
 
 - **Rust** (édition 2024, toolchain stable), UI **egui** via **eframe**.
-- Plateformes : **Windows et Linux**, à égalité. Le jeu doit compiler, passer les tests et tourner sur les deux.
+- Plateformes : **Windows, Linux et macOS**, à égalité (macOS depuis la spec #7, vérifié par la CI et le workflow manuel `capture-macos.yml` : personne n'a de Mac). Le jeu doit compiler, passer les tests et tourner sur les trois.
 - **Matériel de tiers dans le dépôt voisin** : le livret, la FAQ, le compendium, les scans et leurs transcriptions ne sont pas redistribuables et ne sont **jamais** dans ce dépôt public. Ils vivent dans le dépôt privé `trollou/mage-knight`, cloné à côté de celui-ci (`../mage-knight/`, même dossier parent ; un fil cloud a `/home/user/iter-arcanum` et `/home/user/mage-knight`). Les chemins `../mage-knight/docs/regles/…` ci-dessous y renvoient. Un contributeur qui n'a pas ce dépôt lit les renvois `MKUE p. 7, 5.a` dans son propre livret : le jeu compile et les tests passent sans lui.
 - Règles du jeu : livret `../mage-knight/docs/regles/mkue-rulebook.pdf`, transcrit page par page dans `../mage-knight/docs/regles/livret/` (`p01.md` à `p24.md`). **Lire la transcription, pas le PDF** : partir du sommaire `../mage-knight/docs/regles/livret/README.md`, n'ouvrir que les pages utiles, et le PDF seulement pour une illustration. En cas de doute sur une règle, citer la page et le paragraphe du livret (ex. `MKUE p. 7, 5.a`) plutôt que deviner ; si elle reste ambiguë, demander à Mathieu.
 - FAQ : la FAQ officielle (v1.0, 2014, traduction française non officielle) est transcrite dans `../mage-knight/docs/regles/faq/` (`p1.md` à `p3.md`), et le *Compendium of Q&A* de BGG (2026, non officiel, 173 pages) dans `../mage-knight/docs/regles/faq/compendium/`. **Quand le livret ne tranche pas, ou qu'une règle semble en contredire une autre (livret, carte, spec, code)** : chercher la réponse dans la FAQ officielle, puis dans le compendium **par son index** (tableau « Compendium » de `docs/reference/index-par-notion.md`, ou `../mage-knight/docs/regles/faq/compendium/index.md` pour une carte), sans lire le compendium en entier. Citer l'entrée (`Compendium, Combat S34`). Ordre de consultation : livret MKUE et cartes, puis FAQ officielle, puis compendium ; une contradiction avec le livret devient une question ouverte pour Mathieu.
@@ -103,7 +103,7 @@ iter-arcanum/
 
 ## Commandes
 
-Valables sous PowerShell et sous Linux (sous Linux, la compilation demande `libasound2-dev` et `pkg-config` pour le son ; `scripts/verifier.sh` les installe s'ils manquent) :
+Valables sous PowerShell et sous Linux (sous Linux, la compilation demande `libasound2-dev` et `pkg-config` pour le son ; `scripts/verifier.sh` les installe s'ils manquent ; sous macOS, rien à installer) :
 
 ```
 cargo build
@@ -124,7 +124,7 @@ Dans un fil, vérifier avec `scripts/verifier.sh` (bash, donc Git Bash sous Wind
 - **Toute PR porte `Closes #N`** (ou `Fixes #N`) dans sa description, dès sa création, pour chaque issue qu'elle règle, y compris la PR de rédaction d'une spec, qui deviendra celle de son implémentation : GitHub lie ainsi l'issue à la PR (suivi du projet) et la ferme à la fusion. Après la fusion, vérifier que l'issue est fermée ; sinon la fermer en renvoyant à la PR (`docs/issues.md`).
 - Ouvrir la PR **en brouillon** une fois `scripts/verifier.sh` vert en local, et ne la passer « prête » qu'à la toute fin (dernier fil d'une spec en plusieurs fils) : un brouillon ne lance pas la CI.
 - Seul Mathieu fusionne une pull request, et seulement si la CI est verte, sauf la PR d'une issue sans question ouverte, que le fil fusionne lui-même (`docs/issues.md`). Pas de `push --force` ni de réécriture d'historique sur `main`.
-- La CI (`.github/workflows/ci.yml`) tourne sous Linux et Windows sur chaque PR prête, sans filtre de chemins, et sur `main` à chaque fusion ; un brouillon ne lance rien. Détail (déclencheurs, cache, Dependabot, suppression des branches à la fusion) : `docs/ci.md`, à mettre à jour dans la PR qui change `.github/`.
+- La CI (`.github/workflows/ci.yml`) tourne sous Linux, Windows et macOS sur chaque PR prête, sans filtre de chemins, et sur `main` à chaque fusion ; un brouillon ne lance rien. Détail (déclencheurs, cache, Dependabot, suppression des branches à la fusion) : `docs/ci.md`, à mettre à jour dans la PR qui change `.github/`.
 - Messages de commit en français, à l'impératif, une première ligne courte qui cite la spec ou l'issue concernée (ex. `Implémente la spec #32 Cartes des fenêtres`).
 - Un commit = une étape cohérente (spec, tests, implémentation, refactor). Ne pas mélanger plusieurs specs dans un même commit. Les commits locaux peuvent être rouges (tests en phase TDD) ; on ne pousse que du vert.
 - Fins de ligne en LF, imposées par `.gitattributes`. `target/` n'est jamais versionné.

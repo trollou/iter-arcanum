@@ -492,7 +492,7 @@ Aucun (Q7) : couper le son passe par le volume général à 0.
   variantes pour les effets.
 - **Couper le son quand la fenêtre perd le focus** : pas demandé.
 - **Voix** (héros qui parlent) : non.
-- **macOS** : Kira passe par CoreAudio sans rien de plus ; la spec 085 le vérifie.
+- **macOS** : Kira passe par CoreAudio sans rien de plus ; la spec #7 le vérifie.
 
 ## Découpage (grosse spec, issue privée 118)
 

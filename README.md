@@ -2,7 +2,7 @@
 
 *Iter Arcanum* (Latin for "the journey of the arcana") is a single-player desktop game **heavily inspired by the Mage Knight board game**. You play a hero who explores a realm, fights enemies, recruits units, conquers sites and grows stronger, turn after turn, by playing cards.
 
-It runs on **Windows** and **Linux**. The game is displayed in your system language when it is **French or English**, and in English otherwise. To force a language for one session, pass `--lang fr` or `--lang en` (for example `cargo run -p arcanum-ui --release -- --lang en`). **Menu > Preferences…** (or **Ctrl+,**, also on the launch screen) picks the language, whether the game starts in full screen, and four volumes (master, music, ambience, sound effects); these preferences are kept in `preferences.json` in your user configuration folder (`~/.config/iter-arcanum/` on Linux, `%APPDATA%\iter-arcanum\config\` on Windows), or in the repository's `config/` folder when launched with `cargo run`. The `ARCANUM_CONFIG_DIR` environment variable picks another folder.
+It runs on **Windows**, **Linux** and **macOS**. The game is displayed in your system language when it is **French or English**, and in English otherwise. To force a language for one session, pass `--lang fr` or `--lang en` (for example `cargo run -p arcanum-ui --release -- --lang en`). **Menu > Preferences…** (or **Ctrl+,**, **Cmd+,** on macOS, also on the launch screen) picks the language, whether the game starts in full screen, and four volumes (master, music, ambience, sound effects); these preferences are kept in `preferences.json` in your user configuration folder (`~/.config/iter-arcanum/` on Linux, `%APPDATA%\iter-arcanum\config\` on Windows, `~/Library/Application Support/iter-arcanum/` on macOS), or in the repository's `config/` folder when launched with `cargo run`. The `ARCANUM_CONFIG_DIR` environment variable picks another folder.
 
 This is a work in progress: a full game from start to finish is playable, but many cards don't have their effect yet (see below).
 
@@ -30,7 +30,7 @@ This is a work in progress: a full game from start to finish is playable, but ma
 
 ## Running the game
 
-There is no downloadable build yet: you compile the game from this repository, on Windows or Linux.
+There is no downloadable build yet: you compile the game from this repository, on Windows, Linux or macOS. On macOS, keyboard shortcuts written « Ctrl+… » elsewhere use **Cmd** and are shown as « Cmd+… ».
 
 1. Install **Rust** (stable) with [rustup](https://rustup.rs/).
 2. Get this repository (`git clone`).
@@ -42,7 +42,7 @@ There is no downloadable build yet: you compile the game from this repository, o
 
    The first build takes a few minutes.
 
-On Linux you need a graphical session (X11 or Wayland) with OpenGL, and the ALSA development files to compile the sound (Debian, Ubuntu, Linux Mint: `sudo apt install libasound2-dev pkg-config`). Without a sound card the game runs silently.
+On Linux you need a graphical session (X11 or Wayland) with OpenGL, and the ALSA development files to compile the sound (Debian, Ubuntu, Linux Mint: `sudo apt install libasound2-dev pkg-config`). Without a sound card the game runs silently. On macOS (Apple Silicon is what the CI checks), nothing else is needed; there is no `.app` bundle yet, so launch it from the repository.
 
 The game reads its resources (texts, images) from the `assets/` folder: it finds it by itself when launched from the repository. If you copy the executable elsewhere, put the `assets/` folder next to it, or point to it with the `ARCANUM_ASSETS_DIR` environment variable.
 
@@ -94,6 +94,7 @@ The game writes a log file at each launch:
 
 - Windows: `%LOCALAPPDATA%\iter-arcanum\data\logs`
 - Linux: `~/.local/state/iter-arcanum/logs` (or `$XDG_STATE_HOME/iter-arcanum/logs`)
+- macOS: `~/Library/Logs/iter-arcanum` (also shown by the Console app)
 - Launched from the repository with `cargo run`: the repository's `logs/` folder.
 
 Attach it when you report a problem in the [repository issues](https://github.com/trollou/iter-arcanum/issues).

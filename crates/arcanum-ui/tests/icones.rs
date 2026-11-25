@@ -137,6 +137,7 @@ fn every_hero_has_an_emblem() {
 // --- Panneau latéral ---
 
 mod support;
+use support::ctrl;
 
 #[path = "../../arcanum-core/tests/arene/mod.rs"]
 mod arene;
@@ -666,12 +667,20 @@ fn shown_shortcut_matches_bound_key() {
     .map(|shortcut| shortcut_label(shortcut, &catalog))
     .collect();
     let expected = [
-        "Ctrl+Z", "Ctrl+S", "Ctrl+O", "Ctrl+N", "Échap", "Fin", "Entrée", "O", "I", "E", "2", "9",
+        ctrl("Z"),
+        ctrl("S"),
+        ctrl("O"),
+        ctrl("N"),
+        "Échap".into(),
+        "Fin".into(),
+        "Entrée".into(),
+        "O".into(),
+        "I".into(),
+        "E".into(),
+        "2".into(),
+        "9".into(),
     ];
-    assert_eq!(
-        labels,
-        expected.map(|label| Some(label.to_string())).to_vec()
-    );
+    assert_eq!(labels, expected.map(Some).to_vec());
     // Sans touche dans la table, rien à afficher.
     assert_eq!(shortcut_label(Shortcut::Take(10), &catalog), None);
 }

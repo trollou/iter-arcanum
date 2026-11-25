@@ -1529,6 +1529,7 @@
       "enter": "Enter",
       "escape": "Esc",
       "ctrl": "Ctrl+{key}",
+      "cmd": "Cmd+{key}",
       "home": "Home"
     }
   },
