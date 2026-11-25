@@ -85,6 +85,8 @@ pub struct EnemyCard {
     /// Sa figurine, la même que sur le plateau de jeu (spec 075, C20b), et sa couleur de repli.
     pub image: crate::ImageId,
     pub fallback: eframe::egui::Color32,
+    /// Socle sous la figurine, à la couleur de sa catégorie (spec #14, C13).
+    pub base: eframe::egui::Color32,
     /// « Rôdeurs », sans la famille (spec 070, C13).
     pub name: String,
     /// « orques maraudeurs » : l'infobulle du jeton (spec 070, C13).
@@ -255,6 +257,7 @@ pub fn combat_screen(
                 token: enemy.token,
                 image: crate::figure_image(enemy.token.enemy()),
                 fallback: crate::enemy_color(enemy.token.color()),
+                base: crate::enemy_color(enemy.token.color()),
                 values: combat_enemy_values(enemy, catalog),
                 abilities: enemy_abilities(enemy, catalog),
                 resistances: resistance_icons(&enemy.effective_resistances(), catalog),

@@ -188,7 +188,7 @@ fn hover_describes_fortified_sites() {
     let lines = &hidden.hover_lines;
     assert!(lines.contains(&"Forteresse".to_string()), "{lines:?}");
     assert!(
-        lines.contains(&"défenseur gris, face cachée".to_string()),
+        lines.contains(&"défenseur face cachée (gardes de forteresse)".to_string()),
         "{lines:?}"
     );
     let alert = lines.iter().position(|line| *line == assault);

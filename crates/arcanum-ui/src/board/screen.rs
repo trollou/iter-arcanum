@@ -12,7 +12,7 @@ use arcanum_core::{
 use eframe::egui::{Color32, Pos2, Rect, Vec2, pos2, vec2};
 
 use crate::enemy_text::{token_lines, token_names};
-use crate::screen::{adventure_reward, enemy_colors_text, token_reward_text};
+use crate::screen::{adventure_reward, enemy_groups_text, token_reward_text};
 use crate::{BoardActionButton, CastDestination, Command};
 use arcanum_i18n::Catalog;
 
@@ -229,6 +229,9 @@ pub struct Overlay {
     /// Couleur qui multiplie l'image : blanc, sauf le brouillard, à la couleur de la pile du
     /// défenseur face cachée (spec 075, C18).
     pub tint: Color32,
+    /// Socle d'un ennemi, à la couleur de sa catégorie, peint à plat sous ses pieds (spec #14, C9
+    /// à C12) ; aucun pour les autres éléments.
+    pub base: Option<Color32>,
 }
 
 impl Overlay {
@@ -248,6 +251,21 @@ impl Overlay {
             image,
             fallback,
             tint: Color32::WHITE,
+            base: None,
+        }
+    }
+
+    /// Un ennemi debout : repli et socle à la couleur de sa pile (spec #14, C9 à C11).
+    fn enemy(
+        hex: Hex,
+        kind: OverlayKind,
+        rect: Rect,
+        image: ImageId,
+        color: EnemyColor,
+    ) -> Overlay {
+        Overlay {
+            base: Some(enemy_color(color)),
+            ..Overlay::standing(hex, kind, rect, image, enemy_color(color))
         }
     }
 }
@@ -416,24 +434,24 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     } else {
                         standing(hex, (SITE_FOOT, ENEMY_SIZE))
                     };
-                    overlays.push(Overlay::standing(
+                    overlays.push(Overlay::enemy(
                         hex,
                         OverlayKind::SiteEnemy,
                         rect,
                         figure_image(token.enemy()),
-                        enemy_color(token.color()),
+                        token.color(),
                     ));
                 }
             } else if let Some(token) =
                 first_token(input, hex).filter(|_| !holds_site_tokens(input, hex))
             {
                 // Le jeton se pose sur le symbole imprimé et le cache (spec 030).
-                overlays.push(Overlay::standing(
+                overlays.push(Overlay::enemy(
                     hex,
                     OverlayKind::Rampaging,
                     standing(hex, (SITE_FOOT, ENEMY_SIZE)),
                     figure_image(token.enemy()),
-                    enemy_color(token.color()),
+                    token.color(),
                 ));
             } else if let Some(feature) = map
                 .space(hex)
@@ -455,24 +473,20 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
             // Spec 043 : le défenseur, plus petit, à gauche du site, qui reste visible ; face
             // cachée, un brouillard à la couleur de sa pile (spec 075, C18).
             let defender = match face_down_color(input, hex) {
-                Some(color) => Some((FOG_IMAGE, enemy_color(color), enemy_color(color))),
-                None => first_token(input, hex).filter(|_| fortified).map(|token| {
-                    (
-                        figure_image(token.enemy()),
-                        enemy_color(token.color()),
-                        Color32::WHITE,
-                    )
-                }),
+                Some(color) => Some((FOG_IMAGE, color, enemy_color(color))),
+                None => first_token(input, hex)
+                    .filter(|_| fortified)
+                    .map(|token| (figure_image(token.enemy()), token.color(), Color32::WHITE)),
             };
-            if let Some((image, fallback, tint)) = defender {
+            if let Some((image, color, tint)) = defender {
                 overlays.push(Overlay {
                     tint,
-                    ..Overlay::standing(
+                    ..Overlay::enemy(
                         hex,
                         OverlayKind::Defender,
                         standing(hex, DEFENDER),
                         image,
-                        fallback,
+                        color,
                     )
                 });
             }
@@ -535,6 +549,7 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     image,
                     fallback: terrain_color(content.terrain),
                     tint: Color32::WHITE,
+                    base: None,
                 });
             }
         }
@@ -1122,8 +1137,8 @@ fn ruin_lines(input: &BoardInput<'_>, hex: Hex, catalog: &Catalog) -> Vec<String
                 "board.hover.ruins.enemies",
                 &[
                     (
-                        "colors",
-                        &enemy_colors_text(token.definition().enemies(), catalog),
+                        "groups",
+                        &enemy_groups_text(token.definition().enemies(), catalog),
                     ),
                     ("reward", &token_reward_text(*token, catalog)),
                 ],
@@ -1399,7 +1414,7 @@ fn hover_lines(
         } else if let Some(color) = face_down_color(input, hex) {
             lines.push(catalog.format(
                 "enemy.face_down",
-                &[("color", &catalog.text(pile_color_key(color)))],
+                &[("group", &catalog.text(color.label_key()))],
             ));
         } else if let Some(token) = token {
             lines.extend(token_lines(token, catalog));
@@ -1453,13 +1468,9 @@ fn city_tooltip_lines(
         .cloned()
         .unwrap_or_default();
     if !face_down.is_empty() {
-        let colors: Vec<String> = face_down
-            .iter()
-            .map(|&color| catalog.text(pile_color_key(color)))
-            .collect();
         lines.push(catalog.format(
             "board.hover.city.face_down",
-            &[("colors", &colors.join(", "))],
+            &[("groups", &enemy_groups_text(&face_down, catalog))],
         ));
     }
     let defenders = input.enemy_tokens.get(&hex).cloned().unwrap_or_default();
@@ -1671,18 +1682,6 @@ pub(crate) fn feature_key(feature: Feature) -> &'static str {
         },
         Feature::Rampaging(Rampaging::OrcMarauders) => "enemy.orc_marauders.name",
         Feature::Rampaging(Rampaging::Draconum) => "enemy.draconum.name",
-    }
-}
-
-/// Couleur d'une pile d'ennemis, pour un défenseur face cachée (spec 043).
-pub(crate) fn pile_color_key(color: EnemyColor) -> &'static str {
-    match color {
-        EnemyColor::Green => "enemy.pile_color.green",
-        EnemyColor::Grey => "enemy.pile_color.grey",
-        EnemyColor::Violet => "enemy.pile_color.violet",
-        EnemyColor::Brown => "enemy.pile_color.brown",
-        EnemyColor::Red => "enemy.pile_color.red",
-        EnemyColor::White => "enemy.pile_color.white",
     }
 }
 
