@@ -18,7 +18,9 @@ on:
 #   plusieurs Go par branche qui évince tout le reste ;
 # - symboles de débogage réduits aux numéros de ligne : target/ bien plus petit, liens plus rapides
 #   (le disque du runner Linux ne suffisait plus : PR privée 222, « No space left on device »).
-env:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
