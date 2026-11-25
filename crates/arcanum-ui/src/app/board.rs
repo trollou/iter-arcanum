@@ -555,7 +555,8 @@ pub(super) fn paint_figure_base(painter: &egui::Painter, foot: Pos2, width: f32,
         center,
         radius,
         fill,
-        stroke: Stroke::new(1.5, TILE_STROKE),
+        // Le trait s'efface avec le socle d'un ennemi vaincu (spec #5) ; opaque sinon.
+        stroke: Stroke::new(1.5, TILE_STROKE.gamma_multiply(f32::from(fill.a()) / 255.0)),
         angle: 0.0,
     });
 }
