@@ -774,6 +774,22 @@ pub fn animation_repaint(animated: bool, focused: bool) -> Option<std::time::Dur
     (animated && focused).then(|| std::time::Duration::from_millis(34))
 }
 
+/// Variable d'environnement qui ralentit les animations du plateau (issue #50) : un facteur, 1 par
+/// défaut ; 6 les rend six fois plus lentes, pour les capturer sous Xvfb.
+pub const ANIMATION_SCALE_ENV_VAR: &str = "ARCANUM_ANIMATION_SCALE";
+
+/// Facteur de ralenti lu dans `ARCANUM_ANIMATION_SCALE` : un nombre fini et positif, sinon 1.
+pub fn animation_scale(value: Option<&str>) -> f64 {
+    let _ = value;
+    todo!()
+}
+
+/// Temps des animations du plateau : celui d'egui divisé par le facteur de ralenti.
+pub fn animation_time(time: f64, scale: f64) -> f64 {
+    let _ = (time, scale);
+    todo!()
+}
+
 /// Le plateau s'anime : figurine du héros (respiration, glissement) ou effacement en cours
 /// (spec #5, C11), et animations permises (C14).
 pub fn board_animated(input: &BoardInput<'_>) -> bool {

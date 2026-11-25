@@ -5,8 +5,8 @@
 use arcanum_core::{Action, BasicAction, EnemyToken, GameState, Hex, PlayerView, legal_actions};
 use arcanum_ui::{
     BoardCamera, BoardDeparture, BoardInput, BoardScreen, Command, DEPARTURE_SECONDS,
-    DepartingEnemy, GameSession, HeroWalk, Overlay, OverlayKind, animation_repaint, board_animated,
-    board_screen, hex_center,
+    DepartingEnemy, GameSession, HeroWalk, Overlay, OverlayKind, animation_repaint,
+    animation_scale, animation_time, board_animated, board_screen, hex_center,
 };
 use eframe::egui::{Rect, pos2, vec2};
 
@@ -467,4 +467,46 @@ fn no_board_animation_when_disabled() {
     }
     // Avec les animations, la même figurine bouge.
     assert_ne!(hero(&board(STARTED + 0.05, true)).rect, resting.rect);
+}
+
+// Issue #50 — Sans variable, les animations gardent leur vitesse.
+#[test]
+fn animation_scale_defaults_to_one() {
+    assert_eq!(animation_scale(None), 1.0);
+}
+
+// Issue #50 — Un facteur positif est lu tel quel, entier ou décimal.
+#[test]
+fn animation_scale_reads_a_positive_factor() {
+    assert_eq!(animation_scale(Some("6")), 6.0);
+    assert_eq!(animation_scale(Some(" 2.5 ")), 2.5);
+}
+
+// Issue #50 — Une valeur nulle, négative, infinie ou illisible laisse la vitesse normale.
+#[test]
+fn animation_scale_ignores_invalid_values() {
+    for value in ["0", "-2", "inf", "NaN", "lent", ""] {
+        assert_eq!(animation_scale(Some(value)), 1.0, "{value:?}");
+    }
+}
+
+// Issue #50 — Ralenti six fois, l'effacement est à mi-course après six demi-durées, et fini après
+// six durées.
+#[test]
+fn slowed_departure_lasts_scale_times_longer() {
+    let view = village_view();
+    let stood = prowlers_figure(&view);
+    let after = without_prowlers(&view);
+    let enemies = prowlers_departing();
+    let scale = 6.0;
+    let at = |seconds: f64| {
+        let time = animation_time(STARTED * scale + seconds, scale);
+        board_at(&after, time, &enemies, true)
+    };
+    let [departing] = of_kind(&at(scale * DEPARTURE_SECONDS / 2.0), OverlayKind::Departing)
+        .try_into()
+        .expect("en cours");
+    assert!((departing.rect.height() - stood.rect.height() / 4.0).abs() < 0.01);
+    assert!(!of_kind(&at(DEPARTURE_SECONDS), OverlayKind::Departing).is_empty());
+    assert!(of_kind(&at(scale * DEPARTURE_SECONDS), OverlayKind::Departing).is_empty());
 }
