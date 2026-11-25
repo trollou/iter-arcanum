@@ -5,18 +5,17 @@
 use arcanum_core::{EnemyColor, RuinReward, RuinToken, Site};
 
 use super::*;
-use crate::board::pile_color_key;
 
 /// Le jeton de ruines face visible de cette case, s'il y en a un.
 pub(crate) fn ruin_token_at(view: &PlayerView, hex: Hex) -> Option<RuinToken> {
     view.ruins.get(&hex).copied().flatten()
 }
 
-/// « gris, violet » : les couleurs des piles d'ennemis à tirer.
-pub(crate) fn enemy_colors_text(colors: &[EnemyColor], catalog: &Catalog) -> String {
+/// « gardes de forteresse, tour de mage » : les catégories des piles d'ennemis à tirer (spec #14).
+pub(crate) fn enemy_groups_text(colors: &[EnemyColor], catalog: &Catalog) -> String {
     colors
         .iter()
-        .map(|&color| catalog.text(pile_color_key(color)))
+        .map(|&color| catalog.text(color.label_key()))
         .collect::<Vec<_>>()
         .join(", ")
 }

@@ -24,4 +24,4 @@ pub use screen::{
     OVERLAY_MIN_ZOOM, Overlay, OverlayKind, RuinPip, RuinTokenMark, SLAB_DEPTH, Slab, TileOutline,
     WALK_STEP_SECONDS, animation_repaint, board_screen,
 };
-pub(crate) use screen::{feature_key, pile_color_key, terrain_key};
+pub(crate) use screen::{feature_key, terrain_key};
