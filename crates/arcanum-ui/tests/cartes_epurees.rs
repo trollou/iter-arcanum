@@ -235,8 +235,9 @@ fn paid_option_face_omits_payment() {
         red.face,
         EffectFace::Text("un sort rouge de l'offre".into())
     );
+    // Puis, à la ligne, la raison du grisé (pas de mana bleu).
     assert_eq!(
-        red.tooltip,
-        "Renforcer : Payer rouge : un sort rouge de l'offre"
+        red.tooltip.lines().next(),
+        Some("Renforcer : Payer rouge : un sort rouge de l'offre")
     );
 }

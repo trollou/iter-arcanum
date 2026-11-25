@@ -73,7 +73,7 @@ pub(super) fn idle_effects(
     let face = |effect: Effect, strong: bool| match card_option_text(card, effect, strong, catalog)
     {
         Some(written) => EffectFace::Text(written),
-        None => effect_face(effect, catalog),
+        None => paid_face(effect, catalog),
     };
     let text =
         |effect: Effect, strong: bool| card_option_label(card, effect, strong, view, catalog);
@@ -107,6 +107,8 @@ pub(super) fn idle_effects(
             }
         }
     }
+    // Spec #11 C11 (Q2) : les options payantes à la suite des options gratuites de base.
+    basic.extend(paid);
     let mut strong: Vec<EffectButton> = Vec::new();
     if let BasicEffect::Options { options, cost, .. } = definition.strong {
         let key = match cost {
@@ -125,8 +127,20 @@ pub(super) fn idle_effects(
             }
         }));
     }
-    strong.extend(paid);
     (basic, strong)
+}
+
+/// Le visage d'une option payante sans son paiement, que dit la pastille (spec #11, C11, C12) :
+/// le cristal gagné, ou « un sort rouge de l'offre ».
+fn paid_face(effect: Effect, catalog: &Catalog) -> EffectFace {
+    match effect {
+        Effect::PayForCrystal(color) => effect_face(Effect::GainCrystal(color), catalog),
+        Effect::GainSpell(color) => EffectFace::Text(catalog.format(
+            "effect.spell_from_offer",
+            &[("color", &color_name(color, catalog))],
+        )),
+        _ => effect_face(effect, catalog),
+    }
 }
 
 /// Les boutons d'effet d'une carte hors des modes : chaque option grisée, sauf celles qu'une action
@@ -149,10 +163,10 @@ pub(super) fn live_effects(
     };
     // Effet de base : l'action qui joue l'option, ou le choix de la carte à défausser.
     if let BasicEffect::Options { options, .. } = definition.basic {
-        let free = (0u8..)
+        let free_options = (0u8..)
             .zip(options)
             .filter(|(option, _)| definition.basic.option_mana(*option).is_none());
-        for ((option, _), button) in free.zip(basic.iter_mut()) {
+        for ((option, _), button) in free_options.zip(basic.iter_mut()) {
             button.command = basic_command(card, option, legal_actions);
         }
     }
@@ -177,11 +191,11 @@ pub(super) fn live_effects(
             }
         }
     }
-    // Options payantes (spec 025), à la suite des options renforcées.
-    let renforced = strong.len() - paid_count(card);
+    // Options payantes (spec 025), à la suite des options gratuites de base (spec #11, C11).
+    let free = basic.len() - paid_count(card);
     for (paid, button) in paid_buttons(card, view, legal_actions, catalog)
         .into_iter()
-        .zip(strong.iter_mut().skip(renforced))
+        .zip(basic.iter_mut().skip(free))
     {
         button.command = paid.enabled.then_some(paid.command);
         button.tooltip = with_reason(button.tooltip.clone(), paid.tooltip);

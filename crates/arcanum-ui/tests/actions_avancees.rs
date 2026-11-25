@@ -365,13 +365,15 @@ fn strong_pure_magic_buttons_show_the_option_mana() {
             basic(BasicColor::White),
             basic(BasicColor::Blue),
             basic(BasicColor::Red),
-            // Les options payantes de l'effet de base, à la suite.
-            basic(BasicColor::Green),
-            basic(BasicColor::White),
-            basic(BasicColor::Blue),
-            basic(BasicColor::Red),
         ]
     );
+    // Spec #11 C11 (Q2) : les options payantes de l'effet de base sont dans le bloc de base.
+    let basic_colors: Vec<Option<ManaColor>> = screen.hand[0]
+        .basic_effects
+        .iter()
+        .map(|button| button.color)
+        .collect();
+    assert_eq!(basic_colors, colors);
 }
 
 // Spec 053 C23
