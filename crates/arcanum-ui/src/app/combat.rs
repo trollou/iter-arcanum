@@ -175,6 +175,47 @@ impl IterArcanumApp {
         }
     }
 
+    /// Figurine d'une carte d'ennemi, sur son socle (spec 075, C20b ; spec #14, C13) ; grisée
+    /// une fois vaincu.
+    fn enemy_figure(&mut self, ui: &egui::Ui, rect: egui::Rect, enemy: &EnemyCard) {
+        let pixels_per_point = ui.ctx().pixels_per_point();
+        let tint = if enemy.defeated {
+            Color32::from_white_alpha(100)
+        } else {
+            Color32::WHITE
+        };
+        // Spec #14, C13 : le socle à la couleur de sa catégorie, sous la figurine.
+        paint_figure_base(
+            ui.painter(),
+            rect.center_bottom(),
+            rect.width(),
+            enemy
+                .base
+                .gamma_multiply(if enemy.defeated { 0.4 } else { 1.0 }),
+        );
+        match self.paint_of(ui, enemy.image, enemy.fallback, rect, pixels_per_point) {
+            ImagePaint::Texture(texture) => {
+                // La figurine debout, à ses proportions (spec 075, C20b).
+                let size = ui
+                    .ctx()
+                    .tex_manager()
+                    .read()
+                    .meta(texture)
+                    .map(|meta| meta.size);
+                let figure = standing_image_rect(rect, size);
+                ui.painter().image(texture, figure, full_uv(), tint);
+            }
+            ImagePaint::Fallback(color) | ImagePaint::Pending(color) => {
+                ui.painter().circle(
+                    rect.center(),
+                    rect.width() / 2.0,
+                    color.gamma_multiply(if enemy.defeated { 0.4 } else { 1.0 }),
+                    Stroke::new(1.5, TILE_STROKE),
+                );
+            }
+        }
+    }
+
     /// Carte d'un ennemi : son jeton, son nom, ses valeurs, son état, ses boutons et ce qui lui
     /// est arrivé dans ce combat.
     fn enemy_card(&mut self, ui: &mut egui::Ui, enemy: &EnemyCard) -> Option<Command> {
@@ -193,42 +234,7 @@ impl IterArcanumApp {
                         ui.allocate_exact_size(Vec2::splat(ENEMY_TOKEN_SIZE), Sense::hover());
                     // Spec 070, C13 : la famille de l'ennemi au survol de sa figurine.
                     token.on_hover_text(&enemy.family);
-                    let pixels_per_point = ui.ctx().pixels_per_point();
-                    let tint = if enemy.defeated {
-                        Color32::from_white_alpha(100)
-                    } else {
-                        Color32::WHITE
-                    };
-                    // Spec #14, C13 : le socle à la couleur de sa catégorie, sous la figurine.
-                    paint_figure_base(
-                        ui.painter(),
-                        rect.center_bottom(),
-                        rect.width(),
-                        enemy
-                            .base
-                            .gamma_multiply(if enemy.defeated { 0.4 } else { 1.0 }),
-                    );
-                    match self.paint_of(ui, enemy.image, enemy.fallback, rect, pixels_per_point) {
-                        ImagePaint::Texture(texture) => {
-                            // La figurine debout, à ses proportions (spec 075, C20b).
-                            let size = ui
-                                .ctx()
-                                .tex_manager()
-                                .read()
-                                .meta(texture)
-                                .map(|meta| meta.size);
-                            let figure = standing_image_rect(rect, size);
-                            ui.painter().image(texture, figure, full_uv(), tint);
-                        }
-                        ImagePaint::Fallback(color) | ImagePaint::Pending(color) => {
-                            ui.painter().circle(
-                                rect.center(),
-                                rect.width() / 2.0,
-                                color.gamma_multiply(if enemy.defeated { 0.4 } else { 1.0 }),
-                                Stroke::new(1.5, TILE_STROKE),
-                            );
-                        }
-                    }
+                    self.enemy_figure(ui, rect, enemy);
                     ui.vertical(|ui| {
                         let name = egui::RichText::new(&enemy.name).strong();
                         ui.label(if enemy.defeated { name.weak() } else { name });
