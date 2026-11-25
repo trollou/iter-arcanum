@@ -47,7 +47,9 @@ Une spec naît d'une issue `Feature` (ou `Epic`), qui doit exister avant la réd
 
 - Fichier `docs/specs/issue-<N>-<sujet>.md`, cité « spec #N » ; plan éventuel `docs/specs/plans/issue-<N>-<sujet>.md`.
 - Branche `feature/<N>-<sujet>` (rédaction et implémentation sur la même branche).
-- La PR qui rédige la spec la cite (« spec #N ») ; la PR qui l'implémente ferme l'issue (`Closes #N`).
+- La PR de la spec (rédaction puis implémentation, sur la même branche) porte `Closes #N` dans sa description **dès sa
+  création** : GitHub la lie à l'issue (suivi du projet) et ferme l'issue à la fusion. Le fil d'implémentation vérifie que la
+  ligne y est toujours.
 - Le statut (brouillon, à valider, validée, implémentée) est dans l'en-tête de la spec.
 
 Les specs d'avant le 2026-11-24 gardent leur numéro à trois chiffres (« spec 042 ») : la migration vers ce dépôt a
@@ -125,4 +127,4 @@ laissée `à trancher`), sauf si plusieurs se regroupent naturellement (même co
 4. **Fusion** : sans question ouverte (solution donnée par l'issue, aucun choix de règle), le fil fusionne lui-même, en squash,
    une fois la CI verte (une PR de doc seule n'a pas de CI). Sinon Mathieu fusionne.
 5. **Fermeture** : par la PR (`Closes`), ou à la main avec le motif (`completed`, `not planned`, `duplicate`) et une ligne qui
-   dit pourquoi.
+   dit pourquoi. Après une fusion, vérifier que chaque issue réglée est bien fermée ; sinon la fermer à la main en renvoyant à la PR.

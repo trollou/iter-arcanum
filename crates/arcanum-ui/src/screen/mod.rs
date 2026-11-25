@@ -69,7 +69,7 @@ use panels::*;
 use play_area::*;
 use ritual::*;
 use ruins::*;
-pub(crate) use ruins::{enemy_colors_text, token_reward_text};
+pub(crate) use ruins::{enemy_groups_text, token_reward_text};
 pub use score::ScoreWindow;
 pub(crate) use score::reopen_score_button;
 use score::{cities_progress, end_message, last_turn_line, last_turn_next, score_window};

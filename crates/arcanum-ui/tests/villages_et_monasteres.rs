@@ -270,8 +270,8 @@ fn burn_button_asks_confirmation() {
     let prompt = confirming.burn_confirm.expect("confirmation de l'incendie");
     assert_eq!(
         prompt.text,
-        "Incendier le monastère ? Réputation \u{2212}3, combat contre un ennemi violet, sans vos \
-         unités. Pas de retour en arrière."
+        "Incendier le monastère ? Réputation \u{2212}3, combat contre un ennemi tiré au hasard \
+         (tour de mage), sans vos unités. Pas de retour en arrière."
     );
     assert_eq!(
         labels_and_commands(&prompt.buttons),

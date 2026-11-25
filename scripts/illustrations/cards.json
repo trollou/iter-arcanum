@@ -1,111 +1,431 @@
 {
+  "agility": {
+    "description": "An acrobatic fighter vaulting over a low rock while drawing a dagger, light motion streaks, airy white background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "ambush": {
+    "description": "A warrior crouching hidden in tall grass with a drawn sword, ready to spring, eyes watching, green dusk light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "amulet_of_darkness": {
+    "description": "A black onyx amulet shaped like a crescent moon, emitting dark violet light against a bright desert day.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "amulet_of_sun": {
+    "description": "A golden amulet shaped like a radiant sun hanging on a chain, glowing with warm gold light against a deep blue night sky full of stars, the painted scene filling the whole image.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "banner_of_courage": {
+    "description": "A green and gold banner with a rampant lion emblem raised high by a soldier's fist, bright morning light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "banner_of_fear": {
+    "description": "A tattered black war banner with a red horned emblem flapping in a storm, dark clouds, eerie red glow.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "banner_of_glory": {
+    "description": "A golden war banner with a radiant sun emblem flying from a tall pole, glowing light, blue sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "banner_of_protection": {
+    "description": "A silver and blue banner with a shield emblem inside a shimmering dome of protective light, flames and frost glancing off the dome.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
   "battle_versatility": {
-    "description": "The hero in the middle of a battle, whirling between foes, striking with the flail while blocking a blow and hurling a bolt of red energy at a distant enemy, sparks and red battle haze.",
+    "description": "The hero in a dynamic fighting stance, swinging the flail with one hand while the other hurls a bolt of red energy, red sparks, hazy battlefield.",
     "hero": "arythea",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "blood_rage": {
+    "description": "A wounded warrior with a bleeding arm swinging a great sword with furious strength, red aura, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "blood_ritual": {
+    "description": "A dark sorcerer holding a bleeding palm over a stone altar, drops of blood turning into glowing red and multicolored mana orbs, candlelight.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "book_of_wisdom": {
+    "description": "An ancient leather book floating open with blank glowing pages, swirls of colored light rising from it, dark library.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "burning_shield": {
+    "description": "A round shield wreathed in roaring red flames, held up by an armored arm, sparks flying.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "call_to_arms": {
+    "description": "A herald blowing a long horn beside a raised white banner, light shining from it, open field.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "chill": {
+    "description": "A monster frozen solid in a block of blue ice in mid-attack, frost spreading, cold blue mist.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "cold_toughness": {
-    "description": "The hero standing firm in a snowstorm, shrugging off a blast of ice with a raised gauntlet, frost and icicles forming on his armor, cold blue light.",
+    "description": "The hero standing firm with a raised gauntlet, shrugging off a blast of ice, frost forming on the armor, swirling snow, cold blue light.",
     "hero": "tovak",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "concentration": {
-    "description": "A focused sorcerer with eyes closed, fingertips touching temples, three small orbs of blue, white and red mana orbiting the head, calm green aura, dark background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A sorcerer with eyes closed and fingertips at the temples, three orbs of blue, white and red mana orbiting the head, calm green aura, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "crushing_bolt": {
+    "description": "A heavy glowing green crystal boulder smashing into a stone wall, cracks and green sparks, dusty background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "crystal_joy": {
-    "description": "The hero laughing joyfully as glowing crystals of red, blue, white and green spill and float from his hands, playful sparkles, cool blue magical light in a crystal cave.",
+    "description": "The hero laughing, glowing crystals of red, blue, white and green floating up from open hands, playful sparkles, soft blue cave light.",
     "hero": "goldyx",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "crystal_mastery": {
+    "description": "A mage surrounded by a ring of glowing crystals in four colors, one blue crystal duplicating itself in a flash of light, dark cave.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "crystallize": {
-    "description": "Hands holding swirling blue mana energy that condenses into a glowing faceted blue crystal, sparkles and light refractions, dark mystic background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two open hands in the center, swirling blue mana condensing into a large glowing faceted blue crystal between them, sparkles, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "decompose": {
+    "description": "A mage holding a parchment that crumbles into ash and turns into two glowing crystals, red sparks, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "demolish": {
+    "description": "A stone fortress wall crumbling under a blast of red magical force, blocks flying, dust and embers.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "determination": {
-    "description": "A steadfast armored knight standing firm behind a raised shield, jaw set, deep blue light glowing around him, enemies looming in a stormy background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A steadfast knight braced behind a large raised shield, jaw set, a deep blue glow around the shield, stormy background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "diamond_ring": {
+    "description": "A platinum ring set with a large sparkling diamond, white light radiating, resting on dark velvet.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "diplomacy": {
+    "description": "An unarmed mage in white robes speaking calmly with an open palm raised toward a wary warrior, soft golden glowing words of light flowing as ribbons from the mage toward the warrior, whose sword is lowered, calm light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "emerald_ring": {
+    "description": "A golden ring set with a large glowing emerald, green light radiating, resting on dark velvet.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "endless_bag_of_gold": {
+    "description": "A leather pouch overflowing with an endless stream of gold coins spilling out, sparkles, dark wooden table.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "endless_gem_pouch": {
+    "description": "A velvet pouch spilling glowing gems of red, blue, white and green, sparkles, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "energy_flow": {
+    "description": "A stream of green energy flowing from a glowing hand into a tired soldier who straightens up revived, forest background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "expose": {
+    "description": "A beam of white light striking a fortified stone gate, the walls and protective magic wards around it dissolving into sparks.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "fire_bolt": {
+    "description": "A round blazing ball of fire flying across the image like a comet, trailing a long tail of flames and sparks, dark smoky background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "fireball": {
+    "description": "A huge roaring fireball flying across the image, trailing flames and sparks, dark night sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "flame_wall": {
+    "description": "A tall wall of roaring flames stretching across the whole image, embers rising, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "frost_bridge": {
+    "description": "A traveller crossing a dark swamp on a bridge of glittering ice that forms under each step, misty reeds, cold blue light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "golden_grail": {
+    "description": "A golden chalice glowing with warm healing light, soft rays rising from it, dark stone altar.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "heroic_tale": {
+    "description": "A storyteller by a campfire telling a tale with wide gestures, two young recruits listening in awe, warm firelight.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "horn_of_wrath": {
+    "description": "A large curved war horn of bone and bronze lying on a rock, blasting by itself a visible shockwave of force from its mouth, sparks and dust, no hands, no people.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "ice_bolt": {
+    "description": "A round glowing ball of ice and frost flying across the image like a comet, trailing frost mist and ice splinters, dark night background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "ice_shield": {
+    "description": "A warrior holding up a large shield of translucent blue ice that stops an enemy blade, frost spreading, cold blue light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "improvisation": {
-    "description": "A resourceful warrior catching a sword and a torch mid-air while a card-like scroll burns away in red flames, energetic red-orange background, dynamic pose.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A warrior catching a sword in mid-air with one hand and a torch with the other, a burning scroll falling between them, red-orange background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "in_need": {
+    "description": "A wounded, bandaged traveller reaching out to a kind villager who offers bread and help, warm green light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "instinct": {
-    "description": "The hero crouching and turning instantly to face a sudden ambush in a dark forest, sword swinging up, tense atmosphere, red and amber light.",
+    "description": "The hero crouched and spinning around, sword sweeping up to meet a sudden threat, a dark forest behind, tense red and amber light.",
     "hero": "tovak",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "intimidate": {
+    "description": "A hulking warrior in dark spiked armor glaring down with a raised fist, two villagers backing away in fear, red light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "into_the_heat": {
+    "description": "A commander raising a flaming sword, two soldiers beside the commander charging forward with fiery red auras, battle smoke.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "learning": {
+    "description": "A scholar reading a large open book with blank glowing pages at a desk, glowing shapes rising from it, warm candlelight.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "magic_talent": {
+    "description": "A grown adult mage in blue robes, bearded, reaching toward a floating open spellbook with blank glowing pages, blue magic sparks leaping to the fingertips, dark library with shelves.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "mana_bolt": {
+    "description": "A crackling bolt of blue mana lightning streaking across the image, small swirls of red, white and green energy around it, dark sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "mana_claim": {
+    "description": "A hand closing around a glowing blue gem drawn from a fountain of colored light, blue sparkles.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "mana_draw": {
-    "description": "A mage reaching up toward a radiant white source of light in the sky, ribbons of colored magical energy flowing down into an open palm, white luminous background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A mage with one hand raised toward a radiant white light, ribbons of colored magic flowing down into the open palm, bright white background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "mana_meltdown": {
+    "description": "A large red crystal cracking and melting into streams of glowing red mana, sparks flying, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "mana_pull": {
-    "description": "The hero pulling a stream of black and violet mana out of a swirling dark void with an outstretched hand, white sparks crackling, ominous night sky.",
+    "description": "The hero pulling a stream of black and violet mana out of a swirling dark void with an outstretched hand, white sparks, night sky.",
     "hero": "arythea",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "mana_storm": {
+    "description": "A whirlwind of glowing gems of many colors spinning in the air around a mage with raised arms, white lightning, stormy sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "march": {
-    "description": "A lone traveller in a hooded green cloak striding briskly along a winding road through green hills and forest at dawn, walking staff in hand, sense of speed and determination, soft green light.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A traveller in a hooded green cloak striding along a winding road through green hills, walking staff in hand, seen from the side, soft dawn light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "maximal_effect": {
+    "description": "A mage holding a glowing scroll that bursts into three identical blasts of energy, red light, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "meditation": {
+    "description": "A monk meditating cross-legged, two glowing stone tablets floating upward around the monk, calm green aura, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "mind_read": {
+    "description": "A mage with a glowing white third eye on the forehead, ghostly thoughts swirling around the head as white mist, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "noble_manners": {
-    "description": "The hero bowing gracefully before a delighted crowd of nobles and townsfolk in a sunlit hall, courtly elegance, soft white and gold light.",
+    "description": "The hero bowing gracefully with a sweep of the hand, two delighted nobles applauding nearby, sunlit hall, soft white and gold light.",
     "hero": "norowas",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "path_finding": {
+    "description": "A ranger at a forest edge pointing ahead, a faint glowing green trail winding through rough hills, soft light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "promise": {
-    "description": "A charismatic noble in white and gold clothing offering a handshake to a hesitant villager, warm golden light, a village square in the background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A noble in white and gold offering a handshake to a hesitant villager, the two figures facing each other at the center, warm golden light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "pure_magic": {
+    "description": "A mage holding up a single glowing orb whose light shifts between green, white, blue and red, rays of pure light, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "rage": {
-    "description": "A muscular bare-chested warrior screaming in uncontrolled battle fury, veins standing out, an aura of red and orange flames of anger around him, dark smoky background lit in red.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A muscular warrior roaring in battle fury, axe raised, an aura of red and orange flames around the body, dark smoky background lit in red.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "refreshing_walk": {
+    "description": "A traveller walking along a sunny forest path, a soft green glow of healing around the body, flowers along the way.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "regeneration": {
+    "description": "A tired soldier rising to their feet refreshed as green healing light swirls around them, a sapling sprouting nearby, forest background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "rejuvenate": {
-    "description": "The hero in a forest glade with arms spread, vines and blossoms blooming around, wounded soldiers getting up refreshed, glowing green healing motes.",
+    "description": "The hero with arms spread in a forest glade, vines and blossoms blooming around, glowing green healing motes rising.",
     "hero": "norowas",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "restoration": {
+    "description": "Glowing green healing light pouring down onto a kneeling figure in a lush forest, leaves and petals swirling.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "ruby_ring": {
+    "description": "A golden ring set with a large glowing ruby, red light radiating, resting on dark velvet.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "sapphire_ring": {
+    "description": "A silver ring set with a large glowing sapphire, blue light radiating, resting on dark velvet.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "snowstorm": {
+    "description": "A swirling storm of snow and ice shards sweeping across the image, a frozen gust, cold blue light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "song_of_wind": {
+    "description": "A bard playing a flute on open plains, a visible ribbon of white wind carrying leaves and lifting the cloak, bright sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "space_bending": {
+    "description": "A single traveller stepping out of a swirling blue portal standing upright on a stone path in green countryside, one foot still inside the vortex, warped space rippling around the portal.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "stamina": {
-    "description": "A tireless traveller in a blue cloak climbing a steep rocky mountain path with a heavy pack, determined expression, cool blue twilight light, distant peaks.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A traveller in a blue cloak climbing a steep rocky path with a heavy pack, seen from the side, cool blue twilight, distant peaks.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "steady_tempo": {
+    "description": "A hooded traveller walking at an even pace along a long straight road under a starry blue sky, footprints glowing softly behind.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "swift_bolt": {
+    "description": "A glowing white crystal shard shooting across the image like an arrow, trailing a bright streak of wind, pale sky background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "swiftness": {
-    "description": "A nimble archer in a white and silver tunic leaping lightly through the air while loosing an arrow, motion streaks of white wind trailing behind, bright sky.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A nimble archer in a white and silver tunic leaping through the air while loosing an arrow, white wind streaks trailing behind, bright open sky over green hills, the painted scene filling the whole image with no frame.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "sword_of_justice": {
+    "description": "A gleaming silver longsword standing point-down in a stone, a beam of white light falling on it, dark background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "threaten": {
-    "description": "A menacing armored warrior looming over cowering townsfolk, pointing a blade at them, harsh red light and dark shadows, intimidating posture.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "An armored warrior pointing a blade at two cowering townsfolk, harsh red light and long shadows, intimidating posture.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "training": {
+    "description": "A young fighter practicing sword strikes against a wooden training dummy in a courtyard, a veteran watching, green morning light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "tranquility": {
-    "description": "A serene figure meditating cross-legged beside a calm forest pond, soft green glow, floating leaves and fireflies, peaceful misty trees.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A figure meditating cross-legged beside a calm pond, soft green glow, floating leaves and fireflies, misty trees.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "tremor": {
+    "description": "The ground splitting open in a jagged glowing green crack, rocks and dust flying upward, open landscape.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "underground_travel": {
+    "description": "A hooded traveller striding through a glowing green tunnel deep underground, roots and stones around.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "whirlwind": {
+    "description": "A tall swirling white whirlwind in the center lifting dust and leaves, open plain, pale sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "will_focus": {
-    "description": "The hero channeling intense green magical energy into a glowing green crystal held between both clawed hands, concentric rings of light, emerald glow, ancient stone ruins.",
+    "description": "The hero channeling green energy into a glowing green crystal held between both clawed hands, concentric rings of light, emerald glow, dark mossy cave background with soft green light.",
     "hero": "goldyx",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
+  },
+  "wings_of_wind": {
+    "description": "A figure soaring above the clouds on large translucent white wings of wind, bright sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "wound": {
     "description": "A single large, glossy drop of dark red blood, centered, on a plain dark muted grey-brown background, simple and bold, nothing else.",

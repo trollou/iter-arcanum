@@ -57,13 +57,17 @@ pub(super) fn card_content_size() -> Vec2 {
     vec2(CARD_WIDTH, CARD_HEIGHT) - Vec2::splat(2.0 * (CARD_MARGIN + CARD_STROKE))
 }
 
-/// L'illustration en bande sur toute la largeur de la carte, recadrée au milieu (spec 077, C2).
-pub(super) fn art_band(ui: &mut egui::Ui, texture: egui::TextureId) {
+/// L'illustration en bande sur toute la largeur de la carte, recadrée au centre selon la taille
+/// de l'image (spec 077, C2 ; spec #9).
+pub(super) fn art_band(ui: &mut egui::Ui, texture: SizedTexture) {
     let width = ui.available_width();
-    let (top, bottom) = band_uv(width, ART_BAND_HEIGHT);
+    let uv = band_uv(width, ART_BAND_HEIGHT, texture.size.x, texture.size.y);
     ui.add(
-        egui::Image::new(SizedTexture::new(texture, vec2(width, ART_BAND_HEIGHT)))
-            .uv(Rect::from_min_max(pos2(0.0, top), pos2(1.0, bottom)))
+        egui::Image::new(SizedTexture::new(texture.id, vec2(width, ART_BAND_HEIGHT)))
+            .uv(Rect::from_min_max(
+                pos2(uv.left, uv.top),
+                pos2(uv.right, uv.bottom),
+            ))
             .corner_radius(3.0),
     );
 }
@@ -354,7 +358,7 @@ impl IterArcanumApp {
                 let (row, _) =
                     ui.allocate_exact_size(vec2(ui.available_width(), WOUND_ART), Sense::hover());
                 let image = Rect::from_center_size(row.center(), Vec2::splat(WOUND_ART));
-                egui::Image::new(SizedTexture::new(texture, Vec2::splat(WOUND_ART)))
+                egui::Image::new(SizedTexture::new(texture.id, Vec2::splat(WOUND_ART)))
                     .paint_at(ui, image);
             } else {
                 art_band(ui, texture);

@@ -1,7 +1,7 @@
 //! Sites d'aventure du panneau latéral (spec 044) : entrer et sa confirmation, dé du donjon,
 //! cristaux aléatoires et choix de leur couleur, jeton de la clairière.
 
-use arcanum_core::{Feature, Site};
+use arcanum_core::{EnemyColor, Feature, Site};
 
 use super::*;
 use crate::enemy_text::token_names;
@@ -124,10 +124,10 @@ fn confirm_text(view: &PlayerView, hex: Hex, site: Site, catalog: &Catalog) -> S
     }
     // Cartes de site : un jeton marron (deux au Sombre Terrier), rouge au tombeau ; l'antre et le
     // Sombre Terrier gardent les leurs, le donjon et le tombeau en tirent un neuf.
-    let (color, wanted): (&str, usize) = match site {
-        Site::Tomb => ("enemy.pile_color.red", 1),
-        Site::SpawningGrounds => ("enemy.pile_color.brown", 2),
-        _ => ("enemy.pile_color.brown", 1),
+    let (color, wanted): (EnemyColor, usize) = match site {
+        Site::Tomb => (EnemyColor::Red, 1),
+        Site::SpawningGrounds => (EnemyColor::Brown, 2),
+        _ => (EnemyColor::Brown, 1),
     };
     let waiting: Vec<EnemyToken> = if is_night_site(site) {
         Vec::new()
@@ -147,7 +147,7 @@ fn confirm_text(view: &PlayerView, hex: Hex, site: Site, catalog: &Catalog) -> S
             "adventure.confirm.fight_drawn",
             &[
                 ("count", &drawn.to_string()),
-                ("color", &catalog.text(color)),
+                ("group", &catalog.text(color.label_key())),
             ],
         ));
     }
@@ -178,10 +178,10 @@ fn ruins_confirm_text(view: &PlayerView, hex: Hex, catalog: &Catalog) -> String 
     let drawing = waiting.is_empty();
     let fight = if drawing {
         catalog.format(
-            "adventure.confirm.fight_colors",
+            "adventure.confirm.fight_groups",
             &[(
-                "colors",
-                &super::ruins::enemy_colors_text(token.definition().enemies(), catalog),
+                "groups",
+                &super::ruins::enemy_groups_text(token.definition().enemies(), catalog),
             )],
         )
     } else {

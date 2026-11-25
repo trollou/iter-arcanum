@@ -1,102 +1,102 @@
 {
   "altem_guardians": {
-    "description": "Elite colossal knights in gleaming golden full plate armor with winged helmets, enormous ornate shields and halberds, standing in formation before a radiant white citadel.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two towering knights in gleaming golden full plate with winged helmets, side by side behind huge ornate shields, halberds upright, a soft white glow behind them.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "altem_mages": {
-    "description": "Supreme ancient sorcerers in ornate white and gold robes with tall golden headdresses, floating above the ground, orbs of red, blue, white and green magical energy circling them.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two ancient sorcerers in white and gold robes with tall golden headdresses, floating side by side, small orbs of red, blue, white and green energy circling between their raised hands, pale sky.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "amotep_freezers": {
-    "description": "Elite soldiers in heavy bronze and dark blue armor with crested helmets, firing ornate tube weapons that spray freezing blue frost, enemies' ground covered in ice.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two soldiers in heavy bronze and dark blue armor with crested helmets, aiming ornate tube weapons that spray a jet of freezing blue frost, ice forming on the ground.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "amotep_gunners": {
-    "description": "Elite soldiers in heavy bronze and dark red armor with crested helmets, firing ornate hand cannons that blast red fire, smoke and sparks in the air, a fortress in the background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two soldiers in heavy bronze and dark red armor with crested helmets, firing ornate hand cannons in a burst of red fire and smoke, dusky background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "catapults": {
-    "description": "A crew of engineers in leather aprons and helmets operating large wooden catapults, one hurling a flaming boulder toward a distant castle wall, ropes and counterweights in the foreground.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A sturdy wooden siege catapult on a heavy timber frame, seen from the side: its long throwing arm pivots on a thick axle, has just swung forward and stopped against the padded crossbar, and a single round boulder flies away from the cup at the tip of the arm in a high arc toward the right; two engineers in leather aprons stand beside the frame, open field.",
+    "model": "gemini-3-pro-image",
+    "date": "2026-11-25"
   },
   "fire_golems": {
-    "description": "Hulking golems made of cracked black volcanic rock with molten lava glowing through the cracks, fists burning with flames, walking out of a fiery volcanic landscape.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two hulking golems of cracked black volcanic rock, molten lava glowing through the cracks, flaming fists raised, dark red haze behind them.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "fire_mages": {
-    "description": "Battle mages in crimson and gold robes with high collars, hurling roaring fireballs from their hands and staffs, embers swirling, scorched battlefield lit in orange.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two battle mages in crimson and gold robes, one hurling a roaring fireball from the hands, the other raising a burning staff, swirling embers, orange glow.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "foresters": {
-    "description": "Hardy woodsmen in green hooded tunics and leather, carrying axes and longbows, moving swiftly along a hidden path through a dense green forest, ferns and mossy trunks around them.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two woodsmen in green hooded tunics, one with an axe on the shoulder and one with a longbow, walking along a forest path between mossy trunks.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "guardian_golems": {
-    "description": "Massive stone golems carved from grey granite, glowing faint blue runes on their chests, broad slab-like arms raised to shield, standing guard before an ancient temple.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two massive grey granite golems with glowing blue runes on their chests, broad slab-like arms raised as shields, standing guard, plain stone background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "herbalists": {
-    "description": "Gentle village healers in simple green and brown robes with satchels, gathering medicinal herbs and flowers in a sunny forest glade, one grinding herbs in a mortar, baskets of leaves and small glowing remedies.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two village healers in green and brown robes kneeling in a sunny glade, one gathering flowers into a basket, one grinding herbs in a mortar, small glowing remedies.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "ice_golems": {
-    "description": "Hulking golems made of jagged translucent blue ice, frost crystals on their shoulders, freezing mist rising around them, in a glacial landscape of snow and ice.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two hulking golems of jagged translucent blue ice, frost crystals on their shoulders, freezing mist around their feet, pale snowy background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "ice_mages": {
-    "description": "Battle mages in pale blue and white robes with silver trim, casting beams of freezing frost and shards of ice from crystal-topped staffs, snowflakes swirling in the air.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two battle mages in pale blue and white robes, casting a beam of frost and shards of ice from crystal-topped staffs, swirling snowflakes.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "illusionists": {
-    "description": "Mysterious robed mages in deep purple and violet hooded cloaks, their faces half hidden, conjuring shimmering ghostly mirror images and swirling violet mist from their hands.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "A hooded mage in a deep purple cloak, face half hidden, flanked by two shimmering ghostly copies of the same mage, swirling violet mist.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "northern_monks": {
-    "description": "Monks from a frozen land in thick blue and white fur-lined robes, fighting with wooden staves, their breath frosting in the cold air, snowy pine forest and icy peaks behind them.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two monks in thick blue and white fur-lined robes in a fighting stance with wooden staves, breath frosting in the cold air, snowy pines behind.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "peasants": {
-    "description": "Angry medieval peasants in hooded, ragged brown and grey clothes, armed with a pitchfork, a wooden club and a scythe, rough unshaven faces, determined but poorly equipped.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Three angry peasants in ragged brown and grey clothes, armed with a pitchfork, a club and a scythe, standing together on a muddy village road.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "red_cape_monks": {
-    "description": "Bald warrior monks in flowing red capes and orange robes, in martial arts fighting stances, fists wreathed in red fire, a mountain monastery in the background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two bald warrior monks in flowing red capes and orange robes, in martial arts stances, fists wreathed in red fire, mountain mist behind.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "savage_monks": {
-    "description": "Wild tribal monks with painted skin, bone necklaces and tattered green and brown wraps, leaping into battle with clawed gauntlets and spears, jungle and smoke behind them.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two wild monks with painted skin and bone necklaces, leaping forward with clawed gauntlets and a spear, green jungle haze behind.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "utem_crossbowmen": {
-    "description": "Disciplined soldiers in steel helmets and blue-and-silver tabards, kneeling and standing in a firing line, aiming heavy crossbows, bolts in quivers at their hips, a fortified wall behind them.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two soldiers in steel helmets and blue-and-silver tabards, one kneeling and one standing, aiming heavy crossbows, a stone wall behind.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "utem_guardsmen": {
-    "description": "Stalwart guards in heavy steel plate armor with blue tabards, standing shoulder to shoulder behind tall rectangular tower shields, long spears lowered, an unbreakable shield wall.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Three guards in heavy steel plate with blue tabards, shoulder to shoulder behind tall rectangular tower shields, long spears lowered, an unbreakable shield wall.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "utem_swordsmen": {
-    "description": "Veteran swordsmen in steel breastplates and blue tabards, longswords raised, advancing aggressively into battle with round shields, dust and banners in the background.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "description": "Two veteran swordsmen in steel breastplates and blue tabards, longswords raised and round shields forward, charging, dust behind them.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   }
 }

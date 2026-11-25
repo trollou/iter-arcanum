@@ -61,14 +61,14 @@
       "glade": "Mana token at turn start (gold by day, black at night); end your turn here: throw away a Wound",
       "ruins": {
         "altar": "Altar: tribute of 3 {color} mana for 7 Fame",
-        "enemies": "Enemies: {colors}; reward: {reward}",
+        "enemies": "Enemies: {groups}; reward: {reward}",
         "face_down": "Face-down ruins token (revealed next Day, or when you enter)"
       },
       "unsafe_space": "Unsafe space: forced withdrawal if you end your turn here",
       "city": {
         "level": "{city}, level {level}",
         "defenders": "Defenders: {enemies}",
-        "face_down": "Face-down defenders: {colors}",
+        "face_down": "Face-down defenders: {groups}",
         "bonus_white": "Defenders' bonus: Armor +1",
         "bonus_blue": "Defenders' bonus: Ice or Fire Attack +2, Cold Fire Attack +1",
         "bonus_red": "Defenders' bonus: Brutal if their attack is physical",
@@ -304,15 +304,7 @@
       "ice": "ice",
       "cold_fire": "cold fire"
     },
-    "face_down": "{color} defender, face down",
-    "pile_color": {
-      "green": "green",
-      "grey": "grey",
-      "violet": "violet",
-      "brown": "brown",
-      "red": "red",
-      "white": "white"
-    }
+    "face_down": "face-down defender ({group})"
   },
   "scenario": {
     "sandbox": {
@@ -1159,7 +1151,7 @@
       "siege_only": "siege only"
     },
     "calculation": "Halved: {halved} ÷ 2 = {halved_sum} · Others: {full}",
-    "summon_warning": "At the start of the Block phase, {enemies} summon a creature (brown pile): no undo past that point.",
+    "summon_warning": "At the start of the Block phase, {enemies} summon a creature (dungeon): no undo past that point.",
     "swift_line": "Swift: you must block twice its attack, 2 × {attack} = {block}",
     "night_rules": "Night rules: gold mana pays nothing",
     "move_as_attack": "Move as Attack ({move} left)",
@@ -1417,7 +1409,7 @@
   "burn": {
     "button": "Burn the monastery",
     "lost_points": "Burning loses: {move} move, {influence} influence",
-    "confirm": "Burn the monastery? Reputation −3, combat against a violet enemy, without your Units. This cannot be undone.",
+    "confirm": "Burn the monastery? Reputation −3, combat against an enemy drawn at random (mage tower), without your Units. This cannot be undone.",
     "confirm_yes": "Burn",
     "cancel": "Cancel",
     "no_units": "Your Units do not take part in this combat"
@@ -1449,12 +1441,12 @@
     "enter": "Enter: {site}",
     "lost_points": "Entering loses: {move} Move, {influence} Influence",
     "confirm": {
-      "fight_drawn": "Fight {count} {color} enemy(ies), drawn at random.",
+      "fight_drawn": "Fight {count} enemy(ies) drawn at random ({group}).",
       "fight_waiting": "Fight: {enemies}.",
       "night_no_units": "Night rules, without your Units.",
       "reward": "Reward if you win: {reward}.",
       "no_undo": "No undo.",
-      "fight_colors": "Fight enemies drawn at random: {colors}."
+      "fight_groups": "Fight enemies drawn at random: {groups}."
     },
     "confirm_yes": "Enter",
     "cancel": "Cancel",

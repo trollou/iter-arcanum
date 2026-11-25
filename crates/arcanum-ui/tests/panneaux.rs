@@ -10,7 +10,7 @@ use arcanum_core::{
 };
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
-    CARD_GAP, CARD_WIDTH, Command, DiscardChoice, EffectButton, EffectFace, EndTurnChoice,
+    BandUv, CARD_GAP, CARD_WIDTH, Command, DiscardChoice, EffectButton, EffectFace, EndTurnChoice,
     GameScreen, GameSession, HandCard, Icon, SKILLS_WIDTH, ScreenMode, ScreenPhase, Shortcut,
     attack_icon, band_uv, block_icon, bottom_section_widths, card_height, fan_layout, game_screen,
     repository_assets_dir, row_width, section_gap, section_widths,
@@ -236,16 +236,46 @@ fn hovered_card_grows_to_its_content() {
     assert_eq!(card_height(300.0, 260.0), 260.0);
 }
 
-// Spec 077 C2 : la bande garde le milieu de l'image carrée.
+fn uv_permille(uv: BandUv) -> (f32, f32, f32, f32) {
+    let r = |x: f32| (x * 1000.0).round();
+    (r(uv.left), r(uv.top), r(uv.right), r(uv.bottom))
+}
+
+// Spec #9 C1 : une image en bande de 404 × 168 remplit la bande de 202 × 84 sans recadrage.
 #[test]
-fn band_crops_middle_of_square_art() {
-    let (top, bottom) = band_uv(202.0, 84.0);
+fn band_keeps_whole_banner_image() {
     assert_eq!(
-        ((top * 1000.0).round(), (bottom * 1000.0).round()),
-        (292.0, 708.0)
+        uv_permille(band_uv(202.0, 84.0, 404.0, 168.0)),
+        (0.0, 0.0, 1000.0, 1000.0)
     );
-    assert_eq!(band_uv(100.0, 100.0), (0.0, 1.0));
-    assert_eq!(band_uv(80.0, 120.0), (0.0, 1.0));
+}
+
+// Spec #9 C2 (spec 077 C2) : une image carrée garde son milieu en hauteur, toute sa largeur.
+#[test]
+fn band_crops_square_image_as_before() {
+    assert_eq!(
+        uv_permille(band_uv(202.0, 84.0, 256.0, 256.0)),
+        (0.0, 292.0, 1000.0, 708.0)
+    );
+}
+
+// Spec #9 C3 : une image en bande dans un carré garde toute sa hauteur et le milieu de sa largeur.
+#[test]
+fn square_box_crops_banner_sides() {
+    assert_eq!(
+        uv_permille(band_uv(64.0, 64.0, 404.0, 168.0)),
+        (292.0, 0.0, 708.0, 1000.0)
+    );
+}
+
+// Spec #9 C4 : une taille nulle ne recadre rien.
+#[test]
+fn band_uv_degenerate_sizes() {
+    let whole = (0.0, 0.0, 1000.0, 1000.0);
+    assert_eq!(uv_permille(band_uv(0.0, 84.0, 404.0, 168.0)), whole);
+    assert_eq!(uv_permille(band_uv(202.0, 0.0, 404.0, 168.0)), whole);
+    assert_eq!(uv_permille(band_uv(202.0, 84.0, 0.0, 168.0)), whole);
+    assert_eq!(uv_permille(band_uv(202.0, 84.0, 404.0, 0.0)), whole);
 }
 
 // Spec 077 C6 : avec des cartes de 216 points, la carte sous le pointeur ne change pas.

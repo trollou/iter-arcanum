@@ -61,14 +61,14 @@
       "glade": "Jeton de mana au début du tour (or le jour, noir la nuit) ; finir le tour ici : jeter une Blessure",
       "ruins": {
         "altar": "Autel : offrande de 3 mana {color} pour 7 Gloire",
-        "enemies": "Ennemis : {colors} ; récompense : {reward}",
+        "enemies": "Ennemis : {groups} ; récompense : {reward}",
         "face_down": "Jeton de ruines face cachée (révélé au prochain Jour, ou en y entrant)"
       },
       "unsafe_space": "Case non sécurisée : retraite forcée si vous y finissez le tour",
       "city": {
         "level": "{city}, niveau {level}",
         "defenders": "Défenseurs : {enemies}",
-        "face_down": "Défenseurs face cachée : {colors}",
+        "face_down": "Défenseurs face cachée : {groups}",
         "bonus_white": "Bonus des défenseurs : Armure +1",
         "bonus_blue": "Bonus des défenseurs : attaque de glace ou de feu +2, de feu glacé +1",
         "bonus_red": "Bonus des défenseurs : brutal si leur attaque est physique",
@@ -304,15 +304,7 @@
       "ice": "glace",
       "cold_fire": "feu glacé"
     },
-    "face_down": "défenseur {color}, face cachée",
-    "pile_color": {
-      "green": "vert",
-      "grey": "gris",
-      "violet": "violet",
-      "brown": "marron",
-      "red": "rouge",
-      "white": "blanc"
-    }
+    "face_down": "défenseur face cachée ({group})"
   },
   "scenario": {
     "sandbox": {
@@ -1159,7 +1151,7 @@
       "siege_only": "siège seulement"
     },
     "calculation": "Divisées par deux : {halved} ÷ 2 = {halved_sum} · Autres : {full}",
-    "summon_warning": "Au début de la phase de parade, {enemies} invoquent une créature (pile marron) : pas de retour en arrière après.",
+    "summon_warning": "Au début de la phase de parade, {enemies} invoquent une créature (donjon) : pas de retour en arrière après.",
     "swift_line": "Vif : il faut parer le double de son attaque, 2 × {attack} = {block}",
     "night_rules": "Règles de Nuit : le mana or ne paie rien",
     "move_as_attack": "Mouvement en Attaque ({move} restant)",
@@ -1417,7 +1409,7 @@
   "burn": {
     "button": "Incendier le monastère",
     "lost_points": "Incendier fait perdre : {move} mouvement, {influence} influence",
-    "confirm": "Incendier le monastère ? Réputation −3, combat contre un ennemi violet, sans vos unités. Pas de retour en arrière.",
+    "confirm": "Incendier le monastère ? Réputation −3, combat contre un ennemi tiré au hasard (tour de mage), sans vos unités. Pas de retour en arrière.",
     "confirm_yes": "Incendier",
     "cancel": "Annuler",
     "no_units": "Vos unités ne participent pas à ce combat"
@@ -1449,12 +1441,12 @@
     "enter": "Entrer dans : {site}",
     "lost_points": "Entrer fait perdre : {move} mouvement, {influence} influence",
     "confirm": {
-      "fight_drawn": "Combat contre {count} ennemi(s) {color}, tiré(s) au hasard.",
+      "fight_drawn": "Combat contre {count} ennemi(s) tiré(s) au hasard ({group}).",
       "fight_waiting": "Combat contre : {enemies}.",
       "night_no_units": "Règles de Nuit, sans vos unités.",
       "reward": "Récompense si vous gagnez : {reward}.",
       "no_undo": "Pas de retour en arrière.",
-      "fight_colors": "Combat contre des ennemis tirés au hasard : {colors}."
+      "fight_groups": "Combat contre des ennemis tirés au hasard : {groups}."
     },
     "confirm_yes": "Entrer",
     "cancel": "Annuler",

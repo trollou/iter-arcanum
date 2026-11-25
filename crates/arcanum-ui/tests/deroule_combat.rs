@@ -1037,8 +1037,8 @@ fn ranged_phase_warns_about_summon() {
     assert_eq!(
         shown(&state, &catalog).summon_warning.as_deref(),
         Some(
-            "Au début de la phase de parade, Invocateurs orques invoquent une créature (pile \
-             marron) : pas de retour en arrière après."
+            "Au début de la phase de parade, Invocateurs orques invoquent une créature \
+             (donjon) : pas de retour en arrière après."
         )
     );
     let state = done(&state, Action::NextCombatPhase);
