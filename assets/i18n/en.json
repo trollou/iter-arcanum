@@ -1571,6 +1571,8 @@
     "system_language": "System language ({language})",
     "fullscreen_at_launch": "Full screen at launch",
     "fullscreen_hint": "F11 toggles the window without changing this setting.",
+    "display": "Display",
+    "animations": "Animations",
     "not_saved": "Preferences not saved (see the logs).",
     "sound": "Sound",
     "volume_master": "Master volume",

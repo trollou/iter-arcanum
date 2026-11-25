@@ -94,6 +94,11 @@ pub struct BoardInput<'a> {
     pub time: f64,
     /// Dernier déplacement de la figurine, qu'elle suit en glissant (C35).
     pub walk: Option<HeroWalk<'a>>,
+    /// Spec #5 : les ennemis vaincus par le dernier combat, que le plateau efface.
+    pub departure: Option<BoardDeparture<'a>>,
+    /// Spec #5 : la préférence « Animations » ; fausse, ni respiration, ni glissement, ni
+    /// effacement (C14).
+    pub animations: bool,
     /// Arrivées d'un déplacement par effet payé (spec 057, issue privée 257) : en évidence, un clic y
     /// joue le sort ; vides hors de ce choix.
     pub destinations: &'a [CastDestination],
@@ -106,6 +111,27 @@ pub struct HeroWalk<'a> {
     pub path: &'a [Hex],
     pub started: f64,
 }
+
+/// Un ennemi vaincu par le dernier combat, que le plateau efface à son retour (spec #5) : sa case,
+/// son jeton, et sa place parmi les `of` jetons que la case montrait avant le combat (paire réduite
+/// d'un site d'aventure).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct DepartingEnemy {
+    pub hex: Hex,
+    pub token: EnemyToken,
+    pub place: usize,
+    pub of: usize,
+}
+
+/// Les ennemis vaincus que le plateau efface, et l'instant où l'effacement a commencé (spec #5).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct BoardDeparture<'a> {
+    pub enemies: &'a [DepartingEnemy],
+    pub started: f64,
+}
+
+/// Durée de l'effacement d'un ennemi vaincu (spec #5, Q1).
+pub const DEPARTURE_SECONDS: f64 = 0.8;
 
 /// Respiration de la figurine du héros : ± 2 % de sa hauteur, période 3 s (spec 075, C34).
 pub const BREATHING_AMPLITUDE: f32 = 0.02;
@@ -214,6 +240,8 @@ pub enum OverlayKind {
     Defender,
     /// Jeton d'ennemi resté sur un site d'aventure (spec 044, C41) : pas un ennemi errant.
     SiteEnemy,
+    /// Ennemi vaincu qui s'efface au retour sur le plateau (spec #5).
+    Departing,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -232,6 +260,9 @@ pub struct Overlay {
     /// Socle d'un ennemi, à la couleur de sa catégorie, peint à plat sous ses pieds (spec #14, C9
     /// à C12) ; aucun pour les autres éléments.
     pub base: Option<Color32>,
+    /// Part de la hauteur de l'image qui reste debout (spec #5) : 1, sauf un ennemi vaincu qui
+    /// s'affaisse ; l'image garde sa largeur et s'écrase dans `rect`.
+    pub sink: f32,
 }
 
 impl Overlay {
@@ -252,6 +283,7 @@ impl Overlay {
             fallback,
             tint: Color32::WHITE,
             base: None,
+            sink: 1.0,
         }
     }
 
@@ -524,7 +556,12 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     }
                     None => standing(hex, HERO),
                 };
-                let height = rect.height() * breathing(input.time);
+                let breath = if input.animations {
+                    breathing(input.time)
+                } else {
+                    1.0
+                };
+                let height = rect.height() * breath;
                 let rect = Rect::from_min_max(pos2(rect.left(), rect.bottom() - height), rect.max);
                 overlays.push(Overlay::standing(
                     hex,
@@ -550,8 +587,42 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     fallback: terrain_color(content.terrain),
                     tint: Color32::WHITE,
                     base: None,
+                    sink: 1.0,
                 });
             }
+        }
+        // Spec #5 : les ennemis vaincus s'effacent là où le plateau les dessinait avant le combat.
+        for (enemy, remaining) in departing(input) {
+            let hex = enemy.hex;
+            if !hexes.iter().any(|drawing| drawing.hex == hex) {
+                continue;
+            }
+            let rect = if is_fortified_site(input, hex) {
+                standing(hex, DEFENDER)
+            } else if (adventure_site(input, hex).is_some() || is_ruins(input, hex)) && enemy.of > 1
+            {
+                let dx = if enemy.place == 0 { -PAIR_DX } else { PAIR_DX };
+                standing(hex, (vec2(dx, SITE_FOOT.y), PAIR_SIZE))
+            } else {
+                standing(hex, (SITE_FOOT, ENEMY_SIZE))
+            };
+            // Q1 : la figurine s'affaisse vers ses pieds en s'effaçant.
+            let height = rect.height() * remaining;
+            let rect = Rect::from_min_max(pos2(rect.left(), rect.bottom() - height), rect.max);
+            let color = enemy_color(enemy.token.color()).gamma_multiply(remaining);
+            overlays.push(Overlay {
+                tint: Color32::WHITE.gamma_multiply(remaining),
+                fallback: color,
+                base: Some(color),
+                sink: remaining,
+                ..Overlay::enemy(
+                    hex,
+                    OverlayKind::Departing,
+                    rect,
+                    figure_image(enemy.token.enemy()),
+                    enemy.token.color(),
+                )
+            });
         }
         // De l'arrière vers l'avant (spec 075, C13) : par le pied, du haut de l'écran vers le bas,
         // puis de gauche à droite. Tri stable : sur une même case, l'ordre d'ajout reste.
@@ -703,10 +774,32 @@ pub fn animation_repaint(animated: bool, focused: bool) -> Option<std::time::Dur
     (animated && focused).then(|| std::time::Duration::from_millis(34))
 }
 
+/// Le plateau s'anime : figurine du héros (respiration, glissement) ou effacement en cours
+/// (spec #5, C11), et animations permises (C14).
+pub fn board_animated(input: &BoardInput<'_>) -> bool {
+    input.animations
+        && ((input.hero.is_some() && input.figure.is_some()) || departing(input).next().is_some())
+}
+
+/// Les ennemis en train de s'effacer, chacun avec la part de sa hauteur et de son opacité qui
+/// reste : de 1 à 0 en `DEPARTURE_SECONDS`, d'un mouvement qui ralentit à la fin (Q1).
+fn departing<'a>(input: &BoardInput<'a>) -> impl Iterator<Item = (&'a DepartingEnemy, f32)> {
+    let departure = input.departure.filter(|_| input.animations);
+    let progress = departure.map_or(1.0, |departure| {
+        ((input.time - departure.started) / DEPARTURE_SECONDS).max(0.0)
+    });
+    departure
+        .filter(|_| progress < 1.0)
+        .into_iter()
+        .flat_map(|departure| departure.enemies)
+        .map(move |enemy| (enemy, ((1.0 - progress) * (1.0 - progress)) as f32))
+}
+
 /// Où est la figurine pendant son glissement, en unités du plateau (spec 075, C35) : entre deux
 /// cases du trajet ; `None` une fois arrivée, ou si le trajet ne mène pas à sa case (L6).
 fn walking_point(input: &BoardInput<'_>) -> Option<Pos2> {
-    let walk = input.walk?;
+    // C14 : sans animations, la figurine est aussitôt sur sa case.
+    let walk = input.walk.filter(|_| input.animations)?;
     let figure = input.figure?;
     let arrival = walk.path.iter().rposition(|hex| *hex == figure)?;
     let path = &walk.path[..=arrival];

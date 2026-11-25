@@ -215,6 +215,10 @@ pub struct PreferencesWindow {
     pub fullscreen_label: String,
     pub fullscreen_at_launch: bool,
     pub fullscreen_hint: String,
+    /// Spec #5 : le titre « Affichage » et la case « Animations ».
+    pub display_label: String,
+    pub animations_label: String,
+    pub animations: bool,
     /// Spec 081 : « Son » et ses quatre curseurs (C23).
     pub sound_label: String,
     pub volumes: Vec<VolumeSlider>,
@@ -260,6 +264,9 @@ pub fn preferences_window(
         fullscreen_label: catalog.text("preferences.fullscreen_at_launch"),
         fullscreen_at_launch: preferences.fullscreen_at_launch,
         fullscreen_hint: catalog.text("preferences.fullscreen_hint"),
+        display_label: catalog.text("preferences.display"),
+        animations_label: catalog.text("preferences.animations"),
+        animations: preferences.animations,
         sound_label: catalog.text("preferences.sound"),
         volumes: volume_sliders(preferences, catalog),
         no_audio: (!audio_output).then(|| catalog.text("preferences.no_audio")),
