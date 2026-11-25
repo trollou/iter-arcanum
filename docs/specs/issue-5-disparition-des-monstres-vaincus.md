@@ -90,8 +90,9 @@ Exemples pris du bac à sable : Rôdeurs (`enemies.ron`, `Prowlers` : armure 3, 
 
 - **C8** — Au début de l'effacement, la figurine de l'ennemi qui disparaît est dessinée à la place et à la taille qu'avait sa
   figurine avant le combat, opaque (`departing_figure_starts_where_it_stood`).
-- **C9** — Au milieu de la durée, sa hauteur et son opacité sont à moitié, ses pieds restent posés au même endroit ; à la fin
-  de la durée, elle n'est plus dessinée (`departing_figure_sinks_and_fades`).
+- **C9** — Au milieu de la durée, sa hauteur et son opacité sont au quart (le mouvement ralentit à la fin, Q1 : il reste
+  (1 − t)² de la figurine), ses pieds restent posés au même endroit ; à la fin de la durée, elle n'est plus dessinée
+  (`departing_figure_sinks_and_fades`). Écart à l'implémentation : la spec validée disait « à moitié », ce qui contredisait Q1.
 - **C10** — Les autres éléments debout ne changent pas pendant l'effacement (`departure_leaves_other_overlays_alone`), comme
   la respiration ne touche que le héros (spec 075, C34).
 - **C11** — Le plateau demande une image suivante tant qu'un effacement est en cours (au plus 30 par seconde, avec le focus) ;
