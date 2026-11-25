@@ -8,8 +8,8 @@ use arcanum_core::{
 };
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
-    CardInfo, DiscardChoice, GameScreen, HandCard, ScreenMode, ScreenPhase, game_screen,
-    repository_assets_dir,
+    CardInfo, DiscardChoice, EffectFace, GameScreen, HandCard, ScreenMode, ScreenPhase,
+    game_screen, repository_assets_dir,
 };
 
 // L'arène des tests d'arcanum-core, partagée plutôt que recopiée.
@@ -216,5 +216,27 @@ fn extra_mana_keeps_its_swatch() {
             basic(BasicColor::Blue),
             basic(BasicColor::Red),
         ]
+    );
+}
+
+// --- Options payantes ---
+
+// Spec #11 C12 : le bouton dit l'effet, la pastille le paiement ; l'infobulle garde tout.
+#[test]
+fn paid_option_face_omits_payment() {
+    let catalog = french();
+    let talent = held_alone(advanced(AdvancedAction::MagicTalent), &catalog);
+    let red = talent
+        .strong_effects
+        .iter()
+        .find(|button| button.color == Some(ManaColor::Basic(BasicColor::Red)))
+        .expect("option renforcée rouge");
+    assert_eq!(
+        red.face,
+        EffectFace::Text("un sort rouge de l'offre".into())
+    );
+    assert_eq!(
+        red.tooltip,
+        "Renforcer : Payer rouge : un sort rouge de l'offre"
     );
 }

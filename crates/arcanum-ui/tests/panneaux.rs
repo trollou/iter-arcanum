@@ -398,9 +398,10 @@ fn effect_buttons_without_icon() {
     );
 }
 
-// Spec 073 C17 — spec 025 : les options payantes dans le bloc renforcé.
+// Spec 073 C17, remplacé par la spec #11 C11 (Q2) : les options payantes dans le bloc de base,
+// au format « pastille : effet » ; le bloc renforcé sans pastille.
 #[test]
-fn paid_option_in_strong_block() {
+fn paid_option_in_basic_block() {
     let catalog = french();
     let crystallize = card(Crystallize, 1);
     let state = state_with(&[crystallize]);
@@ -413,31 +414,36 @@ fn paid_option_in_strong_block() {
     );
     let screen = screen_of(&state, &catalog);
     let crystallize = held(&screen, crystallize);
-    assert!(crystallize.basic_effects.is_empty());
-    let faces = summary(&crystallize.strong_effects);
-    // Les quatre cristaux de l'effet renforcé, puis les quatre options payantes.
-    assert_eq!(faces.len(), 8);
+    let white = Some(ManaColor::Basic(BasicColor::White));
+    let green = Some(ManaColor::Basic(BasicColor::Green));
     assert_eq!(
-        faces[4..],
+        summary(&crystallize.basic_effects),
         expected(&[
-            (Face::Text("Payer rouge : cristal rouge"), RED, true),
-            (Face::Text("Payer bleu : cristal bleu"), BLUE, false),
+            (Face::Crystal(ManaColor::Basic(BasicColor::Red)), RED, true),
             (
-                Face::Text("Payer blanc : cristal blanc"),
-                Some(ManaColor::Basic(BasicColor::White)),
+                Face::Crystal(ManaColor::Basic(BasicColor::Blue)),
+                BLUE,
                 false
             ),
             (
-                Face::Text("Payer vert : cristal vert"),
-                Some(ManaColor::Basic(BasicColor::Green)),
+                Face::Crystal(ManaColor::Basic(BasicColor::White)),
+                white,
                 false
             ),
-        ])[..]
+            (
+                Face::Crystal(ManaColor::Basic(BasicColor::Green)),
+                green,
+                false
+            ),
+        ])
     );
     assert_eq!(
-        crystallize.strong_effects[4].command,
+        crystallize.basic_effects[0].command,
         crystallize.paid_plays[0].command.into()
     );
+    let strong = &crystallize.strong_effects;
+    assert_eq!(strong.len(), 4);
+    assert!(strong.iter().all(|button| button.color.is_none()));
 }
 
 // Spec 073 C18 — comme la spec 071, C17.
