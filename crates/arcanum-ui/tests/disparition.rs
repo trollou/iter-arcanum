@@ -508,5 +508,12 @@ fn slowed_departure_lasts_scale_times_longer() {
         .expect("en cours");
     assert!((departing.rect.height() - stood.rect.height() / 4.0).abs() < 0.01);
     assert!(!of_kind(&at(DEPARTURE_SECONDS), OverlayKind::Departing).is_empty());
-    assert!(of_kind(&at(scale * DEPARTURE_SECONDS), OverlayKind::Departing).is_empty());
+    // Un centième de plus : (60 + 4,8) / 6 tombe juste sous 10,8 en virgule flottante.
+    assert!(
+        of_kind(
+            &at(scale * DEPARTURE_SECONDS + 0.01),
+            OverlayKind::Departing
+        )
+        .is_empty()
+    );
 }

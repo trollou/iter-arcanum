@@ -9,6 +9,8 @@ ECRAN="${ARCANUM_VERIF_ECRAN:-:99}"
 TAILLE="${ARCANUM_VERIF_TAILLE:-1600x900}"
 # Langue du jeu (spec 076) : français par défaut, la langue du système sous Xvfb vaut souvent C ou en.
 LANGUE="${ARCANUM_VERIF_LANGUE:-fr}"
+# Ralenti des animations du plateau (issue #50) : 1 par défaut ; 10 pour capturer un effacement.
+RALENTI="${ARCANUM_VERIF_RALENTI:-1}"
 if [ -z "${ARCANUM_VERIF_CAPTURES:-}" ]; then
   if [ -d /mnt/project-files/ ]; then
     ARCANUM_VERIF_CAPTURES=/mnt/project-files/captures
@@ -36,8 +38,8 @@ Usage : scripts/verif-manuelle.sh <commande> [arguments]
   arreter              ferme le jeu et Xvfb
 
 Variables : ARCANUM_VERIF_ECRAN (:99), ARCANUM_VERIF_TAILLE (1600x900), ARCANUM_VERIF_CAPTURES (dossier),
-ARCANUM_VERIF_LANGUE (fr : langue du jeu, passée en --lang), ARCANUM_CONFIG_DIR (préférences : dossier neuf
-à chaque lancement s'il n'est pas posé).
+ARCANUM_VERIF_LANGUE (fr : langue du jeu, passée en --lang), ARCANUM_VERIF_RALENTI (1 : animations du plateau
+ralenties de ce facteur), ARCANUM_CONFIG_DIR (préférences : dossier neuf à chaque lancement s'il n'est pas posé).
 AIDE
 }
 
@@ -88,6 +90,7 @@ demarrer() {
   # la sortie du script ouverte (sinon `demarrer | tail` ne rend jamais la main) et le PID noté est
   # bien celui du jeu (sinon `arreter` ne tue que le sous-shell).
   (cd "$RACINE" && ARCANUM_LOG_DIR="$ETAT/logs" ARCANUM_CONFIG_DIR="$config" LIBGL_ALWAYS_SOFTWARE=1 \
+    ARCANUM_ANIMATION_SCALE="$RALENTI" \
     exec "$RACINE/target/debug/iter-arcanum" --lang "$LANGUE") >"$ETAT/jeu.log" 2>&1 </dev/null &
   echo $! >"$ETAT/jeu.pid"
   local fenetre=""

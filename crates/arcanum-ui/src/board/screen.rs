@@ -780,14 +780,15 @@ pub const ANIMATION_SCALE_ENV_VAR: &str = "ARCANUM_ANIMATION_SCALE";
 
 /// Facteur de ralenti lu dans `ARCANUM_ANIMATION_SCALE` : un nombre fini et positif, sinon 1.
 pub fn animation_scale(value: Option<&str>) -> f64 {
-    let _ = value;
-    todo!()
+    value
+        .and_then(|value| value.trim().parse::<f64>().ok())
+        .filter(|scale| scale.is_finite() && *scale > 0.0)
+        .unwrap_or(1.0)
 }
 
 /// Temps des animations du plateau : celui d'egui divisé par le facteur de ralenti.
 pub fn animation_time(time: f64, scale: f64) -> f64 {
-    let _ = (time, scale);
-    todo!()
+    time / scale
 }
 
 /// Le plateau s'anime : figurine du héros (respiration, glissement) ou effacement en cours
