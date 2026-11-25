@@ -1,10 +1,10 @@
 name: CI
 
-# Dépôt public : minutes illimitées, Windows compris (spec 082, Q6).
-# - PR : Linux et Windows au complet, sans filtre de chemins, une fois la PR prête (un brouillon ne
+# Dépôt public : minutes illimitées, Windows et macOS compris (spec 082, Q6 ; spec #7, Q2).
+# - PR : Linux, Windows et macOS au complet, sans filtre de chemins, une fois la PR prête (un brouillon ne
 #   lance rien) ;
-# - main : à chaque fusion, Linux et Windows, ce qui enregistre aussi le cache ;
-# - à la main (onglet Actions) : tout, sur les deux OS.
+# - main : à chaque fusion, les trois OS, ce qui enregistre aussi le cache ;
+# - à la main (onglet Actions) : tout, sur les trois OS.
 on:
   pull_request:
     # ready_for_review : le passage de brouillon à prête lance la CI.
@@ -28,7 +28,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        # macos-latest : Apple Silicon ; rien à installer (CoreAudio est fourni, spec #7).
+        os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7

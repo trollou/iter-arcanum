@@ -228,7 +228,7 @@ Aucun.
   à proposer dans une issue après la publication.
 - Paquets et versions publiées (exécutables Windows, AppImage) : plus tard.
 - Copie des issues fermées et de l'historique des PR : ils restent dans le privé, en archive.
-- macOS : spec 085.
+- macOS : spec #7.
 - Reprise des anciens dossiers `mage-knight` (sauvegardes, préférences, logs, lanceur) : écartée par Mathieu (2026-11-20).
 
 ## Questions ouvertes

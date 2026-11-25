@@ -6,6 +6,8 @@ Avant d'attribuer une touche, vérifier ici qu'elle n'est pas déjà prise dans 
 Chaque bouton qui a une touche la montre en infobulle, « Raccourci : … » (spec 071) ; un élément du Menu l'écrit en face de son
 libellé (spec 074). Ctrl+Z, Ctrl+S, Ctrl+O et Ctrl+N sont aussi dans le Menu.
 
+Sous macOS, Ctrl est Cmd : la touche à presser et son libellé (« Cmd+Z ») ; le reste du tableau écrit « Ctrl » (spec #7).
+
 Les touches n'agissent jamais quand un champ de saisie a le focus, sauf Entrée dans le champ de la graine (spec 065).
 
 | Touche | Effet | Contexte | Spec |

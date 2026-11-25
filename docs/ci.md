@@ -6,21 +6,31 @@ sert aux fils qui touchent `.github/` ou qui s'étonnent d'un check.
 
 ## Ce que lance la CI
 
-La CI (`.github/workflows/ci.yml`) lance `fmt`, `clippy` et `test` sous Linux et Windows. Sur un dépôt public,
-les minutes GitHub Actions sont illimitées, Windows compris (spec 082, Q6) : plus de filtre de chemins ni de
+La CI (`.github/workflows/ci.yml`) lance `fmt`, `clippy` et `test` sous Linux, Windows et macOS (`macos-latest`, Apple Silicon ; spec #7). Sur un dépôt public,
+les minutes GitHub Actions sont illimitées, Windows et macOS compris (spec 082, Q6) : plus de filtre de chemins ni de
 passage de nuit, qui économisaient le quota du dépôt privé (issues privées 48 et 305).
 
-- **Sur une pull request prête**, Linux et Windows au complet, quel que soit ce qu'elle touche (une PR de doc
+- **Sur une pull request prête**, Linux, Windows et macOS au complet, quel que soit ce qu'elle touche (une PR de doc
   tourne aussi, en quelques minutes). Le job Linux installe d'abord `libasound2-dev` et `pkg-config`, sans
-  lesquels le son (cpal, ALSA) ne compile pas (spec 081) ; `scripts/verifier.sh` fait de même dans un fil.
+  lesquels le son (cpal, ALSA) ne compile pas (spec 081) ; `scripts/verifier.sh` fait de même dans un fil. Le job
+  macOS n'installe rien (CoreAudio est fourni).
 - **Un brouillon ne lance rien** : la CI part quand la PR passe « prête » (`ready_for_review`), puis à
   chaque push tant qu'elle reste prête (l'exécution précédente est annulée). Les fils ouvrent leur PR en
   brouillon et la passent prête à la toute fin, une fois le dernier fil de la spec fini.
-- **Sur `main`, à chaque fusion**, les deux OS au complet ; c'est aussi ce passage qui enregistre le cache.
-- **À la main** (onglet Actions), sur les deux OS, au complet.
+- **Sur `main`, à chaque fusion**, les trois OS au complet ; c'est aussi ce passage qui enregistre le cache.
+- **À la main** (onglet Actions), sur les trois OS, au complet.
 - **Garde-fou du dépôt public** : `cargo test` comprend `crates/arcanum-core/tests/depot_public.rs`, qui
   refuse tout matériel de tiers suivi par git (`docs/regles/`, PDF, images hors de `assets/` et
   `docs/specs/images/`, fichier de plus de 5 Mo ; spec 082, C4 et C5).
+
+## Capture macOS
+
+`.github/workflows/capture-macos.yml` ne tourne jamais tout seul : onglet Actions, « Capture macOS », « Run workflow »,
+choisir la branche et la langue (`fr-FR` ou `en-US`). Il compile le jeu en release sur `macos-latest`, règle la langue
+préférée du runner, lance le jeu comme un jeu déployé (sans `cargo`, sans `--lang` ni variable de dossier), prend une
+capture d'écran au bout de 20 s et publie en artefact `capture-macos-<langue>` : `ecran.png`, les logs de
+`~/Library/Logs/iter-arcanum/` (langue détectée, dossiers) et la liste de `~/Library/Application Support/iter-arcanum/`.
+Si le runner refuse l'enregistrement de l'écran, la capture sort noire ; les logs restent probants (spec #7, Q3).
 
 ## Contrôle qualité
 

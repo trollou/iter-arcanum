@@ -62,7 +62,7 @@ puis : chargement du catalogue de la langue retenue ; s'il échoue, anglais ; s'
 
 - **Lire le paramètre** : `--lang <code>` ou `--lang=<code>`. Le code se lit comme une langue du système (ci-dessous) :
   `FR`, `fr_FR` et `fr-FR` donnent `fr`.
-- **Langue du système, Linux** (et tout ce qui n'est pas Windows, en attendant la spec 085 pour macOS) : la première variable
+- **Langue du système, Linux** (et tout ce qui n'est pas Windows, en attendant la spec #7 pour macOS) : la première variable
   non vide parmi `LC_ALL`, `LC_MESSAGES`, `LANG`, dans cet ordre (ordre POSIX pour les messages). `LANGUAGE` (liste GNU) est
   ignorée (hors périmètre).
 - **Langue du système, Windows** : la langue de l'interface de Windows, `GetUserDefaultUILanguage` (kernel32, toujours lié),
@@ -184,7 +184,7 @@ Aucun : le choix se fait au lancement.
 
 - **Écran de préférences** et langue mémorisée d'une session à l'autre : spec 080, qui reprend ce choix.
 - **Changer de langue en cours de partie** : spec 080.
-- **macOS** : sa détection propre (`#[cfg(target_os = "macos")]`) relève de la spec 085 ; d'ici là, macOS passe par les
+- **macOS** : sa détection propre (`#[cfg(target_os = "macos")]`) relève de la spec #7 ; d'ici là, macOS passe par les
   variables d'environnement, comme Linux.
 - **Variable `LANGUAGE`** (liste de langues GNU, `fr:en`) : ignorée ; `LC_ALL`, `LC_MESSAGES` et `LANG` suffisent sur les
   bureaux Linux courants, qui posent `LANG`.

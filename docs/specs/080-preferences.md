@@ -306,7 +306,7 @@ virgule est une touche directe (Q2).
 - **Taille et position de la fenêtre** gardées d'une session à l'autre : pas demandées.
 - **Thème clair ou sombre**, taille du texte : pas demandés.
 - **Réglages de partie** (scénario, héros, options du fantôme par défaut) : l'écran de nouvelle partie les tient.
-- **macOS** : son dossier de configuration vient de `directories` sans rien de plus ; la spec 085 le vérifie.
+- **macOS** : son dossier de configuration vient de `directories` sans rien de plus ; la spec #7 le vérifie.
 - **Renommage du dossier** `mage-knight` : fait par la spec 082, sans reprise.
 
 ## Décisions
