@@ -236,8 +236,9 @@ Aucun : les touches des boutons « Prendre » (1 à 3) et d'Échap ne changent p
   « comment va se comporter la fenêtre si l'écran est trop petit ? Prévoir que les actions avancées auront bientôt une
   illustration. » Mesuré (L2) : avec une bande sur chaque carte, une rangée par offre ne tient plus en 1 600 × 900.
   Proposition : actions avancées et sorts sur la même rangée quand la largeur le permet (1 600 points), unités dessous ;
-  sinon passage à la ligne et défilement vertical, la fenêtre ne dépassant jamais l'écran (L1, L2). Autre possibilité :
-  une rangée par offre, et défilement dès 1 600 × 900.
+  sinon passage à la ligne et défilement vertical, la fenêtre ne dépassant jamais l'écran (L1, L2). **Tranchée par
+  Mathieu (2026-11-25) : actions avancées et sorts côte à côte, unités dessous** (écartée : une rangée par offre, qui
+  défile dès 1 600 × 900).
 - **« Prendre »** (Mathieu, 2026-11-25) : en haut à droite, face au nom, nom entier en infobulle s'il est tronqué ; repris
   dans L4 et la seconde maquette.
 - **Q2. Texte** : celui du « i » de la même carte en main (texte écrit d'abord, C7), pour qu'une carte dise partout la
