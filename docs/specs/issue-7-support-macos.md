@@ -1,6 +1,6 @@
 # #7 — Support de macOS
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-25)
 - Issue : #7 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec 076 (langue du système), spec 080 (préférences), spec 081 (son), spec 082 (dépôt public), spec 003
   (logs), spec 004 (icône), spec 074 (touches du Menu)
@@ -61,7 +61,7 @@ fait le travail** (`windows_language_id_to_code` en est le modèle) ; **seul le 
 lancement) est derrière `#[cfg(target_os = "macos")]`, dans un module dédié (ADR 0004). Les tests rouges se voient donc dès
 Linux, sauf ceux qui interrogent le vrai système (C1 à C3, C5), rouges ou verts dans la CI macOS seulement.
 
-## Décisions proposées
+## Décisions
 
 - **Langue du système, macOS** : la **première** langue préférée de l'utilisateur, traduite en code par `locale_to_code`
   (spec 076 : `fr-FR` → `fr`, `zh-Hans-CN` → `zh`, `en` → `en`). Seule la première compte, comme Windows ne donne qu'une
@@ -70,8 +70,8 @@ Linux, sauf ceux qui interrogent le vrai système (C1 à C3, C5), rouges ou vert
   L'ordre de la spec 076 et de la spec 080 est inchangé : `--lang`, puis préférences, puis système, puis anglais.
 - **Lecture de la liste** : appel direct à CoreFoundation (`CFLocaleCopyPreferredLanguages`, `CFArrayGetCount`,
   `CFArrayGetValueAtIndex`, `CFStringGetCString`, `CFRelease`), lié par `#[link(name = "CoreFoundation", kind =
-  "framework")]`, comme `GetUserDefaultUILanguage` l'est à kernel32 : aucune dépendance nouvelle (Q1).
-- **Logs, macOS** : `~/Library/Logs/iter-arcanum/` (Q5). C'est le dossier qu'Apple prévoit pour les logs d'une application,
+  "framework")]`, comme `GetUserDefaultUILanguage` l'est à kernel32 : aucune dépendance nouvelle (Q1, tranchée).
+- **Logs, macOS** : `~/Library/Logs/iter-arcanum/` (Q5, tranchée). C'est le dossier qu'Apple prévoit pour les logs d'une application,
   que l'app Console affiche d'elle-même. Les autres sources de la spec 003 (variable `ARCANUM_LOG_DIR`, dossier `logs/` du dépôt
   sous `cargo run`) sont inchangées.
 - **Libellé des touches, macOS** : « Cmd+{key} » au lieu de « Ctrl+{key} », en français comme en anglais (Q4). Le symbole ⌘
@@ -208,22 +208,12 @@ Aucune touche ajoutée ni modifiée : seul le libellé du modificateur change so
 
 ## Questions ouvertes
 
-- **Q1 — Lire la langue de macOS : appel direct ou crate ?** Recommandé : appel direct à CoreFoundation (une trentaine de
-  lignes `unsafe` commentées, aucune dépendance), sur le modèle de kernel32 pour Windows (spec 076). Autre choix : la crate
-  `sys-locale` (MIT ou Apache-2.0, compatible GPL v3), qui couvre les trois systèmes et remplacerait aussi le code Windows,
-  au prix d'une dépendance.
-- **Q2 — Quand lancer la CI macOS ?** Recommandé : à chaque PR prête et à chaque fusion sur `main`, comme Linux et Windows
-  (gratuit sur un dépôt public, en parallèle des deux autres ; la CI de `main` dure aujourd'hui 6 à 8 minutes). Autres choix :
-  sur `main` et à la main seulement (une régression macOS ne se voit qu'après fusion) ; ou en PR seulement quand elle touche
-  `arcanum-ui`, `arcanum-audio`, `Cargo.*` ou `.github/` (retour au filtre de chemins retiré par la spec 082).
-- **Q3 — Vérifier à l'œil sans Mac : le workflow de capture ?** Recommandé : oui, `capture-macos.yml` lancé à la main
-  (section Interface), une fois à l'implémentation, puis quand l'écran de lancement ou les dossiers changent. Autre choix :
-  pas de capture, les tests de la CI suffisent, et un premier joueur sur Mac fera le retour.
-- **Q4 — Touches sous macOS : seulement le libellé « Cmd+… » ?** Recommandé : oui, aucune touche ajoutée. F11 est pris par
-  macOS (afficher le bureau) mais le bouton vert de la fenêtre et Menu > Plein écran restent ; Fin s'obtient par Fn+→ sur un
-  portable. Autre choix : ajouter Ctrl+Cmd+F (plein écran habituel sous macOS) et une seconde touche de fin du tour.
-- **Q5 — Logs sous macOS : `~/Library/Logs/iter-arcanum/` ?** Recommandé : oui (convention Apple, visible dans l'app
-  Console). Autre choix : `~/Library/Application Support/iter-arcanum/logs/`, à côté des préférences et des sauvegardes.
-- **Q6 — Partage avec l'issue #33 : d'accord ?** Cette spec s'arrête au jeu compilé depuis le dépôt et vérifié par la CI ; le
-  paquet `.app`, la signature, le binaire universel et la recherche des ressources dans le paquet vont à #33. Autre choix :
-  produire dès ici un `.app` non signé (artefact du workflow de capture), ce qui avance une partie de #33.
+Aucune. Tranchées par Mathieu le 2026-11-25, qui a retenu chaque recommandation :
+
+- **Q1** : appel direct à CoreFoundation, aucune dépendance nouvelle.
+- **Q2** : CI macOS à chaque PR prête et à chaque fusion sur `main`, comme Linux et Windows.
+- **Q3** : workflow de capture `capture-macos.yml`, lancé à la main (section Interface).
+- **Q4** : seul le libellé « Cmd+… » change, aucune touche ajoutée.
+- **Q5** : logs dans `~/Library/Logs/iter-arcanum/`.
+- **Q6** : la spec s'arrête au jeu compilé depuis le dépôt et vérifié par la CI ; paquet, signature, binaire universel et
+  ressources dans le paquet vont à l'issue #33.
