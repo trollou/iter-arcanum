@@ -1,6 +1,6 @@
 # #5 — Disparition des monstres vaincus
 
-- Statut : à valider
+- Statut : validée le 2026-11-25 (Q1 à Q3 tranchées par Mathieu : réponses proposées retenues)
 - Issue : #5 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec 075 (plateau isométrique, essai d'animation du héros, `BoardInput::time`, `animation_repaint`),
   spec 080 (préférences, section « Affichage »), spec 031 (fin du combat) ; toutes implémentées
@@ -135,7 +135,7 @@ prend le titre `preferences.display`, en gras comme « Langue » et « Son ».
 ## Interface
 
 - **Effacement des figurines vaincues** au retour sur le plateau : la figurine s'affaisse vers ses pieds en s'effaçant, en
-  `DEPARTURE_SECONDS` (0,8 s proposé, Q1) (C8 à C10, `GameSession::last_departure`, `BoardInput::departure`). Fluidité :
+  `DEPARTURE_SECONDS` (0,8 s, Q1) (C8 à C10, `GameSession::last_departure`, `BoardInput::departure`). Fluidité :
   vérification à l'œil.
 - **Case « Animations »** dans la section « Affichage » des préférences, sous « Plein écran au lancement » (C13,
   `PreferencesWindow::animations`).
@@ -161,13 +161,10 @@ Aucun : la case se coche dans la fenêtre des préférences (Ctrl+,).
 
 ## Questions ouvertes
 
-- **Q1. Mouvement de l'effacement.** Proposé : la figurine **s'affaisse vers ses pieds** (hauteur de 100 % à 0 %) **en
-  s'effaçant** (opacité de 1 à 0), en **0,8 s**, d'un mouvement qui ralentit à la fin. Autres options : fondu seul, sans
-  affaissement ; ou la figurine monte et s'efface comme une fumée. La respiration de l'essai a été jugée peu convaincante
-  (issue #4) : un mouvement franc et court semble plus lisible qu'un fondu discret.
-- **Q2. Ligne « Animations » du Menu.** La spec 075 (Q7) prévoyait une ligne du Menu pour couper les animations, avant que
-  les préférences existent. Proposé : **la seule case des préférences** (le Menu a déjà « Préférences… », Ctrl+,) ; une
-  ligne du Menu ferait doublon. Sinon, une ligne à cocher « Animations » dans le Menu, qui change la même préférence.
-- **Q3. Ennemis jamais vus sur le plateau.** Proposé : un ennemi tiré au moment où le combat commence (donjon, tombeau,
-  incendie) ne s'efface pas, puisqu'il n'a jamais été dessiné sur le plateau (Règles, « Qui disparaît »). Sinon, tous les
-  vaincus s'effacent, et ceux-là apparaissent un instant sur leur site pour disparaître.
+Aucune. Décisions de Mathieu (2026-11-25), réponses proposées retenues :
+
+- **Q1. Mouvement de l'effacement** : la figurine s'affaisse vers ses pieds (hauteur de 100 % à 0 %) en s'effaçant
+  (opacité de 1 à 0), en 0,8 s (`DEPARTURE_SECONDS`), d'un mouvement qui ralentit à la fin.
+- **Q2. Ligne « Animations » du Menu** : non, la seule case des préférences (spec 075, Q7, remplacée par cette décision).
+- **Q3. Ennemis jamais vus sur le plateau** : un ennemi tiré au moment où le combat commence (donjon, tombeau, incendie)
+  ne s'efface pas (Règles, « Qui disparaît » ; C4).
