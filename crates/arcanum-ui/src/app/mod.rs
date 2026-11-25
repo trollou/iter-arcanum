@@ -63,6 +63,8 @@ pub struct IterArcanumApp {
     /// Essai d'animation (spec 075, C35) : le déplacement en cours de glissement, par son numéro,
     /// et l'instant où il a commencé.
     walk_start: Option<(u64, f64)>,
+    /// Spec #5 : la dernière disparition vue et l'instant où son effacement a commencé.
+    departure_start: Option<(u64, f64)>,
     /// Dossiers des ressources candidats : le catalogue d'une autre langue y est relu (spec 080).
     assets_candidates: Vec<PathBuf>,
     /// Spec 081 : le lecteur (Kira, ou muet) et le directeur qui lui donne ses ordres.
@@ -89,6 +91,7 @@ impl IterArcanumApp {
             image_warnings: ImageWarnings::default(),
             illustrations,
             walk_start: None,
+            departure_start: None,
             assets_candidates: Vec::new(),
             audio: Box::new(SilentPlayer),
             director: AudioDirector::new(std::time::Duration::from_secs_f64(WALK_STEP_SECONDS)),

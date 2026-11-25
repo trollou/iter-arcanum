@@ -689,3 +689,26 @@ fn preferences_window_blocks_game_keys() {
     client.shortcut(Shortcut::Preferences);
     assert!(client.preferences_window(&catalog).is_none());
 }
+
+#[test]
+fn animations_checkbox_is_saved() {
+    // Spec #5 C13 : la case « Animations » dans « Affichage », cochée selon la préférence ; la
+    // changer l'enregistre tout de suite.
+    let catalog = french();
+    let dir = tempfile::tempdir().expect("dossier temporaire");
+    let mut client = in_game(dir.path());
+    client.command(Command::OpenPreferences);
+    let shown = window(&client, &catalog);
+    assert_eq!(shown.display_label, "Affichage");
+    assert_eq!(shown.animations_label, "Animations");
+    assert!(shown.animations, "cochée par défaut");
+
+    client.command(Command::SetAnimations(false));
+    assert!(!window(&client, &catalog).animations);
+    assert!(!client.preferences().animations);
+    assert!(file_text(dir.path()).contains(r#""animations": false"#));
+
+    client.command(Command::SetAnimations(true));
+    assert!(window(&client, &catalog).animations);
+    assert!(file_text(dir.path()).contains(r#""animations": true"#));
+}
