@@ -21,8 +21,8 @@
   },
   "catapults": {
     "description": "A sturdy wooden siege catapult on a heavy timber frame, seen from the side: its long throwing arm pivots on a thick axle, has just swung forward and stopped against the padded crossbar, and a single round boulder flies away from the cup at the tip of the arm in a high arc toward the right; two engineers in leather aprons stand beside the frame, open field.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "model": "gemini-3-pro-image",
+    "date": "2026-11-25"
   },
   "fire_golems": {
     "description": "Two hulking golems of cracked black volcanic rock, molten lava glowing through the cracks, flaming fists raised, dark red haze behind them.",

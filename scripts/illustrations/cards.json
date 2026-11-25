@@ -15,7 +15,9 @@
     "date": "2026-11-25"
   },
   "amulet_of_sun": {
-    "description": "A golden amulet shaped like a radiant sun hanging on a chain, glowing with warm gold light against a deep blue night sky full of stars, the painted scene filling the whole image."
+    "description": "A golden amulet shaped like a radiant sun hanging on a chain, glowing with warm gold light against a deep blue night sky full of stars, the painted scene filling the whole image.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "banner_of_courage": {
     "description": "A green and gold banner with a rampant lion emblem raised high by a soldier's fist, bright morning light.",
@@ -126,7 +128,9 @@
     "date": "2026-11-25"
   },
   "diplomacy": {
-    "description": "An unarmed mage in white robes speaking calmly with an open palm raised toward a wary warrior, soft golden glowing words of light flowing as ribbons from the mage toward the warrior, whose sword is lowered, calm light."
+    "description": "An unarmed mage in white robes speaking calmly with an open palm raised toward a wary warrior, soft golden glowing words of light flowing as ribbons from the mage toward the warrior, whose sword is lowered, calm light.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "emerald_ring": {
     "description": "A golden ring set with a large glowing emerald, green light radiating, resting on dark velvet.",
@@ -154,7 +158,9 @@
     "date": "2026-11-25"
   },
   "fire_bolt": {
-    "description": "A round blazing ball of fire flying across the image like a comet, trailing a long tail of flames and sparks, dark smoky background."
+    "description": "A round blazing ball of fire flying across the image like a comet, trailing a long tail of flames and sparks, dark smoky background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "fireball": {
     "description": "A huge roaring fireball flying across the image, trailing flames and sparks, dark night sky.",
@@ -182,10 +188,14 @@
     "date": "2026-11-25"
   },
   "horn_of_wrath": {
-    "description": "A large curved war horn of bone and bronze lying on a rock, blasting by itself a visible shockwave of force from its mouth, sparks and dust, no hands, no people."
+    "description": "A large curved war horn of bone and bronze lying on a rock, blasting by itself a visible shockwave of force from its mouth, sparks and dust, no hands, no people.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "ice_bolt": {
-    "description": "A round glowing ball of ice and frost flying across the image like a comet, trailing frost mist and ice splinters, dark night background."
+    "description": "A round glowing ball of ice and frost flying across the image like a comet, trailing frost mist and ice splinters, dark night background.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "ice_shield": {
     "description": "A warrior holding up a large shield of translucent blue ice that stops an enemy blade, frost spreading, cold blue light.",
@@ -224,7 +234,9 @@
     "date": "2026-11-25"
   },
   "magic_talent": {
-    "description": "A grown adult mage in blue robes, bearded, reaching toward a floating open spellbook with blank glowing pages, blue magic sparks leaping to the fingertips, dark library with shelves."
+    "description": "A grown adult mage in blue robes, bearded, reaching toward a floating open spellbook with blank glowing pages, blue magic sparks leaping to the fingertips, dark library with shelves.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "mana_bolt": {
     "description": "A crackling bolt of blue mana lightning streaking across the image, small swirls of red, white and green energy around it, dark sky.",
@@ -345,7 +357,9 @@
     "date": "2026-11-25"
   },
   "space_bending": {
-    "description": "A single traveller stepping out of a swirling blue portal standing upright on a stone path in green countryside, one foot still inside the vortex, warped space rippling around the portal."
+    "description": "A single traveller stepping out of a swirling blue portal standing upright on a stone path in green countryside, one foot still inside the vortex, warped space rippling around the portal.",
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "stamina": {
     "description": "A traveller in a blue cloak climbing a steep rocky path with a heavy pack, seen from the side, cool blue twilight, distant peaks.",
@@ -364,8 +378,8 @@
   },
   "swiftness": {
     "description": "A nimble archer in a white and silver tunic leaping through the air while loosing an arrow, white wind streaks trailing behind, bright open sky over green hills, the painted scene filling the whole image with no frame.",
-    "model": "gemini-2.5-flash-image",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "sword_of_justice": {
     "description": "A gleaming silver longsword standing point-down in a stone, a beam of white light falling on it, dark background.",
@@ -405,8 +419,8 @@
   "will_focus": {
     "description": "The hero channeling green energy into a glowing green crystal held between both clawed hands, concentric rings of light, emerald glow, dark mossy cave background with soft green light.",
     "hero": "goldyx",
-    "model": "gemini-3-pro-image-preview",
-    "date": "2026-11-06"
+    "model": "gemini-3.1-flash-lite-image",
+    "date": "2026-11-25"
   },
   "wings_of_wind": {
     "description": "A figure soaring above the clouds on large translucent white wings of wind, bright sky.",
