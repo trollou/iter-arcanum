@@ -1,6 +1,6 @@
 # 0009 — Illustrations générées
 
-- Statut : acceptée (2026-11-05), **révisée le 2026-11-06** par la spec 072 (voir « Révision » en fin de page : héros et
+- Statut : acceptée (2026-11-05), **révisée le 2026-11-06** par la spec 072, puis le 2026-11-11 (issue privée 167) et le 2026-11-25 (spec #9, format en bande) (voir « Révision » en fin de page : héros et
   monstres restent en SVG, images carrées), issue de la discussion sur la refonte de l'IHM (synthèse `docs/specs/refonte-ihm.md`) ;
   traduite en comportements par la spec 072.
 - Complète la règle « Assets et droits » de `CLAUDE.md` (visuels créés par nous), mise à jour pour dire que les illustrations
@@ -90,3 +90,15 @@ Demandée par Mathieu dans l'issue privée 167 ; elle l'emporte sur la taille de
   assez même sur un écran à haute densité, et chaque image passe d'environ 480 Ko à 50 Ko (18 Mo à 2 Mo pour le premier
   lot). Une carte affichée en plus grand demanderait de régénérer ou de reprendre le candidat d'origine.
 - `scripts/illustrations.py retenir` produit directement ce format ; le test de la spec 072 (C2) le vérifie.
+
+## Révision (2026-11-25, spec #9)
+
+Elle l'emporte sur les formats précédents (512 px, puis 256 × 256).
+
+- **404 × 168 en bande (2,4:1), palette de 256 couleurs** pour les cartes et les unités : deux fois la bande de 202 × 84
+  où le jeu les affiche (spec 077, spec #32), pour le même poids qu'un 256 × 256. Le générateur reçoit du 21:9, recadré au
+  centre par le script.
+- **Blessure** : 256 × 256, palette, car elle s'affiche en grand (spec 077).
+- Un seul modèle, `gemini-3.1-flash-lite-image`, cartes de héros comprises (avec le portrait de référence), en génération
+  différée (moitié prix). Une reprise peut passer par un modèle plus fort quand le léger échoue (Catapultes) ; le JSON des
+  descriptions note le modèle de chaque image retenue.

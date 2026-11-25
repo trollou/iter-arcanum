@@ -101,15 +101,47 @@ pub fn bottom_section_widths(
     widths
 }
 
-/// Spec 077, C2 : la part d'une image carrée gardée dans une bande de `width` × `height` points,
-/// centrée verticalement, en coordonnées de texture (0 en haut, 1 en bas) : `(haut, bas)`.
-pub fn band_uv(width: f32, height: f32) -> (f32, f32) {
-    if width <= 0.0 || height >= width {
-        return (0.0, 1.0);
+/// Part d'une image gardée dans un cadre, en coordonnées de texture (0 en haut et à gauche).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct BandUv {
+    pub left: f32,
+    pub top: f32,
+    pub right: f32,
+    pub bottom: f32,
+}
+
+/// Spec #9 (révise la spec 077, C2) : la plus grande part centrée d'une image de `image_width` ×
+/// `image_height` pixels qui a le rapport d'une bande de `width` × `height` points.
+pub fn band_uv(width: f32, height: f32, image_width: f32, image_height: f32) -> BandUv {
+    let whole = BandUv {
+        left: 0.0,
+        top: 0.0,
+        right: 1.0,
+        bottom: 1.0,
+    };
+    if width <= 0.0 || height <= 0.0 || image_width <= 0.0 || image_height <= 0.0 {
+        return whole;
     }
-    let kept = height / width;
-    let top = (1.0 - kept) / 2.0;
-    (top, top + kept)
+    let band = width / height;
+    let image = image_width / image_height;
+    if image > band {
+        // Image plus large que la bande : on rogne les côtés.
+        let kept = band / image;
+        let left = (1.0 - kept) / 2.0;
+        BandUv {
+            left,
+            right: left + kept,
+            ..whole
+        }
+    } else {
+        let kept = image / band;
+        let top = (1.0 - kept) / 2.0;
+        BandUv {
+            top,
+            bottom: top + kept,
+            ..whole
+        }
+    }
 }
 
 /// Hauteur d'une carte survolée (spec 073, C12 bis) : celle de son contenu, cadre compris, au

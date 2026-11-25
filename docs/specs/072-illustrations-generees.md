@@ -83,6 +83,8 @@ générateur est 1:1.
 
 `scripts/illustrations.py` (Python 3 et Pillow, outil de développement lancé depuis un fil cloud, Q1). Il lit la clé dans le
 secret d'environnement `GEMINI_API_KEY`, jamais versionnée ; sans clé, il s'arrête avec un message et n'appelle rien.
+La spec #9 change le format (404 × 168 en bande), le modèle, et ajoute la génération différée (`generer --differe`) et
+`recuperer` (spec #9, § « Le script »).
 
 Candidats et planches vont dans le dossier de sortie : option `--sortie <dossier>` (avant la commande), sinon variable
 `ILLUSTRATIONS_SORTIE`, sinon `target/illustrations/`. Ce dernier disparaît avec le conteneur d'un fil cloud : depuis un fil,
@@ -111,7 +113,7 @@ Fichiers :
   `card-art/wound.png` (`illustration_path_follows_label_key`).
 - **C2** — Chaque PNG de `assets/images/unit-art/` et `card-art/` porte l'identifiant d'un élément de sa famille, se décode
   mesure 256 × 256 et a une palette de 256 couleurs au plus (`every_illustration_is_known_and_valid`) — ADR 0009,
-  révision du 2026-11-11 (issue privée 167).
+  révision du 2026-11-11 (issue privée 167). Format révisé par la spec #9 (C5) : 404 × 168 en bande, sauf la Blessure.
 - **C3** — Chaque PNG a son entrée dans `scripts/illustrations/<famille>.json`, avec description, modèle et date ; chaque
   entrée porte un identifiant connu (`every_illustration_has_its_description`).
 - **C4** — L'index des illustrations, lu une fois au lancement dans le dossier des images, sait lesquelles sont présentes :

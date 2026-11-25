@@ -75,9 +75,9 @@ pub use language::{
     system_language, unix_system_language, windows_language_id_to_code,
 };
 pub use layout::{
-    CARD_GAP, CARD_HEIGHT, CARD_WIDTH, FanLayout, MIN_SECTION_WIDTH, SECTION_GAP, SKILLS_WIDTH,
-    band_uv, bottom_section_widths, card_height, cards_per_row, fan_layout, row_width, section_gap,
-    section_widths,
+    BandUv, CARD_GAP, CARD_HEIGHT, CARD_WIDTH, FanLayout, MIN_SECTION_WIDTH, SECTION_GAP,
+    SKILLS_WIDTH, band_uv, bottom_section_widths, card_height, cards_per_row, fan_layout,
+    row_width, section_gap, section_widths,
 };
 pub use logging::{
     ArcanumLogger, KEPT_PREVIOUS_LOGS, LOG_DIR_ENV_VAR, LOG_FILE_NAME, LOG_LEVEL_ENV_VAR,

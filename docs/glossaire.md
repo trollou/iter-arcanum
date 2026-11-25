@@ -404,11 +404,12 @@ Pas de terme correspondant dans le livret. Introduits par la spec 000.
 
 | Français | Code | Sens |
 |---|---|---|
-| Illustration générée | `Illustration` (UI) | Image PNG carrée d'une unité ou d'une carte, produite par un générateur d'images hors du jeu et versionnée (ADR 0009). Le plateau, les héros, les ennemis et les icônes restent des SVG. |
+| Illustration générée | `Illustration` (UI) | Image PNG en bande (404 × 168, 2,4:1, spec #9) d'une unité ou d'une carte, carrée pour la seule Blessure, produite par un générateur d'images hors du jeu et versionnée (ADR 0009). Le plateau, les héros, les ennemis et les icônes restent des SVG. |
 | Famille d'illustrations | `IllustrationFamily` (UI) | Unité ou carte : fixe le dossier (`unit-art`, `card-art`) et le fichier des descriptions. |
 | Vignette | — (UI) | Petite illustration (64 × 64) posée sur une carte ou une unité, sans infobulle. |
 | Préambule de style | `scripts/illustrations/style.json` | Texte commun placé avant chaque description envoyée au générateur, pour que toutes les images aient le même style ; une variante par famille. |
 | Lot | — | Ensemble d'illustrations générées et validées ensemble par Mathieu, sur des planches. |
+| Génération différée | `generer --differe`, `recuperer` (script) | Appels au générateur groupés en un lot que l'API traite dans la journée, à moitié prix (*Batch API*, spec #9) ; `recuperer` écrit ensuite ses candidats. |
 | Planche | — | Image qui montre côte à côte les candidats d'un lot, avec leur identifiant, pour choisir ceux à retenir. |
 
 ### Panneaux (spec 073)
