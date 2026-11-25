@@ -278,8 +278,8 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
         unit_plays: Vec::new(),
         info,
         show_text: card.card().is_artifact(),
-        strong_heading: String::new(),
-        strong_colors: Vec::new(),
+        strong_heading: strong_heading(card, catalog),
+        strong_colors: strong_colors(card),
     }
 }
 
@@ -308,6 +308,32 @@ fn strong_title(card: CardId, catalog: &Catalog) -> String {
         spell_name(card, true, catalog)
     } else {
         catalog.text("panel.strong")
+    }
+}
+
+/// Le titre du bloc renforcé (spec #11, C7) : « si détruit » pour un artefact.
+fn strong_heading(card: CardId, catalog: &Catalog) -> String {
+    if card.card().is_artifact() {
+        catalog.text("card.if_destroyed")
+    } else {
+        strong_title(card, catalog)
+    }
+}
+
+/// Le mana du renforcé, en pastilles devant son titre (spec #11, C7 ; MKUE p. 4, 3.d ; p. 5,
+/// 2.a) : la couleur de la carte, puis le noir pour un sort ; aucun pour un artefact, détruit
+/// sans mana.
+fn strong_colors(card: CardId) -> Vec<ManaColor> {
+    let Some(definition) = card.card().definition() else {
+        return Vec::new();
+    };
+    let color = ManaColor::Basic(definition.color);
+    if card.card().is_artifact() {
+        Vec::new()
+    } else if card.card().is_spell() {
+        vec![color, ManaColor::Black]
+    } else {
+        vec![color]
     }
 }
 
