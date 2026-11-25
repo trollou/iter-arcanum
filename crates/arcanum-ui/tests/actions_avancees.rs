@@ -273,10 +273,10 @@ fn freezers_ability_named_and_armor_shown() {
     .fighting();
     let screen = screen_of(&state, &catalog);
     let effect = &screen.units.units[0].effects[2];
-    assert_eq!(
-        effect.face,
-        EffectFace::Text(catalog.text(&Unit::AmotepFreezers.ability_key(1)))
-    );
+    // Spec #11 C13 : sans « (mana bleu) » devant, que dit la pastille.
+    let written = catalog.text(&Unit::AmotepFreezers.ability_key(1));
+    let (_, without_mana) = written.split_once(") ").expect("« (mana bleu) » en tête");
+    assert_eq!(effect.face, EffectFace::Text(without_mana.into()));
     let state = skip_to_attack_phase(&state);
     let state = done(
         &state,

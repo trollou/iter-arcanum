@@ -284,7 +284,10 @@ pub(super) fn unit_effects(
         let ability = u8::try_from(index).unwrap_or(u8::MAX);
         if !printed.is_supported() {
             buttons.push(EffectButton {
-                face: EffectFace::Text(catalog.text(&unit.unit.ability_key(index))),
+                face: EffectFace::Text(without_mana(
+                    catalog.text(&unit.unit.ability_key(index)),
+                    printed,
+                )),
                 mark: None,
                 color: printed.mana,
                 command: None,
@@ -302,6 +305,17 @@ pub(super) fn unit_effects(
         ));
     }
     buttons
+}
+
+/// Le texte d'une capacité à mana sans « (mana blanc) » devant : la pastille le dit (spec #11,
+/// C13, C14).
+fn without_mana(text: String, printed: &UnitAbility) -> String {
+    match (printed.mana, text.strip_prefix('(')) {
+        (Some(_), Some(rest)) => rest
+            .split_once(") ")
+            .map_or(text.clone(), |(_, effect)| effect.to_owned()),
+        _ => text,
+    }
 }
 
 fn option_buttons(
@@ -338,9 +352,10 @@ fn option_buttons(
         // Spec 053 : une option sans points se nomme par le texte de la capacité.
         let written = unit_option_text(unit, ability, printed, chosen, catalog);
         buttons.push(EffectButton {
-            face: written
-                .clone()
-                .map_or_else(|| effect_face(chosen.effect, catalog), EffectFace::Text),
+            face: written.clone().map_or_else(
+                || effect_face(chosen.effect, catalog),
+                |text| EffectFace::Text(without_mana(text, printed)),
+            ),
             mark: halved_mark(chosen.effect, view, catalog),
             color: printed.mana,
             command: command(&found(false)),
