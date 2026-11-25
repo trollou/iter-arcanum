@@ -106,8 +106,9 @@ fn known_illustrations_cover_every_unit_and_card() {
     assert!(cards.contains(&card_illustration(DeedCard::Wound)));
 }
 
-// Spec 072, C2 : chaque PNG porte l'identifiant d'un élément de sa famille, se décode, mesure
-// 256 × 256 et a une palette de 256 couleurs au plus (issue privée 167).
+// Spec 072, C2, révisée par la spec #9, C5 : chaque PNG porte l'identifiant d'un élément de sa
+// famille, se décode, a une palette de 256 couleurs au plus (issue privée 167) et mesure 404 × 168,
+// le double de la bande ; la Blessure, affichée en grand, reste en 256 × 256.
 #[test]
 fn every_illustration_is_known_and_valid() {
     let images_dir = repository_assets_dir().join("images");
@@ -130,10 +131,15 @@ fn every_illustration_is_known_and_valid() {
                 assert_eq!((image.width(), image.height()), (512, 512), "{path:?}");
                 continue;
             }
+            let expected = if family == IllustrationFamily::Card && stem == "wound" {
+                (256, 256)
+            } else {
+                (404, 168)
+            };
             assert_eq!(
                 (image.width(), image.height()),
-                (256, 256),
-                "{path:?} n'est pas en 256 × 256"
+                expected,
+                "{path:?} n'a pas le format de sa famille"
             );
             // Octet 25 du PNG : type de couleur de l'en-tête IHDR, 3 pour une image à palette.
             let bytes = fs::read(&path).unwrap_or_else(|error| panic!("{path:?} : {error}"));
@@ -174,6 +180,32 @@ fn every_illustration_has_its_description() {
                 assert!(!value.is_empty(), "{file:?} : {stem} sans {field}");
             }
         }
+    }
+}
+
+// Spec #9, C6 : chaque unité et chaque carte du contenu a son PNG et son entrée dans le fichier des
+// descriptions de sa famille ; le lot est complet à la fusion.
+#[test]
+fn every_unit_and_card_has_its_illustration() {
+    let images_dir = repository_assets_dir().join("images");
+    for family in [IllustrationFamily::Unit, IllustrationFamily::Card] {
+        let file = descriptions_file(family);
+        let text = fs::read_to_string(&file).unwrap_or_else(|_| panic!("{file:?} manque"));
+        let entries: serde_json::Map<String, serde_json::Value> =
+            serde_json::from_str(&text).unwrap_or_else(|error| panic!("{file:?} : {error}"));
+        let present: BTreeSet<String> = png_stems(&images_dir.join(family.dir()))
+            .into_iter()
+            .collect();
+        let missing: Vec<&str> = known_illustrations(family)
+            .into_iter()
+            .map(|illustration| illustration.id)
+            .filter(|id| !present.contains(*id) || !entries.contains_key(*id))
+            .collect();
+        assert!(
+            missing.is_empty(),
+            "{} : sans image ou sans entrée : {missing:?}",
+            family.dir()
+        );
     }
 }
 
