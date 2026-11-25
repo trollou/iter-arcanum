@@ -229,6 +229,9 @@ pub struct Overlay {
     /// Couleur qui multiplie l'image : blanc, sauf le brouillard, à la couleur de la pile du
     /// défenseur face cachée (spec 075, C18).
     pub tint: Color32,
+    /// Socle d'un ennemi, à la couleur de sa catégorie, peint à plat sous ses pieds (spec #14, C9
+    /// à C12) ; aucun pour les autres éléments.
+    pub base: Option<Color32>,
 }
 
 impl Overlay {
@@ -248,6 +251,7 @@ impl Overlay {
             image,
             fallback,
             tint: Color32::WHITE,
+            base: None,
         }
     }
 }
@@ -535,6 +539,7 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     image,
                     fallback: terrain_color(content.terrain),
                     tint: Color32::WHITE,
+                    base: None,
                 });
             }
         }

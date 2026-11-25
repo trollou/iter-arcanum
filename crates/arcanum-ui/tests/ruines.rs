@@ -282,7 +282,7 @@ fn hover_describes_ruins() {
         ..Ruins::default()
     });
     assert!(
-        unit.contains(&"Ennemis : gris, violet ; récompense : une unité de l'offre".to_string()),
+        unit.contains(&"Ennemis : gardes de forteresse, tour de mage ; récompense : une unité de l'offre".to_string()),
         "{unit:?}"
     );
     let two = lines(Ruins {
@@ -290,7 +290,7 @@ fn hover_describes_ruins() {
         ..Ruins::default()
     });
     assert!(
-        two.contains(&"Ennemis : marron, rouge ; récompense : 2 artefact(s)".to_string()),
+        two.contains(&"Ennemis : donjon, draconien ; récompense : 2 artefact(s)".to_string()),
         "{two:?}"
     );
     let mixed = lines(Ruins {
@@ -299,7 +299,7 @@ fn hover_describes_ruins() {
     });
     assert!(
         mixed.contains(
-            &"Ennemis : marron, violet ; récompense : un sort, un cristal de chaque couleur"
+            &"Ennemis : donjon, tour de mage ; récompense : un sort, un cristal de chaque couleur"
                 .to_string()
         ),
         "{mixed:?}"
@@ -458,7 +458,7 @@ fn ruins_enter_confirmation() {
         .expect("confirmation");
     assert_eq!(
         confirm.text,
-        "Combat contre des ennemis tirés au hasard : gris, violet.\n\
+        "Combat contre des ennemis tirés au hasard : gardes de forteresse, tour de mage.\n\
          Récompense si vous gagnez : une unité de l'offre. Pas de retour en arrière."
     );
     assert_eq!(

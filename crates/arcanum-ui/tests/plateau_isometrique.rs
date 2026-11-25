@@ -638,6 +638,22 @@ fn rampaging_enemy_is_a_standing_figure() {
     );
 }
 
+// Spec #14, C9 : les Rôdeurs errants (pile verte) reposent sur un socle à la couleur de leur catégorie.
+#[test]
+fn rampaging_enemy_has_a_category_base() {
+    let state = Units {
+        placed: vec![(prowlers(), ORCS_2)],
+        ..Units::default()
+    }
+    .state();
+    let screen = arena_screen(&state, None);
+    let rampaging = overlays_on(&screen, ORCS_2)
+        .into_iter()
+        .find(|overlay| overlay.kind == OverlayKind::Rampaging)
+        .expect("Rôdeurs debout");
+    assert_eq!(rampaging.base, Some(enemy_color(EnemyColor::Green)));
+}
+
 /// Écran des éléments debout autour d'une case, la caméra centrée sur elle.
 fn screen_around(state: &GameState, hex: Hex) -> BoardScreen {
     let seen = view(state, SOLO);
@@ -715,6 +731,81 @@ fn site_enemies_stand_or_hide_in_fog() {
     );
     assert!(foot(&pair[0]).x < foot(&pair[1]).x);
     assert!(pair[0].rect.height() < alone[0].rect.height());
+}
+
+// Spec #14, C10 : au Sombre Terrier, chaque monstre resté a son socle marron.
+#[test]
+fn site_enemies_have_a_category_base() {
+    let pair = Adventure {
+        figure: SPAWNING_GROUNDS,
+        placed: vec![
+            (gargoyle(), SPAWNING_GROUNDS),
+            (minotaur(), SPAWNING_GROUNDS),
+        ],
+        ..Adventure::default()
+    };
+    let site_enemies: Vec<Overlay> = overlays_on(
+        &screen_around(&pair.state(), SPAWNING_GROUNDS),
+        SPAWNING_GROUNDS,
+    )
+    .into_iter()
+    .filter(|overlay| overlay.kind == OverlayKind::SiteEnemy)
+    .collect();
+    assert_eq!(site_enemies.len(), 2);
+    for enemy in &site_enemies {
+        assert_eq!(enemy.base, Some(enemy_color(EnemyColor::Brown)));
+    }
+}
+
+// Spec #14, C11 : le défenseur de la forteresse (pile grise) a son socle gris, face cachée sous le
+// brouillard comme retourné.
+#[test]
+fn defenders_have_a_category_base() {
+    let defender_base = |fortified: &Fortified| {
+        overlays_on(&screen_around(&fortified.state(), KEEP), KEEP)
+            .into_iter()
+            .find(|overlay| overlay.kind == OverlayKind::Defender)
+            .expect("défenseur")
+            .base
+    };
+    let grey = Some(enemy_color(EnemyColor::Grey));
+    assert_eq!(defender_base(&Fortified::default()), grey);
+    let revealed = Fortified {
+        keep: Some((guardsmen(), true)),
+        ..Fortified::default()
+    };
+    assert_eq!(defender_base(&revealed), grey);
+}
+
+// Spec #14, C12 : héros, sites, drapeaux et relief n'ont pas de socle d'ennemi.
+#[test]
+fn only_enemies_have_a_category_base() {
+    let enemy_kinds = [
+        OverlayKind::Rampaging,
+        OverlayKind::SiteEnemy,
+        OverlayKind::Defender,
+    ];
+    let fortified = screen_around(&Fortified::default().state(), KEEP);
+    let state = Units {
+        placed: vec![(prowlers(), ORCS_2)],
+        ..Units::default()
+    }
+    .state();
+    let units = arena_screen(&state, None);
+    let others: Vec<&Overlay> = fortified
+        .overlays
+        .iter()
+        .chain(&units.overlays)
+        .filter(|overlay| !enemy_kinds.contains(&overlay.kind))
+        .collect();
+    assert!(
+        others.iter().any(|overlay| overlay.kind == OverlayKind::Figure),
+        "le héros est à l'écran"
+    );
+    assert!(others.iter().any(|overlay| overlay.kind == OverlayKind::Site));
+    for overlay in others {
+        assert_eq!(overlay.base, None, "{overlay:?}");
+    }
 }
 
 // Spec 075, C19 : le drapeau d'un site conquis, debout à côté du site (à gauche depuis l'issue privée 292).
@@ -867,6 +958,27 @@ fn combat_shows_the_figure() {
     assert_eq!(screen.enemies.len(), 1);
     assert_eq!(screen.enemies[0].image, ImageId::new("figure", "prowlers"));
     assert_eq!(screen.enemies[0].fallback, enemy_color(EnemyColor::Green));
+}
+
+// Spec #14, C13 : la carte des Rôdeurs a son socle vert sous la figurine.
+#[test]
+fn combat_card_has_a_category_base() {
+    let state = Units {
+        placed: vec![(prowlers(), ORCS_2)],
+        ..Units::default()
+    }
+    .state();
+    let state = done(&state, challenge(ORCS_2));
+    let state = done(&state, arcanum_core::Action::StartCombat);
+    let screen = combat_screen(
+        &view(&state, SOLO),
+        &legal_actions(&state, SOLO),
+        &CombatChoice::default(),
+        arcanum_core::UndoStatus::Possible,
+        &french(),
+    )
+    .expect("écran de combat");
+    assert_eq!(screen.enemies[0].base, enemy_color(EnemyColor::Green));
 }
 
 // Spec 075, C20b : plus aucun jeton ; le dossier `enemy/` est supprimé.

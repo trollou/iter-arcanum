@@ -133,7 +133,7 @@ fn city_tooltip_lines() {
     );
     for line in [
         "Cité bleue, niveau 5",
-        "Défenseurs face cachée : violet, violet, blanc",
+        "Défenseurs face cachée : tour de mage, tour de mage, cité",
         "Bonus des défenseurs : attaque de glace ou de feu +2, de feu glacé +1",
         "On y achète des sorts : 7 Influence et un mana",
         "Finir le tour ici ou à côté : limite de main +1, +2 pour le Seigneur",

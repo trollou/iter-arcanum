@@ -296,7 +296,7 @@ fn enter_confirmation() {
     let (state, prompt) = confirm(Adventure::default());
     assert_eq!(
         prompt.text,
-        "Combat contre 1 ennemi(s) marron, tiré(s) au hasard.\nRègles de Nuit, sans vos \
+        "Combat contre 1 ennemi(s) tiré(s) au hasard (donjon).\nRègles de Nuit, sans vos \
          unités.\nRécompense si vous gagnez : un sort (dé or ou noir) ou un artefact. \
          Pas de retour en arrière."
     );
@@ -324,7 +324,7 @@ fn enter_confirmation() {
     });
     assert_eq!(
         prompt.text,
-        "Combat contre : Gargouille (donjon).\nCombat contre 1 ennemi(s) marron, tiré(s) au hasard.\n\
+        "Combat contre : Gargouille (donjon).\nCombat contre 1 ennemi(s) tiré(s) au hasard (donjon).\n\
          Récompense si vous gagnez : un artefact et trois cristaux aléatoires. Pas de retour en \
          arrière."
     );
@@ -335,7 +335,7 @@ fn enter_confirmation() {
     });
     assert_eq!(
         prompt.text,
-        "Combat contre 1 ennemi(s) rouge, tiré(s) au hasard.\nRègles de Nuit, sans vos unités.\n\
+        "Combat contre 1 ennemi(s) tiré(s) au hasard (draconien).\nRègles de Nuit, sans vos unités.\n\
          Récompense si vous gagnez : la gloire seulement. Pas de retour en arrière."
     );
     // Hors confirmation, pas de bandeau.
