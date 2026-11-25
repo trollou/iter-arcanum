@@ -9,6 +9,7 @@ use arcanum_i18n::Catalog;
 use arcanum_persistance::{LoadError, SaveEntry, SaveError, SaveGame, list, load, save, save_auto};
 use chrono::{DateTime, Local};
 
+use crate::departure::DepartureTracker;
 use crate::{
     CombatChoice, CombatScreen, Command, Controls, DepartingEnemy, DiscardChoice, DiscardWindow,
     EndTurnChoice, FrameOutcome, GameScreen, HumanHandle, LoadWindow, ManaChoice, MenuBar,
@@ -102,6 +103,8 @@ pub struct GameSession {
     /// Dernier déplacement de la figurine : son numéro et ses cases (spec 075, C35).
     walk: Option<(u64, Vec<Hex>)>,
     walk_count: u64,
+    /// Spec #5 : la dernière disparition des ennemis vaincus.
+    departure: DepartureTracker,
     /// Change quand le journal est réécrit (retour en arrière, partie chargée) : le son ne
     /// rejoue pas les événements d'avant (spec 081, C7, C8).
     log_epoch: u64,
@@ -115,6 +118,7 @@ impl GameSession {
     }
 
     pub fn with_runner(runner: GameRunner, human: HumanHandle) -> Self {
+        let runner_len = runner.log().len();
         Self {
             runner,
             human,
@@ -134,6 +138,7 @@ impl GameSession {
             walk_log_from: None,
             walk: None,
             walk_count: 0,
+            departure: DepartureTracker::from_log_len(runner_len),
             log_epoch: 0,
         }
     }
@@ -217,6 +222,9 @@ impl GameSession {
         if self.phase != Phase::Playing {
             return false;
         }
+        let state = self.runner.state();
+        self.departure
+            .note_board(self.runner.log().len(), || view(state, PlayerId::SOLO));
         let again = match run_frame(&mut self.runner).outcome {
             FrameOutcome::Waiting => false,
             FrameOutcome::StepLimitReached => true,
@@ -230,6 +238,7 @@ impl GameSession {
             }
         };
         self.record_walk();
+        self.departure.scan(self.runner.log().entries());
         self.autosave();
         again
     }
@@ -333,6 +342,7 @@ impl GameSession {
                 self.offers_open = false;
                 self.walk = None;
                 self.walk_log_from = None;
+                self.departure = DepartureTracker::from_log_len(self.runner.log().len());
             }
             Err(error) => {
                 log::error!(
@@ -542,6 +552,7 @@ impl GameSession {
                     // L6 : la figurine est aussitôt sur sa case.
                     self.walk = None;
                     self.walk_log_from = None;
+                    self.departure.undone(self.runner.log().len());
                 }
             }
             Command::Save => {
@@ -1173,7 +1184,7 @@ impl GameSession {
     /// vaincus que le plateau montrait avant ce combat. Absente sans vaincu, après un retour en
     /// arrière, un chargement ou une nouvelle partie (C5, C7).
     pub fn last_departure(&self) -> Option<(u64, &[DepartingEnemy])> {
-        None
+        self.departure.last()
     }
 
     /// Le plateau de jeu propose déplacements et explorations, sauf en mode fin du tour.

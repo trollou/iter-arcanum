@@ -6,6 +6,7 @@ mod assets;
 mod board;
 mod client;
 mod controls;
+mod departure;
 mod desktop_entry;
 mod enemy_text;
 mod frame;
