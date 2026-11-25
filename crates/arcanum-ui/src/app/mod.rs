@@ -30,6 +30,7 @@ mod menu_bar;
 mod new_game;
 mod side_panel;
 mod widgets;
+mod window_cards;
 mod windows;
 
 const SIDE_PANEL_WIDTH: f32 = 340.0;

@@ -1,46 +1,11 @@
 //! Petits widgets du panneau latéral et de l'écran de combat : cartes, dés, cristaux, jetons.
 
-use eframe::egui::{self, Color32, Sense, Stroke, TextureId, Vec2, load::SizedTexture};
+use eframe::egui::{self, Color32, Sense, Stroke, Vec2};
 
 use super::{CHOICE_STROKE, SWATCH_STROKE};
 use crate::{Command, ReclaimMenu, SourceDie, SourceLine, StrongButton, hover_text};
 use arcanum_core::{BasicColor, ManaColor};
 use arcanum_i18n::Catalog;
-
-/// Côté d'une vignette de carte ou d'unité (spec 072, « Interface »).
-const THUMBNAIL: f32 = 64.0;
-
-/// La vignette seule, carrée.
-pub(super) fn thumbnail(ui: &mut egui::Ui, texture: TextureId) {
-    ui.add(egui::Image::new(SizedTexture::new(
-        texture,
-        Vec2::splat(THUMBNAIL),
-    )));
-}
-
-/// Le contenu, et sa vignette en haut à droite s'il y en a une ; sans image, le contenu seul,
-/// sans place réservée (spec 072, C9).
-pub(super) fn with_thumbnail<R>(
-    ui: &mut egui::Ui,
-    texture: Option<TextureId>,
-    body: impl FnOnce(&mut egui::Ui) -> R,
-) -> R {
-    let Some(texture) = texture else {
-        return body(ui);
-    };
-    ui.horizontal_top(|ui| {
-        let width = (ui.available_width() - THUMBNAIL - ui.spacing().item_spacing.x).max(0.0);
-        let inner = ui
-            .vertical(|ui| {
-                ui.set_width(width);
-                body(ui)
-            })
-            .inner;
-        thumbnail(ui, texture);
-        inner
-    })
-    .inner
-}
 
 /// Pastille de la couleur d'une carte.
 pub(super) fn color_swatch(ui: &mut egui::Ui, color: BasicColor) {

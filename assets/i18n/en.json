@@ -1396,7 +1396,6 @@
     "choose_advanced_action": "Level {level}: choose an Advanced Action",
     "button": "Offers…",
     "unsupported": "{text} (not coded yet: play it sideways)",
-    "spell_name": "{basic} / {strong}",
     "close": "Close",
     "monastery_card": "monastery",
     "disabled": {

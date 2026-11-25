@@ -79,7 +79,7 @@ Décidée par Mathieu en validant la spec 072 ; elle l'emporte sur ce qui préc�
 - **Format carré**, 512 × 512, pour les cartes comme pour les unités : la vignette occupe l'espace libre sous les boutons
   « jouer de côté » (spec 071). La taille de 256 px des figurines (Q3) ne sert plus.
 - **Pas de détourage** : les images sont des scènes opaques, la Q4 ne s'applique plus.
-- **Bande et vignette** : bande recadrée dans le panneau du bas (spec 077), vignette de 64 dans les fenêtres ; sans image
+- **Bande et vignette** : bande recadrée dans le panneau du bas (spec 077), bande dans les fenêtres aussi (spec [#32](../specs/issue-32-cartes-des-fenetres.md)) ; sans image
   en grand au survol.
 
 ## Révision (2026-11-11, issue privée 167)

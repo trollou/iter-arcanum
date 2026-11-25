@@ -283,6 +283,29 @@ pub(super) fn idle_card(card: CardId, catalog: &Catalog) -> HandCard {
     }
 }
 
+/// Une action avancée, un sort ou un artefact dans une fenêtre (Offres, choix de l'artefact ou du
+/// sort ; spec #32) : le nom de base, le texte du « i » de la même carte en main (Q2), sinon,
+/// pour un artefact, son texte écrit ; la séparation de la main. Ni « Prendre » ni marque.
+pub(super) fn window_card(card: CardId, catalog: &Catalog) -> OfferCardView {
+    let (effect, _) = card_effect_texts(card, catalog);
+    let strong_text = card_strong_text(card, catalog);
+    let lines = match card_info(card, &effect, &strong_text, catalog) {
+        Some(info) => vec![info.basic, info.strong],
+        None => vec![effect, strong_text],
+    };
+    OfferCardView {
+        name: card_name(card, catalog),
+        color: card.card().definition().map(|definition| definition.color),
+        lines,
+        take: None,
+        mark: None,
+        illustration: crate::card_illustration(card.card()),
+        uses: Vec::new(),
+        strong_heading: strong_heading(card, catalog),
+        strong_colors: strong_colors(card),
+    }
+}
+
 /// Le texte complet derrière « i » (spec #11, C1 à C5) : le texte écrit de la carte quand elle en
 /// a un (actions avancées, sorts), sinon les textes calculés ; rien pour une Blessure ni un
 /// artefact, qui écrit le sien sur lui (Q1).
