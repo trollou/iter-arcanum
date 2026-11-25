@@ -113,12 +113,34 @@ pub struct BandUv {
 /// Spec #9 (révise la spec 077, C2) : la plus grande part centrée d'une image de `image_width` ×
 /// `image_height` pixels qui a le rapport d'une bande de `width` × `height` points.
 pub fn band_uv(width: f32, height: f32, image_width: f32, image_height: f32) -> BandUv {
-    let _ = (width, height, image_width, image_height);
-    BandUv {
+    let whole = BandUv {
         left: 0.0,
         top: 0.0,
-        right: 0.0,
-        bottom: 0.0,
+        right: 1.0,
+        bottom: 1.0,
+    };
+    if width <= 0.0 || height <= 0.0 || image_width <= 0.0 || image_height <= 0.0 {
+        return whole;
+    }
+    let band = width / height;
+    let image = image_width / image_height;
+    if image > band {
+        // Image plus large que la bande : on rogne les côtés.
+        let kept = band / image;
+        let left = (1.0 - kept) / 2.0;
+        BandUv {
+            left,
+            right: left + kept,
+            ..whole
+        }
+    } else {
+        let kept = image / band;
+        let top = (1.0 - kept) / 2.0;
+        BandUv {
+            top,
+            bottom: top + kept,
+            ..whole
+        }
     }
 }
 
