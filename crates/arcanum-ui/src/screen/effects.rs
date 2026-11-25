@@ -73,7 +73,7 @@ pub(super) fn idle_effects(
     let face = |effect: Effect, strong: bool| match card_option_text(card, effect, strong, catalog)
     {
         Some(written) => EffectFace::Text(written),
-        None => effect_face(effect, catalog),
+        None => paid_face(effect, catalog),
     };
     let text =
         |effect: Effect, strong: bool| card_option_label(card, effect, strong, view, catalog);
@@ -107,6 +107,8 @@ pub(super) fn idle_effects(
             }
         }
     }
+    // Spec #11 C11 (Q2) : les options payantes à la suite des options gratuites de base.
+    basic.extend(paid);
     let mut strong: Vec<EffectButton> = Vec::new();
     if let BasicEffect::Options { options, cost, .. } = definition.strong {
         let key = match cost {
@@ -117,21 +119,28 @@ pub(super) fn idle_effects(
             EffectButton {
                 face: face(*effect, true),
                 mark: view.and_then(|view| halved_mark(*effect, view, catalog)),
-                // Issue privée 312 : le mana en plus de l'option (Magie pure), le titre « Renforcé » portant
-                // déjà la couleur de la carte.
-                color: Some(ManaColor::Basic(
-                    definition
-                        .strong
-                        .option_mana(option)
-                        .unwrap_or(definition.color),
-                )),
+                // Spec #11 C8, C10 : seul le mana en plus de l'option (Magie pure) ; le titre du bloc
+                // porte la couleur de la carte.
+                color: definition.strong.option_mana(option).map(ManaColor::Basic),
                 command: None,
                 tooltip: catalog.format(key, &[("effect", &text(*effect, true))]),
             }
         }));
     }
-    strong.extend(paid);
     (basic, strong)
+}
+
+/// Le visage d'une option payante sans son paiement, que dit la pastille (spec #11, C11, C12) :
+/// le cristal gagné, ou « un sort rouge de l'offre ».
+fn paid_face(effect: Effect, catalog: &Catalog) -> EffectFace {
+    match effect {
+        Effect::PayForCrystal(color) => effect_face(Effect::GainCrystal(color), catalog),
+        Effect::GainSpell(color) => EffectFace::Text(catalog.format(
+            "effect.spell_from_offer",
+            &[("color", &color_name(color, catalog))],
+        )),
+        _ => effect_face(effect, catalog),
+    }
 }
 
 /// Les boutons d'effet d'une carte hors des modes : chaque option grisée, sauf celles qu'une action
@@ -154,10 +163,10 @@ pub(super) fn live_effects(
     };
     // Effet de base : l'action qui joue l'option, ou le choix de la carte à défausser.
     if let BasicEffect::Options { options, .. } = definition.basic {
-        let free = (0u8..)
+        let free_options = (0u8..)
             .zip(options)
             .filter(|(option, _)| definition.basic.option_mana(*option).is_none());
-        for ((option, _), button) in free.zip(basic.iter_mut()) {
+        for ((option, _), button) in free_options.zip(basic.iter_mut()) {
             button.command = basic_command(card, option, legal_actions);
         }
     }
@@ -182,11 +191,11 @@ pub(super) fn live_effects(
             }
         }
     }
-    // Options payantes (spec 025), à la suite des options renforcées.
-    let renforced = strong.len() - paid_count(card);
+    // Options payantes (spec 025), à la suite des options gratuites de base (spec #11, C11).
+    let free = basic.len() - paid_count(card);
     for (paid, button) in paid_buttons(card, view, legal_actions, catalog)
         .into_iter()
-        .zip(strong.iter_mut().skip(renforced))
+        .zip(basic.iter_mut().skip(free))
     {
         button.command = paid.enabled.then_some(paid.command);
         button.tooltip = with_reason(button.tooltip.clone(), paid.tooltip);
@@ -275,7 +284,10 @@ pub(super) fn unit_effects(
         let ability = u8::try_from(index).unwrap_or(u8::MAX);
         if !printed.is_supported() {
             buttons.push(EffectButton {
-                face: EffectFace::Text(catalog.text(&unit.unit.ability_key(index))),
+                face: EffectFace::Text(without_mana(
+                    catalog.text(&unit.unit.ability_key(index)),
+                    printed,
+                )),
                 mark: None,
                 color: printed.mana,
                 command: None,
@@ -293,6 +305,17 @@ pub(super) fn unit_effects(
         ));
     }
     buttons
+}
+
+/// Le texte d'une capacité à mana sans « (mana blanc) » devant : la pastille le dit (spec #11,
+/// C13, C14).
+fn without_mana(text: String, printed: &UnitAbility) -> String {
+    match (printed.mana, text.strip_prefix('(')) {
+        (Some(_), Some(rest)) => rest
+            .split_once(") ")
+            .map_or(text.clone(), |(_, effect)| effect.to_owned()),
+        _ => text,
+    }
 }
 
 fn option_buttons(
@@ -329,9 +352,10 @@ fn option_buttons(
         // Spec 053 : une option sans points se nomme par le texte de la capacité.
         let written = unit_option_text(unit, ability, printed, chosen, catalog);
         buttons.push(EffectButton {
-            face: written
-                .clone()
-                .map_or_else(|| effect_face(chosen.effect, catalog), EffectFace::Text),
+            face: written.clone().map_or_else(
+                || effect_face(chosen.effect, catalog),
+                |text| EffectFace::Text(without_mana(text, printed)),
+            ),
             mark: halved_mark(chosen.effect, view, catalog),
             color: printed.mana,
             command: command(&found(false)),

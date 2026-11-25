@@ -102,7 +102,7 @@ pub use saves::{
 };
 pub use screen::{
     AbilityButton, ActionButton, AltarWindow, AnnouncePrompt, ArtifactChoice, ArtifactPlay,
-    BannerTag, BoardActionButton, BoardActionKind, BoostChoice, Button, CastChoice,
+    BannerTag, BoardActionButton, BoardActionKind, BoostChoice, Button, CardInfo, CastChoice,
     CastDestination, CastPicks, Clock, CombatChoice, CombatScreen, Command, CrystalButton,
     CrystalChoice, CrystalGroup, DamageGroup, DestinationChoice, DiscardChoice, DiscardPrompt,
     DiscardToggle, DiscardWindow, DummyCrystals, DummySection, EffectButton, EffectFace,

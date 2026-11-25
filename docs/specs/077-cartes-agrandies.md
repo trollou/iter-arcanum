@@ -114,7 +114,8 @@ Tailles en points d'egui.
   (toute la largeur intérieure de la carte), recadrée au milieu (C2), coins arrondis de 3 points ; puis l'effet de base et
   ses boutons, et le bloc renforcé, sur toute la largeur, comme aujourd'hui. Une carte simple (Marche, Promesse, Rage)
   s'affiche entière, boutons renforcés compris. Maquette [bande](images/077-cartes-agrandies/bande.png) (vérification à
-  l'œil, `main-blessures`).
+  l'œil, `main-blessures`). Depuis la spec [#11](issue-11-cartes-en-main-epurees.md), le texte de l'effet n'est plus écrit
+  (bouton « i » à droite du nom, sauf un artefact) et le bloc renforcé s'ouvre sur « —— pastille Renforcé —— ».
 - **Unité** (panneau du bas, et sous la main au combat) : même bande sous l'en-tête ; armure, résistances et état dessous,
   sur toute la largeur ; bannière et boutons ensuite (vérification à l'œil, partie préparée `unites`).
 - **Carte plus grande** : 216 × 240 au lieu de 200 × 212 (C3 à C7) ; le panneau du bas prend 28 points de hauteur de plus

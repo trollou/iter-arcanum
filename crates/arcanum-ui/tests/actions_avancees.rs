@@ -273,10 +273,10 @@ fn freezers_ability_named_and_armor_shown() {
     .fighting();
     let screen = screen_of(&state, &catalog);
     let effect = &screen.units.units[0].effects[2];
-    assert_eq!(
-        effect.face,
-        EffectFace::Text(catalog.text(&Unit::AmotepFreezers.ability_key(1)))
-    );
+    // Spec #11 C13 : sans « (mana bleu) » devant, que dit la pastille.
+    let written = catalog.text(&Unit::AmotepFreezers.ability_key(1));
+    let (_, without_mana) = written.split_once(") ").expect("« (mana bleu) » en tête");
+    assert_eq!(effect.face, EffectFace::Text(without_mana.into()));
     let state = skip_to_attack_phase(&state);
     let state = done(
         &state,
@@ -365,13 +365,15 @@ fn strong_pure_magic_buttons_show_the_option_mana() {
             basic(BasicColor::White),
             basic(BasicColor::Blue),
             basic(BasicColor::Red),
-            // Les options payantes de l'effet de base, à la suite.
-            basic(BasicColor::Green),
-            basic(BasicColor::White),
-            basic(BasicColor::Blue),
-            basic(BasicColor::Red),
         ]
     );
+    // Spec #11 C11 (Q2) : les options payantes de l'effet de base sont dans le bloc de base.
+    let basic_colors: Vec<Option<ManaColor>> = screen.hand[0]
+        .basic_effects
+        .iter()
+        .map(|button| button.color)
+        .collect();
+    assert_eq!(basic_colors, colors);
 }
 
 // Spec 053 C23

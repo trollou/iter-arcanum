@@ -505,14 +505,13 @@ pub(super) fn spell_effects(
                 } else {
                     EffectFace::Text(label.clone())
                 };
-                let color = effect
-                    .option_mana(option)
-                    .map(ManaColor::Basic)
-                    .unwrap_or(if strong {
-                        ManaColor::Black
-                    } else {
-                        ManaColor::Basic(definition.color)
-                    });
+                // Spec #11 C9 : le renforcé ne répète plus son mana (couleur et noir), dans le
+                // titre du bloc ; seul un mana en plus garde sa pastille.
+                let color = match (effect.option_mana(option), strong) {
+                    (Some(extra), _) => Some(ManaColor::Basic(extra)),
+                    (None, true) => None,
+                    (None, false) => Some(ManaColor::Basic(definition.color)),
+                };
                 let mut tooltip = catalog.format(
                     if strong { "play.strong" } else { "play.basic" },
                     &[("effect", &label)],
@@ -544,7 +543,7 @@ pub(super) fn spell_effects(
                 EffectButton {
                     face,
                     mark: view.and_then(|view| halved(points, view, catalog)),
-                    color: Some(color),
+                    color,
                     command,
                     tooltip,
                 }

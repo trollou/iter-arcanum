@@ -1,12 +1,16 @@
-# Référence de scripts/qualite.sh : d42ef06 2026-11-24 ; une mesure par ligne.
-lignes_src 52977
-lignes_tests 88718
+# Référence de scripts/qualite.sh : d84fa9f 2026-11-25 ; une mesure par ligne.
+lignes_src 53196
+lignes_tests 89016
 plus_gros_fichier 2463
 fichiers_trop_longs 1
 fonctions_trop_longues 43
 fonctions_trop_complexes 7
 plus_longue_fonction 491
 plus_complexe_fonction 49
+duplication_src_lignes 637
+duplication_src_pct 1.20
+duplication_tests_lignes 3643
+duplication_tests_pct 4.09
 couverture_arcanum_core 94.3
 couverture_arcanum_i18n 91.2
 couverture_arcanum_persistance 96.3
