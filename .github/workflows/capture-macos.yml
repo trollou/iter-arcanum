@@ -14,6 +14,10 @@ on:
         options: [fr-FR, en-US]
         default: fr-FR
 
+# Lecture seule : le workflow ne fait que compiler et publier un artefact.
+permissions:
+  contents: read
+
 jobs:
   capture:
     runs-on: macos-latest
