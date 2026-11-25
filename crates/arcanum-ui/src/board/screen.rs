@@ -552,7 +552,12 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     }
                     None => standing(hex, HERO),
                 };
-                let height = rect.height() * breathing(input.time);
+                let breath = if input.animations {
+                    breathing(input.time)
+                } else {
+                    1.0
+                };
+                let height = rect.height() * breath;
                 let rect = Rect::from_min_max(pos2(rect.left(), rect.bottom() - height), rect.max);
                 overlays.push(Overlay::standing(
                     hex,
@@ -580,6 +585,35 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
                     base: None,
                 });
             }
+        }
+        // Spec #5 : les ennemis vaincus s'effacent là où le plateau les dessinait avant le combat.
+        for (enemy, remaining) in departing(input) {
+            let hex = enemy.hex;
+            if !hexes.iter().any(|drawing| drawing.hex == hex) {
+                continue;
+            }
+            let rect = if is_fortified_site(input, hex) {
+                standing(hex, DEFENDER)
+            } else if (adventure_site(input, hex).is_some() || is_ruins(input, hex)) && enemy.of > 1
+            {
+                let dx = if enemy.place == 0 { -PAIR_DX } else { PAIR_DX };
+                standing(hex, (vec2(dx, SITE_FOOT.y), PAIR_SIZE))
+            } else {
+                standing(hex, (SITE_FOOT, ENEMY_SIZE))
+            };
+            // Q1 : la figurine s'affaisse vers ses pieds en s'effaçant.
+            let height = rect.height() * remaining;
+            let rect = Rect::from_min_max(pos2(rect.left(), rect.bottom() - height), rect.max);
+            overlays.push(Overlay {
+                tint: Color32::WHITE.gamma_multiply(remaining),
+                ..Overlay::standing(
+                    hex,
+                    OverlayKind::Departing,
+                    rect,
+                    figure_image(enemy.token.enemy()),
+                    enemy_color(enemy.token.color()).gamma_multiply(remaining),
+                )
+            });
         }
         // De l'arrière vers l'avant (spec 075, C13) : par le pied, du haut de l'écran vers le bas,
         // puis de gauche à droite. Tri stable : sur une même case, l'ordre d'ajout reste.
@@ -734,13 +768,29 @@ pub fn animation_repaint(animated: bool, focused: bool) -> Option<std::time::Dur
 /// Le plateau s'anime : figurine du héros (respiration, glissement) ou effacement en cours
 /// (spec #5, C11), et animations permises (C14).
 pub fn board_animated(input: &BoardInput<'_>) -> bool {
-    input.hero.is_some() && input.figure.is_some()
+    input.animations
+        && ((input.hero.is_some() && input.figure.is_some()) || departing(input).next().is_some())
+}
+
+/// Les ennemis en train de s'effacer, chacun avec la part de sa hauteur et de son opacité qui
+/// reste : de 1 à 0 en `DEPARTURE_SECONDS`, d'un mouvement qui ralentit à la fin (Q1).
+fn departing<'a>(input: &BoardInput<'a>) -> impl Iterator<Item = (&'a DepartingEnemy, f32)> {
+    let departure = input.departure.filter(|_| input.animations);
+    let progress = departure.map_or(1.0, |departure| {
+        ((input.time - departure.started) / DEPARTURE_SECONDS).max(0.0)
+    });
+    departure
+        .filter(|_| progress < 1.0)
+        .into_iter()
+        .flat_map(|departure| departure.enemies)
+        .map(move |enemy| (enemy, ((1.0 - progress) * (1.0 - progress)) as f32))
 }
 
 /// Où est la figurine pendant son glissement, en unités du plateau (spec 075, C35) : entre deux
 /// cases du trajet ; `None` une fois arrivée, ou si le trajet ne mène pas à sa case (L6).
 fn walking_point(input: &BoardInput<'_>) -> Option<Pos2> {
-    let walk = input.walk?;
+    // C14 : sans animations, la figurine est aussitôt sur sa case.
+    let walk = input.walk.filter(|_| input.animations)?;
     let figure = input.figure?;
     let arrival = walk.path.iter().rposition(|hex| *hex == figure)?;
     let path = &walk.path[..=arrival];

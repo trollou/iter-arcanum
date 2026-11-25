@@ -8,10 +8,10 @@ use eframe::egui::{
 use super::widgets::{card_color, shortcut_button};
 use super::{CHOICE_STROKE, IterArcanumApp, PROVOKE_STROKE, TILE_STROKE, full_uv};
 use crate::{
-    BOARD_BACKGROUND, BOARD_TILT, BoardAction, BoardActionKind, BoardCamera, BoardInput,
-    BoardMovement, BoardScreen, CameraBounds, Command, ExploreGhost, GameScreen, HeroWalk,
-    HexDrawing, ImagePaint, MoveMark, Overlay, OverlayKind, RuinPip, RuinTokenMark,
-    animation_repaint, board_action_image, board_screen, enemy_color, night_veil,
+    BOARD_BACKGROUND, BOARD_TILT, BoardAction, BoardActionKind, BoardCamera, BoardDeparture,
+    BoardInput, BoardMovement, BoardScreen, CameraBounds, Command, ExploreGhost, GameScreen,
+    HeroWalk, HexDrawing, ImagePaint, MoveMark, Overlay, OverlayKind, RuinPip, RuinTokenMark,
+    animation_repaint, board_action_image, board_animated, board_screen, enemy_color, night_veil,
 };
 use arcanum_core::{EXPLORE_COST, MapShape};
 
@@ -128,54 +128,67 @@ impl IterArcanumApp {
             };
             HeroWalk { path, started }
         });
+        // Spec #5 : l'effacement commence à la première image du plateau après le combat.
+        let departure = game.last_departure().map(|(id, enemies)| {
+            let started = match self.departure_start {
+                Some((known, started)) if known == id => started,
+                _ => {
+                    self.departure_start = Some((id, time));
+                    time
+                }
+            };
+            BoardDeparture { enemies, started }
+        });
+        let animations = self.client.preferences().animations;
         let site_anchor = game_screen
             .site_menu
             .as_ref()
             .filter(|menu| menu.open)
             .map(|menu| menu.hex)
             .or(game_screen.site_prompt_hex);
-        let screen = board_screen(
-            &BoardInput {
-                map,
-                figure: view.figure,
-                hero: view.hero,
-                shape,
-                camera: *camera,
-                area,
-                cursor: response.hover_pos(),
-                inventory: Some(view.inventory),
-                // Mode fin du tour : ni case en évidence ni clic (spec 016) ; choix d'une arrivée :
-                // seules les arrivées (issue privée 257).
-                movement: (shows_moves && game_screen.cast_destinations.is_empty()).then_some(
-                    BoardMovement {
-                        move_rules: &view.move_rules,
-                        move_points: view.move_points,
-                        next_tile: view.next_tile,
-                        legal_actions: &legal_actions,
-                        movement_ended: view.movement_ended,
-                        enemies_to_fight: &view.enemies_to_fight,
-                    },
-                ),
-                enemy_tokens: &view.enemy_tokens,
-                shields: &view.shields,
-                face_down_defenders: &view.face_down_defenders,
-                cities: &view.cities,
-                ruins: &view.ruins,
-                // Mode fin du tour : ni bouton d'action (C33).
-                actions: if with_actions && shows_moves {
-                    &game_screen.board_actions
-                } else {
-                    &[]
+        let input = BoardInput {
+            map,
+            figure: view.figure,
+            hero: view.hero,
+            shape,
+            camera: *camera,
+            area,
+            cursor: response.hover_pos(),
+            inventory: Some(view.inventory),
+            // Mode fin du tour : ni case en évidence ni clic (spec 016) ; choix d'une arrivée :
+            // seules les arrivées (issue privée 257).
+            movement: (shows_moves && game_screen.cast_destinations.is_empty()).then_some(
+                BoardMovement {
+                    move_rules: &view.move_rules,
+                    move_points: view.move_points,
+                    next_tile: view.next_tile,
+                    legal_actions: &legal_actions,
+                    movement_ended: view.movement_ended,
+                    enemies_to_fight: &view.enemies_to_fight,
                 },
-                site_anchor: site_anchor.filter(|_| with_actions),
-                time,
-                walk,
-                departure: None,
-                animations: true,
-                destinations: &game_screen.cast_destinations,
+            ),
+            enemy_tokens: &view.enemy_tokens,
+            shields: &view.shields,
+            face_down_defenders: &view.face_down_defenders,
+            cities: &view.cities,
+            ruins: &view.ruins,
+            // Mode fin du tour : ni bouton d'action (C33).
+            actions: if with_actions && shows_moves {
+                &game_screen.board_actions
+            } else {
+                &[]
             },
-            &self.catalog,
-        );
+            site_anchor: site_anchor.filter(|_| with_actions),
+            time,
+            walk,
+            departure,
+            animations,
+            destinations: &game_screen.cast_destinations,
+        };
+        let screen = board_screen(&input, &self.catalog);
+        // L7 : au plus 30 images par seconde, et seulement avec le focus ; rien sans animations
+        // (spec #5, C14).
+        let animated = board_animated(&input);
         self.paint(ui, area, &screen, night_veil(view.time_of_day));
         // Un clic simple, jamais un glissement, sur une case mise en évidence (spec 014) ou sur
         // un bouton d'action (spec 075, C27).
@@ -190,8 +203,6 @@ impl IterArcanumApp {
             ui.ctx().request_repaint();
         }
         show_hover_tooltip(&response, &screen.hover_lines, screen.hover_alert);
-        // L7 : au plus 30 images par seconde, et seulement avec le focus.
-        let animated = view.hero.is_some() && view.figure.is_some();
         if let Some(delay) = animation_repaint(animated, ui.input(|input| input.focused)) {
             ui.ctx().request_repaint_after(delay);
         }
