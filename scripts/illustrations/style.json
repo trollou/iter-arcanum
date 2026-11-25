@@ -1,14 +1,14 @@
 {
-  "model": "gemini-2.5-flash-image",
-  "aspect_ratio": "1:1",
-  "usd_per_image": 0.039,
+  "model": "gemini-3.1-flash-lite-image",
+  "aspect_ratio": "21:9",
+  "usd_per_image": 0.034,
+  "usd_per_image_deferred": 0.017,
   "preamble": "Stylized hand-painted fantasy game illustration, clean dark outlines, rich saturated colors, soft cel shading, warm light from the upper left, high detail, consistent with a colorful tabletop fantasy board game. Absolutely no text, no letters, no numbers, no logos, no frame, no border.",
   "variants": {
-    "unit-art": "A square scene illustration filling the whole image edge to edge, dramatic composition, painted background.",
-    "card-art": "A square scene illustration filling the whole image edge to edge, dramatic composition, painted background.",
+    "unit-art": "A wide panoramic banner illustration, about 2.4 times wider than tall, filling the whole image edge to edge. One clear subject, large and centered, fully inside the central area, readable at a small size; simple, uncluttered painted background; nothing important near the top or bottom edges.",
+    "card-art": "A wide panoramic banner illustration, about 2.4 times wider than tall, filling the whole image edge to edge. One clear subject, large and centered, fully inside the central area, readable at a small size; simple, uncluttered painted background; nothing important near the top or bottom edges.",
+    "square": "A square scene illustration filling the whole image edge to edge, dramatic composition, painted background.",
     "heroes": "A full-body character reference portrait of a single hero, standing in a confident heroic pose, whole figure visible from head to feet, simple softly painted background."
   },
-  "hero_reference": "The first image is the reference portrait of the main character: draw exactly the same character, with the same face, helmet, armor, clothing, colors and weapon, in the new scene below. Do not copy the reference's pose or background.",
-  "hero_model": "gemini-3-pro-image-preview",
-  "hero_usd_per_image": 0.14
+  "hero_reference": "The first image is the reference portrait of the main character: draw exactly the same character, with the same face, helmet, armor, clothing, colors and weapon, in the new scene below. Do not copy the reference's pose or background."
 }
