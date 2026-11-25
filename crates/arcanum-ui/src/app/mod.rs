@@ -9,8 +9,8 @@ use arcanum_audio::{AudioDirector, AudioPlayer, SilentPlayer, SoundCategory};
 use arcanum_i18n::Catalog;
 use arcanum_persistance::preferences::Volumes;
 use eframe::egui::{
-    self, Color32, Frame, Modifiers, Pos2, Rect, TextureFilter, TextureId, TextureOptions,
-    load::SizeHint, load::TexturePoll, pos2,
+    self, Color32, Frame, Modifiers, Pos2, Rect, TextureFilter, TextureOptions, Vec2,
+    load::SizeHint, load::SizedTexture, load::TexturePoll, pos2,
 };
 
 use crate::{
@@ -20,7 +20,7 @@ use crate::{
 };
 
 /// Textures des illustrations à dessiner dans une fenêtre (spec 072) : seulement celles chargées.
-type Thumbnails = BTreeMap<Illustration, TextureId>;
+type Thumbnails = BTreeMap<Illustration, SizedTexture>;
 
 mod board;
 mod bottom_panel;
@@ -215,7 +215,7 @@ impl IterArcanumApp {
         &mut self,
         ctx: &egui::Context,
         illustration: Illustration,
-    ) -> Option<TextureId> {
+    ) -> Option<SizedTexture> {
         if !self.illustrations.contains(illustration) {
             return None;
         }
@@ -226,12 +226,18 @@ impl IterArcanumApp {
             mipmap_mode: Some(TextureFilter::Linear),
             ..TextureOptions::LINEAR
         };
+        // Spec #9 : la taille de l'image décide de son recadrage dans la bande.
+        let mut size = Vec2::ZERO;
         let load = match ctx.try_load_texture(&uri, options, SizeHint::default()) {
-            Ok(TexturePoll::Ready { texture }) => ImageLoad::Ready(texture.id),
+            Ok(TexturePoll::Ready { texture }) => {
+                size = texture.size;
+                ImageLoad::Ready(texture.id)
+            }
             Ok(TexturePoll::Pending { .. }) => ImageLoad::Pending,
             Err(error) => ImageLoad::Failed(error.to_string()),
         };
         illustration_paint(load, &path, &mut self.image_warnings)
+            .map(|id| SizedTexture::new(id, size))
     }
 
     /// Les textures chargées de ces illustrations, pour une fenêtre dessinée hors de l'application.
