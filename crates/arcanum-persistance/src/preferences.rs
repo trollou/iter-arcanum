@@ -15,7 +15,7 @@ pub const PREFERENCES_VERSION: u32 = 1;
 pub const PREFERENCES_FILE: &str = "preferences.json";
 
 /// Réglages du joueur. Champs absents : valeurs par défaut ; champs inconnus : ignorés (C3).
-#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Preferences {
     /// `None` = langue du système ; sinon un code (`fr`, `en`).
     #[serde(default)]
@@ -26,8 +26,23 @@ pub struct Preferences {
     #[serde(default)]
     pub volumes: Volumes,
     /// Spec #5 : les animations du plateau permises ; absent d'un fichier plus ancien, vrai (C12).
-    #[serde(default)]
+    #[serde(default = "animations_on")]
     pub animations: bool,
+}
+
+fn animations_on() -> bool {
+    true
+}
+
+impl Default for Preferences {
+    fn default() -> Self {
+        Self {
+            language: None,
+            fullscreen_at_launch: false,
+            volumes: Volumes::default(),
+            animations: animations_on(),
+        }
+    }
 }
 
 /// Les quatre volumes, de 0 à 100 (spec 081). Le champ s'appelle `volumes` : `music` reste un

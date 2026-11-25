@@ -184,6 +184,8 @@ fn preferences_window(
                     }
                 });
             ui.add_space(12.0);
+            // Spec #5 : la section « Affichage », en gras comme « Langue » et « Son ».
+            ui.strong(&window.display_label);
             let mut fullscreen = window.fullscreen_at_launch;
             if ui
                 .checkbox(&mut fullscreen, &window.fullscreen_label)
@@ -192,6 +194,13 @@ fn preferences_window(
                 clicked = Some(Command::SetFullscreenAtLaunch(fullscreen));
             }
             ui.label(egui::RichText::new(&window.fullscreen_hint).weak());
+            let mut animations = window.animations;
+            if ui
+                .checkbox(&mut animations, &window.animations_label)
+                .changed()
+            {
+                clicked = Some(Command::SetAnimations(animations));
+            }
             ui.add_space(12.0);
             ui.strong(&window.sound_label);
             egui::Grid::new("preferences_volumes")

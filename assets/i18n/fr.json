@@ -1570,6 +1570,8 @@
     "system_language": "Langue du système ({language})",
     "fullscreen_at_launch": "Plein écran au lancement",
     "fullscreen_hint": "F11 bascule la fenêtre sans changer ce réglage.",
+    "display": "Affichage",
+    "animations": "Animations",
     "not_saved": "Préférences non enregistrées (voir les logs).",
     "sound": "Son",
     "volume_master": "Volume général",
