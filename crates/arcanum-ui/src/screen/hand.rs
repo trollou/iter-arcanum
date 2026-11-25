@@ -290,10 +290,15 @@ fn card_info(card: CardId, effect: &str, strong_text: &str, catalog: &Catalog) -
     if card.card().is_wound() || card.card().is_artifact() {
         return None;
     }
-    let (basic, strong) = match card.card().unsupported_text_keys() {
-        Some((basic, strong)) => (catalog.text(basic), catalog.text(strong)),
-        None => (effect.to_owned(), strong_text.to_owned()),
+    // Une carte aux effets tous codés peut n'avoir aucun texte écrit (issue privée 276) : le texte
+    // calculé la remplace, effet par effet.
+    let written = |key: Option<&str>, computed: &str| match key {
+        Some(key) if catalog.parameters(key).is_some() => catalog.text(key),
+        _ => computed.to_owned(),
     };
+    let keys = card.card().unsupported_text_keys();
+    let basic = written(keys.map(|(basic, _)| basic), effect);
+    let strong = written(keys.map(|(_, strong)| strong), strong_text);
     Some(CardInfo {
         name: card_name(card, catalog),
         basic,
