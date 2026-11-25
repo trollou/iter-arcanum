@@ -117,14 +117,9 @@ pub(super) fn idle_effects(
             EffectButton {
                 face: face(*effect, true),
                 mark: view.and_then(|view| halved_mark(*effect, view, catalog)),
-                // Issue privée 312 : le mana en plus de l'option (Magie pure), le titre « Renforcé » portant
-                // déjà la couleur de la carte.
-                color: Some(ManaColor::Basic(
-                    definition
-                        .strong
-                        .option_mana(option)
-                        .unwrap_or(definition.color),
-                )),
+                // Spec #11 C8, C10 : seul le mana en plus de l'option (Magie pure) ; le titre du bloc
+                // porte la couleur de la carte.
+                color: definition.strong.option_mana(option).map(ManaColor::Basic),
                 command: None,
                 tooltip: catalog.format(key, &[("effect", &text(*effect, true))]),
             }
