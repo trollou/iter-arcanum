@@ -212,6 +212,7 @@ impl ClientSession {
                 self.preferences.fullscreen_at_launch = on;
                 self.save_preferences();
             }
+            Command::SetAnimations(_on) => {}
             Command::SetVolume(category, volume) => {
                 let volumes = &mut self.preferences.volumes;
                 let slot = match category {

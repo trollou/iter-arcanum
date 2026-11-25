@@ -187,6 +187,8 @@ pub enum Command {
     SetLanguage(Option<usize>),
     /// Cocher ou décocher « Plein écran au lancement ».
     SetFullscreenAtLaunch(bool),
+    /// Spec #5 : cocher ou décocher « Animations ».
+    SetAnimations(bool),
     /// Spec 081 : changer un volume pour la session pendant qu'on glisse le curseur, sans écrire
     /// le fichier ; le premier changement d'un glissé demande l'échantillon de ce type de son.
     SetVolume(arcanum_audio::SoundCategory, u8),

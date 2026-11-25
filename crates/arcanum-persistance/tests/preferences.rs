@@ -161,3 +161,19 @@ fn volumes_tolerate_old_and_out_of_range_files() {
         "un warn nomme la valeur ramenée"
     );
 }
+
+#[test]
+fn animations_default_to_on() {
+    // Spec #5 C12 : un fichier sans le champ donne `animations` vrai ; un fichier qui l'a garde sa
+    // valeur.
+    assert!(Preferences::default().animations);
+    let dir = tempfile::tempdir().expect("dossier temporaire");
+    let path = dir.path().join(PREFERENCES_FILE);
+    fs::write(&path, r#"{"version": 1, "language": "fr"}"#).expect("fichier");
+    assert!(load(&path).expect("lecture").animations);
+
+    fs::write(&path, r#"{"version": 1, "animations": false}"#).expect("fichier");
+    assert!(!load(&path).expect("lecture").animations);
+    fs::write(&path, r#"{"version": 1, "animations": true}"#).expect("fichier");
+    assert!(load(&path).expect("lecture").animations);
+}

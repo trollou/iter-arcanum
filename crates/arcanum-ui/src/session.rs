@@ -625,6 +625,7 @@ impl GameSession {
             | Command::ClosePreferences
             | Command::SetLanguage(_)
             | Command::SetFullscreenAtLaunch(_)
+            | Command::SetAnimations(_)
             | Command::SetVolume(..)
             | Command::SaveVolumes => {}
             // Spec 060 : la tactique encadrée, les cartes et les dés cochés.

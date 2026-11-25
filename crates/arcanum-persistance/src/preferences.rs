@@ -25,6 +25,9 @@ pub struct Preferences {
     /// Spec 081 : absents d'un fichier de la spec 080, les volumes par défaut (C19).
     #[serde(default)]
     pub volumes: Volumes,
+    /// Spec #5 : les animations du plateau permises ; absent d'un fichier plus ancien, vrai (C12).
+    #[serde(default)]
+    pub animations: bool,
 }
 
 /// Les quatre volumes, de 0 à 100 (spec 081). Le champ s'appelle `volumes` : `music` reste un
