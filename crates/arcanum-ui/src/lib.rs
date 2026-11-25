@@ -34,15 +34,15 @@ pub use assets::{
 pub use board::{
     ARROW_SCROLL_SPEED, BOARD_ACTION_DIAMETER, BOARD_ACTION_KINDS, BOARD_BACKGROUND, BOARD_TILT,
     BREATHING_AMPLITUDE, BREATHING_PERIOD, BoardAction, BoardCamera, BoardInput, BoardMovement,
-    BoardScreen, CameraBounds, DEFAULT_ZOOM, EnemyAlert, ExploreGhost, FIT_ZOOM_OUT, FOG_IMAGE,
-    FORBIDDEN_COLOR, FORBIDDEN_IMAGE, HeroWalk, HexDrawing, Hovered, ImageId, ImageLoad,
-    ImagePaint, ImageWarnings, MAX_SCROLL_SECONDS, MAX_ZOOM, MIN_ZOOM, MoveMark, OVERLAY_MIN_ZOOM,
-    Overlay, OverlayKind, RuinPip, RuinTokenMark, SLAB_DEPTH, STANDING_HEIGHT, Slab, TileOutline,
-    WALK_STEP_SECONDS, ZOOM_STEP, animation_repaint, board_action_image, board_images,
-    board_screen, enemy_color, feature_color, feature_image, figure_image, flag_image, hero_color,
-    hero_figure_image, hero_image, hex_center, hex_corners, illustration_paint, image_paint,
-    night_veil, point_to_hex, relief_image, svg_size, terrain_color, terrain_image,
-    time_of_day_image,
+    BoardScreen, CameraBounds, DEFAULT_ZOOM, DepartingEnemy, EnemyAlert, ExploreGhost,
+    FIT_ZOOM_OUT, FOG_IMAGE, FORBIDDEN_COLOR, FORBIDDEN_IMAGE, HeroWalk, HexDrawing, Hovered,
+    ImageId, ImageLoad, ImagePaint, ImageWarnings, MAX_SCROLL_SECONDS, MAX_ZOOM, MIN_ZOOM,
+    MoveMark, OVERLAY_MIN_ZOOM, Overlay, OverlayKind, RuinPip, RuinTokenMark, SLAB_DEPTH,
+    STANDING_HEIGHT, Slab, TileOutline, WALK_STEP_SECONDS, ZOOM_STEP, animation_repaint,
+    board_action_image, board_images, board_screen, enemy_color, feature_color, feature_image,
+    figure_image, flag_image, hero_color, hero_figure_image, hero_image, hex_center, hex_corners,
+    illustration_paint, image_paint, night_veil, point_to_hex, relief_image, svg_size,
+    terrain_color, terrain_image, time_of_day_image,
 };
 pub use client::{ClientSession, QuitWindow, WindowRequest, clock_seed};
 pub use controls::{

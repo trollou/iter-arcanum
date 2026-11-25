@@ -107,6 +107,17 @@ pub struct HeroWalk<'a> {
     pub started: f64,
 }
 
+/// Un ennemi vaincu par le dernier combat, que le plateau efface à son retour (spec #5) : sa case,
+/// son jeton, et sa place parmi les `of` jetons que la case montrait avant le combat (paire réduite
+/// d'un site d'aventure).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct DepartingEnemy {
+    pub hex: Hex,
+    pub token: EnemyToken,
+    pub place: usize,
+    pub of: usize,
+}
+
 /// Respiration de la figurine du héros : ± 2 % de sa hauteur, période 3 s (spec 075, C34).
 pub const BREATHING_AMPLITUDE: f32 = 0.02;
 pub const BREATHING_PERIOD: f64 = 3.0;

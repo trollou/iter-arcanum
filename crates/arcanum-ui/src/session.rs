@@ -10,12 +10,13 @@ use arcanum_persistance::{LoadError, SaveEntry, SaveError, SaveGame, list, load,
 use chrono::{DateTime, Local};
 
 use crate::{
-    CombatChoice, CombatScreen, Command, Controls, DiscardChoice, DiscardWindow, EndTurnChoice,
-    FrameOutcome, GameScreen, HumanHandle, LoadWindow, ManaChoice, MenuBar, MenuState, Notice,
-    OffersWindow, ScreenMode, ScreenPhase, SetDiceChoice, combat_screen, controls_screen,
-    discard_window, dummy_discard_window, game_screen, human_player, load_window_screen, menu_bar,
-    offers_window_in, run_frame, save_stem, saved_at, screen::artifact_enemy_toggles,
-    screen::cancel_command, screen::cast_enemy_toggles, screen::reopen_score_button,
+    CombatChoice, CombatScreen, Command, Controls, DepartingEnemy, DiscardChoice, DiscardWindow,
+    EndTurnChoice, FrameOutcome, GameScreen, HumanHandle, LoadWindow, ManaChoice, MenuBar,
+    MenuState, Notice, OffersWindow, ScreenMode, ScreenPhase, SetDiceChoice, combat_screen,
+    controls_screen, discard_window, dummy_discard_window, game_screen, human_player,
+    load_window_screen, menu_bar, offers_window_in, run_frame, save_stem, saved_at,
+    screen::artifact_enemy_toggles, screen::cancel_command, screen::cast_enemy_toggles,
+    screen::reopen_score_button,
 };
 
 /// Raccourcis clavier de la fin du tour (spec 016), traduits depuis les touches par l'application.
@@ -1166,6 +1167,13 @@ impl GameSession {
     /// retour en arrière ou un chargement (L6).
     pub fn last_walk(&self) -> Option<(u64, &[Hex])> {
         self.walk.as_ref().map(|(id, path)| (*id, path.as_slice()))
+    }
+
+    /// La dernière disparition (spec #5) : un numéro qui change à chaque combat, et les ennemis
+    /// vaincus que le plateau montrait avant ce combat. Absente sans vaincu, après un retour en
+    /// arrière, un chargement ou une nouvelle partie (C5, C7).
+    pub fn last_departure(&self) -> Option<(u64, &[DepartingEnemy])> {
+        None
     }
 
     /// Le plateau de jeu propose déplacements et explorations, sauf en mode fin du tour.
