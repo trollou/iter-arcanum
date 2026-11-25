@@ -121,7 +121,7 @@ chercher (`grep -rn "Forced Withdrawal" ../mage-knight/docs/regles/livret/`).
 | Capacités des ennemis : Vif, Brutal, Toxique, Paralysant, Invocation… | p. 24 *Enemy Token Abilities* (image `livret/images/p24-icones-ennemis.jpg`) ; valeurs de chaque jeton : `cartes/ennemis.md` ; p. 9 *Block Phase*, 2 et 6.a ; p. 10, 6 ; Compendium, *Combat* S20, Q22, S23, *ORC SUMMONERS* S1 | 033 |
 | Fortifié, doublement fortifié, non fortifié | p. 9 *Ranged and Siege Attack Phase*, 3.a ; p. 24 *Defensive* | 031 (jeton), 032 (siège), [043](../specs/043-sites-fortifies.md) ; non fortifié : extensions, hors périmètre |
 | Attaques multiples d'un ennemi | p. 24 *Multiple Attacks* | aucun ennemi du jeu de base (extensions, hors périmètre ; spec 033) |
-| Jetons d'ennemis : piles par couleur, défausse, remélange, pile de secours | p. 3 *Enemy and Ruin token piles* ; valeurs : `cartes/ennemis.md` ; Compendium, *Scenarios* S5 | 030, 031 (défausse, remélange), 033 (pile de secours) |
+| Jetons d'ennemis : piles par couleur, défausse, remélange, pile de secours | p. 3 *Enemy and Ruin token piles* ; valeurs : `cartes/ennemis.md` ; Compendium, *Scenarios* S5 | 030, 031 (défausse, remélange), 033 (pile de secours), [#14](../specs/issue-14-ennemis-par-categorie.md) (piles nommées par catégorie, socle coloré des figurines) |
 
 ## Blessures, soins, progression
 
