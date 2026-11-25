@@ -17,6 +17,11 @@
   [avec l'action avancée d'un monastère](images/issue-32-cartes-des-fenetres/maquette-monastere.png) (`monastere`) ;
   [choix du sort](images/issue-32-cartes-des-fenetres/maquette-sort.png) (`tour-conquise`, fin du tour) ;
   [choix de l'artefact](images/issue-32-cartes-des-fenetres/maquette-artefact.png) (`sombre-terrier`, touche 1).
+  Seconde maquette (relecture de Mathieu, 2026-11-25), **une bande factice sur chaque action avancée et chaque sort**
+  (rectangle brun à la place de l'image à venir) et « Prendre » dans l'en-tête :
+  [Offres en 1 600 × 900](images/issue-32-cartes-des-fenetres/maquette-bandes-1600x900.png),
+  [Offres en 1 280 × 800](images/issue-32-cartes-des-fenetres/maquette-bandes-1280x800.png) (`monastere`),
+  [choix du sort, « Prendre » en haut à droite](images/issue-32-cartes-des-fenetres/maquette-prendre-en-tete.png).
 
 ## Objectif
 
@@ -134,14 +139,22 @@ tests qui ouvrent `offers_window`, `artifact_choice` ou `spell_choice`) :
 - **L1** — Offre plus large que la fenêtre (offre d'unités de 5 ou 6 cartes, actions avancées de monastère comprises, à
   1 280 points de large) : la rangée passe à la ligne (C8). La fenêtre ne dépasse pas l'écran : au plus sa largeur moins
   une marge.
-- **L2** — Fenêtre plus haute que l'écran (1 280 × 800, taille de départ du jeu, ou rangées passées à la ligne) : son
-  contenu défile verticalement, titre et boutons « Fermer » ou « Renoncer » restant visibles. En 1 600 × 900, la fenêtre
-  Offres de `tour-conquise` et de `monastere` tient sans défiler (maquettes ; spec 070, C18).
+- **L2** — Fenêtre plus haute que l'écran : elle ne dépasse jamais l'écran (au plus sa hauteur moins une marge) ; ses
+  cartes défilent verticalement (molette, barre de défilement), son titre et les boutons « Fermer » ou « Renoncer »
+  restant visibles. Hauteurs mesurées sur la seconde maquette, **avec une bande sur chaque carte** (illustrations des
+  actions avancées et des sorts à venir) : une rangée d'actions avancées ou de sorts fait environ 255 points, une rangée
+  d'unités environ 290 ; trois rangées l'une sous l'autre font environ 980 points avec le titre et « Fermer », plus que
+  900. D'où la disposition de Q1 : en 1 600 × 900, actions avancées et sorts sur une même rangée, unités dessous, la
+  fenêtre Offres tient sans défiler (environ 680 points) ; en 1 280 × 800, la rangée du haut ne tient plus (6 cartes font
+  1 336 points), elle passe à la ligne (L1) et la fenêtre défile.
 - **L3** — Cartes d'une même rangée **de même hauteur**, celle de la plus haute (maquette) ; pas de hauteur fixe de 240
   (spec 077) : une carte de fenêtre ne se coupe pas et ne grandit pas au survol, elle montre tout son texte. La bande d'une
   carte sans image n'est pas réservée (spec 077, L1).
-- **L4** — Les boutons (« Prendre », « Apprendre (6 Influence) », « Lancer », « Recruter (gratuit) », « Utiliser : … ») et
-  leurs touches restent sous le texte de leur carte, sans autre changement (specs 050, 056, 057, 071 C22).
+- **L4** — Le bouton de la carte (`take` : « Prendre », « Apprendre (6 Influence) », « Lancer », « Recruter (gratuit) »,
+  specs 050, 056, 057) est **toujours à la même place, en haut à droite, face au nom** (Mathieu, 2026-11-25), avec sa
+  touche (spec 071, C22). Le nom prend la place qui reste et se tronque au besoin ; tronqué, il s'affiche en entier au
+  survol (infobulle). Les boutons « Utiliser : … » d'une unité (Appel aux armes, spec 057), un par capacité, restent sous
+  ses lignes.
 - **L5** — Pas de bouton « i » sur ces cartes : leur texte complet est écrit dessus.
 
 ## Information cachée
@@ -163,9 +176,9 @@ nom de base (C2) ; seule `offers.rs` la lit dans `src`.
 ## Interface
 
 - **Carte d'une fenêtre** : le cadre d'une carte de la main (`card_frame`, fond, bordure, coins), 216 points de large
-  (`CARD_WIDTH`) ; en-tête : pastille de la couleur (`OfferCardView::color`), nom en gras, puis la marque « monastère »
-  (`mark`) ; bande d'illustration de 202 × 84 recadrée au milieu (`art_band`, spec 077 C2 ; `illustration`) ; texte de
-  base ; séparation et texte renforcé en grisé ; boutons (C1 à C6 ; vérification à l'œil, maquettes
+  (`CARD_WIDTH`) ; en-tête : pastille de la couleur (`OfferCardView::color`), nom en gras, la marque « monastère »
+  (`mark`), et à droite le bouton `take` (L4) ; bande d'illustration de 202 × 84 recadrée au milieu (`art_band`, spec 077 C2 ; `illustration`) ; texte de
+  base ; séparation et texte renforcé en grisé ; boutons « Utiliser » d'une unité (C1 à C6 ; vérification à l'œil, maquettes
   [Offres](images/issue-32-cartes-des-fenetres/maquette-offres.png)).
 - **Séparation** : celle de la main (spec #11, `strong_separator`) : pour une action avancée, un trait, la pastille,
   « Renforcé », un trait ; pour un sort, un trait simple puis les pastilles couleur et noir et le nom renforcé en gras ;
@@ -173,7 +186,8 @@ nom de base (C2) ; seule `offers.rs` la lit dans `src`.
   l'œil, maquettes [sort](images/issue-32-cartes-des-fenetres/maquette-sort.png) et
   [artefact](images/issue-32-cartes-des-fenetres/maquette-artefact.png)). Le dessin de la main est partagé, pas recopié.
 - **Unité** : en-tête (nom), bande, puis ses lignes, comme aujourd'hui (C3).
-- **Fenêtre Offres** (Q1) : une rangée par offre, dans l'ordre Actions avancées, Sorts, Unités, son titre au-dessus ;
+- **Fenêtre Offres** (Q1) : les trois offres dans l'ordre Actions avancées, Sorts, Unités, chacune son titre au-dessus
+  de ses cartes ; actions avancées et sorts côte à côte sur une même rangée quand la largeur le permet, unités dessous ;
   cartes côte à côte, écart de 8 points, à la hauteur de la plus haute de la rangée (L3) ; passage à la ligne (C8, L1) et
   défilement vertical (L2) ; « Fermer » et « Renoncer » en bas, comme aujourd'hui (maquettes
   [Offres](images/issue-32-cartes-des-fenetres/maquette-offres.png),
@@ -214,10 +228,16 @@ Aucun : les touches des boutons « Prendre » (1 à 3) et d'Échap ne changent p
 
 ## Questions ouvertes
 
-- **Q1. Disposition** : une **rangée par offre** (maquette), plutôt que des colonnes de cartes empilées. Des colonnes de
-  cartes de 216 points mettraient trois ou quatre cartes l'une sous l'autre (environ 750 points pour les unités) et
-  défileraient dès 1 600 × 900 ; les rangées tiennent sans défiler à cette taille et règlent la « taille minimale » de la
-  spec 077 (Q4) : chaque carte garde la largeur d'une carte de la main, rien ne rétrécit. Proposition : rangées.
+- **Q1. Disposition** : des **rangées** plutôt que des colonnes de cartes empilées (des colonnes de cartes de 216 points
+  mettraient trois ou quatre cartes l'une sous l'autre et défileraient toujours). Chaque carte garde la largeur d'une carte
+  de la main, rien ne rétrécit : la « taille minimale » de la spec 077 (Q4) est réglée. Relecture de Mathieu (2026-11-25) :
+  « comment va se comporter la fenêtre si l'écran est trop petit ? Prévoir que les actions avancées auront bientôt une
+  illustration. » Mesuré (L2) : avec une bande sur chaque carte, une rangée par offre ne tient plus en 1 600 × 900.
+  Proposition : actions avancées et sorts sur la même rangée quand la largeur le permet (1 600 points), unités dessous ;
+  sinon passage à la ligne et défilement vertical, la fenêtre ne dépassant jamais l'écran (L1, L2). Autre possibilité :
+  une rangée par offre, et défilement dès 1 600 × 900.
+- **« Prendre »** (Mathieu, 2026-11-25) : en haut à droite, face au nom, nom entier en infobulle s'il est tronqué ; repris
+  dans L4 et la seconde maquette.
 - **Q2. Texte** : celui du « i » de la même carte en main (texte écrit d'abord, C7), pour qu'une carte dise partout la
   même chose ; il diffère parfois du texte calculé d'aujourd'hui (Éclair de feu renforcé : « Blessure ; Attaque de siège de
   feu 8 » au lieu de « Attaque de siège de feu 8 et une Blessure »). Proposition : le texte du « i ».
