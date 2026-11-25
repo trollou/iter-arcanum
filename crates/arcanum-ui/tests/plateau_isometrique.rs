@@ -799,10 +799,16 @@ fn only_enemies_have_a_category_base() {
         .filter(|overlay| !enemy_kinds.contains(&overlay.kind))
         .collect();
     assert!(
-        others.iter().any(|overlay| overlay.kind == OverlayKind::Figure),
+        others
+            .iter()
+            .any(|overlay| overlay.kind == OverlayKind::Figure),
         "le héros est à l'écran"
     );
-    assert!(others.iter().any(|overlay| overlay.kind == OverlayKind::Site));
+    assert!(
+        others
+            .iter()
+            .any(|overlay| overlay.kind == OverlayKind::Site)
+    );
     for overlay in others {
         assert_eq!(overlay.base, None, "{overlay:?}");
     }

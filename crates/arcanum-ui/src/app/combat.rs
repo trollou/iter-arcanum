@@ -3,7 +3,7 @@
 use super::widgets::shortcut_button;
 use eframe::egui::{self, Color32, Frame, Sense, Stroke, Vec2, vec2};
 
-use super::board::standing_image_rect;
+use super::board::{paint_figure_base, standing_image_rect};
 use super::{CHOICE_STROKE, IterArcanumApp, RESISTANCE_TEXT, SWATCH_STROKE, TILE_STROKE, full_uv};
 use crate::{CombatScreen, Command, EnemyCard, ImagePaint, StepState};
 
@@ -199,6 +199,15 @@ impl IterArcanumApp {
                     } else {
                         Color32::WHITE
                     };
+                    // Spec #14, C13 : le socle à la couleur de sa catégorie, sous la figurine.
+                    paint_figure_base(
+                        ui.painter(),
+                        rect.center_bottom(),
+                        rect.width(),
+                        enemy
+                            .base
+                            .gamma_multiply(if enemy.defeated { 0.4 } else { 1.0 }),
+                    );
                     match self.paint_of(ui, enemy.image, enemy.fallback, rect, pixels_per_point) {
                         ImagePaint::Texture(texture) => {
                             // La figurine debout, à ses proportions (spec 075, C20b).

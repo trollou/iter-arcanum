@@ -271,8 +271,11 @@ impl IterArcanumApp {
         // Éléments debout, déjà rangés de l'arrière vers l'avant (spec 075, C13).
         let tint = veil.map_or(Color32::WHITE, veil_tint);
         for overlay in &screen.overlays {
+            // Socle du héros à sa couleur, d'un ennemi à celle de sa catégorie (spec #14, C9).
             if overlay.kind == OverlayKind::Figure {
-                paint_hero_base(&painter, overlay, tint);
+                paint_base(&painter, overlay, overlay.fallback, tint);
+            } else if let Some(base) = overlay.base {
+                paint_base(&painter, overlay, base, tint);
             }
             match self.paint_of(
                 ui,
@@ -509,14 +512,21 @@ fn veil_tint(veil: Color32) -> Color32 {
     Color32::from_rgb(channel(veil.r()), channel(veil.g()), channel(veil.b()))
 }
 
-/// Socle du héros, un disque à plat à sa couleur sous ses pieds (spec 075, Héros).
-fn paint_hero_base(painter: &egui::Painter, overlay: &Overlay, tint: Color32) {
-    let radius = vec2(0.42, 0.42 * BOARD_TILT * 0.45) * overlay.rect.width();
-    let center = overlay.foot - vec2(0.0, radius.y * 0.4);
+/// Socle d'une figurine, un disque cerné à plat sous ses pieds : le héros à sa couleur (spec 075,
+/// Héros), un ennemi à celle de sa catégorie (spec #14, Q2).
+fn paint_base(painter: &egui::Painter, overlay: &Overlay, color: Color32, tint: Color32) {
+    paint_figure_base(painter, overlay.foot, overlay.rect.width(), color * tint);
+}
+
+/// Le disque d'un socle, aplati par l'inclinaison du plateau, pour une figurine de cette largeur
+/// posée sur ce pied ; repris sous la figurine des cartes d'ennemis (spec #14, C13).
+pub(super) fn paint_figure_base(painter: &egui::Painter, foot: Pos2, width: f32, fill: Color32) {
+    let radius = vec2(0.42, 0.42 * BOARD_TILT * 0.45) * width;
+    let center = foot - vec2(0.0, radius.y * 0.4);
     painter.add(egui::epaint::EllipseShape {
         center,
         radius,
-        fill: overlay.fallback * tint,
+        fill,
         stroke: Stroke::new(1.5, TILE_STROKE),
         angle: 0.0,
     });

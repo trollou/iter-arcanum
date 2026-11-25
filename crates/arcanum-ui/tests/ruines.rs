@@ -282,7 +282,10 @@ fn hover_describes_ruins() {
         ..Ruins::default()
     });
     assert!(
-        unit.contains(&"Ennemis : gardes de forteresse, tour de mage ; récompense : une unité de l'offre".to_string()),
+        unit.contains(
+            &"Ennemis : gardes de forteresse, tour de mage ; récompense : une unité de l'offre"
+                .to_string()
+        ),
         "{unit:?}"
     );
     let two = lines(Ruins {

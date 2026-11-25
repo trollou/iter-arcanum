@@ -257,7 +257,7 @@ pub fn combat_screen(
                 token: enemy.token,
                 image: crate::figure_image(enemy.token.enemy()),
                 fallback: crate::enemy_color(enemy.token.color()),
-                base: eframe::egui::Color32::TRANSPARENT,
+                base: crate::enemy_color(enemy.token.color()),
                 values: combat_enemy_values(enemy, catalog),
                 abilities: enemy_abilities(enemy, catalog),
                 resistances: resistance_icons(&enemy.effective_resistances(), catalog),
