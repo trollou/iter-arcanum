@@ -1,6 +1,6 @@
 # #14 — Ennemis par catégorie
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-25)
 - Issue : #14 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec 030 (jetons d'ennemis), spec 043 (défenseurs face cachée), spec 045 (ruines), spec 062 (cités), spec 070 (groupe dans l'infobulle), spec 075 (plateau isométrique, socle du héros)
 - Livret : aucune règle nouvelle (MKUE p. 3 et p. 7, 4 pour les piles et les défenseurs, inchangés)
@@ -29,7 +29,7 @@ orques (vert), un draconien (rouge) ou un défenseur de cité (blanc).
 - Aucun champ nouveau dans l'état ni dans la vue : `PlayerView::face_down_defenders`, `enemy_tokens` et les
   jetons de ruines portent déjà la couleur.
 - Écran : `Overlay` (plateau) gagne un **socle** facultatif, la couleur à peindre sous l'élément debout ;
-  `EnemyCard` (combat) aussi, si Q3 est acceptée.
+  `EnemyCard` (combat) aussi (Q3).
 
 ## Actions et événements
 
@@ -96,7 +96,7 @@ nuit comme les éléments debout (spec 075, L8).
   le sien à sa couleur, inchangé (spec 075, `hero_figure_uses_its_standing_image`)
   (`only_enemies_have_a_category_base`).
 
-### Écran de combat (si Q3 est acceptée)
+### Écran de combat
 
 - **C13** — La carte des Rôdeurs (`EnemyCard`) a pour socle `enemy_color(Green)`, dessiné sous la figurine
   (`combat_card_has_a_category_base`) — à côté de `combat_shows_the_figure` (spec 075, C20b).
@@ -144,7 +144,7 @@ Clés supprimées : le groupe `enemy.pile_color` (six clés), qui n'a plus de le
 - **Socle des figurines d'ennemis** sur le plateau (C9 à C12) : la couleur vient de `EnemyToken::color()` ou de
   `PlayerView::face_down_defenders`. Forme, taille et lisibilité de jour, de nuit et sur chaque terrain :
   vérification à l'œil.
-- **Socle sur la carte d'ennemi** de l'écran de combat (C13, si Q3), même couleur ; placement : vérification à l'œil.
+- **Socle sur la carte d'ennemi** de l'écran de combat (C13), même couleur ; placement : vérification à l'œil.
 - **Pastilles du jeton de ruines** (spec 045, `RuinPip::Enemy`) : inchangées, déjà à la couleur de la pile.
 
 Parties préparées existantes, sans partie nouvelle (`docs/verification-manuelle.md`) :
@@ -157,7 +157,7 @@ Parties préparées existantes, sans partie nouvelle (`docs/verification-manuell
 | `sombre-terrier` | deux socles marron réduits (C10), confirmation (C5) |
 | `cite-bleue` | infobulle des défenseurs face cachée (C4), socles blancs et violets autour de la cité |
 | `monastere` | confirmation de l'incendie (C7) |
-| `combat-deux-ennemis` | socle sur les cartes d'ennemis (C13, si Q3) |
+| `combat-deux-ennemis` | socle sur les cartes d'ennemis (C13) |
 
 ### Raccourcis clavier
 
@@ -166,18 +166,17 @@ Aucun.
 ## Hors périmètre
 
 - Plusieurs monstres sur une même case du plateau (issue #28) et icônes de capacité des monstres (issue #27).
-- Noms des catégories eux-mêmes : repris tels quels de la spec 070, sauf réponse contraire à Q1.
+- Noms des catégories eux-mêmes : repris tels quels de la spec 070 (Q1).
+
+## Décisions
+
+Tranchées par Mathieu le 2026-11-25, à la relecture (« Ok avec tes propositions ») :
+
+- **Q1 — Noms des catégories** : ceux de l'infobulle depuis la spec 070 (`enemy.color.*`), inchangés.
+- **Q2 — Forme du socle** : disque plein à la couleur de la pile, cerné comme celui du héros ; le héros garde son
+  socle à sa couleur.
+- **Q3 — Écran de combat** : le socle est aussi sous la figurine de chaque carte d'ennemi (C13).
 
 ## Questions ouvertes
 
-- **Q1 — Noms des catégories.** Je propose de garder ceux de l'infobulle depuis la spec 070 (« orques maraudeurs »,
-  « gardes de forteresse », « tour de mage », « donjon », « draconien », « cité » ; en anglais « keep », « mage
-  tower », « dungeon »…). Ils se lisent bien dans « Ennemis : donjon, draconien » ; « tour de mage » et « cité »
-  restent des noms de site plutôt que de troupes. Autre choix possible : des noms de troupes partout
-  (« défenseurs de tour de mage », « monstres de donjon », « garnison de cité »), plus longs dans les infobulles.
-- **Q2 — Forme du socle.** Je propose un disque plein à la couleur de la pile, cerné comme celui du héros : il se
-  voit sur tous les terrains, et un anneau seul se perdrait dans la forêt et la nuit. Le héros garde son socle à sa
-  couleur ; Arythea (rouge) et Goldyx (vert) ont un socle proche de celui des draconiens et des orques, mais leur
-  figurine les distingue.
-- **Q3 — Écran de combat.** Je propose d'y mettre aussi le socle sous la figurine de chaque carte d'ennemi (C13),
-  pour garder le même repère qu'au plateau ; sinon, C13 sort de la spec.
+Aucune.
