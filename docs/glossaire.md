@@ -165,6 +165,7 @@ Les traductions françaises sont une **proposition à valider par Mathieu** : en
 | Enemy token | Jeton d'ennemi | `EnemyToken` (ennemi + numéro d'exemplaire, spec 030) |
 | (enemy type, ex. Prowlers) | Ennemi | `Enemy` (spec 030) |
 | (token back color) | Couleur d'ennemi | `EnemyColor` (`Green`, `Grey`, `Violet`, `Brown`, `Red`, `White`) |
+| (token back category) | Catégorie d'ennemis | `EnemyColor`, libellés `enemy.color.*` : « orques maraudeurs », « gardes de forteresse »… (spec 070, spec #14) |
 | Enemy token pile | Pile d'ennemis | `enemy_piles` (une pile par `EnemyColor`) |
 | Face up / face down | Face visible / face cachée | défenseurs face cachée : `GameState::face_down_defenders`, `PlayerView::face_down_defenders` (spec 043) |
 | Armor | Armure | `armor` |
