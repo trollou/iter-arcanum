@@ -17,6 +17,7 @@ use arcanum_ui::{
 use chrono::{DateTime, Local, TimeZone};
 
 mod support;
+use support::ctrl;
 use support::{first_reconnaissance_config, play};
 
 const SOLO: PlayerId = PlayerId::SOLO;
@@ -327,15 +328,17 @@ fn control_buttons_show_shortcut() {
     let controls = session.controls(&catalog);
     // Au début du tour, rien à reprendre : grisé, la raison puis la touche.
     assert!(!controls.undo.enabled);
-    assert_eq!(controls.undo.shortcut.as_deref(), Some("Ctrl+Z"));
+    assert_eq!(controls.undo.shortcut, Some(ctrl("Z")));
     assert_eq!(
         hover_text(
             Some(&controls.undo.hint),
             controls.undo.shortcut.as_deref(),
             &catalog
-        )
-        .as_deref(),
-        Some("Rien à reprendre depuis le début du tour.\nRaccourci : Ctrl+Z")
+        ),
+        Some(format!(
+            "Rien à reprendre depuis le début du tour.\nRaccourci : {}",
+            ctrl("Z")
+        ))
     );
     play(&mut session, &basic(card(BasicAction::March, 1)));
     let controls = session.controls(&catalog);
@@ -358,19 +361,25 @@ fn control_buttons_show_shortcut() {
         [
             (
                 "Reprendre votre dernière action".to_string(),
-                Some("Reprendre votre dernière action\nRaccourci : Ctrl+Z".to_string())
+                Some(format!(
+                    "Reprendre votre dernière action\nRaccourci : {}",
+                    ctrl("Z")
+                ))
             ),
             (
                 "Sauvegarder la partie".to_string(),
-                Some("Sauvegarder la partie\nRaccourci : Ctrl+S".to_string())
+                Some(format!("Sauvegarder la partie\nRaccourci : {}", ctrl("S")))
             ),
             (
                 "Charger une partie".to_string(),
-                Some("Charger une partie\nRaccourci : Ctrl+O".to_string())
+                Some(format!("Charger une partie\nRaccourci : {}", ctrl("O")))
             ),
             (
                 "Commencer une autre partie".to_string(),
-                Some("Commencer une autre partie\nRaccourci : Ctrl+N".to_string())
+                Some(format!(
+                    "Commencer une autre partie\nRaccourci : {}",
+                    ctrl("N")
+                ))
             ),
         ]
     );

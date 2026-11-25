@@ -13,6 +13,7 @@ use arcanum_ui::{
 };
 
 mod support;
+use support::ctrl;
 use support::first_reconnaissance_config;
 
 fn french() -> Catalog {
@@ -80,19 +81,19 @@ fn menu_lists_commands_with_keys() {
     assert_eq!(
         lines,
         [
-            Some(("Revenir en arrière", Some("Ctrl+Z"))),
+            Some(("Revenir en arrière", Some(ctrl("Z").as_str()))),
             None,
-            Some(("Sauvegarder", Some("Ctrl+S"))),
-            Some(("Charger…", Some("Ctrl+O"))),
-            Some(("Nouvelle partie…", Some("Ctrl+N"))),
+            Some(("Sauvegarder", Some(ctrl("S").as_str()))),
+            Some(("Charger…", Some(ctrl("O").as_str()))),
+            Some(("Nouvelle partie…", Some(ctrl("N").as_str()))),
             None,
             Some(("Recentrer le plateau", Some("Début"))),
             Some(("Plein écran", Some("F11"))),
             None,
             // Spec 080 C13
-            Some(("Préférences…", Some("Ctrl+,"))),
+            Some(("Préférences…", Some(ctrl(",").as_str()))),
             None,
-            Some(("Quitter", Some("Ctrl+Q"))),
+            Some(("Quitter", Some(ctrl("Q").as_str()))),
         ]
     );
     let commands: Vec<Command> = entries(&bar).iter().map(|entry| entry.command).collect();
@@ -399,10 +400,7 @@ fn quit_and_fullscreen_keys_are_bound() {
     };
     assert_eq!(bound(Shortcut::Quit), Some(("Q", KeyModifier::Ctrl)));
     assert_eq!(bound(Shortcut::Fullscreen), Some(("F11", KeyModifier::Any)));
-    assert_eq!(
-        shortcut_label(Shortcut::Quit, &catalog).as_deref(),
-        Some("Ctrl+Q")
-    );
+    assert_eq!(shortcut_label(Shortcut::Quit, &catalog), Some(ctrl("Q")));
     assert_eq!(
         shortcut_label(Shortcut::Fullscreen, &catalog).as_deref(),
         Some("F11")

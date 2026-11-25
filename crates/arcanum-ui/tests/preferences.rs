@@ -4,6 +4,7 @@
 //! machine.
 
 mod support;
+use support::ctrl;
 
 use std::ffi::OsString;
 use std::fs;
@@ -288,9 +289,9 @@ fn menu_lists_preferences_before_quit() {
         [
             Some(("Plein écran".to_owned(), Some("F11".to_owned()), true)),
             None,
-            Some(("Préférences…".to_owned(), Some("Ctrl+,".to_owned()), true)),
+            Some(("Préférences…".to_owned(), Some(ctrl(",")), true)),
             None,
-            Some(("Quitter".to_owned(), Some("Ctrl+Q".to_owned()), true)),
+            Some(("Quitter".to_owned(), Some(ctrl("Q")), true)),
         ]
     );
 }
@@ -529,8 +530,8 @@ fn preferences_shortcuts() {
         .map(|binding| (binding.key.name(), binding.modifier));
     assert_eq!(bound, Some(("Comma", KeyModifier::Ctrl)));
     assert_eq!(
-        shortcut_label(Shortcut::Preferences, &catalog).as_deref(),
-        Some("Ctrl+,")
+        shortcut_label(Shortcut::Preferences, &catalog),
+        Some(ctrl(","))
     );
 
     // Ctrl+, ouvre et ferme ; Échap ferme la fenêtre des préférences avant celle de chargement.

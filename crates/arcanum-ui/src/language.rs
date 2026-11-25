@@ -77,17 +77,43 @@ pub fn windows_language_id_to_code(id: u16) -> Option<&'static str> {
     }
 }
 
+/// Langue du système sous macOS (spec #7) : la première langue préférée de l'utilisateur, sinon
+/// les variables de locale. Pure : l'appelant lit CoreFoundation et l'environnement.
+pub fn apple_system_language(
+    first_preferred: Option<&str>,
+    lookup: impl Fn(&str) -> Option<String>,
+) -> Option<String> {
+    let _ = (first_preferred, lookup);
+    todo!()
+}
+
 /// Langue du système, lue au lancement.
 pub fn system_language() -> Option<String> {
     #[cfg(windows)]
     {
         windows_system_language()
     }
-    #[cfg(not(windows))]
+    #[cfg(target_os = "macos")]
     {
-        // macOS passe aussi par là en attendant la spec 085.
+        macos_system_language(|name| std::env::var(name).ok())
+    }
+    #[cfg(not(any(windows, target_os = "macos")))]
+    {
         unix_system_language(|name| std::env::var(name).ok())
     }
+}
+
+/// Première langue préférée de l'utilisateur macOS, lue dans CoreFoundation (spec #7, Q1).
+#[cfg(target_os = "macos")]
+pub fn macos_preferred_language() -> Option<String> {
+    todo!()
+}
+
+/// Langue du système sous macOS : langues préférées, puis `lookup` pour les variables de locale.
+#[cfg(target_os = "macos")]
+pub fn macos_system_language(lookup: impl Fn(&str) -> Option<String>) -> Option<String> {
+    let _ = lookup;
+    todo!()
 }
 
 /// Lecture de la langue de l'interface de Windows (spec 076, Q1 et Q2).

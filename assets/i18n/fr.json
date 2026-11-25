@@ -1537,6 +1537,7 @@
       "enter": "Entrée",
       "escape": "Échap",
       "ctrl": "Ctrl+{key}",
+      "cmd": "Cmd+{key}",
       "home": "Début"
     }
   },

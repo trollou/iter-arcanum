@@ -18,6 +18,22 @@ pub enum KeyModifier {
     Any,
 }
 
+/// Système dont on écrit le modificateur : Cmd sous macOS, Ctrl ailleurs (spec #7, C7).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum KeyPlatform {
+    Mac,
+    Other,
+}
+
+impl KeyPlatform {
+    /// Le système de compilation.
+    pub const CURRENT: Self = if cfg!(target_os = "macos") {
+        Self::Mac
+    } else {
+        Self::Other
+    };
+}
+
 /// Une touche et le raccourci qu'elle déclenche.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct KeyBinding {
@@ -73,8 +89,14 @@ pub const KEY_BINDINGS: [KeyBinding; 27] = [
     bind(Key::ArrowRight, KeyModifier::None, Shortcut::NextStep),
 ];
 
-/// Le libellé d'une touche de la table : « Ctrl+Z », « Entrée », « O », « 2 ».
+/// Le libellé d'une touche de la table : « Ctrl+Z » (« Cmd+Z » sous macOS), « Entrée », « O », « 2 ».
 pub fn key_label(binding: &KeyBinding, catalog: &Catalog) -> String {
+    key_label_on(binding, catalog, KeyPlatform::CURRENT)
+}
+
+/// Le libellé d'une touche pour un système donné.
+pub fn key_label_on(binding: &KeyBinding, catalog: &Catalog, platform: KeyPlatform) -> String {
+    let _ = platform;
     // Les lettres et les chiffres ne se traduisent pas.
     let key = match binding.key {
         Key::Escape => catalog.text("shortcut.key.escape"),

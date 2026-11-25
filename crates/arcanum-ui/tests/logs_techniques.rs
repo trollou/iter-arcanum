@@ -204,6 +204,9 @@ fn deployed_game_writes_logs_in_user_data_dir() {
     let base = PathBuf::from("base");
     let expected = if cfg!(windows) {
         base.join("iter-arcanum").join("data").join("logs")
+    } else if cfg!(target_os = "macos") {
+        // Spec #7, Q5 : sous macOS, la base est le dossier personnel.
+        base.join("Library").join("Logs").join("iter-arcanum")
     } else {
         base.join("iter-arcanum").join("logs")
     };

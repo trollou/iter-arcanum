@@ -13,7 +13,7 @@ use std::sync::{Mutex, PoisonError};
 use chrono::{DateTime, Local, SecondsFormat, TimeZone};
 use log::{Level, LevelFilter, Log, Metadata, Record};
 
-pub use platform::user_logs_dir;
+pub use platform::{macos_logs_dir, user_base_dir, user_logs_dir};
 
 /// Gravité minimale de nos crates.
 pub const LOG_LEVEL_ENV_VAR: &str = "ARCANUM_LOG";
