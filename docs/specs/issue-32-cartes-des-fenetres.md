@@ -1,6 +1,6 @@
 # #32 — Cartes des fenêtres
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-25 : Q1 et Q2 tranchées, « Prendre » dans l'en-tête)
 - Issue : #32 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec #11 (cartes en main épurées, PR #40, **à fusionner avant l'implémentation** : elle crée `CardInfo`,
   `strong_heading`, `strong_colors` et la clé `card.if_destroyed` que cette spec reprend), spec 077 (cartes agrandies),
@@ -230,6 +230,9 @@ Aucun : les touches des boutons « Prendre » (1 à 3) et d'Échap ne changent p
 
 ## Questions ouvertes
 
+Tranchées par Mathieu (2026-11-25) :
+
+
 - **Q1. Disposition** : des **rangées** plutôt que des colonnes de cartes empilées (des colonnes de cartes de 216 points
   mettraient trois ou quatre cartes l'une sous l'autre et défileraient toujours). Chaque carte garde la largeur d'une carte
   de la main, rien ne rétrécit : la « taille minimale » de la spec 077 (Q4) est réglée. Relecture de Mathieu (2026-11-25) :
@@ -243,4 +246,4 @@ Aucun : les touches des boutons « Prendre » (1 à 3) et d'Échap ne changent p
   dans L4 et la seconde maquette.
 - **Q2. Texte** : celui du « i » de la même carte en main (texte écrit d'abord, C7), pour qu'une carte dise partout la
   même chose ; il diffère parfois du texte calculé d'aujourd'hui (Éclair de feu renforcé : « Blessure ; Attaque de siège de
-  feu 8 » au lieu de « Attaque de siège de feu 8 et une Blessure »). Proposition : le texte du « i ».
+  feu 8 » au lieu de « Attaque de siège de feu 8 et une Blessure »). **Tranchée par Mathieu (2026-11-25) : le texte du « i ».**
