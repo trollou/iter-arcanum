@@ -65,6 +65,8 @@ pub struct IterArcanumApp {
     walk_start: Option<(u64, f64)>,
     /// Spec #5 : la dernière disparition vue et l'instant où son effacement a commencé.
     departure_start: Option<(u64, f64)>,
+    /// Issue #50 : facteur de ralenti des animations du plateau, 1 par défaut.
+    animation_scale: f64,
     /// Dossiers des ressources candidats : le catalogue d'une autre langue y est relu (spec 080).
     assets_candidates: Vec<PathBuf>,
     /// Spec 081 : le lecteur (Kira, ou muet) et le directeur qui lui donne ses ordres.
@@ -92,11 +94,18 @@ impl IterArcanumApp {
             illustrations,
             walk_start: None,
             departure_start: None,
+            animation_scale: 1.0,
             assets_candidates: Vec::new(),
             audio: Box::new(SilentPlayer),
             director: AudioDirector::new(std::time::Duration::from_secs_f64(WALK_STEP_SECONDS)),
             volume_save_at: None,
         }
+    }
+
+    /// Issue #50 : les animations du plateau ralenties de ce facteur (`ARCANUM_ANIMATION_SCALE`).
+    pub fn with_animation_scale(mut self, scale: f64) -> Self {
+        self.animation_scale = scale;
+        self
     }
 
     /// Spec 081 : le lecteur créé au lancement, réglé aux volumes des préférences.
