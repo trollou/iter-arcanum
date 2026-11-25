@@ -568,6 +568,25 @@ fn unit_effect_buttons() {
     );
 }
 
+// Spec #11 C13 : la pastille dit le mana, le bouton ne le répète plus.
+#[test]
+fn unit_mana_ability_omits_mana_prefix() {
+    let catalog = french();
+    let state = Units {
+        level: 3,
+        owned: vec![UnitCard::new(Unit::Illusionists, 1)],
+        ..Units::default()
+    }
+    .state();
+    let screen = screen_of(&state, &catalog);
+    let ability = &screen.units.units[0].effects[1];
+    assert_eq!(
+        ability.face,
+        EffectFace::Text("Un ennemi non fortifié n'attaque pas".into())
+    );
+    assert_eq!(ability.color, Some(ManaColor::Basic(BasicColor::White)));
+}
+
 // Spec 073 C21
 #[test]
 fn unit_option_plays_directly() {

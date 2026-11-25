@@ -4,7 +4,7 @@
 
 use arcanum_core::{
     AdvancedAction, Artifact, BasicAction, BasicColor, CardId, DeedCard, GameState, ManaColor,
-    Spell, legal_actions, view,
+    Spell, Unit, legal_actions, view,
 };
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
@@ -240,4 +240,32 @@ fn paid_option_face_omits_payment() {
         red.tooltip.lines().next(),
         Some("Renforcer : Payer rouge : un sort rouge de l'offre")
     );
+}
+
+// --- Unités ---
+
+// Spec #11 C14 : le texte de toute capacité à mana commence par son mana entre parenthèses, que
+// le bouton retire (C13).
+#[test]
+fn unit_mana_ability_texts_start_with_mana() {
+    for language in ["fr", "en"] {
+        let catalog = Catalog::load(
+            &repository_assets_dir().join("i18n"),
+            &Language(language.into()),
+        )
+        .expect("catalogue du dépôt");
+        for unit in Unit::ALL {
+            for (index, ability) in unit.definition().abilities.iter().enumerate() {
+                if ability.mana.is_none() {
+                    continue;
+                }
+                let text = catalog.text(&unit.ability_key(index));
+                let prefix = text
+                    .strip_prefix('(')
+                    .and_then(|rest| rest.split_once(") "));
+                assert!(prefix.is_some(), "{language} {unit:?} {index} : {text}");
+            }
+        }
+        assert_eq!(catalog.gaps(), vec![], "langue {language}");
+    }
 }
