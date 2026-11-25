@@ -21,7 +21,9 @@
   (rectangle brun à la place de l'image à venir) et « Prendre » dans l'en-tête :
   [Offres en 1 600 × 900](images/issue-32-cartes-des-fenetres/maquette-bandes-1600x900.png),
   [Offres en 1 280 × 800](images/issue-32-cartes-des-fenetres/maquette-bandes-1280x800.png) (`monastere`),
-  [choix du sort, « Prendre » en haut à droite](images/issue-32-cartes-des-fenetres/maquette-prendre-en-tete.png).
+  [choix du sort, « Prendre » en haut à droite](images/issue-32-cartes-des-fenetres/maquette-prendre-en-tete.png),
+  [actions avancées et sorts sur une rangée, unités dessous](images/issue-32-cartes-des-fenetres/maquette-deux-rangees-1600x900.png)
+  (`monastere`, 1 600 × 900, Q1).
 
 ## Objectif
 
@@ -145,7 +147,7 @@ tests qui ouvrent `offers_window`, `artifact_choice` ou `spell_choice`) :
   actions avancées et des sorts à venir) : une rangée d'actions avancées ou de sorts fait environ 255 points, une rangée
   d'unités environ 290 ; trois rangées l'une sous l'autre font environ 980 points avec le titre et « Fermer », plus que
   900. D'où la disposition de Q1 : en 1 600 × 900, actions avancées et sorts sur une même rangée, unités dessous, la
-  fenêtre Offres tient sans défiler (environ 680 points) ; en 1 280 × 800, la rangée du haut ne tient plus (6 cartes font
+  fenêtre Offres tient sans défiler (environ 630 points, [maquette](images/issue-32-cartes-des-fenetres/maquette-deux-rangees-1600x900.png), `monastere`) ; en 1 280 × 800, la rangée du haut ne tient plus (6 cartes font
   1 336 points), elle passe à la ligne (L1) et la fenêtre défile.
 - **L3** — Cartes d'une même rangée **de même hauteur**, celle de la plus haute (maquette) ; pas de hauteur fixe de 240
   (spec 077) : une carte de fenêtre ne se coupe pas et ne grandit pas au survol, elle montre tout son texte. La bande d'une
