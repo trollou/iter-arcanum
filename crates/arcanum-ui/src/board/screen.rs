@@ -609,14 +609,18 @@ pub fn board_screen(input: &BoardInput<'_>, catalog: &Catalog) -> BoardScreen {
             // Q1 : la figurine s'affaisse vers ses pieds en s'effaçant.
             let height = rect.height() * remaining;
             let rect = Rect::from_min_max(pos2(rect.left(), rect.bottom() - height), rect.max);
+            let color = enemy_color(enemy.token.color()).gamma_multiply(remaining);
             overlays.push(Overlay {
                 tint: Color32::WHITE.gamma_multiply(remaining),
-                ..Overlay::standing(
+                fallback: color,
+                base: Some(color),
+                sink: remaining,
+                ..Overlay::enemy(
                     hex,
                     OverlayKind::Departing,
                     rect,
                     figure_image(enemy.token.enemy()),
-                    enemy_color(enemy.token.color()).gamma_multiply(remaining),
+                    enemy.token.color(),
                 )
             });
         }

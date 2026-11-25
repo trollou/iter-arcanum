@@ -2,7 +2,7 @@
 
 use eframe::egui::{
     self, Color32, Event, Key, MouseWheelUnit, PointerButton, Pos2, Rect, Sense, Shape, Stroke,
-    Vec2, vec2,
+    Vec2, pos2, vec2,
 };
 
 use super::widgets::{card_color, shortcut_button};
@@ -290,11 +290,22 @@ impl IterArcanumApp {
             } else if let Some(base) = overlay.base {
                 paint_base(&painter, overlay, base, tint);
             }
+            // Spec #5 : un ennemi vaincu s'affaisse ; son image est demandée à sa taille debout,
+            // déjà chargée, puis écrasée vers ses pieds.
+            let standing = if overlay.sink < 1.0 {
+                let height = overlay.rect.height() / overlay.sink.max(f32::EPSILON);
+                Rect::from_min_max(
+                    pos2(overlay.rect.left(), overlay.rect.bottom() - height),
+                    overlay.rect.max,
+                )
+            } else {
+                overlay.rect
+            };
             match self.paint_of(
                 ui,
                 overlay.image,
                 overlay.fallback,
-                overlay.rect,
+                standing,
                 pixels_per_point,
             ) {
                 ImagePaint::Texture(texture) => {
@@ -304,7 +315,11 @@ impl IterArcanumApp {
                         .read()
                         .meta(texture)
                         .map(|meta| meta.size);
-                    let rect = standing_image_rect(overlay.rect, size);
+                    let rect = standing_image_rect(standing, size);
+                    let rect = Rect::from_min_max(
+                        pos2(rect.left(), rect.bottom() - rect.height() * overlay.sink),
+                        rect.max,
+                    );
                     // Le brouillard prend la couleur de sa pile (spec 075, C18).
                     painter.image(texture, rect, full_uv(), tint * overlay.tint);
                 }
