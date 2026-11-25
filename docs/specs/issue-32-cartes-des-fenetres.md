@@ -1,6 +1,6 @@
 # #32 — Cartes des fenêtres
 
-- Statut : validée (Mathieu, 2026-11-25 : Q1 et Q2 tranchées, « Prendre » dans l'en-tête)
+- Statut : implémentée (2026-11-25) ; validée par Mathieu le 2026-11-25 (Q1 et Q2 tranchées, « Prendre » dans l'en-tête)
 - Issue : #32 (Epic #31 Finitions v0.1.0, milestone v0.1.0)
 - Dépend de : spec #11 (cartes en main épurées, PR #40, **à fusionner avant l'implémentation** : elle crée `CardInfo`,
   `strong_heading`, `strong_colors` et la clé `card.if_destroyed` que cette spec reprend), spec 077 (cartes agrandies),
