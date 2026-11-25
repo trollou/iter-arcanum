@@ -96,7 +96,6 @@ pub fn key_label(binding: &KeyBinding, catalog: &Catalog) -> String {
 
 /// Le libellé d'une touche pour un système donné.
 pub fn key_label_on(binding: &KeyBinding, catalog: &Catalog, platform: KeyPlatform) -> String {
-    let _ = platform;
     // Les lettres et les chiffres ne se traduisent pas.
     let key = match binding.key {
         Key::Escape => catalog.text("shortcut.key.escape"),
@@ -107,7 +106,13 @@ pub fn key_label_on(binding: &KeyBinding, catalog: &Catalog, platform: KeyPlatfo
         key => key.name().to_owned(),
     };
     match binding.modifier {
-        KeyModifier::Ctrl => catalog.format("shortcut.key.ctrl", &[("key", &key)]),
+        KeyModifier::Ctrl => {
+            let modifier = match platform {
+                KeyPlatform::Mac => "shortcut.key.cmd",
+                KeyPlatform::Other => "shortcut.key.ctrl",
+            };
+            catalog.format(modifier, &[("key", &key)])
+        }
         KeyModifier::None | KeyModifier::Any => key,
     }
 }

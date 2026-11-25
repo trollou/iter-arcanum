@@ -83,8 +83,10 @@ pub fn apple_system_language(
     first_preferred: Option<&str>,
     lookup: impl Fn(&str) -> Option<String>,
 ) -> Option<String> {
-    let _ = (first_preferred, lookup);
-    todo!()
+    // Seule la première compte, comme Windows ne donne qu'une langue d'interface.
+    first_preferred
+        .and_then(locale_to_code)
+        .or_else(|| unix_system_language(lookup))
 }
 
 /// Langue du système, lue au lancement.
@@ -106,14 +108,77 @@ pub fn system_language() -> Option<String> {
 /// Première langue préférée de l'utilisateur macOS, lue dans CoreFoundation (spec #7, Q1).
 #[cfg(target_os = "macos")]
 pub fn macos_preferred_language() -> Option<String> {
-    todo!()
+    let language = apple::first_preferred_language();
+    if language.is_none() {
+        log::info!("langues préférées de macOS illisibles ; repli sur les variables de locale");
+    }
+    language
 }
 
 /// Langue du système sous macOS : langues préférées, puis `lookup` pour les variables de locale.
 #[cfg(target_os = "macos")]
 pub fn macos_system_language(lookup: impl Fn(&str) -> Option<String>) -> Option<String> {
-    let _ = lookup;
-    todo!()
+    apple_system_language(macos_preferred_language().as_deref(), lookup)
+}
+
+#[cfg(target_os = "macos")]
+mod apple {
+    use std::ffi::{CStr, c_char, c_void};
+
+    type CFIndex = isize;
+    /// `kCFStringEncodingUTF8`.
+    const UTF8: u32 = 0x0800_0100;
+    /// Assez pour un identifiant de langue (`zh-Hans-CN`) ; plus long, la lecture échoue (L2).
+    const BUFFER_LEN: usize = 64;
+
+    #[link(name = "CoreFoundation", kind = "framework")]
+    unsafe extern "C" {
+        fn CFLocaleCopyPreferredLanguages() -> *const c_void;
+        fn CFArrayGetCount(array: *const c_void) -> CFIndex;
+        fn CFArrayGetValueAtIndex(array: *const c_void, index: CFIndex) -> *const c_void;
+        fn CFStringGetCString(
+            string: *const c_void,
+            buffer: *mut c_char,
+            size: CFIndex,
+            encoding: u32,
+        ) -> u8;
+        fn CFRelease(object: *const c_void);
+    }
+
+    /// Première langue préférée, `None` si la liste est vide ou illisible (L2).
+    pub fn first_preferred_language() -> Option<String> {
+        // SAFETY : fonction sans argument ; le tableau rendu (règle « Copy ») nous appartient et
+        // est libéré plus bas, une seule fois.
+        let languages = unsafe { CFLocaleCopyPreferredLanguages() };
+        if languages.is_null() {
+            return None;
+        }
+        // SAFETY : `languages` est un CFArray valide jusqu'au CFRelease.
+        let first = (unsafe { CFArrayGetCount(languages) } > 0)
+            // SAFETY : indice 0 < nombre d'éléments ; valeur empruntée (règle « Get »), non libérée.
+            .then(|| unsafe { CFArrayGetValueAtIndex(languages, 0) })
+            .and_then(read_string);
+        // SAFETY : libère le tableau obtenu par « Copy », plus utilisé ensuite.
+        unsafe { CFRelease(languages) };
+        first
+    }
+
+    fn read_string(string: *const c_void) -> Option<String> {
+        if string.is_null() {
+            return None;
+        }
+        let mut buffer: [c_char; BUFFER_LEN] = [0; BUFFER_LEN];
+        // SAFETY : `string` est une CFString du tableau encore vivant ; le tampon fait BUFFER_LEN
+        // octets et CoreFoundation y écrit au plus autant, zéro final compris.
+        let ok =
+            unsafe { CFStringGetCString(string, buffer.as_mut_ptr(), BUFFER_LEN as CFIndex, UTF8) };
+        if ok == 0 {
+            return None;
+        }
+        // SAFETY : en cas de succès, le tampon contient une chaîne terminée par zéro.
+        let text = unsafe { CStr::from_ptr(buffer.as_ptr()) };
+        text.to_str().ok().map(str::to_owned)
+    }
 }
 
 /// Lecture de la langue de l'interface de Windows (spec 076, Q1 et Q2).

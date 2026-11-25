@@ -7,8 +7,7 @@ const APP_DIR: &str = "iter-arcanum";
 /// Dossier des logs sous macOS depuis le dossier personnel : `~/Library/Logs/iter-arcanum` (spec #7, Q5).
 /// Compilé partout pour être testé partout.
 pub fn macos_logs_dir(home: &Path) -> PathBuf {
-    let _ = home;
-    todo!()
+    home.join("Library").join("Logs").join(APP_DIR)
 }
 
 /// Dossier local et non itinérant : des logs n'ont pas à suivre l'utilisateur.
@@ -20,7 +19,7 @@ pub fn user_base_dir() -> Option<PathBuf> {
 /// Sous macOS, la base est le dossier personnel : les logs vont dans `~/Library/Logs` (spec #7).
 #[cfg(target_os = "macos")]
 pub fn user_base_dir() -> Option<PathBuf> {
-    todo!()
+    directories::BaseDirs::new().map(|dirs| dirs.home_dir().to_path_buf())
 }
 
 /// La norme XDG range les logs dans le dossier d'état, pas dans celui des données.
@@ -37,8 +36,7 @@ pub fn user_logs_dir(base: &Path) -> PathBuf {
 
 #[cfg(target_os = "macos")]
 pub fn user_logs_dir(base: &Path) -> PathBuf {
-    let _ = base;
-    todo!()
+    macos_logs_dir(base)
 }
 
 #[cfg(not(any(windows, target_os = "macos")))]
