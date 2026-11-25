@@ -1,6 +1,6 @@
 # #9 — Illustrations en bande
 
-- Statut : à valider
+- Statut : validée (2026-11-25, Q1 à Q5 tranchées par Mathieu selon les propositions)
 - Issue : #9 (milestone v0.1.0) ; reprise de l'issue privée 280, second volet de l'issue privée 180
 - Dépend de : spec 072 (illustrations générées, script), spec 077 (bande dans le panneau du bas), spec #32 (bande dans les
   fenêtres Offres et de choix ; implémentation en cours, à fusionner avant le code de cette spec) ; ADR 0009
@@ -195,12 +195,15 @@ de la spec #32 :
 
 ## Questions ouvertes
 
-- **Q1. Modèle** : proposé `gemini-3.1-flash-lite-image` pour tout (le moins cher, propre aux essais, héros gardé avec son
-  portrait). Autres choix : `gemini-2.5-flash-image` (le style des images d'aujourd'hui, mais cadres et bandes noires à
-  retirer), ou `gemini-3.1-flash-image` en 0,5K (sans doute plus fin, +30 %, pas essayé).
-- **Q2. Candidats** : deux par image (proposé, environ 4,7 $ reprises comprises) ou un seul (environ 2,4 $).
-- **Q3. Génération différée** : proposée pour tous les lots (moitié prix, résultat dans la journée, souvent moins d'une
-  heure) ; le fil attend sans rien faire pendant ce temps.
-- **Q4. Descriptions** : les relire avant l'envoi (proposé : une liste par lot postée dans le fil, une ligne par carte),
-  ou ne juger que les planches ?
-- **Q5. Blessure** : la garder telle quelle (proposé) ou la refaire avec les autres ?
+Aucune.
+
+## Questions tranchées
+
+Par Mathieu le 2026-11-25, toutes selon la proposition.
+
+- **Q1. Modèle** : `gemini-3.1-flash-lite-image` pour toutes les images, cartes de héros comprises (avec leur portrait de
+  référence).
+- **Q2. Candidats** : deux par image (environ 3,5 $, 4,7 $ avec reprises).
+- **Q3. Génération différée** : pour tous les lots (moitié prix, résultat dans la journée).
+- **Q4. Descriptions** : relues par Mathieu avant tout appel, une liste par lot postée dans le fil, une ligne par carte.
+- **Q5. Blessure** : gardée telle quelle (carrée, 256 × 256).
