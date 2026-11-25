@@ -297,6 +297,8 @@ pub(super) fn artifact_choice(
                     mark: None,
                     illustration: crate::card_illustration(card.card()),
                     uses: Vec::new(),
+                    strong_heading: String::new(),
+                    strong_colors: Vec::new(),
                 }
             })
             .collect(),
@@ -440,6 +442,8 @@ pub(super) fn spell_choice(
                     mark: None,
                     illustration: crate::card_illustration(card.card()),
                     uses: Vec::new(),
+                    strong_heading: String::new(),
+                    strong_colors: Vec::new(),
                 }
             })
             .collect(),

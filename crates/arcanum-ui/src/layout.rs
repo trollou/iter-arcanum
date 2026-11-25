@@ -23,6 +23,13 @@ pub fn row_width(n: usize) -> f32 {
     n * CARD_WIDTH + (n - 1.0) * CARD_GAP
 }
 
+/// Nombre de cartes de `CARD_WIDTH`, écart `CARD_GAP`, qui tiennent côte à côte dans `width`, au
+/// moins une (spec #32, C8).
+pub fn cards_per_row(width: f32) -> usize {
+    let _ = width;
+    todo!()
+}
+
 /// Largeur de chaque section, à partir de leurs largeurs naturelles et de la largeur disponible :
 /// naturelles si tout tient, sinon partagées en proportion, chaque section gardant au moins la plus
 /// petite de sa largeur naturelle et de `MIN_SECTION_WIDTH`.

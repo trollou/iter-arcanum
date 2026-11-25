@@ -42,6 +42,11 @@ pub struct OfferCardView {
     pub illustration: crate::Illustration,
     /// « Utiliser : … », une par capacité d'une unité de l'offre avec Appel aux armes (spec 057).
     pub uses: Vec<Button>,
+    /// Le titre de la séparation, comme en main (spec #32) : « Renforcé », le nom renforcé d'un
+    /// sort, « si détruit » pour un artefact ; vide pour une unité.
+    pub strong_heading: String,
+    /// Les pastilles de la séparation (spec #32) ; vides pour un artefact et une unité.
+    pub strong_colors: Vec<ManaColor>,
 }
 
 /// Calculée depuis la vue et les actions légales (les « Prendre » pendant le choix).
@@ -344,6 +349,8 @@ fn offer_card(card: CommonCard, legal_actions: &[Action], catalog: &Catalog) -> 
                 mark: None,
                 illustration: crate::card_illustration(deed.card()),
                 uses: Vec::new(),
+                strong_heading: String::new(),
+                strong_colors: Vec::new(),
             }
         }
         CommonCard::Unit(unit) => unit_card(unit, catalog),
@@ -398,6 +405,8 @@ pub(super) fn unit_card(card: UnitCard, catalog: &Catalog) -> OfferCardView {
         mark: None,
         illustration: crate::unit_illustration(card.unit),
         uses: Vec::new(),
+        strong_heading: String::new(),
+        strong_colors: Vec::new(),
     }
 }
 
