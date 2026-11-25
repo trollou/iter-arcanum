@@ -279,7 +279,7 @@ Chaque cas devient au moins un test (nom indicatif entre parenthèses).
 ## Interface
 
 - **Fenêtre Offres** : ouverte par le bouton « Offres… » du panneau latéral ou la touche O, fermée par Échap ou sa croix. Trois
-  colonnes : actions avancées et sorts dans l'ordre de l'offre (première place en haut), chacun avec nom, couleur, et ses deux
+  colonnes (cartes de la main en rangées depuis la spec [#32](issue-32-cartes-des-fenetres.md)) : actions avancées et sorts dans l'ordre de l'offre (première place en haut), chacun avec nom, couleur, et ses deux
   effets (texte calculé, ou texte écrit par nous suivi de « pas encore codé : se joue de côté ») ; unités avec nom, régulière ou
   élite, niveau, coût, armure, résistances, lieux de recrutement, capacités (texte). Sous chaque colonne : « Pioche : N ».
   Consultation seule : on ne prend rien ici en dehors du choix ci-dessous (recruter : spec 042, acheter : 041 à 043).

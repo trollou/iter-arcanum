@@ -162,15 +162,15 @@ Tailles en points d'egui. Les images sont réduites avec lissage
 (mipmaps) pour rester nettes en vignette : vérification à l'œil.
 
 - Dans le panneau du bas (main, écran de combat, fenêtre de la défausse, unités), les vignettes ci-dessous sont remplacées
-  par une bande sous le nom, et l'image en grand pour une Blessure : spec 077. Elles restent dans la fenêtre Offres et les
-  fenêtres de choix (spec 086).
+  par une bande sous le nom, et l'image en grand pour une Blessure : spec 077. La fenêtre Offres et les
+  fenêtres de choix prennent aussi la bande : spec [#32](issue-32-cartes-des-fenetres.md) (la vignette de 64 n'y sert plus).
 - **Vignette de carte** : 64 × 64, en haut à droite du cadre de la carte, sous l'encart « jouer de côté » s'il y en a un
   (spec 071), le texte et les boutons restant à sa gauche ; dans la main du panneau et de l'écran de combat (C5), dans la
-  fenêtre Offres et les fenêtres de choix (C6). Maquettes
+  fenêtre Offres et les fenêtres de choix (C6 ; remplacée par la bande, spec [#32](issue-32-cartes-des-fenetres.md)). Maquettes
   [panneau-main](images/072-illustrations/panneau-main.png) et [combat](images/072-illustrations/combat.png) (Marche et Rage
   illustrées ; Promesse et Concentration sans image, comme aujourd'hui).
 - **Vignette d'unité** : 64 × 64, à gauche de la ligne de l'unité, dans le panneau et sous la main en combat (C7) ; dans la
-  fenêtre Offres, en haut à droite comme une carte (C6). Maquette
+  fenêtre Offres, en haut à droite comme une carte (C6 ; remplacée par la bande, spec [#32](issue-32-cartes-des-fenetres.md)). Maquette
   [panneau-unite](images/072-illustrations/panneau-unite.png).
 - **Chargement** : chaque PNG est lu au premier affichage par les chargeurs d'images d'egui, comme les SVG (spec 011), puis
   gardé en mémoire ; l'index (C4) évite de demander un fichier absent.

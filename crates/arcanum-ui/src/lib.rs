@@ -76,7 +76,7 @@ pub use language::{
 };
 pub use layout::{
     CARD_GAP, CARD_HEIGHT, CARD_WIDTH, FanLayout, MIN_SECTION_WIDTH, SECTION_GAP, SKILLS_WIDTH,
-    band_uv, bottom_section_widths, card_height, fan_layout, row_width, section_gap,
+    band_uv, bottom_section_widths, card_height, cards_per_row, fan_layout, row_width, section_gap,
     section_widths,
 };
 pub use logging::{

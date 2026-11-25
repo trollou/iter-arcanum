@@ -414,14 +414,9 @@ fn strong_magic_talent_chooses_spell_in_offers() {
     );
 }
 
+/// Spec #32 : la carte d'un sort de l'offre porte son nom de base (test modifié).
 fn spell_name(spell: Spell, catalog: &Catalog) -> String {
-    catalog.format(
-        "offers.spell_name",
-        &[
-            ("basic", &catalog.text(spell.label_key())),
-            ("strong", &catalog.text(spell.strong_name_key())),
-        ],
-    )
+    catalog.text(spell.label_key())
 }
 
 // Spec 056 C13 ; carte Tempête de mana : le dé se choisit dans la Source, seuls les dés de couleur

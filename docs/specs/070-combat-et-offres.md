@@ -185,7 +185,7 @@ Aucun caractère nouveau : parenthèses et chiffres seulement.
   - la case « cible » ou « Parer » ;
   - « Dans ce combat (n) », replié (C15).
   Mise en page et tailles : vérification à l'œil.
-- **Fenêtre Offres** : sans taille de pioche (C17) ; nom et texte des cartes à la taille normale, colonnes élargies pour que la
+- **Fenêtre Offres** : sans taille de pioche (C17) ; nom et texte des cartes à la taille normale, colonnes élargies (rangées de cartes de la main depuis la spec [#32](issue-32-cartes-des-fenetres.md)) pour que la
   fenêtre tienne en 1600 × 900 sans défiler (C18, vérification à l'œil). Même taille de texte dans la fenêtre de choix d'un
   artefact, qui a la même présentation (C18).
 

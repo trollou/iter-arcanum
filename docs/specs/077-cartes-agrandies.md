@@ -124,7 +124,7 @@ Tailles en points d'egui.
   `main-blessures`).
 - **Pas d'image agrandie au survol** (Q3) : la bande suffit.
 - **Fenêtre Offres et fenêtres de choix** (artefact, sort) : inchangées dans cette spec, vignette de 64 en haut à droite
-  (spec 072, C6) ; présentées comme la main par la spec 086 (Q4).
+  (spec 072, C6) ; présentées comme la main par la spec [#32](issue-32-cartes-des-fenetres.md) (Q4).
 - **Zone de jeu** : inchangée, les cartes jouées n'y sont que des noms.
 
 ### Raccourcis clavier

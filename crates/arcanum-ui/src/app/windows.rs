@@ -6,10 +6,11 @@ use eframe::egui::{self, Color32, Sense, TextStyle, Vec2, vec2};
 
 use arcanum_i18n::Catalog;
 
-use super::widgets::{card_color, color_swatch, with_thumbnail};
+use super::widgets::color_swatch;
+use super::window_cards::{card_rows, natural_width, window_limits};
 use super::{IterArcanumApp, Thumbnails};
 use crate::{
-    AltarWindow, ArtifactChoice, Command, CrystalChoice, MeditationWindow, OffersWindow,
+    AltarWindow, ArtifactChoice, CARD_GAP, Command, CrystalChoice, MeditationWindow, OffersWindow,
     PreferencesWindow, PreparationWindow, ReclaimWindow, ScoreWindow, SkillChoiceWindow,
     SkillOffer, TacticCard, TacticDecision, TacticWindow, TokenChoice, volume_value_label,
 };
@@ -17,7 +18,6 @@ use crate::{
 /// Largeur d'une colonne de la fenêtre Offres (spec 050).
 /// Spec 070, C18 : élargies pour le texte à la taille du jeu, la fenêtre tient en 1600 × 900.
 const OFFER_COLUMN_WIDTH: f32 = 300.0;
-const OFFER_SWATCH: f32 = 10.0;
 
 /// Largeur à réserver pour que le titre d'une fenêtre ne soit pas tronqué : egui ne le fait pas
 /// revenir à la ligne, il suit la largeur du contenu (issue privée 135).
@@ -298,8 +298,10 @@ pub(super) fn score_window(
     clicked
 }
 
-/// Fenêtre Offres (spec 050), centrée : trois colonnes, « Prendre » pendant le choix d'une action
-/// avancée ; la croix et « Fermer » seulement hors du choix.
+/// Fenêtre Offres (spec 050), centrée : les cartes de la main en rangées (spec #32) ; actions
+/// avancées et sorts côte à côte quand la largeur le permet, unités dessous (Q1) ; elle défile
+/// plutôt que de dépasser l'écran (L2). « Prendre » pendant le choix d'une action avancée ; la
+/// croix et « Fermer » seulement hors du choix.
 pub(super) fn offers_window(
     ctx: &egui::Context,
     window: &OffersWindow,
@@ -308,9 +310,11 @@ pub(super) fn offers_window(
 ) -> Option<Command> {
     let mut clicked = None;
     let mut open = true;
+    let (max_width, max_height) = window_limits(ctx);
     let mut frame = egui::Window::new(&window.title)
         .id(egui::Id::unique("offers_window"))
         .min_width(title_min_width(ctx, &window.title))
+        .max_width(max_width)
         .collapsible(false)
         .resizable(false)
         .anchor(egui::Align2::CENTER_CENTER, vec2(0.0, 0.0));
@@ -318,56 +322,51 @@ pub(super) fn offers_window(
         frame = frame.open(&mut open);
     }
     frame.show(ctx, |ui| {
-        ui.horizontal_top(|ui| {
-            for column in &window.columns {
-                ui.vertical(|ui| {
-                    ui.set_width(OFFER_COLUMN_WIDTH);
-                    ui.strong(&column.title);
-                    for card in &column.cards {
-                        ui.separator();
-                        // Spec 072, C6 : la vignette en haut à droite, comme sur une carte.
-                        let texture = thumbnails.get(&card.illustration).copied();
-                        with_thumbnail(ui, texture, |ui| {
-                            ui.horizontal(|ui| {
-                                if let Some(color) = card.color {
-                                    let (rect, _) = ui.allocate_exact_size(
-                                        Vec2::splat(OFFER_SWATCH),
-                                        Sense::hover(),
-                                    );
-                                    ui.painter().rect_filled(rect, 2.0, card_color(color));
-                                }
-                                ui.strong(&card.name);
-                                // Spec 041 : « monastère » après le nom d'une action avancée de
-                                // l'offre d'unités.
-                                if let Some(mark) = &card.mark {
-                                    ui.small(mark);
-                                }
-                            });
-                            for line in &card.lines {
-                                ui.add(egui::Label::new(line).wrap());
-                            }
-                            if let Some(take) = &card.take
-                                && shortcut_button(
-                                    ui,
-                                    &take.label,
-                                    take.shortcut.as_deref(),
-                                    catalog,
-                                )
-                                .clicked()
-                            {
-                                clicked = Some(take.command);
-                            }
-                            // Spec 057 : les capacités d'une unité de l'offre (Appel aux armes).
-                            for button in &card.uses {
-                                if ui.button(&button.label).clicked() {
-                                    clicked = Some(button.command);
-                                }
-                            }
+        let id = egui::Id::unique("offers_rows");
+        egui::ScrollArea::vertical()
+            .max_height(max_height)
+            .show(ui, |ui| {
+                let (top, bottom) = window.columns.split_at(window.columns.len().min(2));
+                let gap = 2.0 * CARD_GAP;
+                let side_by_side = top
+                    .iter()
+                    .map(|column| natural_width(&column.cards))
+                    .sum::<f32>()
+                    + gap
+                    <= max_width;
+                let mut offer =
+                    |ui: &mut egui::Ui, index: usize, width: f32, peer: Option<usize>| {
+                        let column = &window.columns[index];
+                        ui.vertical(|ui| {
+                            ui.strong(&column.title);
+                            let shown = card_rows(
+                                ui,
+                                id.with(index),
+                                peer.map(|peer| id.with(peer)),
+                                &column.cards,
+                                width,
+                                thumbnails,
+                                catalog,
+                            );
+                            clicked = shown.or(clicked);
                         });
+                    };
+                if side_by_side {
+                    ui.horizontal_top(|ui| {
+                        ui.spacing_mut().item_spacing.x = gap;
+                        for (index, column) in top.iter().enumerate() {
+                            offer(ui, index, natural_width(&column.cards), Some(1 - index));
+                        }
+                    });
+                } else {
+                    for index in 0..top.len() {
+                        offer(ui, index, max_width, None);
                     }
-                });
-            }
-        });
+                }
+                for index in top.len()..top.len() + bottom.len() {
+                    offer(ui, index, max_width, None);
+                }
+            });
         if window.closable
             && shortcut_button(
                 ui,
@@ -519,42 +518,25 @@ pub(super) fn artifact_window(
     thumbnails: &Thumbnails,
     catalog: &Catalog,
 ) -> Option<Command> {
-    let mut clicked = None;
+    let (max_width, max_height) = window_limits(ctx);
     egui::Window::new(&window.title)
         .id(egui::Id::unique(id))
         .min_width(title_min_width(ctx, &window.title))
         .collapsible(false)
         .resizable(false)
         .anchor(egui::Align2::CENTER_CENTER, vec2(0.0, 0.0))
+        .max_width(max_width)
         .show(ctx, |ui| {
-            ui.horizontal_top(|ui| {
-                for card in &window.cards {
-                    ui.vertical(|ui| {
-                        ui.set_width(OFFER_COLUMN_WIDTH);
-                        // Spec 072, C6 : la vignette en haut à droite, comme sur une carte.
-                        let texture = thumbnails.get(&card.illustration).copied();
-                        with_thumbnail(ui, texture, |ui| {
-                            ui.strong(&card.name);
-                            for line in &card.lines {
-                                ui.add(egui::Label::new(line).wrap());
-                            }
-                            if let Some(take) = &card.take
-                                && shortcut_button(
-                                    ui,
-                                    &take.label,
-                                    take.shortcut.as_deref(),
-                                    catalog,
-                                )
-                                .clicked()
-                            {
-                                clicked = Some(take.command);
-                            }
-                        });
-                    });
-                }
-            });
-        });
-    clicked
+            egui::ScrollArea::vertical()
+                .max_height(max_height)
+                .show(ui, |ui| {
+                    let id = egui::Id::unique(("choice_rows", id));
+                    card_rows(ui, id, None, &window.cards, max_width, thumbnails, catalog)
+                })
+                .inner
+        })
+        .and_then(|response| response.inner)
+        .flatten()
 }
 
 /// Taille d'une tactique dans la grille du choix (spec 060).
