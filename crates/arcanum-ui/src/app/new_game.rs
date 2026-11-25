@@ -291,7 +291,7 @@ impl IterArcanumApp {
             Some(texture) => {
                 // Arrondi proportionnel : 10 points pour la liste, davantage en grand.
                 let radius = (rect.width() / 6.0).clamp(8.0, 24.0);
-                egui::Image::from_texture((texture, rect.size()))
+                egui::Image::from_texture((texture.id, rect.size()))
                     .corner_radius(CornerRadius::same(radius as u8))
                     .paint_at(ui, rect);
             }
