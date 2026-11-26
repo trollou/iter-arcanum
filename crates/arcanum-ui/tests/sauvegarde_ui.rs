@@ -11,8 +11,8 @@ use arcanum_core::{
 use arcanum_i18n::{Catalog, Language};
 use arcanum_persistance::{AUTOSAVE_NAME, LoadError, SaveEntry, load};
 use arcanum_ui::{
-    Command, GameSession, Shortcut, choose_saves_dir, hover_text, human_player,
-    load_window_screen, repository_assets_dir,
+    Command, GameSession, Shortcut, choose_saves_dir, hover_text, human_player, load_window_screen,
+    repository_assets_dir,
 };
 use jiff::ZonedDateTime;
 use jiff::civil::date;

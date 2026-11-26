@@ -155,12 +155,10 @@ pub fn load_window_screen(entries: &[SaveEntry], catalog: &Catalog) -> LoadWindo
                     .unwrap_or_default();
                 let reason = catalog.text(match error {
                     LoadError::Io(_) => "load.error.unreadable",
-                    // Squelette (tests rouges) : raisons de la spec #52 pas encore distinguées.
-                    LoadError::NewerVersion { .. }
-                    | LoadError::TooOld { .. }
-                    | LoadError::NotMigratable { .. }
-                    | LoadError::Invalid(_)
-                    | LoadError::Resume(_) => "load.error.invalid",
+                    LoadError::NewerVersion { .. } => "load.error.newer_version",
+                    LoadError::TooOld { .. } => "load.error.too_old",
+                    LoadError::NotMigratable { .. } => "load.error.not_migratable",
+                    LoadError::Invalid(_) | LoadError::Resume(_) => "load.error.invalid",
                 });
                 LoadLine {
                     text: catalog

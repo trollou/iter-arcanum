@@ -18,7 +18,11 @@ fn tests_dir() -> PathBuf {
 /// « v0.1.0 » → (0, 1, 0), pour ranger les versions.
 fn version_of(name: &str) -> Option<(u32, u32, u32)> {
     let mut parts = name.strip_prefix('v')?.split('.').map(str::parse);
-    let version = (parts.next()?.ok()?, parts.next()?.ok()?, parts.next()?.ok()?);
+    let version = (
+        parts.next()?.ok()?,
+        parts.next()?.ok()?,
+        parts.next()?.ok()?,
+    );
     parts.next().is_none().then_some(version)
 }
 
@@ -72,8 +76,9 @@ fn every_witness_loads_and_resumes() {
     assert!(count > 0, "aucun témoin");
 }
 
-// Spec #52, C11.
+// Spec #52, C11. Les constantes vérifiées changent avec le code : c'est ce que le test surveille.
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn migration_chain_matches_supported_versions() {
     assert!(
         EVENT_FORMAT_VERSION == PREVIOUS_RELEASE_FORMAT
@@ -85,7 +90,7 @@ fn migration_chain_matches_supported_versions() {
         usize::from(EVENT_FORMAT_VERSION - OLDEST_SUPPORTED_FORMAT),
         "une migration par format entre le plus ancien gardé et le courant"
     );
-    assert!(MIGRATIONS.len() <= 3);
+    assert!(MIGRATIONS.len() <= 3, "trois migrations au plus");
 
     let witnessed = versions(&tests_dir().join("temoins"), "");
     let fingerprinted = versions(&tests_dir().join("format"), ".yaml");
@@ -93,7 +98,10 @@ fn migration_chain_matches_supported_versions() {
         !witnessed.is_empty() && witnessed.len() <= 3,
         "témoins : {witnessed:?}"
     );
-    assert_eq!(witnessed, fingerprinted, "un dossier de témoins par empreinte figée");
+    assert_eq!(
+        witnessed, fingerprinted,
+        "un dossier de témoins par empreinte figée"
+    );
 
     for path in witnesses(&witnessed[0]) {
         let value: serde_json::Value =

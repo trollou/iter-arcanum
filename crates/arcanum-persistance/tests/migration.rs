@@ -145,10 +145,7 @@ fn save_older_than_oldest_supported_is_too_old() {
     );
 
     let mut missing: Value = serde_json::from_slice(&fs::read(&v1).expect("lue")).expect("JSON");
-    missing
-        .as_object_mut()
-        .expect("objet")
-        .remove("version");
+    missing.as_object_mut().expect("objet").remove("version");
     fs::write(&v1, missing.to_string()).expect("écrite");
     assert!(matches!(
         load_with(&v1, &formats),
@@ -178,12 +175,7 @@ fn list_shows_previous_saves_and_flags_others() {
             .map(|entry| entry.summary.clone())
             .expect("listée")
     };
-    assert!(
-        summary("v2")
-            .expect("migrée")
-            .saved_at
-            .ends_with("|2→3")
-    );
+    assert!(summary("v2").expect("migrée").saved_at.ends_with("|2→3"));
     assert!(summary("v3").is_ok());
     assert_eq!(summary("v1"), Err(LoadError::TooOld { found: 1 }));
     assert_eq!(summary("v4"), Err(LoadError::NewerVersion { found: 4 }));

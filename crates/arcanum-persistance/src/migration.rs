@@ -40,11 +40,19 @@ impl Formats {
     /// Amène le JSON d'une sauvegarde au format courant : refuse un format hors de la fenêtre,
     /// applique les migrations depuis son format, et lui donne le numéro courant. Renvoie aussi
     /// le format lu, pour le journal.
-    pub fn migrate(&self, value: Value) -> Result<(Value, u16), LoadError> {
-        // Squelette (tests rouges) : le comportement d'avant la spec #52.
+    pub fn migrate(&self, mut value: Value) -> Result<(Value, u16), LoadError> {
         let found = read_version(&value)?;
-        if found != self.current {
+        if found > self.current {
             return Err(LoadError::NewerVersion { found });
+        }
+        if found == 0 || found < self.oldest {
+            return Err(LoadError::TooOld { found });
+        }
+        let first = usize::from(found - self.oldest);
+        for (step, migration) in (found..).zip(self.chain.iter().skip(first)) {
+            value =
+                migration(value).map_err(|reason| LoadError::NotMigratable { found, reason })?;
+            value["version"] = Value::from(step + 1);
         }
         Ok((value, found))
     }

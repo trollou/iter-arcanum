@@ -166,7 +166,18 @@ pub fn load_with(path: &Path, formats: &Formats) -> Result<SaveGame, LoadError> 
     let text = fs::read_to_string(path).map_err(|error| LoadError::Io(error.to_string()))?;
     let value: serde_json::Value =
         serde_json::from_str(&text).map_err(|error| LoadError::Invalid(error.to_string()))?;
-    let (value, _found) = formats.migrate(value)?;
+    let (value, found) = formats.migrate(value).inspect_err(|error| {
+        if let LoadError::NotMigratable { .. } = error {
+            log::warn!("sauvegarde {} non migrée : {error}", path.display());
+        }
+    })?;
+    if found != formats.current {
+        log::info!(
+            "sauvegarde {} migrée du format {found} au format {}",
+            path.display(),
+            formats.current
+        );
+    }
     serde_json::from_value(value).map_err(|error| LoadError::Invalid(error.to_string()))
 }
 

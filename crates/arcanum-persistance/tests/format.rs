@@ -87,13 +87,11 @@ fn fingerprint() -> String {
             ContainerFormat::Struct(fields) => {
                 writeln!(text, "{name}:").and_then(|()| write_fields(&mut text, &fields, 2))
             }
-            ContainerFormat::Enum(variants) => {
-                writeln!(text, "{name}:").and_then(|()| {
-                    variants
-                        .values()
-                        .try_for_each(|variant| write_variant(&mut text, variant))
-                })
-            }
+            ContainerFormat::Enum(variants) => writeln!(text, "{name}:").and_then(|()| {
+                variants
+                    .values()
+                    .try_for_each(|variant| write_variant(&mut text, variant))
+            }),
         }
         .expect("écriture en mémoire");
     }
