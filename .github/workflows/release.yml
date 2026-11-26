@@ -155,5 +155,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          if [[ "$TAG" == *-rc.* ]]; then mode=--prerelease; else mode=--draft; fi
+          if [[ "$TAG" == *-rc.* ]]; then
+            mode=--prerelease
+          else
+            mode=--draft
+            # Issue #64 : les notes partent de la release précédente ; sans ses pre-releases (tags gardés),
+            # c'est la release finale précédente, et non le dernier tag de test de cette version.
+            for rc in $(gh release list --limit 100 --json tagName --jq '.[].tagName' | grep -F "$TAG-rc." || true); do
+              gh release delete "$rc" --yes
+            done
+          fi
           gh release create "$TAG" archives/* --title "Iter Arcanum ${TAG#v}" --generate-notes --verify-tag "$mode"

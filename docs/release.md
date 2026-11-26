@@ -35,7 +35,9 @@ En local (Linux, fil cloud) : `cargo build -p arcanum-ui --release`, puis
    aussitôt, marquée « pre-release » (D3). Télécharger les archives et les essayer ; un défaut se corrige par une PR,
    puis `-rc.2`, etc.
 3. Tag final : `git tag vX.Y.0 && git push origin vX.Y.0`. La release est créée en **brouillon** : écrire le résumé en
-   tête des notes générées (PR rangées en « Bilans » et « Changements », `.github/release.yml`), puis « Publish release ».
+   tête des notes générées, puis « Publish release ». Les notes listent les PR fusionnées depuis la release finale
+   précédente (le workflow supprime d'abord les pre-releases `-rc.N` de la version, pas leurs tags), rangées par label de
+   PR en « Changements », « Corrections de bugs » et « Outillage et documentation » (`.github/release.yml`, issue #64).
 4. Par une PR : `version = "X.Y+1.0-dev"` (D2). Un tag posé sur une version `-dev` est refusé.
 
 ## Faire un correctif `X.Y.Z+1`
