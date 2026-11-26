@@ -1,9 +1,13 @@
-# Notes de version générées par `gh release create --generate-notes` (spec #33, section 6 de l'issue) :
-# PR fusionnées depuis le tag précédent, rangées par label de PR. Le fil qui ouvre la PR d'une issue
-# `bilan` lui met aussi ce label (docs/issues.md).
+# Notes de version générées par `gh release create --generate-notes` (spec #33, issue #64) : PR fusionnées
+# depuis la release finale précédente, rangées par leur label de catégorie. Le fil qui ouvre une PR lui met
+# l'un des trois (docs/issues.md, Labels) ; Dependabot met `dependencies`.
 changelog:
   categories:
-    - title: Bilans
-      labels: [bilan]
     - title: Changements
+      labels: [changement]
+    - title: Corrections de bugs
+      labels: [correction]
+    - title: Outillage et documentation
+      labels: [outillage, dependencies]
+    - title: Autres
       labels: ["*"]
