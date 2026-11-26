@@ -2,8 +2,20 @@
   "language": {
     "name": "Français"
   },
+  "about": {
+    "button": "À propos…",
+    "title": "À propos",
+    "name": "Iter Arcanum",
+    "version": "Version {version}",
+    "license_code": "Code sous licence GNU GPL v3 ou ultérieure",
+    "license_assets": "Visuels et textes sous licence CC BY-SA 4.0 ; chaque son garde la licence de son auteur",
+    "unofficial": "Projet de fan non officiel, sans lien avec les éditeurs de Mage Knight.",
+    "repository": "Code source",
+    "sounds": "Crédits des sons : {file}, livré avec le jeu",
+    "close": "Fermer"
+  },
   "app": {
-    "title": "Iter Arcanum (prototype)"
+    "title": "Iter Arcanum"
   },
   "hand": {
     "empty": "Aucune carte en main",

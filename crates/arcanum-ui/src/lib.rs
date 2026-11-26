@@ -28,6 +28,10 @@ mod screen;
 mod session;
 mod sound;
 
+pub use about::{
+    AboutWindow, REPOSITORY_URL, SOUND_CREDITS_FILE, about_window, build_version_label,
+    short_commit, version_label,
+};
 pub use app::IterArcanumApp;
 pub use assets::{
     ASSETS_ENV_VAR, AssetsError, assets_candidates, catalog_or_empty, find_assets_dir,
@@ -93,10 +97,6 @@ pub use logging::{
     LevelChoice, LogDirChoice, LogDirSource, PreparedLogFile, choose_logs_dir, format_line,
     init_logging, install_panic_hook, is_enabled, macos_logs_dir, parse_level, prepare_log_file,
     rotate_log_files, startup_message, user_base_dir, user_logs_dir,
-};
-pub use about::{
-    AboutWindow, REPOSITORY_URL, SOUND_CREDITS_FILE, about_window, build_version_label, short_commit,
-    version_label,
 };
 pub use menu_bar::{MenuBar, MenuEntry, MenuItem, MenuState, menu_bar};
 pub use new_game::{

@@ -71,7 +71,7 @@ pub fn menu_bar(
             command: button.command,
         })
     };
-    // Recentrer, Plein écran, Préférences et Quitter : toujours actifs, sans description (C3).
+    // Recentrer, Plein écran, Préférences, À propos et Quitter : toujours actifs, sans description (C3).
     let window_entry = |key: &str, shortcut: Option<String>, checked, command| {
         MenuItem::Entry(MenuEntry {
             label: catalog.text(key),
@@ -110,6 +110,8 @@ pub fn menu_bar(
             None,
             Command::OpenPreferences,
         ),
+        // Spec #33 C3 : sans touche, toujours actif comme « Préférences… ».
+        window_entry("about.button", None, None, Command::OpenAbout),
         MenuItem::Separator,
         window_entry(
             "menu.quit",
