@@ -49,6 +49,7 @@ Keep the `assets/` folder next to the executable: the game reads its texts, imag
 **The game is not signed**, so your system warns you the first time:
 
 - **Windows**: SmartScreen shows "Windows protected your PC". Click **More info**, then **Run anyway**.
+- **Windows 11 with Smart App Control**: it blocks unsigned applications, with no per-application exception. You can only play by turning it off (**Windows Security > App & browser control > Smart App Control settings**); decide whether you accept that for your computer. Signing the game is planned ([#70](https://github.com/trollou/iter-arcanum/issues/70)).
 - **macOS**: Gatekeeper refuses to open an application from an unidentified developer. Open it once with a right click (or Ctrl+click) on **Iter Arcanum** in **Applications**, then **Open**, and confirm. On recent macOS versions where this is not offered, try to open it once, then go to **System Settings > Privacy & Security** and click **Open Anyway** next to the message about Iter Arcanum.
 
 **On Linux**, the game needs a graphical session (X11 or Wayland) with OpenGL, which any desktop installation provides. It uses these system libraries, already installed on Ubuntu, Linux Mint or Debian with a desktop: `libc6`, `libgcc-s1`, `libasound2` (sound), `libxkbcommon0`, and, under X11, `libgl1`, `libx11-6`, `libx11-xcb1`, `libxcursor1`, `libxi6`, `libxkbcommon-x11-0`, or, under Wayland, `libegl1` and `libwayland-client0`. Without a sound card the game runs silently.
