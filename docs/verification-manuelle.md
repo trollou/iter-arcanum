@@ -139,6 +139,8 @@ pouvait pas gagner le combat, la fenêtre des cristaux n'a été vue que par les
 - **Variables** : `ARCANUM_VERIF_ECRAN` (`:99`), `ARCANUM_VERIF_TAILLE` (`1600x900`), `ARCANUM_VERIF_CAPTURES` (dossier des captures),
   `ARCANUM_VERIF_LANGUE` (`fr`) : langue du jeu, passée en `--lang` (spec 076). Sous Xvfb la langue du système vaut souvent `C` ou
   `en`, ce qui passerait les captures en anglais ; `ARCANUM_VERIF_LANGUE=en` pour vérifier le jeu en anglais.
+  `ARCANUM_VERIF_RALENTI` (`1`) : facteur de ralenti des animations du plateau, passé au jeu en `ARCANUM_ANIMATION_SCALE`
+  (issue #50) ; voir « Capturer une animation » plus bas.
   `ARCANUM_CONFIG_DIR` : dossier des préférences (spec 080). Non posé, le script en prend un neuf à chaque lancement
   (`target/verif-manuelle/config`), pour qu'une préférence de développement (plein écran, langue) ne fausse pas les captures ;
   posé, il est gardé (relancer avec les mêmes préférences). Sans gestionnaire de fenêtres, le plein écran au lancement ne se
@@ -169,7 +171,11 @@ pouvait pas gagner le combat, la fenêtre des cristaux n'a été vue que par les
 - Les installations passent par `apt-get` (root dans le conteneur cloud, `sudo` ailleurs).
 - Les actions du lieu (interagir, piller, incendier, entrer, offrande, défier, engager le combat) sont des boutons ronds posés
   au-dessus de leur case (spec 075) : les repérer sur une capture, comme les cases.
-- Le glissement de la figurine (150 ms par pas, essai d'animation de la spec 075) est plus bref qu'une capture : on ne voit que
-  l'arrivée. La fluidité se juge sur un poste avec écran.
+- **Capturer une animation** (issue #50) : une capture prend environ 0,6 s, plus que l'effacement d'un ennemi vaincu (0,8 s)
+  ou un pas du glissement de la figurine (150 ms, spec 075) : à vitesse normale, on ne voit que l'arrivée. Lancer le jeu
+  ralenti, par exemple `ARCANUM_VERIF_RALENTI=10 scripts/verif-manuelle.sh demarrer` (8 s d'effacement, 1,5 s par pas), puis
+  enchaîner les captures. Toutes les animations du plateau ralentissent (respiration du héros comprise), pas le son des pas,
+  ni le défilement au clavier. Le jeu lit la variable `ARCANUM_ANIMATION_SCALE` (nombre positif, sinon 1) : on peut aussi
+  la poser hors du script. La fluidité se juge sur un poste avec écran.
 - Un réglage au clavier qui « ne marche pas » vient souvent du focus, pas du jeu : Tab avait le focus sur l'écran du fond, ou le
   clic n'en donne pas (curseurs egui). Voir « Focus clavier » ci-dessus (issue privée 364).

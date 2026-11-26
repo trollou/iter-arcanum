@@ -43,6 +43,11 @@ dans la CI : `scripts/qualite.sh` les lance en fin de spec, la couverture en fin
 Le cache `rust-cache` n'est enregistré que par `main` (fusion ou à la main) ; les PR le lisent sans
 l'enregistrer, pour ne pas saturer le quota de 10 Go du dépôt.
 
+Les symboles de débogage sont réduits aux numéros de ligne (`CARGO_PROFILE_DEV_DEBUG: line-tables-only`,
+bloc `env:` du workflow) : `target/` et le cache sont bien plus petits, les éditions de liens plus rapides.
+Sans ce réglage, le disque du runner Linux ne suffisait plus (PR privée 222, « No space left on device ») ;
+perdu à la création du dépôt public, il a été remis par l'issue #57.
+
 ## Branches
 
 GitHub supprime la branche à la fusion de la PR (« Automatically delete head branches »). Pour un plan à

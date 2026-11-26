@@ -11,7 +11,8 @@ use crate::{
     BOARD_BACKGROUND, BOARD_TILT, BoardAction, BoardActionKind, BoardCamera, BoardDeparture,
     BoardInput, BoardMovement, BoardScreen, CameraBounds, Command, ExploreGhost, GameScreen,
     HeroWalk, HexDrawing, ImagePaint, MoveMark, Overlay, OverlayKind, RuinPip, RuinTokenMark,
-    animation_repaint, board_action_image, board_animated, board_screen, enemy_color, night_veil,
+    animation_repaint, animation_time, board_action_image, board_animated, board_screen,
+    enemy_color, night_veil,
 };
 use arcanum_core::{EXPLORE_COST, MapShape};
 
@@ -117,7 +118,8 @@ impl IterArcanumApp {
         }
 
         // Essai d'animation (spec 075, Q6) : le temps d'egui, et le début du dernier glissement.
-        let time = ui.input(|input| input.time);
+        // Issue #50 : ralenti au besoin, pour capturer les animations sous Xvfb.
+        let time = animation_time(ui.input(|input| input.time), self.animation_scale);
         let walk = game.last_walk().map(|(id, path)| {
             let started = match self.walk_start {
                 Some((known, started)) if known == id => started,

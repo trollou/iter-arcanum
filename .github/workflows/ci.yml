@@ -19,6 +19,12 @@ on:
 # - symboles de débogage réduits aux numéros de ligne : target/ bien plus petit, liens plus rapides
 #   (le disque du runner Linux ne suffisait plus : PR privée 222, « No space left on device »).
 env:
+  CARGO_PROFILE_DEV_DEBUG: line-tables-only
+
+# Un nouveau push sur une PR annule son exécution en cours (issue #51) ; main garde chacune, car
+# chaque exécution de main enregistre le cache.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:

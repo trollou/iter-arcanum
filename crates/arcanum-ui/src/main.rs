@@ -6,10 +6,10 @@
 use arcanum_audio::{AudioPlayer, KiraPlayer, SOUNDS_DIR, SilentPlayer, SoundBank};
 use arcanum_persistance::preferences::PREFERENCES_FILE;
 use arcanum_ui::{
-    ASSETS_ENV_VAR, CONFIG_DIR_ENV_VAR, ClientSession, IterArcanumApp, LanguageChoices,
-    SAVE_DIR_ENV_VAR, assets_candidates, choose_config_dir, choose_saves_dir, find_assets_dir,
-    init_logging, launch_catalog, launch_preferences, system_language, user_config_dir,
-    user_data_dir, viewport, window_icon,
+    ANIMATION_SCALE_ENV_VAR, ASSETS_ENV_VAR, CONFIG_DIR_ENV_VAR, ClientSession, IterArcanumApp,
+    LanguageChoices, SAVE_DIR_ENV_VAR, animation_scale, assets_candidates, choose_config_dir,
+    choose_saves_dir, find_assets_dir, init_logging, launch_catalog, launch_preferences,
+    system_language, user_config_dir, user_data_dir, viewport, window_icon,
 };
 
 fn main() -> eframe::Result {
@@ -60,6 +60,8 @@ fn main() -> eframe::Result {
         }
     };
     let volumes = preferences.volumes;
+    // Issue #50 : ralenti des animations du plateau, pour les captures de la vérification à l'œil.
+    let scale = animation_scale(std::env::var(ANIMATION_SCALE_ENV_VAR).ok().as_deref());
 
     // Dossier des sauvegardes (spec 024), dans le même ordre que celui des logs.
     let saves_dir = choose_saves_dir(
@@ -92,7 +94,8 @@ fn main() -> eframe::Result {
             Ok(Box::new(
                 IterArcanumApp::new(client, catalog, images_dir)
                     .with_assets_candidates(candidates)
-                    .with_audio(audio, volumes),
+                    .with_audio(audio, volumes)
+                    .with_animation_scale(scale),
             ))
         }),
     )
