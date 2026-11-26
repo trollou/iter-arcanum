@@ -108,7 +108,8 @@ l'empaquetage :
 
 | Exécution | Politique | Approbation |
 |---|---|---|
-| tag `vX.Y.Z` ou `vX.Y.Z-rc.N` | `release-signing` | Mathieu, dans SignPath (Q2 : les tags de test aussi) |
+| tag final `vX.Y.Z` | `release-signing` | Mathieu, dans SignPath |
+| tag de test `vX.Y.Z-rc.N` | aucune signature (Q2), sans avertissement | — |
 | essai à blanc (`workflow_dispatch`) | `test-signing` | aucune |
 | PR qui touche l'empaquetage | aucune signature (pas de secret pour une PR) | — |
 
@@ -151,12 +152,13 @@ erreur) ; `every_sound_has_a_permitted_license` (son `println!` du relevé non c
   l'onglet Actions une fois la demande approuvée (aucune règle `disallow_reruns` dans la politique SignPath).
 - **E4** — L'archive Windows publiée contient l'exe signé : l'essai de lancement (spec #33 E8) tourne sur l'archive
   construite avec lui, et `SHA256SUMS.txt` est calculé après la signature (ordre des jobs inchangé).
-- **E5** — Sans `SIGNPATH_API_TOKEN` (avant l'admission, fork, PR), aucune demande n'est envoyée : le job écrit un
+- **E5** — Sur un tag de test `-rc.N` (Q2), aucune demande n'est envoyée, secret présent ou non : l'archive n'est pas
+  signée, sans avertissement (choix voulu). Sans `SIGNPATH_API_TOKEN` (avant l'admission, fork, PR), aucune demande n'est envoyée : le job écrit un
   avertissement (`::warning::exe Windows non signé`) et continue, archive non signée (Q4).
 - **E6** — Seul l'exe est envoyé à SignPath : ni l'archive, ni `assets/`, ni les autres archives (condition « nos
   binaires seulement »).
 - **E7** — L'essai à blanc signe avec `test-signing`, sans approbation : il vérifie toute la chaîne (envoi, retour,
-  remplacement, E2) avant le premier vrai tag.
+  remplacement, E2) avant le premier tag final signé.
 
 ### Documentation
 
@@ -171,8 +173,8 @@ erreur) ; `every_sound_has_a_permitted_license` (son `println!` du relevé non c
 
 ## Cas limites et refus
 
-- **L1** — Demande refusée par Mathieu dans SignPath : le job échoue, rien n'est publié ; on corrige et on repose un tag
-  (`-rc.N+1`).
+- **L1** — Demande refusée par Mathieu dans SignPath : le job échoue, aucun brouillon de release n'est créé ; on corrige
+  par une PR et on pose un nouveau tag.
 - **L2** — SignPath indisponible ou jeton expiré : le job échoue avec l'erreur de l'action ; pas de repli silencieux vers
   une archive non signée sur un tag quand le secret existe (E5 ne joue que sans secret).
 - **L3** — Certificat de la fondation renouvelé : rien à changer dans le dépôt, E2 vérifie le nom, pas l'empreinte.
@@ -190,8 +192,8 @@ Aucun : rien ne s'affiche dans le jeu. Les textes ajoutés sont dans le README e
 
 ## Interface
 
-Aucune dans le jeu. Vérification par Mathieu sur son PC Windows 11 avec Smart App Control activé : la release `-rc.N`
-signée se lance depuis l'archive dépaquetée, et les propriétés du fichier (onglet « Signatures numériques », onglet
+Aucune dans le jeu. Vérification par Mathieu sur son PC Windows 11 avec Smart App Control activé, sur le **brouillon** de
+release du tag final (les rc ne sont pas signées, Q2), avant de le publier : l'archive Windows se lance depuis l'archive dépaquetée, et les propriétés du fichier (onglet « Signatures numériques », onglet
 « Détails ») montrent la signature et « Iter Arcanum ». C'est la vérification qui ferme l'issue.
 
 ### Raccourcis clavier
@@ -211,18 +213,18 @@ Aucun.
 - **Q1 — Service.** (a) SignPath Foundation, gratuit, éditeur « SignPath Foundation », sur dossier ; (b) Azure Artifact
   Signing, payant, éditeur Mathieu, mais fermé aux particuliers hors États-Unis et Canada ; (c) certificat individuel
   (Certum), payant, mal automatisable. **Recommandé : (a)**, plan B (c) si refus.
-- **Q2 — Signer les tags de test.** (a) oui, `-rc.N` aussi : c'est sur une rc que Mathieu vérifie Smart App Control, au prix
-  d'une approbation par rc ; (b) seulement le tag final. **Recommandé : (a).**
+- **Q2 — Signer les tags de test.** (a) oui, `-rc.N` aussi ; (b) seulement le tag final. **Décidé (Mathieu, 2026-11-26) :
+  (b)**, les rc restent non signées pour aller plus vite ; avis à revoir plus tard peut-être.
 - **Q3 — Durée d'attente de l'approbation.** (a) 2 heures, puis échec et relance du job ; (b) 6 heures (maximum d'un job
   GitHub), runner occupé tout ce temps ; (c) 10 minutes (valeur par défaut de l'action), Mathieu doit approuver aussitôt.
   **Recommandé : (a)** : Mathieu pose le tag et approuve dans la foulée, la relance couvre l'oubli.
 - **Q4 — Sans secret.** (a) publier sans signer avec un avertissement, jusqu'à l'admission ; (b) refuser tout tag sans
-  signature. **Recommandé : (a)** : la v0.2.0 ne doit pas attendre la décision de la fondation, et L2 empêche le repli une
-  fois le secret posé.
+  signature. **Décidé (Mathieu, 2026-11-26) : (a)** : la v0.2.0 n'attend pas la décision de la fondation, et L2 empêche le
+  repli une fois le secret posé.
 - **Q5 — Sons non commerciaux.** La fondation refuse tout composant non libre ; le hibou (Sampling+ 1.0) n'en est pas un.
   (a) remplacer le hibou et refuser désormais les licences NC et Sampling+ dans le test des licences (la règle « NC en
   second choix » de la spec 081 et d'ADR 0010 tombe) ; (b) remplacer le hibou seulement, sans changer la règle.
-  **Recommandé : (a)** : la condition vaudra pour chaque release, mieux vaut qu'un test la garde. ADR 0010 et
+  **Décidé (Mathieu, 2026-11-26) : (a)** : la condition vaudra pour chaque release, un test la garde. ADR 0010 et
   `.claude/rules/arcanum-audio.md` mis à jour dans la même PR.
 - **Q6 — D6.** Cette spec remplace D6 pour Windows (« signature gratuite par SignPath Foundation ») et la garde pour macOS.
   Faut-il un ADR ? **Recommandé : non**, la décision est consignée ici et dans `docs/release.md`, comme D6 l'était dans
