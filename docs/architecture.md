@@ -263,7 +263,7 @@ format gardé, format courant, chaîne `MIGRATIONS` ; `Formats::SUPPORTED` pour 
 d'un test), `OLDEST_SUPPORTED_FORMAT`, `PREVIOUS_RELEASE_FORMAT` ; une sauvegarde d'un format gardé plus ancien est migrée
 en mémoire, une plus récente est `NewerVersion`, une trop ancienne `TooOld`, une migration ratée `NotMigratable`. Tests :
 `crates/arcanum-persistance/tests/sauvegarde.rs` et `migration.rs` (chaîne de test), dossiers temporaires (`tempfile`) ;
-`temoins.rs` (sauvegardes des versions gardées, `tests/temoins/v<X.Y.Z>/`, jamais régénérées) ; `format.rs` (empreinte du
+`temoins.rs` (sauvegardes des versions gardées, `tests/temoins/v<X.Y.Z>/`, jamais régénérées, écrites par `scripts/temoins-release.sh`) ; `format.rs` (empreinte du
 format par `serde-reflection`, `tests/format/sauvegarde.yaml` et une empreinte figée `v<X.Y.Z>.yaml` par version gardée).
 
 Module `preferences` (spec 080) : `Preferences` (langue, plein écran au lancement, `Volumes` de la spec 081, `animations` de la spec #5, vrai par défaut ; `Default`), `load(chemin)` tolérant (champ
