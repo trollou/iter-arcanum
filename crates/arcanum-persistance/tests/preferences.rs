@@ -3,7 +3,9 @@
 
 use std::fs;
 
-use arcanum_persistance::preferences::{PREFERENCES_FILE, Preferences, Volumes, load, save};
+use arcanum_persistance::preferences::{
+    PREFERENCES_FILE, Preferences, PreferencesError, Volumes, load, save,
+};
 use log::Level;
 
 // Logger de capture partagé avec arcanum-ui (issue privée 358).
@@ -176,4 +178,69 @@ fn animations_default_to_on() {
     assert!(!load(&path).expect("lecture").animations);
     fs::write(&path, r#"{"version": 1, "animations": true}"#).expect("fichier");
     assert!(load(&path).expect("lecture").animations);
+}
+
+// Issue #78 : les branches d'erreur et de repli du fichier, que rien ne parcourait.
+
+#[test]
+fn preferences_without_version_are_read() {
+    // Spec 080 C3 : un champ absent prend sa valeur par défaut, `version` comprise.
+    let dir = tempfile::tempdir().expect("dossier temporaire");
+    let path = dir.path().join(PREFERENCES_FILE);
+    fs::write(&path, r#"{"language": "fr"}"#).expect("fichier");
+    assert_eq!(
+        load(&path),
+        Ok(Preferences {
+            language: Some("fr".to_owned()),
+            ..Preferences::default()
+        })
+    );
+}
+
+#[test]
+fn unreadable_preferences_path_is_not_reported_as_missing() {
+    // Spec 080 C11 (lecture) : un chemin qui existe mais ne se lit pas (ici un dossier) n'est pas
+    // un fichier absent.
+    let dir = tempfile::tempdir().expect("dossier temporaire");
+    let path = dir.path().join(PREFERENCES_FILE);
+    fs::create_dir(&path).expect("dossier à la place du fichier");
+    assert!(
+        matches!(load(&path), Err(PreferencesError::Io(_))),
+        "{:?}",
+        load(&path)
+    );
+}
+
+#[test]
+fn preferences_under_a_file_cannot_be_saved() {
+    // Spec 080 C5 : le dossier ne peut pas être créé, l'écriture échoue sans paniquer.
+    let dir = tempfile::tempdir().expect("dossier temporaire");
+    let blocker = dir.path().join("pas-un-dossier");
+    fs::write(&blocker, "").expect("fichier");
+    let path = blocker.join(PREFERENCES_FILE);
+    assert!(
+        matches!(
+            save(&path, &Preferences::default()),
+            Err(PreferencesError::Write(_))
+        ),
+        "l'écriture aurait dû échouer"
+    );
+}
+
+#[test]
+fn failed_rename_leaves_no_temp_file() {
+    // Spec 080 C5 : le renommage échoue (un dossier non vide occupe la place du fichier) ; le
+    // fichier temporaire est effacé.
+    let dir = tempfile::tempdir().expect("dossier temporaire");
+    let path = dir.path().join(PREFERENCES_FILE);
+    fs::create_dir(&path).expect("dossier à la place du fichier");
+    fs::write(path.join("occupant"), "").expect("fichier dans le dossier");
+    assert!(
+        matches!(
+            save(&path, &Preferences::default()),
+            Err(PreferencesError::Write(_))
+        ),
+        "le renommage aurait dû échouer"
+    );
+    assert!(!path.with_extension("json.tmp").exists());
 }
