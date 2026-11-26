@@ -1,6 +1,6 @@
 # #70 — Signer l'exécutable Windows
 
-- Statut : validée (Mathieu, 2026-11-26 : Q1, Q3 à Q6 comme recommandé ; Q2 : rc non signées)
+- Statut : validée (Mathieu, 2026-11-26 : Q1, Q3 à Q6 comme recommandé ; Q2 : rc non signées) ; implémentée (PR #80)
 - Issue : #70 (milestone v0.2.0)
 - Dépend de : spec #33 (mécanisme de release, fusionnée : PR #54) ; spec 004 (icône embarquée par `build.rs`) ;
   spec 081 (licences des sons)
