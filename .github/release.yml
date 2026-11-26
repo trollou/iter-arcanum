@@ -1,0 +1,9 @@
+# Notes de version générées par `gh release create --generate-notes` (spec #33, section 6 de l'issue) :
+# PR fusionnées depuis le tag précédent, rangées par label de PR. Le fil qui ouvre la PR d'une issue
+# `bilan` lui met aussi ce label (docs/issues.md).
+changelog:
+  categories:
+    - title: Bilans
+      labels: [bilan]
+    - title: Changements
+      labels: ["*"]

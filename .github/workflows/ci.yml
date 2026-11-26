@@ -12,6 +12,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Spec #33 : appelé tel quel par release.yml, pour ne pas recopier fmt, clippy et test.
+  workflow_call:
 
 # Cache (issue : quota de 10 Go plein, éditions de liens en « Bus error ») :
 # - seul main enregistre le cache ; les PR le lisent sans en créer, au lieu d'un cache de
