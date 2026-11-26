@@ -14,7 +14,9 @@ use arcanum_ui::{
     Command, GameSession, Shortcut, choose_saves_dir, hover_text, human_player,
     repository_assets_dir,
 };
-use chrono::{DateTime, Local, TimeZone};
+use jiff::ZonedDateTime;
+use jiff::civil::date;
+use jiff::tz::TimeZone;
 
 mod support;
 use support::ctrl;
@@ -30,11 +32,11 @@ fn french() -> Catalog {
     .expect("fr.json du dépôt")
 }
 
-fn fixed_clock() -> DateTime<Local> {
-    Local
-        .with_ymd_and_hms(2026, 10, 27, 18, 0, 0)
-        .single()
-        .expect("date non ambiguë")
+fn fixed_clock() -> ZonedDateTime {
+    date(2026, 10, 27)
+        .at(18, 0, 0, 0)
+        .to_zoned_datetime(TimeZone::system())
+        .expect("date valide")
 }
 
 fn card(action: BasicAction, copy: u16) -> CardId {

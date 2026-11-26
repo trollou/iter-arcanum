@@ -14,7 +14,8 @@ use arcanum_ui::{
     choose_logs_dir, format_line, is_enabled, parse_level, prepare_log_file, rotate_log_files,
     startup_message, user_logs_dir,
 };
-use chrono::{FixedOffset, TimeZone, Utc};
+use jiff::civil::date;
+use jiff::tz::{TimeZone, offset};
 use log::{Level, LevelFilter, Log, Record};
 use support::logs::captured;
 
@@ -84,12 +85,10 @@ fn rotated(dir: &Path, rank: usize) -> PathBuf {
 #[test]
 fn log_line_has_local_timestamp_level_target_and_message() {
     // Spec 003 C1
-    let offset = FixedOffset::east_opt(2 * 3600).expect("décalage");
-    let time = offset
-        .with_ymd_and_hms(2026, 10, 24, 15, 51, 32)
-        .single()
-        .expect("date")
-        + chrono::Duration::milliseconds(123);
+    let time = date(2026, 10, 24)
+        .at(15, 51, 32, 123_000_000)
+        .to_zoned_datetime(TimeZone::fixed(offset(2)))
+        .expect("date");
     let line = format_line(&time, Level::Warn, "arcanum_i18n", "clé manquante");
     assert_eq!(
         line,
@@ -100,9 +99,9 @@ fn log_line_has_local_timestamp_level_target_and_message() {
 #[test]
 fn unknown_local_offset_falls_back_to_utc() {
     // Spec 003 L6 : sans décalage connu, l'heure est écrite en UTC, suffixe Z.
-    let time = Utc
-        .with_ymd_and_hms(2026, 10, 24, 13, 51, 32)
-        .single()
+    let time = date(2026, 10, 24)
+        .at(13, 51, 32, 0)
+        .to_zoned_datetime(TimeZone::UTC)
         .expect("date");
     let line = format_line(&time, Level::Info, "arcanum_ui", "lancement");
     assert!(

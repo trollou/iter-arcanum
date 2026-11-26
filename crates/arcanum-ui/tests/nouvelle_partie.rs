@@ -17,8 +17,10 @@ use arcanum_ui::{
     hero_illustration, hero_image, hero_sheet, human_player, known_illustrations, new_game_screen,
     repository_assets_dir, sheet_keys_of_hero, sheet_keys_of_scenario,
 };
-use chrono::{DateTime, Local, TimeZone};
 use eframe::egui::{Color32, Pos2, Rect, pos2, vec2};
+use jiff::ZonedDateTime;
+use jiff::civil::date;
+use jiff::tz::TimeZone;
 
 mod support;
 
@@ -43,11 +45,11 @@ fn french() -> Catalog {
     catalog("fr")
 }
 
-fn fixed_clock() -> DateTime<Local> {
-    Local
-        .with_ymd_and_hms(2026, 10, 30, 14, 0, 0)
-        .single()
-        .expect("date non ambiguë")
+fn fixed_clock() -> ZonedDateTime {
+    date(2026, 10, 30)
+        .at(14, 0, 0, 0)
+        .to_zoned_datetime(TimeZone::system())
+        .expect("date valide")
 }
 
 fn clock_seed() -> u64 {

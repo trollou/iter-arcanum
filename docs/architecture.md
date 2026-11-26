@@ -21,7 +21,7 @@ arcanum-ui ──► arcanum-core
 | `arcanum-i18n` | Catalogue de libellés chargé depuis `assets/i18n/<langue>.json`. | `serde_json`, `thiserror`, `log` |
 | `arcanum-persistance` | Sauvegardes JSON (journal + positions des générateurs, spec 038) : `SaveGame`, `save`, `save_auto`, `load`, `list` dans un dossier donné (spec 024). Module `preferences` : fichier des préférences (spec 080), volumes compris (spec 081). | `serde`, `serde_json`, `thiserror`, `log` |
 | `arcanum-audio` | Son (spec 081, ADR 0010) : directeur pur, banque de sons, lecteurs (Kira ou muet). Écoute la partie, ne la change jamais. | `kira` (sans options par défaut : `cpal`, `ogg`, `vorbis`), `thiserror`, `log` |
-| `arcanum-ui` | Client eframe/egui : affichage et saisie, logs techniques, icône, dossier des sauvegardes. Exécutable `iter-arcanum`. | `eframe`, `egui_extras`, `directories`, `chrono` |
+| `arcanum-ui` | Client eframe/egui : affichage et saisie, logs techniques, icône, dossier des sauvegardes. Exécutable `iter-arcanum`. | `eframe`, `egui_extras`, `directories`, `jiff` |
 
 `arcanum-players` n'existe pas encore. Règles propres à chaque crate : `.claude/rules/`.
 
