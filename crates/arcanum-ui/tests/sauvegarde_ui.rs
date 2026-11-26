@@ -9,9 +9,9 @@ use arcanum_core::{
     GameRunner, Hero, Hex, ManaColor, PlayerId, RngPositions, Scenario, TileId, TilePosition,
 };
 use arcanum_i18n::{Catalog, Language};
-use arcanum_persistance::{AUTOSAVE_NAME, load};
+use arcanum_persistance::{AUTOSAVE_NAME, LoadError, SaveEntry, load};
 use arcanum_ui::{
-    Command, GameSession, Shortcut, choose_saves_dir, hover_text, human_player,
+    Command, GameSession, Shortcut, choose_saves_dir, hover_text, human_player, load_window_screen,
     repository_assets_dir,
 };
 use jiff::ZonedDateTime;
@@ -433,4 +433,40 @@ fn displayed_date_keeps_the_written_wall_clock() {
 #[test]
 fn unreadable_saved_date_is_displayed_as_is() {
     assert_eq!(arcanum_ui::display_date("hier soir"), "hier soir");
+}
+
+// Spec #52, C13 : une sauvegarde refusée (plus récente, trop ancienne, non migrable) montre sa
+// raison, sans bouton Charger.
+#[test]
+fn load_window_explains_refused_saves() {
+    let catalog = french();
+    let refused = |name: &str, error: LoadError| SaveEntry {
+        path: PathBuf::from(format!("{name}.json")),
+        summary: Err(error),
+    };
+    let window = load_window_screen(
+        &[
+            refused("auto", LoadError::NewerVersion { found: 2 }),
+            refused("vieille", LoadError::TooOld { found: 0 }),
+            refused(
+                "cassee",
+                LoadError::NotMigratable {
+                    found: 1,
+                    reason: "test".to_string(),
+                },
+            ),
+        ],
+        &catalog,
+    );
+    let texts: Vec<&str> = window.lines.iter().map(|line| line.text.as_str()).collect();
+    assert_eq!(
+        texts,
+        [
+            "auto · Sauvegarde d'une version plus récente du jeu.",
+            "vieille · Sauvegarde trop ancienne : l'ouvrir avec une version intermédiaire du jeu, \
+             puis la sauvegarder de nouveau.",
+            "cassee · Sauvegarde d'une ancienne version du jeu, qui ne se charge plus.",
+        ]
+    );
+    assert!(window.lines.iter().all(|line| line.load.is_none()));
 }

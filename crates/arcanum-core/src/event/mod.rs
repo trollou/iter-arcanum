@@ -36,7 +36,8 @@ pub enum DestroyedFrom {
     PlayArea,
 }
 
-/// Version du format des événements, portée par chaque entrée du journal.
+/// Version du format des sauvegardes (journal compris). Change au plus une fois par version
+/// publiée, avec une migration (spec #52, `docs/architecture.md`, « Ajouter un événement »).
 pub const EVENT_FORMAT_VERSION: u16 = 1;
 
 /// Fait accompli, hasard déjà résolu.

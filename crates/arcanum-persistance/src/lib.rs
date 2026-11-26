@@ -13,7 +13,10 @@ use arcanum_core::{
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
+pub mod migration;
 pub mod preferences;
+
+use migration::Formats;
 
 /// Nom (sans extension) de la sauvegarde automatique, remplacée à chaque fois.
 pub const AUTOSAVE_NAME: &str = "auto";
@@ -23,7 +26,8 @@ const EXTENSION: &str = "json";
 /// Une sauvegarde, telle qu'écrite dans le fichier.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SaveGame {
-    /// `EVENT_FORMAT_VERSION` : reste 1 jusqu'à la fin du J6, sans migration.
+    /// Numéro de format (`EVENT_FORMAT_VERSION`) ; une sauvegarde d'un format gardé plus ancien
+    /// est migrée au chargement (spec #52).
     pub version: u16,
     pub summary: SaveSummary,
     /// Position du générateur de chaque usage déjà tiré (spec 038), en texte : un entier de
@@ -66,11 +70,17 @@ pub enum SaveError {
 pub enum LoadError {
     #[error("fichier illisible : {0}")]
     Io(String),
-    /// JSON invalide, ou événement d'une forme qui n'existe plus (pas de migration avant le J6).
+    /// JSON invalide, `version` absente, ou JSON (migré ou non) qui ne se lit pas comme une
+    /// sauvegarde du format courant.
     #[error("sauvegarde invalide : {0}")]
     Invalid(String),
-    #[error("sauvegarde de la version {found}, le jeu lit la version {EVENT_FORMAT_VERSION}")]
-    OtherVersion { found: u16 },
+    #[error("sauvegarde du format {found}, plus récent que celui du jeu ({EVENT_FORMAT_VERSION})")]
+    NewerVersion { found: u16 },
+    /// Format plus ancien que celui de la plus ancienne des trois dernières versions publiées.
+    #[error("sauvegarde du format {found}, trop ancien pour être migré")]
+    TooOld { found: u16 },
+    #[error("sauvegarde du format {found} impossible à migrer : {reason}")]
+    NotMigratable { found: u16, reason: String },
     #[error(transparent)]
     Resume(#[from] ResumeError),
 }
@@ -145,19 +155,28 @@ fn write(path: &Path, game: &SaveGame) -> Result<(), SaveError> {
     Ok(())
 }
 
-/// Lit une sauvegarde. La version est vérifiée avant les événements, pour un message clair.
+/// Lit une sauvegarde, migrée en mémoire si elle vient d'une version publiée gardée (spec #52).
 pub fn load(path: &Path) -> Result<SaveGame, LoadError> {
+    load_with(path, &Formats::SUPPORTED)
+}
+
+/// `load` avec les formats donnés : ceux d'un test, ou `Formats::SUPPORTED`. Le fichier n'est
+/// jamais réécrit.
+pub fn load_with(path: &Path, formats: &Formats) -> Result<SaveGame, LoadError> {
     let text = fs::read_to_string(path).map_err(|error| LoadError::Io(error.to_string()))?;
     let value: serde_json::Value =
         serde_json::from_str(&text).map_err(|error| LoadError::Invalid(error.to_string()))?;
-    let version = value
-        .get("version")
-        .and_then(serde_json::Value::as_u64)
-        .ok_or_else(|| LoadError::Invalid("version absente".to_string()))?;
-    if version != u64::from(EVENT_FORMAT_VERSION) {
-        return Err(LoadError::OtherVersion {
-            found: u16::try_from(version).unwrap_or(u16::MAX),
-        });
+    let (value, found) = formats.migrate(value).inspect_err(|error| {
+        if let LoadError::NotMigratable { .. } = error {
+            log::warn!("sauvegarde {} non migrée : {error}", path.display());
+        }
+    })?;
+    if found != formats.current {
+        log::info!(
+            "sauvegarde {} migrée du format {found} au format {}",
+            path.display(),
+            formats.current
+        );
     }
     serde_json::from_value(value).map_err(|error| LoadError::Invalid(error.to_string()))
 }
@@ -178,6 +197,11 @@ impl SaveEntry {
 /// Les sauvegardes de `dir` : l'automatique en tête, puis de la plus récente à la plus ancienne,
 /// les illisibles à la fin. Un dossier absent n'en contient aucune.
 pub fn list(dir: &Path) -> Vec<SaveEntry> {
+    list_with(dir, &Formats::SUPPORTED)
+}
+
+/// `list` avec les formats donnés (voir `load_with`).
+pub fn list_with(dir: &Path, formats: &Formats) -> Vec<SaveEntry> {
     let entries = match fs::read_dir(dir) {
         Ok(entries) => entries,
         Err(error) => {
@@ -192,7 +216,7 @@ pub fn list(dir: &Path) -> Vec<SaveEntry> {
         .map(|entry| entry.path())
         .filter(|path| path.extension().and_then(|ext| ext.to_str()) == Some(EXTENSION))
         .map(|path| SaveEntry {
-            summary: load(&path).map(|game| game.summary),
+            summary: load_with(&path, formats).map(|game| game.summary),
             path,
         })
         .collect();

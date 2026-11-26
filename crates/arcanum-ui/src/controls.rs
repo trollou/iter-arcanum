@@ -155,7 +155,9 @@ pub fn load_window_screen(entries: &[SaveEntry], catalog: &Catalog) -> LoadWindo
                     .unwrap_or_default();
                 let reason = catalog.text(match error {
                     LoadError::Io(_) => "load.error.unreadable",
-                    LoadError::OtherVersion { .. } => "load.error.other_version",
+                    LoadError::NewerVersion { .. } => "load.error.newer_version",
+                    LoadError::TooOld { .. } => "load.error.too_old",
+                    LoadError::NotMigratable { .. } => "load.error.not_migratable",
                     LoadError::Invalid(_) | LoadError::Resume(_) => "load.error.invalid",
                 });
                 LoadLine {

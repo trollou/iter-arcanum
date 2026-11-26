@@ -1082,7 +1082,9 @@
     "failed": "Could not load (see the logs).",
     "error": {
       "unreadable": "Unreadable file.",
-      "other_version": "Saved by another version of the game.",
+      "newer_version": "Saved by a newer version of the game.",
+      "too_old": "Save too old: open it with an intermediate version of the game, then save it again.",
+      "not_migratable": "Saved by an old version of the game that can no longer be loaded.",
       "invalid": "Invalid save."
     },
     "unreadable": "{name} · {reason}"

@@ -1,0 +1,1093 @@
+# Empreinte du format des sauvegardes (spec #52), générée par le test `format`.
+AdvancedAction:
+  - FireBolt
+  - IceBolt
+  - SwiftBolt
+  - CrushingBolt
+  - BloodRage
+  - IceShield
+  - Agility
+  - RefreshingWalk
+  - Intimidate
+  - FrostBridge
+  - SongOfWind
+  - PathFinding
+  - BloodRitual
+  - PureMagic
+  - HeroicTale
+  - Regeneration
+  - IntoTheHeat
+  - SteadyTempo
+  - Diplomacy
+  - InNeed
+  - Decompose
+  - CrystalMastery
+  - ManaStorm
+  - Ambush
+  - MaximalEffect
+  - MagicTalent
+  - Learning
+  - Training
+AdvancedActionSet:
+  - All
+  - FirstSixteen
+Artifact:
+  - BannerOfGlory
+  - BannerOfFear
+  - BannerOfProtection
+  - BannerOfCourage
+  - RubyRing
+  - SapphireRing
+  - DiamondRing
+  - EmeraldRing
+  - SwordOfJustice
+  - HornOfWrath
+  - EndlessBagOfGold
+  - EndlessGemPouch
+  - GoldenGrail
+  - BookOfWisdom
+  - AmuletOfSun
+  - AmuletOfDarkness
+ArtifactChoices:
+  discard: Picks
+  enemies: Picks
+  bonus: u8
+  colors: Picks
+  gain: Option<CardId>
+AttackKind:
+  - Melee
+  - Ranged
+  - Siege
+BasicAction:
+  - Rage
+  - Determination
+  - Swiftness
+  - March
+  - Stamina
+  - Tranquility
+  - Promise
+  - Threaten
+  - Crystallize
+  - ManaDraw
+  - Concentration
+  - Improvisation
+  - BattleVersatility
+  - ManaPull
+  - WillFocus
+  - CrystalJoy
+  - NobleManners
+  - Rejuvenate
+  - ColdToughness
+  - Instinct
+BasicColor:
+  - Red
+  - Blue
+  - White
+  - Green
+BoostTarget:
+  card: CardId
+  option: u8
+  discard: Option<CardId>
+  set_dice: Array<Option<DieSetting>, 2>
+CardDestination:
+  - DeckTop
+  - DiscardPile
+  - Hand
+CardId:
+  card: DeedCard
+  copy: u16
+CardPlay:
+  - Basic:
+      option: u8
+      discard: Option<CardId>
+      mana: Option<ManaPayment>
+      with: Option<BoostTarget>
+      gain: Option<CardId>
+      die: Option<u8>
+  - Sideways: SidewaysEffect
+  - SidewaysSkill:
+      sideways: SidewaysEffect
+      skill: Skill
+      option: u8
+      mana: Option<SkillMana>
+  - Strong:
+      option: u8
+      discard: Option<CardId>
+      mana: ManaPayment
+      set_dice: Array<Option<DieSetting>, 2>
+      with: Option<BoostTarget>
+      extra_mana: Option<ManaPayment>
+      gain: Option<CardId>
+  - Boosted:
+      option: u8
+      discard: Option<CardId>
+      set_dice: Array<Option<DieSetting>, 2>
+  - Cast:
+      option: u8
+      mana: ManaPayment
+      black: Option<ManaPayment>
+      extra_mana: Option<ManaPayment>
+      enemy: Option<EnemyToken>
+      from_offer: bool
+      targets: CastTargets
+  - Artifact:
+      option: u8
+      choices: ArtifactChoices
+  - ThrowAway:
+      option: u8
+      choices: ArtifactChoices
+CastTargets:
+  destination: Option<Hex>
+  units: Picks
+  enemies: Picks
+  die: Option<u8>
+CityLevels:
+  levels: Array<u8, 4>
+  count: u8
+CityRule:
+  - Closed
+  - Levels: CityLevels
+Columns:
+  - Three
+  - Four
+  - Five
+CombatPhase:
+  - RangedAndSiege
+  - Block
+  - AssignDamage
+  - Attack
+CommonCard:
+  - Deed: CardId
+  - Unit: UnitCard
+CommonDeck:
+  - AdvancedActions
+  - Spells
+  - Artifacts
+  - RegularUnits
+  - EliteUnits
+CountrysideOrder:
+  - Random
+  - ByNumber
+DeedCard:
+  - Basic: BasicAction
+  - Wound
+  - Advanced: AdvancedAction
+  - Spell: Spell
+  - Artifact: Artifact
+DestroyedFrom:
+  - Hand
+  - PlayArea
+DieSetting:
+  die: u8
+  color: BasicColor
+DummyHeroChoice:
+  - Random
+  - Hero: Hero
+DummyRule:
+  - None
+  - Standard
+Effect:
+  - Move: u8
+  - Influence: u8
+  - Attack:
+      amount: u8
+      element: Element
+      kind: AttackKind
+  - Block:
+      amount: u8
+      element: Element
+  - GainToken: BasicColor
+  - GainCrystal: BasicColor
+  - PayForCrystal: BasicColor
+  - ExtraDie
+  - ExtraDieBlackAnyColor
+  - SetDice:
+      dice: u8
+      tokens: u8
+  - Boost: u8
+  - IceBlockPerAbility: u8
+  - InfluenceReputation:
+      amount: u8
+      reputation: i8
+  - InfluenceInInteraction:
+      amount: u8
+      fame: u8
+      reputation: i8
+  - Heal: u8
+  - DrawCards: u8
+  - SwiftBlock: u8
+  - ReadyUnit: u8
+  - TokenAndCrystal: BasicColor
+  - GainTokens: (ManaColor, ManaColor)
+  - Nothing
+  - AttackWithWound:
+      amount: u8
+      element: Element
+      kind: AttackKind
+  - AttackPerEnemy:
+      amount: u8
+      element: Element
+      per: u8
+  - BlockPerEnemy:
+      amount: u8
+      element: Element
+      per: u8
+  - DestroyEnemy
+  - CastFromOffer
+  - MoveAndHeal:
+      movement: u8
+      heal: u8
+  - HealAndReady:
+      heal: u8
+      level: u8
+  - InfluencePerWound:
+      base: u8
+      per: u8
+  - WoundCrystalAndToken:
+      crystal: BasicColor
+      token: ManaColor
+  - WoundAndTokens: u8
+  - CrystalsFromDestroyed: u8
+  - CrystalsOtherColors
+  - GainOwnedCrystal: BasicColor
+  - CrystalFromDie
+  - RerollSource
+  - Repeat: u8
+  - GainSpell: BasicColor
+  - TrainFromOffer: CardDestination
+  - WoundsPerCrystal: BasicColor
+  - OthersOnly
+  - HealByTerrain:
+      heal: u8
+      forest: u8
+  - HealAndReadyLevels:
+      heal: u8
+      forest_heal: u8
+      levels: u8
+      forest_levels: u8
+  - ReadyAnyUnit:
+      heal: bool
+  - UndergroundMove:
+      assault: bool
+  - FlyMove:
+      max: u8
+  - DoesNotAttackPerMove
+  - DiscardToDeck:
+      random: bool
+  - ClaimDie:
+      each_turn: bool
+  - BannerAssigned
+  - InfluenceAndFame:
+      amount: u8
+      fame: u8
+  - AmuletOfSun:
+      tokens: u8
+  - AmuletOfDarkness:
+      tokens: u8
+  - TokenCrystalAndFame: BasicColor
+  - CrystalAndToken:
+      crystal: BasicColor
+      token: ManaColor
+  - DrawAndToken:
+      cards: u8
+      token: BasicColor
+  - HealUnit
+  - CrystalColorInfluence
+  - InteractionInfluence: u8
+  - MovePerUnit:
+      max: u8
+  - DiscardWoundToDraw
+  - ThrowWounds: u8
+  - Flight:
+      spaces: u8
+      cost: u8
+  - ResistanceBreak
+  - SourceOpening
+  - CalmWeather
+  - ManaOverload
+  - CancelAttacks: u8
+  - ReadyAllUnits
+  - SwordDiscard
+  - HornOfWrath:
+      extra: u8
+  - GemPouchDice
+  - TokensEachColorAndTime
+  - SpellAndCrystalFromOffer
+Element:
+  - Physical
+  - Fire
+  - Ice
+  - ColdFire
+Enemy:
+  - Prowlers
+  - Diggers
+  - CursedHags
+  - WolfRiders
+  - Ironclads
+  - OrcSummoners
+  - Crossbowmen
+  - Guardsmen
+  - Swordsmen
+  - Golems
+  - Monks
+  - Illusionists
+  - IceMages
+  - IceGolems
+  - FireMages
+  - FireGolems
+  - Minotaur
+  - Gargoyle
+  - Medusa
+  - CryptWorm
+  - Werewolf
+  - SwampDragon
+  - FireDragon
+  - IceDragon
+  - HighDragon
+  - Freezers
+  - Gunners
+  - AltemGuardsmen
+  - AltemMages
+EnemyColor:
+  - Green
+  - Grey
+  - Violet
+  - Brown
+  - Red
+  - White
+EnemyToken:
+  enemy: Enemy
+  copy: u8
+Event:
+  - GameStarted:
+      config: GameConfig
+  - TilePlaced:
+      tile: TileId
+      position: TilePosition
+  - TileDeckFormed:
+      order: Vec<TileId>
+  - TileRevealed:
+      tile: TileId
+      position: TilePosition
+  - HeroFigurePlaced:
+      player: PlayerId
+      hex: Hex
+  - DeckShuffled:
+      player: PlayerId
+      order: Vec<CardId>
+  - CardDrawn:
+      player: PlayerId
+      card: CardId
+  - CardPlayed:
+      player: PlayerId
+      card: CardId
+      play: CardPlay
+      effect: Effect
+  - CardDiscarded:
+      player: PlayerId
+      card: CardId
+  - HeroMoved:
+      player: PlayerId
+      from: Hex
+      to: Hex
+      cost: u8
+  - Explored:
+      player: PlayerId
+      position: TilePosition
+      cost: u8
+  - TurnEnded:
+      player: PlayerId
+  - TurnStarted:
+      player: PlayerId
+      turn: u32
+  - SourceRolled:
+      dice: Vec<ManaColor>
+  - CrystalGained:
+      player: PlayerId
+      color: BasicColor
+  - DieTaken:
+      player: PlayerId
+      die: u8
+      color: ManaColor
+  - CrystalUsed:
+      player: PlayerId
+      color: BasicColor
+  - DieReturned:
+      player: PlayerId
+      die: u8
+      color: ManaColor
+  - ManaTokenGained:
+      player: PlayerId
+      color: ManaColor
+  - ManaTokenUsed:
+      player: PlayerId
+      color: ManaColor
+  - CardReturnedToHand:
+      player: PlayerId
+      card: CardId
+  - DieSet:
+      player: PlayerId
+      die: u8
+      color: BasicColor
+  - RoundEnded:
+      round: u32
+  - RoundStarted:
+      round: u32
+      time_of_day: TimeOfDay
+  - EnemyPileShuffled:
+      color: EnemyColor
+      order: Vec<EnemyToken>
+  - EnemyPileReshuffled:
+      color: EnemyColor
+      order: Vec<EnemyToken>
+  - EnemyTokenPlaced:
+      token: EnemyToken
+      hex: Hex
+  - DefenderPlaced:
+      token: EnemyToken
+      hex: Hex
+  - CityPlaced:
+      hex: Hex
+      color: BasicColor
+      level: u8
+  - EnemyTokenRevealed:
+      hex: Hex
+      token: EnemyToken
+  - AssaultStarted:
+      player: PlayerId
+      site: Hex
+      from: Hex
+  - EnemiesProvoked:
+      player: PlayerId
+      enemies: Vec<Hex>
+  - EnemyChallenged:
+      player: PlayerId
+      enemy: Hex
+  - CombatStarted:
+      player: PlayerId
+      enemies: Vec<(Hex, EnemyToken)>
+  - CombatPhaseStarted:
+      player: PlayerId
+      phase: CombatPhase
+  - CombatEnded:
+      player: PlayerId
+  - AttackDeclared:
+      player: PlayerId
+      targets: Vec<EnemyToken>
+  - EnemiesDefeated:
+      player: PlayerId
+      enemies: Vec<EnemyToken>
+      fame: u32
+  - AttackFailed:
+      player: PlayerId
+  - BlockDeclared:
+      player: PlayerId
+      target: EnemyToken
+  - EnemyBlocked:
+      player: PlayerId
+      enemy: EnemyToken
+  - BlockFailed:
+      player: PlayerId
+  - WoundsTaken:
+      player: PlayerId
+      enemy: EnemyToken
+      wounds: Vec<CardId>
+  - WoundFromCard:
+      player: PlayerId
+      card: CardId
+      wound: CardId
+  - PoisonWoundsDiscarded:
+      player: PlayerId
+      enemy: EnemyToken
+      wounds: Vec<CardId>
+  - HandParalyzed:
+      player: PlayerId
+      cards: Vec<CardId>
+  - EnemySummoned:
+      player: PlayerId
+      summoner: EnemyToken
+      token: EnemyToken
+  - SummonedEnemyDiscarded:
+      player: PlayerId
+      summoner: EnemyToken
+  - WoundsHealed:
+      player: PlayerId
+      wounds: Vec<CardId>
+  - KnockedOut:
+      player: PlayerId
+      cards: Vec<CardId>
+  - LevelGained:
+      player: PlayerId
+      level: u8
+  - FameGained:
+      player: PlayerId
+      fame: u32
+  - LastTurnAnnounced:
+      player: PlayerId
+  - CommonDeckShuffled:
+      deck: CommonDeck
+      order: Vec<CommonCard>
+  - OfferCardDealt:
+      offer: Offer
+      card: CommonCard
+  - OfferCardReturned:
+      offer: Offer
+      card: CommonCard
+  - SkillsRevealed:
+      player: PlayerId
+      skills: Vec<Skill>
+  - SkillGained:
+      player: PlayerId
+      skill: Skill
+  - SkillTakenFromCommonOffer:
+      player: PlayerId
+      skill: Skill
+  - SkillToCommonOffer:
+      skill: Skill
+  - SkillUsed:
+      player: PlayerId
+      skill: Skill
+      option: u8
+      effect: Effect
+  - SkillPlacedInCenter:
+      player: PlayerId
+      skill: Skill
+      color: Option<ManaColor>
+  - CenterAdvantageUsed:
+      player: PlayerId
+      skill: Skill
+  - CenterSkillReturned:
+      player: PlayerId
+      skill: Skill
+  - UnitUnderBonds:
+      player: PlayerId
+      unit: UnitCard
+  - SourceDieKept:
+      player: PlayerId
+      die: u8
+  - ResistanceBroken:
+      player: PlayerId
+      enemy: EnemyToken
+      by: u8
+  - OfferCardGained:
+      player: PlayerId
+      offer: Offer
+      card: CommonCard
+      to: CardDestination
+  - ReputationChanged:
+      player: PlayerId
+      change: i8
+  - InteractionStarted:
+      player: PlayerId
+      site: Site
+      bonus: i8
+      city_shields: u8
+  - UnitRecruited:
+      player: PlayerId
+      unit: UnitCard
+      cost: u8
+  - BannerAssigned:
+      player: PlayerId
+      card: CardId
+      unit: UnitCard
+  - BannerLost:
+      player: PlayerId
+      card: CardId
+      unit: UnitCard
+  - BannersReclaimed:
+      player: PlayerId
+      banners: Vec<CardId>
+  - EndlessManaUsed:
+      player: PlayerId
+      color: ManaColor
+  - BannerUsed:
+      player: PlayerId
+      unit: UnitCard
+      enemy: Option<EnemyToken>
+  - ArtifactDieRolled:
+      player: PlayerId
+      card: CardId
+      color: ManaColor
+  - UnitDisbanded:
+      player: PlayerId
+      unit: UnitCard
+  - UnitActivated:
+      player: PlayerId
+      unit: UnitCard
+      ability: u8
+      option: u8
+      effect: Effect
+      enemy: Option<EnemyToken>
+  - UnitReadied:
+      player: PlayerId
+      unit: UnitCard
+  - UnitWounded:
+      player: PlayerId
+      unit: UnitCard
+      wounds: u8
+  - DamageAssignedToUnit:
+      player: PlayerId
+      enemy: EnemyToken
+      unit: UnitCard
+      wounds: u8
+  - UnitDestroyed:
+      player: PlayerId
+      unit: UnitCard
+  - UnitHealed:
+      player: PlayerId
+      unit: UnitCard
+      cost: u8
+  - UnitsReadied:
+      player: PlayerId
+  - HealingBought:
+      player: PlayerId
+      cost: u8
+  - AdvancedActionBought:
+      player: PlayerId
+      card: CardId
+      cost: u8
+  - AdvancedActionDrawnBlind:
+      player: PlayerId
+      card: CardId
+      cost: u8
+  - ArtifactBought:
+      player: PlayerId
+      cost: u8
+  - EliteUnitAdded:
+      player: PlayerId
+      card: CommonCard
+      cost: u8
+  - SpellBought:
+      player: PlayerId
+      card: CardId
+      cost: u8
+  - MonasteryBurnStarted:
+      player: PlayerId
+      hex: Hex
+  - MonasteryBurned:
+      player: PlayerId
+      hex: Hex
+  - EnemyTokenDiscarded:
+      hex: Hex
+      token: EnemyToken
+  - SiteConquered:
+      player: PlayerId
+      hex: Hex
+  - CityShieldPlaced:
+      player: PlayerId
+      hex: Hex
+      enemy: EnemyToken
+  - CityConquered:
+      hex: Hex
+      leader: PlayerId
+  - HeroWithdrew:
+      player: PlayerId
+      from: Hex
+      to: Hex
+  - ArtifactsDrawn:
+      player: PlayerId
+      cards: Vec<CardId>
+  - ArtifactTaken:
+      player: PlayerId
+      card: CardId
+  - ArtifactReturned:
+      card: CardId
+  - VillagePlundered:
+      player: PlayerId
+  - MoveSpentAsAttack:
+      player: PlayerId
+      ranged: bool
+  - InfluenceSpentAsBlock:
+      player: PlayerId
+      element: Element
+  - ForcedWithdrawal:
+      player: PlayerId
+      path: Vec<Hex>
+      wounds: Vec<CardId>
+  - SteadyTempoKept:
+      player: PlayerId
+      card: CardId
+      top: bool
+  - AdventureSiteEntered:
+      player: PlayerId
+      hex: Hex
+  - RewardDieRolled:
+      player: PlayerId
+      color: ManaColor
+  - WoundThrownAway:
+      player: PlayerId
+      from: WoundPile
+  - RuinPileShuffled:
+      order: Vec<RuinToken>
+  - SkillPileShuffled:
+      player: PlayerId
+      order: Vec<Skill>
+  - RuinTokenPlaced:
+      token: RuinToken
+      hex: Hex
+      face_up: bool
+  - RuinTokenRevealed:
+      hex: Hex
+      token: RuinToken
+  - AltarTributePaid:
+      player: PlayerId
+      hex: Hex
+  - UnitRewardTaken:
+      player: PlayerId
+      unit: UnitCard
+  - UnitRewardDeclined:
+      player: PlayerId
+  - CardDestroyed:
+      player: PlayerId
+      card: CardId
+      from: DestroyedFrom
+  - DieRerolled:
+      die: u8
+      color: ManaColor
+  - CrystalDeclined:
+      player: PlayerId
+  - AdvancedActionLearned:
+      player: PlayerId
+      card: CardId
+      cost: u8
+  - CrystalsReturned:
+      player: PlayerId
+      colors: Vec<BasicColor>
+  - CardsReturnedToHand:
+      player: PlayerId
+      cards: Vec<CardId>
+  - CardSetAside:
+      player: PlayerId
+      card: CardId
+  - ExtraTurnStarted:
+      player: PlayerId
+  - DiscardPicked:
+      player: PlayerId
+      cards: Vec<CardId>
+  - CardsPlacedOnDeck:
+      player: PlayerId
+      top: bool
+      order: Vec<CardId>
+  - DrawBonusUsed:
+      player: PlayerId
+  - DieKept:
+      player: PlayerId
+      die: u8
+  - EnemyDestroyed:
+      player: PlayerId
+      enemy: EnemyToken
+  - DeferredAttackUsed:
+      player: PlayerId
+      amount: u8
+      element: Element
+  - TacticChosen:
+      player: PlayerId
+      tactic: Tactic
+  - TacticsRemoved:
+      tactics: Vec<Tactic>
+  - DeckReshuffled:
+      player: PlayerId
+      order: Vec<CardId>
+  - CardSearched:
+      player: PlayerId
+      card: CardId
+  - DieStolen:
+      player: PlayerId
+      die: u8
+  - StolenDieUsed:
+      player: PlayerId
+  - RightMomentAnnounced:
+      player: PlayerId
+  - LongNightUsed:
+      player: PlayerId
+      cards: Vec<CardId>
+  - CardsShuffledIntoDeck:
+      player: PlayerId
+      cards: Vec<CardId>
+  - CardStored:
+      player: PlayerId
+      card: CardId
+  - StoredCardsTaken:
+      player: PlayerId
+  - ManaSearchUsed:
+      player: PlayerId
+  - DrawStopped:
+      player: PlayerId
+      missing: u64
+  - StolenDieReturned:
+      player: PlayerId
+      color: ManaColor
+  - DummySetUp:
+      hero: Hero
+      crystals: Vec<BasicColor>
+      skills: Vec<Skill>
+      deck: Vec<CardId>
+  - DummyTacticDrawn:
+      tactic: Tactic
+  - DummyTurnPlayed:
+      cards: Vec<CardId>
+  - DummyAnnouncedEndOfRound
+  - DummyCardAdded:
+      card: CardId
+  - DummyCrystalGained:
+      color: BasicColor
+  - DummyDeckShuffled:
+      order: Vec<CardId>
+  - DummySkillRevealed:
+      skill: Skill
+  - GameEnded:
+      reason: GameEndReason
+FinalScoring:
+  - None
+  - AchievementsWithoutTitles
+  - SoloConquest
+GameConfig:
+  seed: u64
+  scenario: Scenario
+  hero: Hero
+  dummy_hero: DummyHeroChoice
+GameEndReason:
+  - CityRevealed
+  - LastRound
+  - AllCitiesConquered
+Hero:
+  - Arythea
+  - Goldyx
+  - Norowas
+  - Tovak
+Hex:
+  q: i32
+  r: i32
+ManaColor:
+  - Basic: BasicColor
+  - Gold
+  - Black
+ManaPayment:
+  - Die: u8
+  - Crystal
+  - Token
+  - Endless: ManaColor
+  - Invocation: CardId
+  - Polarized:
+      from: ManaColor
+      source: PolarSource
+  - StolenDie
+MapShape:
+  - Wedge
+  - StandardWedge
+  - Open: Columns
+Offer:
+  - AdvancedActions
+  - Spells
+  - Units
+Picks: newtype Array<Option<UnitCard>, 8>
+PlayerId: newtype u8
+PolarSource:
+  - Die: u8
+  - Crystal
+  - Token
+  - Invocation: CardId
+  - StolenDie
+RuinToken:
+  - GreenAltar
+  - BlueAltar
+  - WhiteAltar
+  - RedAltar
+  - BrownRed
+  - GreenRed
+  - GreyWhite
+  - GreyBrown
+  - GreyViolet
+  - GreenBrown
+  - GreenGreen
+  - BrownViolet
+SaveGame:
+  version: u16
+  summary: SaveSummary
+  rng_positions: Map<str, str>
+  events: Vec<SavedEvent>
+SaveSummary:
+  saved_at: str
+  scenario: ScenarioId
+  hero: Hero
+  round: u32
+  round_limit: u8
+  time_of_day: TimeOfDay
+  turn: u32
+SavedEvent:
+  decision: u64
+  event: Event
+Scenario:
+  id: ScenarioId
+  shape: MapShape
+  tile_deck: TileDeckRecipe
+  rounds: u8
+  fame_per_tile: u8
+  end: ScenarioEnd
+  scoring: FinalScoring
+  elite_units: bool
+  advanced_actions: AdvancedActionSet
+  village_unit_at_setup: bool
+  tactics: TacticRule
+  dummy: DummyRule
+  cities: CityRule
+  spells: SpellSet
+ScenarioEnd:
+  - RoundLimit
+  - CityRevealed
+  - AllCitiesConquered
+ScenarioId:
+  - Sandbox
+  - FirstReconnaissance
+  - SoloConquest
+SidewaysEffect:
+  - Move
+  - Influence
+  - Attack
+  - Block
+Site:
+  - Portal
+  - Village
+  - Monastery
+  - MagicalGlade
+  - Mine: BasicColor
+  - Keep
+  - MageTower
+  - Dungeon
+  - Tomb
+  - MonsterDen
+  - SpawningGrounds
+  - Ruins
+  - City: BasicColor
+Skill:
+  - DarkPaths
+  - BurningPower
+  - HotSwordsmanship
+  - DarkNegotiation
+  - DarkFireMagic
+  - MotivationArythea
+  - PowerOfPain
+  - Invocation
+  - Polarization
+  - RitualOfPain
+  - FreezingPower
+  - PotionMaking
+  - WhiteCrystalCraft
+  - GreenCrystalCraft
+  - RedCrystalCraft
+  - MotivationGoldyx
+  - GlitteringFortune
+  - Flight
+  - UniversalPower
+  - SourceOpening
+  - DaySharpshooting
+  - BrightNegotiation
+  - Inspiration
+  - LeavesInTheWind
+  - WhisperInTheTreetops
+  - MotivationNorowas
+  - ForwardMarch
+  - Leadership
+  - BondsOfLoyalty
+  - CalmingTheWeather
+  - DoubleTime
+  - NightSharpshooting
+  - ColdSwordsmanship
+  - ShieldMastery
+  - MotivationTovak
+  - ResistanceBreak
+  - IFeelNoPain
+  - IDontGiveADamn
+  - WhoNeedsMagic
+  - ManaOverload
+SkillMana:
+  color: ManaColor
+  payment: ManaPayment
+Spell:
+  - Fireball
+  - Snowstorm
+  - Expose
+  - Tremor
+  - FlameWall
+  - ManaBolt
+  - Whirlwind
+  - UndergroundTravel
+  - BurningShield
+  - Chill
+  - WingsOfWind
+  - Restoration
+  - Demolish
+  - SpaceBending
+  - CallToArms
+  - Meditation
+  - ManaMeltdown
+  - ManaClaim
+  - MindRead
+  - EnergyFlow
+SpellSet:
+  - All
+  - WithoutCompetitive
+Tactic:
+  - EarlyBird
+  - Rethink
+  - ManaSteal
+  - Planning
+  - GreatStart
+  - TheRightMoment
+  - FromTheDusk
+  - LongNight
+  - ManaSearch
+  - MidnightMeditation
+  - Preparation
+  - SparingPower
+TacticOrder:
+  - PlayerFirst
+TacticRemoval:
+  - AllTaken
+TacticRule:
+  - None
+  - Chosen:
+      order: TacticOrder
+      removal: TacticRemoval
+TileDeckRecipe:
+  countryside: u8
+  countryside_order: CountrysideOrder
+  core_city: u8
+  core_non_city: u8
+TileId:
+  - StartingA
+  - StartingB
+  - Countryside: u8
+  - Core: u8
+TilePosition:
+  center: Hex
+TimeOfDay:
+  - Day
+  - Night
+Unit:
+  - Peasants
+  - Herbalists
+  - Foresters
+  - UtemCrossbowmen
+  - UtemGuardsmen
+  - UtemSwordsmen
+  - GuardianGolems
+  - Illusionists
+  - RedCapeMonks
+  - NorthernMonks
+  - SavageMonks
+  - FireGolems
+  - IceGolems
+  - FireMages
+  - IceMages
+  - AmotepGunners
+  - AmotepFreezers
+  - Catapults
+  - AltemMages
+  - AltemGuardians
+UnitCard:
+  unit: Unit
+  copy: u8
+WoundPile:
+  - Hand
+  - DiscardPile

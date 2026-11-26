@@ -19,7 +19,7 @@ arcanum-ui ──► arcanum-core
 |---|---|---|
 | `arcanum-core` | Règles, état, contenu (cartes, tuiles, scénarios). Pur : ni UI, ni fichiers, ni horloge. | `rand`, `rand_chacha`, `thiserror`, `log`, `serde`, `ron` |
 | `arcanum-i18n` | Catalogue de libellés chargé depuis `assets/i18n/<langue>.json`. | `serde_json`, `thiserror`, `log` |
-| `arcanum-persistance` | Sauvegardes JSON (journal + positions des générateurs, spec 038) : `SaveGame`, `save`, `save_auto`, `load`, `list` dans un dossier donné (spec 024). Module `preferences` : fichier des préférences (spec 080), volumes compris (spec 081). | `serde`, `serde_json`, `thiserror`, `log` |
+| `arcanum-persistance` | Sauvegardes JSON (journal + positions des générateurs, spec 038) : `SaveGame`, `save`, `save_auto`, `load`, `list` dans un dossier donné (spec 024), migration des sauvegardes des versions publiées gardées (spec #52). Module `preferences` : fichier des préférences (spec 080), volumes compris (spec 081). | `serde`, `serde_json`, `thiserror`, `log` |
 | `arcanum-audio` | Son (spec 081, ADR 0010) : directeur pur, banque de sons, lecteurs (Kira ou muet). Écoute la partie, ne la change jamais. | `kira` (sans options par défaut : `cpal`, `ogg`, `vorbis`), `thiserror`, `log` |
 | `arcanum-ui` | Client eframe/egui : affichage et saisie, logs techniques, icône, dossier des sauvegardes. Exécutable `iter-arcanum`. | `eframe`, `egui_extras`, `directories`, `jiff` |
 
@@ -118,8 +118,17 @@ GameRunner::step()
    `view` s'il est visible du joueur. Les tests qui construisent un `PlayerView` champ par champ (arcanum-ui) sont à compléter.
 4. `Event` et tout ce qu'il porte dérivent `serde::Serialize` et `Deserialize` (sauvegardes, spec 024) : un nouveau type porté par
    un événement aussi. `Effect` a sa forme complète ; la forme courte des fichiers de contenu passe par `effects_from_text`.
-5. Changer la forme d'un événement existant : rien à faire jusqu'à la fin du J6, `EVENT_FORMAT_VERSION` reste à 1 et les
-   sauvegardes d'avant sont refusées (spec 024) ; après le J6, version et migration.
+5. Changer un événement existant, ou un type qu'il porte (spec #52, ADR 0001) : le test `format` d'arcanum-persistance
+   compare l'empreinte du format à `tests/format/sauvegarde.yaml`. **Compatible** (variante ajoutée, champ ajouté avec
+   `#[serde(default)]` qui redonne l'ancien sens) : régénérer l'empreinte
+   (`ARCANUM_REGENERER_DOCS=1 cargo test -p arcanum-persistance --test format`). **Incompatible** (champ ou variante
+   renommé ou retiré, champ obligatoire ajouté, type changé, usage de générateur renommé, ou nouveau sens donné par
+   `apply` à un événement existant, que l'empreinte ne voit pas) : `EVENT_FORMAT_VERSION` passe à
+   `PREVIOUS_RELEASE_FORMAT + 1` s'il ne l'a pas déjà fait depuis la dernière release (une fois par cycle), et la
+   migration de ce format (`MIGRATIONS`, `src/migration.rs`, une fonction pure sur le JSON entier) est écrite ou
+   complétée, avec son test ; `diff tests/format/v<X.Y.Z>.yaml tests/format/sauvegarde.yaml` liste ce qui a changé depuis
+   une version gardée. Toute PR qui change le bras d'`apply` d'un événement existant le dit en une ligne : « Sens
+   d'`apply` changé : non » ou « oui : <événements> ».
 
 ### Recette : ajouter du contenu (carte, tuile, scénario)
 
@@ -249,8 +258,13 @@ rien après un retour en arrière ou un chargement) et `sound_situation` (`sound
 Ne choisit pas le dossier (arcanum-ui le fait) et n'a pas d'horloge (la date du résumé est donnée par l'appelant).
 `SaveGame::from_runner(&runner, date)` puis `save(dossier, nom, &game)` (suffixe `-2`… si le nom est pris) ou `save_auto` (`auto.json`) ;
 `load(chemin)?.resume(joueurs)` rejoue le journal par `GameRunner::resume`. `list(dossier)` : automatique en tête, plus récentes
-ensuite, illisibles à la fin. Version vérifiée avant les événements ; pas de migration avant la fin du J6. Tests :
-`crates/arcanum-persistance/tests/sauvegarde.rs`, dossiers temporaires (`tempfile`).
+ensuite, illisibles à la fin. Version vérifiée avant les événements. Module `migration` (spec #52) : `Formats` (plus ancien
+format gardé, format courant, chaîne `MIGRATIONS` ; `Formats::SUPPORTED` pour les vrais, `load_with` et `list_with` pour ceux
+d'un test), `OLDEST_SUPPORTED_FORMAT`, `PREVIOUS_RELEASE_FORMAT` ; une sauvegarde d'un format gardé plus ancien est migrée
+en mémoire, une plus récente est `NewerVersion`, une trop ancienne `TooOld`, une migration ratée `NotMigratable`. Tests :
+`crates/arcanum-persistance/tests/sauvegarde.rs` et `migration.rs` (chaîne de test), dossiers temporaires (`tempfile`) ;
+`temoins.rs` (sauvegardes des versions gardées, `tests/temoins/v<X.Y.Z>/`, jamais régénérées) ; `format.rs` (empreinte du
+format par `serde-reflection`, `tests/format/sauvegarde.yaml` et une empreinte figée `v<X.Y.Z>.yaml` par version gardée).
 
 Module `preferences` (spec 080) : `Preferences` (langue, plein écran au lancement, `Volumes` de la spec 081, `animations` de la spec #5, vrai par défaut ; `Default`), `load(chemin)` tolérant (champ
 absent : défaut ; champ inconnu : ignoré ; autre `version` : `warn`, lu quand même ; fichier absent : `PreferencesError::Missing`)

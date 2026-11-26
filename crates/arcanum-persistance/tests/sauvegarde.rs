@@ -252,9 +252,9 @@ fn list_sorts_and_reports_unreadable() {
     assert!(matches!(entries[3].summary, Err(LoadError::Invalid(_))));
 }
 
-// Spec 024 C20 et L5
+// Spec 024 C20 et L5 ; spec #52, C4 : une sauvegarde d'un format plus récent est refusée.
 #[test]
-fn other_version_is_refused() {
+fn newer_save_is_refused() {
     let dir = tempfile::tempdir().expect("dossier temporaire");
     let (runner, _) = played(11, 5);
     let mut game = saved(&runner);
@@ -263,7 +263,7 @@ fn other_version_is_refused() {
 
     assert_eq!(
         load(&path),
-        Err(LoadError::OtherVersion {
+        Err(LoadError::NewerVersion {
             found: arcanum_core::EVENT_FORMAT_VERSION + 1
         })
     );
