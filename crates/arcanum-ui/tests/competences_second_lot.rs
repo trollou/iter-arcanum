@@ -933,13 +933,36 @@ fn bonds_of_loyalty_token_and_recruit() {
     );
     let after = done(&state, recruit(crossbowmen(), true));
     let screen = screen_of(&after, &ScreenMode::Normal, &catalog);
-    assert_eq!(screen.units.bonds_token, None);
+    // Issue #26 : le jeton occupé reste affiché et nomme son unité.
+    assert_eq!(
+        screen.units.bonds_token.as_deref(),
+        Some("Jeton de Loyauté : Arbalétriers d'Utem")
+    );
     assert!(
         !screen
             .recruit
             .iter()
             .any(|button| button.label.starts_with("Recruter sous Loyauté"))
     );
+}
+
+// Issue #26 (texte de Loyauté sans faille) : l'unité sous le jeton de Loyauté ne prend pas de
+// jeton de commandement ordinaire ; l'en-tête ne la compte pas, à cette manche comme aux suivantes.
+#[test]
+fn bonds_unit_not_counted_in_units_header() {
+    let catalog = french();
+    let state = bonded(&[], &[crossbowmen(), herbalists()]);
+    let after = done(
+        &state,
+        Action::RecruitUnit {
+            unit: crossbowmen(),
+            disband: None,
+            bonds: true,
+        },
+    );
+    let screen = screen_of(&after, &ScreenMode::Normal, &catalog);
+    assert_eq!(screen.units.header, "Unités : 0/1");
+    assert_eq!(screen.units.units.len(), 1);
 }
 
 // Issue privée 341 : sans assez d'Influence pour le coût réduit, la ligne « Recruter sous Loyauté »
