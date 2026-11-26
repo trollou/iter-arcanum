@@ -31,7 +31,7 @@ Windows par la SignPath Foundation exclut tout composant non libre (spec #70, Q5
 | `effects/defeat.ogg` | Fantasy Sound Effects Library : Jingle_Lose_00 | Little Robot Sound Factory | https://opengameart.org/content/fantasy-sound-effects-library | CC BY 3.0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/preview.ogg` | Bell dings/chimes : bell_ding1 | PWL | https://opengameart.org/content/bell-dingschimes | CC0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/rooster.ogg` | Rooster Calling, Close, A | InspectorJ (www.jshaw.co.uk) | https://freesound.org/people/InspectorJ/sounds/439472/ | CC BY 4.0 | Mono, 44,1 kHz, Ogg Vorbis qualité 4 |
-| `effects/owl.ogg` | Birds of Prey - Great Horned Owl Hooting; Distant, Reverberant | TheKingOfGeeks360 | https://freesound.org/people/TheKingOfGeeks360/sounds/863463/ | CC0 | Mono, 44,1 kHz, Ogg Vorbis qualité 4 |
+| `effects/owl.ogg` | Birds of Prey - Great Horned Owl Hooting; Distant, Reverberant | TheKingOfGeeks360 | https://freesound.org/people/TheKingOfGeeks360/sounds/863463/ | CC0 | Mono, 44,1 kHz, +12 dB (niveau des autres effets), Ogg Vorbis qualité 4 |
 | `effects/enemy_defeated.ogg` | 15 monster grunt/pain/death sounds : deathb | Michel Baradari (publié par qubodup) | https://opengameart.org/content/15-monster-gruntpaindeath-sounds | CC BY 3.0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/spell.ogg` | 8 Magic Attacks : 25_Wind_01 | leohpaz | https://opengameart.org/content/8-magic-attacks | CC BY 4.0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/combat_start.ogg` | Fantasy Weapons and Apparel SFX Library : sword-knife-clash-06 | Vehicle | https://opengameart.org/content/fantasy-weapons-and-apparel-sfx-library | CC0 | Mono, Ogg Vorbis qualité 4 |
