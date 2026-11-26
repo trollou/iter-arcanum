@@ -266,8 +266,9 @@ fn preferences_window(
 fn about_window(ctx: &egui::Context, window: &AboutWindow, catalog: &Catalog) -> Option<Command> {
     let mut clicked = None;
     let mut open = true;
+    // Plus large que les préférences : les lignes de licence tiennent sur une ligne.
     egui::Window::new(&window.title)
-        .min_width(title_min_width(ctx, &window.title).max(320.0))
+        .min_width(title_min_width(ctx, &window.title).max(480.0))
         .collapsible(false)
         .resizable(false)
         .open(&mut open)
