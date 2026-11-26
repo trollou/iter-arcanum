@@ -1,6 +1,6 @@
 # #52 — Migration des sauvegardes
 
-- Statut : à valider (reprise le 2026-11-26 : portée réduite aux trois dernières versions publiées)
+- Statut : validée (Mathieu, 2026-11-26)
 - Issue : #52 (milestone v0.2.0)
 - Dépend de : spec 024 (sauvegarde et retour en arrière), spec 038 (un générateur par usage), tag `v0.1.0` (#49), #55 (remplacer
   `chrono`, avant celle-ci)
@@ -275,13 +275,6 @@ Aucun.
   (`serde_json::Value`) du fichier entier ; un journal migré qui se rejoue autrement se charge quand même (L2) ; pas de copie
   de secours avant migration (C5, C6) ; les préférences gardent leur lecture tolérante, sans migration ; trois messages de
   refus distincts (`NewerVersion`, `TooOld`, `NotMigratable`).
-
-## Questions ouvertes
-
-**Q7 — Quels témoins pour la v0.1.0 ?**
-(a) Les parties préparées du tag `v0.1.0` et les deux parcours de fin de jalon (J6) sauvegardés, plus une vraie partie de
-Mathieu en option. (b) Les parties préparées et une vraie partie de Mathieu obligatoire.
-*Recommandation : (a)*, proposée par Mathieu. Les parcours du J6 apportent ce qui manquait aux parties préparées (fin de
-manche, fantôme, combats de cité, retraite, Blessures, fin de partie : 74 variantes sur 153 au lieu de 56) et se refont à
-chaque release sans effort de Mathieu. Une vraie partie reste un plus (niveaux, sorts et artefacts variés), mais n'est plus
-indispensable : l'empreinte (C12) couvre la forme des variantes jamais jouées.
+- **Q7 — Quels témoins pour la v0.1.0 ?** (Mathieu, 2026-11-26) : les parties préparées du tag `v0.1.0` et les deux parcours
+  de fin de jalon (J6) sauvegardés ; une vraie partie de Mathieu en option. Mesure : 74 variantes de `Event` sur 153, contre 56
+  pour les parties préparées seules ; l'empreinte (C12) couvre la forme des autres.

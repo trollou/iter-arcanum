@@ -41,7 +41,7 @@ Toute modification de l'état de partie passe par des événements historisés.
 - **Un générateur par usage** (ADR 0007, spec 038) : la sauvegarde garde la position de chaque générateur, et non plus d'un seul.
 - **Pas de mode debug d'annulation libre** (décision de Mathieu, 2026-10-27) : le retour en arrière s'arrête toujours au point de non-retour.
 
-## Révision (spec #52, proposée, à valider avec la spec)
+## Révision (spec #52, validée par Mathieu le 2026-11-26)
 
 - **Migration à partir de la v0.1.0** : remplace « Pas de migration avant la fin du J6 ». Le format de la v0.1.0 est le
   format 1. Seule garantie : une sauvegarde de l'une des trois dernières versions publiées se charge avec la version courante
