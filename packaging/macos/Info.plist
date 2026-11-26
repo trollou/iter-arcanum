@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Modèle du paquet macOS (spec #33) : scripts/empaqueter.sh remplace @VERSION@. -->
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>Iter Arcanum</string>
+	<key>CFBundleDisplayName</key>
+	<string>Iter Arcanum</string>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.trollou.iter-arcanum</string>
+	<key>CFBundleExecutable</key>
+	<string>iter-arcanum</string>
+	<key>CFBundleIconFile</key>
+	<string>iter-arcanum</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@VERSION@</string>
+	<key>CFBundleVersion</key>
+	<string>@VERSION@</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>11.0</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+</dict>
+</plist>
