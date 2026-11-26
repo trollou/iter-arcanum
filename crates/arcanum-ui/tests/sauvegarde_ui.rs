@@ -397,3 +397,38 @@ fn user_dirs_are_named_iter_arcanum() {
     let config = arcanum_ui::user_config_dir().expect("dossier de configuration");
     assert!(named(config.clone()), "{config:?}");
 }
+
+// Issue #55 : le format des dates écrites dans les sauvegardes ne change pas avec la bibliothèque
+// d'horodatage (pas de migration, issue #52).
+#[test]
+fn saved_at_is_rfc3339_to_the_second_with_numeric_offset() {
+    let written = arcanum_ui::saved_at(&fixed_clock());
+    let (date, offset) = written.split_at("2026-10-27T18:00:00".len());
+    assert_eq!(date, "2026-10-27T18:00:00", "{written}");
+    let bytes = offset.as_bytes();
+    assert!(
+        bytes.len() == 6
+            && (bytes[0] == b'+' || bytes[0] == b'-')
+            && bytes[1..3].iter().all(u8::is_ascii_digit)
+            && bytes[3] == b':'
+            && bytes[4..6].iter().all(u8::is_ascii_digit),
+        "décalage numérique attendu, jamais Z : {written}"
+    );
+}
+
+#[test]
+fn displayed_date_keeps_the_written_wall_clock() {
+    assert_eq!(
+        arcanum_ui::display_date("2026-10-27T18:00:00+01:00"),
+        "2026-10-27 18:00"
+    );
+    assert_eq!(
+        arcanum_ui::display_date("2026-10-27T18:00:00-05:00"),
+        "2026-10-27 18:00"
+    );
+}
+
+#[test]
+fn unreadable_saved_date_is_displayed_as_is() {
+    assert_eq!(arcanum_ui::display_date("hier soir"), "hier soir");
+}
