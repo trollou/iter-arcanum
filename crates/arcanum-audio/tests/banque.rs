@@ -134,25 +134,18 @@ fn with_licenses(dir: &TempDir, rows: &[&str]) {
 
 #[test]
 fn license_check_finds_missing_and_bad_lines() {
-    // C25, sur un dossier d'essai : un son sans ligne, une licence interdite, une ligne sans
-    // fichier, et un son NC compté à part.
-    let dir = sounds_dir(&[
-        "music/day.ogg",
-        "effects/owl.ogg",
-        "effects/block.ogg",
-        "effects/miss.ogg",
-    ]);
+    // C25, sur un dossier d'essai : un son sans ligne, une licence interdite et une ligne sans
+    // fichier.
+    let dir = sounds_dir(&["music/day.ogg", "effects/owl.ogg", "effects/block.ogg"]);
     with_licenses(
         &dir,
         &[
             "| music/day.ogg | Jour | A | https://exemple.org/1 | CC0 | coupé |",
             "| effects/owl.ogg | Hibou | B | https://exemple.org/2 | CC BY-ND 4.0 | — |",
-            "| effects/miss.ogg | Souffle | C | https://exemple.org/3 | CC BY-NC 4.0 | — |",
             "| effects/rooster.ogg | Coq | D | https://exemple.org/4 | CC BY 4.0 | — |",
         ],
     );
     let report = check_licenses(dir.path());
-    assert_eq!(report.non_commercial, vec!["effects/miss.ogg"]);
     assert_eq!(report.errors.len(), 3, "{:?}", report.errors);
     for named in [
         "effects/block.ogg",
@@ -168,18 +161,39 @@ fn license_check_finds_missing_and_bad_lines() {
 }
 
 #[test]
+fn license_check_refuses_non_commercial_licenses() {
+    // Spec #70, C3 (Q5) : la SignPath Foundation refuse tout composant non libre ; une licence non
+    // commerciale (NC ou Sampling+ 1.0) est une erreur, plus un second choix.
+    let dir = sounds_dir(&["effects/miss.ogg", "effects/owl.ogg", "effects/block.ogg"]);
+    with_licenses(
+        &dir,
+        &[
+            "| effects/miss.ogg | Souffle | C | https://exemple.org/3 | CC BY-NC 4.0 | — |",
+            "| effects/owl.ogg | Owl | Johnc | https://freesound.org/people/Johnc/sounds/20684/ | Sampling+ 1.0 | Mono |",
+            "| effects/block.ogg | Lames | E | https://exemple.org/5 | CC0 | — |",
+        ],
+    );
+    let report = check_licenses(dir.path());
+    assert_eq!(report.errors.len(), 2, "{:?}", report.errors);
+    for named in ["effects/miss.ogg", "effects/owl.ogg"] {
+        assert!(
+            report
+                .errors
+                .iter()
+                .any(|error| error.contains(named) && error.contains("non commerciale")),
+            "{named} : {:?}",
+            report.errors
+        );
+    }
+}
+
+#[test]
 fn every_sound_has_a_permitted_license() {
     // C25, sur les vrais fichiers du jeu.
     let dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets/sounds");
     assert!(dir.join(LICENSES_FILE).is_file(), "LICENSES.md manquant");
     let report = check_licenses(&dir);
     assert_eq!(report.errors, Vec::<String>::new());
-    println!(
-        "{} sons, dont {} sous licence non commerciale : {:?}",
-        report.files.len(),
-        report.non_commercial.len(),
-        report.non_commercial
-    );
 }
 
 /// Budget du dossier des sons (Q10).
@@ -228,20 +242,4 @@ fn every_cue_has_a_sound_within_budget() {
         size <= SOUNDS_BUDGET_BYTES,
         "{size} octets, au-delà de 20 Mo"
     );
-}
-
-#[test]
-fn sampling_plus_counts_as_non_commercial() {
-    // C25 : Sampling+ 1.0 (hibou de Freesound, Mathieu, 2026-11-20) est rangée avec les licences
-    // NC de second choix.
-    let dir = sounds_dir(&["effects/owl.ogg"]);
-    with_licenses(
-        &dir,
-        &[
-            "| effects/owl.ogg | Owl | Johnc | https://freesound.org/people/Johnc/sounds/20684/ | Sampling+ 1.0 | Mono |",
-        ],
-    );
-    let report = check_licenses(dir.path());
-    assert_eq!(report.errors, Vec::<String>::new());
-    assert_eq!(report.non_commercial, vec!["effects/owl.ogg"]);
 }

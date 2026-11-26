@@ -147,3 +147,38 @@ fn public_repository_has_no_third_party_material() {
         refused.join("\n")
     );
 }
+
+/// Spec #70, C2 : phrases imposées par la SignPath Foundation (`signpath.org/terms`), mot pour mot.
+const SIGNING_POLICY_PHRASES: [&str; 3] = [
+    "Free code signing provided by SignPath.io, certificate by SignPath Foundation",
+    "This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.",
+    "trollou",
+];
+
+/// La section « Code signing policy » du README : de son titre au titre suivant de même niveau.
+fn code_signing_policy_section(readme: &str) -> Option<String> {
+    let start = readme.find("\n## Code signing policy\n")?;
+    let rest = &readme[start + 1..];
+    let end = rest[3..]
+        .find("\n## ")
+        .map_or(rest.len(), |index| index + 3);
+    Some(rest[..end].to_owned())
+}
+
+// C2 — Spec #70 : la politique de signature (phrase de la fondation, rôles, confidentialité) est en ligne.
+#[test]
+fn readme_states_the_code_signing_policy() {
+    let readme =
+        std::fs::read_to_string(workspace_root().join("README.md")).expect("README.md lisible");
+    let section = code_signing_policy_section(&readme)
+        .expect("le README n'a pas de section « ## Code signing policy »");
+    for phrase in SIGNING_POLICY_PHRASES {
+        assert!(section.contains(phrase), "« {phrase} » manque à la section");
+    }
+    for role in ["Author", "Reviewer", "Approver"] {
+        assert!(
+            section.contains(role),
+            "rôle « {role} » absent de la section"
+        );
+    }
+}
