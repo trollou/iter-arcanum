@@ -380,9 +380,15 @@ pub fn illustration_paint(
 }
 
 /// Adresse `file://` d'une image pour les chargeurs d'egui (issue #62).
+/// Un chemin Windows (`C:\…`) ne commence pas par `/` : sans le troisième `/`, egui_extras le
+/// prendrait pour un hôte réseau et ouvrirait `\\C:\…`. Sans `#[cfg]` : la règle vaut partout.
 pub fn image_uri(path: &Path) -> String {
-    let _ = path;
-    todo!()
+    let path = path.display().to_string();
+    if path.starts_with('/') {
+        format!("file://{path}")
+    } else {
+        format!("file:///{path}")
+    }
 }
 
 fn warn_once(path: &Path, reason: &str, warnings: &mut ImageWarnings) {

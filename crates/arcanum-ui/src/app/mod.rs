@@ -16,7 +16,7 @@ use eframe::egui::{
 use crate::{
     BOARD_BACKGROUND, BoardCamera, ClientSession, Illustration, IllustrationIndex, ImageId,
     ImageLoad, ImagePaint, ImageWarnings, KEY_BINDINGS, KeyModifier, SourceLine, WALK_STEP_SECONDS,
-    WindowRequest, catalog_or_empty, illustration_paint, image_paint, svg_size,
+    WindowRequest, catalog_or_empty, illustration_paint, image_paint, image_uri, svg_size,
 };
 
 /// Textures des illustrations à dessiner dans une fenêtre (spec 072) : seulement celles chargées.
@@ -205,7 +205,7 @@ impl IterArcanumApp {
             return ImagePaint::Fallback(fallback);
         };
         let path = image.path(images_dir);
-        let uri = format!("file://{}", path.display());
+        let uri = image_uri(&path);
         let height = svg_size(rect.height() * pixels_per_point);
         let load =
             match ui
@@ -232,7 +232,7 @@ impl IterArcanumApp {
             return None;
         }
         let path = illustration.path(self.images_dir.as_ref()?);
-        let uri = format!("file://{}", path.display());
+        let uri = image_uri(&path);
         // Mipmaps : le PNG de 512 px reste net réduit en vignette.
         let options = TextureOptions {
             mipmap_mode: Some(TextureFilter::Linear),
