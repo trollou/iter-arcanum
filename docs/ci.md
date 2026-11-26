@@ -32,10 +32,27 @@ capture d'écran au bout de 20 s et publie en artefact `capture-macos-<langue>` 
 `~/Library/Logs/iter-arcanum/` (langue détectée, dossiers) et la liste de `~/Library/Application Support/iter-arcanum/`.
 Si le runner refuse l'enregistrement de l'écran, la capture sort noire ; les logs restent probants (spec #7, Q3).
 
+## Release
+
+`.github/workflows/release.yml` construit, empaquette et publie le jeu (spec #33 ; procédure complète :
+`docs/release.md`). Déclencheurs :
+
+- **tag `v*`** : release. Brouillon pour `vX.Y.Z`, pre-release pour `vX.Y.Z-rc.N` ;
+- **à la main** (onglet Actions, depuis `main`) : essai à blanc, le job `publier` ne tourne pas ;
+- **PR prête qui touche l'empaquetage** (`release.yml`, `scripts/empaqueter.sh`, `scripts/essai-lancement.sh`,
+  `scripts/controler-version.sh`, `packaging/**`, `crates/arcanum-ui/build.rs`) : essai à blanc (spec #33, D11), car
+  GitHub refuse `workflow_dispatch` tant que le fichier n'est pas sur `main`. Une PR ordinaire ne le lance pas.
+
+Jobs : `controles` (version du tag, `cargo deny check` complet, bloquant), `verifier` (`ci.yml` appelé par
+`workflow_call` ; sauté sur une PR, où `ci.yml` tourne déjà), `construire` (matrice Windows, Ubuntu 22.04, macOS :
+construction, empaquetage, `dumpbin` sous Windows, essai de lancement, archive en artefact `archive-<os>`), `publier`
+(tag seulement, seul job en `contents: write`). Pas de cache enregistré. Les archives d'un essai à blanc se téléchargent
+depuis la page de l'exécution (pas depuis un fil cloud : proxy 403).
+
 ## Contrôle qualité
 
 Les outils de qualité (couverture `llvm-cov`, duplication `jscpd`, `cargo machete`, `cargo deny`) ne tournent pas
-dans la CI : `scripts/qualite.sh` les lance en fin de spec, la couverture en fin de jalon
+dans la CI ordinaire (`cargo deny check` tourne seulement dans `release.yml`, spec #33) : `scripts/qualite.sh` les lance en fin de spec, la couverture en fin de jalon
 (`docs/qualite/README.md`). Décision de Mathieu, 2026-11-17 (issue privée 305), prise pour le quota du dépôt privé.
 
 ## Cache
