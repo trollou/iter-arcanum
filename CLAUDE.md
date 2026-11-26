@@ -135,7 +135,7 @@ Dans un fil, vérifier avec `scripts/verifier.sh` (bash, donc Git Bash sous Wind
 
 Licences (Mathieu, 2026-11-12) : code sous GPL-3.0-or-later (`LICENSE`), visuels et libellés de `assets/` sous CC BY-SA 4.0 (`assets/LICENSE`) ; ce qui vient du jeu d'origine et les documents de référence du dépôt privé (`../mage-knight/docs/regles/`) ne sont couverts par aucune licence du projet (`NOTICE`).
 
-Les sons de `assets/sounds/` ne sont pas sous CC BY-SA 4.0 : chacun garde la licence de son auteur (CC0, CC BY, CC BY-SA ; NC en second choix seulement), avec une ligne par fichier dans `assets/sounds/LICENSES.md`, vérifiée par un test (spec 081).
+Les sons de `assets/sounds/` ne sont pas sous CC BY-SA 4.0 : chacun garde la licence de son auteur (CC0, CC BY, CC BY-SA ; jamais NC, spec #70), avec une ligne par fichier dans `assets/sounds/LICENSES.md`, vérifiée par un test (spec 081).
 
 Aucun visuel ni texte officiel de Mage Knight dans le jeu. Les visuels sont créés par nous : SVG dessinés par le code (plateau, icônes) et illustrations générées sans rien nommer du jeu ni lui reprendre d'image (cartes et unités ; ADR 0009), dans `assets/images/` : ils peuvent évoquer l'ambiance et les couleurs du jeu de base pour ne pas dérouter les joueurs, mais rien n'est décalqué ni repris des scans ou du livret. Le livret et les scans (`../mage-knight/docs/regles/`) servent uniquement de référence de règles.
 

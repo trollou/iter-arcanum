@@ -19,9 +19,10 @@ $S construire scripts/sons/exemple.json target/planche   # data.json + planche.h
 
 1. **Chercher** sur OpenGameArt (`chercher`, puis `fiche` pour la licence). kenney.nl et freesound.org refusent les
    requêtes d'un fil cloud : demander à Mathieu les packs Kenney (CC0) ou les sons Freesound (compte exigé), et les
-   citer par leur chemin local dans le manifeste.
-2. **Ne garder que les licences permises** par la spec 081 (`FREE_LICENSES` et `NON_COMMERCIAL_LICENSES` de
-   `crates/arcanum-audio/src/licenses.rs`). Pixabay est écarté : sa licence interdit de redistribuer le fichier seul.
+   citer par leur chemin local dans le manifeste. La page d'un son Freesound (titre, auteur, licence) se lit quand
+   même par l'agent web-fetch (spec #70).
+2. **Ne garder que les licences permises** (`FREE_LICENSES` de `crates/arcanum-audio/src/licenses.rs`) ; les licences
+   non commerciales (`NON_COMMERCIAL_LICENSES`, Sampling+ comprise) sont refusées depuis la spec #70. Pixabay est écarté : sa licence interdit de redistribuer le fichier seul.
 3. **Manifeste** (`exemple.json`) : un besoin par son du jeu (`groupe` : Musiques, Ambiances ou Effets ; `cle` : son
    chemin dans `assets/sounds/` sans extension), deux à quatre candidats chacun. `fichier` est une URL ou un chemin
    local, `membres` un motif dans l'archive ou le dossier (plusieurs fichiers = variantes), `debut` et `duree` en

@@ -3,8 +3,8 @@
 Les sons de ce dossier ne sont pas sous la licence CC BY-SA 4.0 du reste de `assets/` : chacun garde la licence de son
 auteur, donnée ci-dessous (spec 081, ADR 0010). Une ligne par fichier `.ogg`, vérifiée par le test
 `every_sound_has_a_permitted_license` d'arcanum-audio. Licences permises : CC0, CC BY 3.0 ou 4.0, CC BY-SA 3.0 ou 4.0,
-OGA-BY 3.0 ; en second choix, CC BY-NC 3.0 ou 4.0, CC BY-NC-SA 3.0 ou 4.0 et Sampling+ 1.0 (non commerciales, à remplacer si le projet
-change d'avis).
+OGA-BY 3.0. Les licences non commerciales (CC BY-NC, CC BY-NC-SA, Sampling+ 1.0) sont refusées : la signature de l'exécutable
+Windows par la SignPath Foundation exclut tout composant non libre (spec #70, Q5).
 
 | Fichier | Titre | Auteur | Source | Licence | Modifications |
 |---|---|---|---|---|---|
@@ -31,7 +31,7 @@ change d'avis).
 | `effects/defeat.ogg` | Fantasy Sound Effects Library : Jingle_Lose_00 | Little Robot Sound Factory | https://opengameart.org/content/fantasy-sound-effects-library | CC BY 3.0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/preview.ogg` | Bell dings/chimes : bell_ding1 | PWL | https://opengameart.org/content/bell-dingschimes | CC0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/rooster.ogg` | Rooster Calling, Close, A | InspectorJ (www.jshaw.co.uk) | https://freesound.org/people/InspectorJ/sounds/439472/ | CC BY 4.0 | Mono, 44,1 kHz, Ogg Vorbis qualité 4 |
-| `effects/owl.ogg` | owl | Johnc | https://freesound.org/people/Johnc/sounds/20684/ | Sampling+ 1.0 | Mono, Ogg Vorbis qualité 4. **Non commercial** pour la copie du fichier tel quel : à remplacer si le projet change d'avis |
+| `effects/owl.ogg` | Birds of Prey - Great Horned Owl Hooting; Distant, Reverberant | TheKingOfGeeks360 | https://freesound.org/people/TheKingOfGeeks360/sounds/863463/ | CC0 | Mono, 44,1 kHz, +12 dB (niveau des autres effets), Ogg Vorbis qualité 4 |
 | `effects/enemy_defeated.ogg` | 15 monster grunt/pain/death sounds : deathb | Michel Baradari (publié par qubodup) | https://opengameart.org/content/15-monster-gruntpaindeath-sounds | CC BY 3.0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/spell.ogg` | 8 Magic Attacks : 25_Wind_01 | leohpaz | https://opengameart.org/content/8-magic-attacks | CC BY 4.0 | Mono, Ogg Vorbis qualité 4 |
 | `effects/combat_start.ogg` | Fantasy Weapons and Apparel SFX Library : sword-knife-clash-06 | Vehicle | https://opengameart.org/content/fantasy-weapons-and-apparel-sfx-library | CC0 | Mono, Ogg Vorbis qualité 4 |

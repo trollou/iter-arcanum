@@ -1,23 +1,34 @@
-//! Embarque l'icône dans `iter-arcanum.exe` quand on compile pour Windows (spec 004), et passe le
-//! commit au code par `ARCANUM_COMMIT` pour la fenêtre « À propos » (spec #33).
+//! Embarque l'icône et la ressource de version dans `iter-arcanum.exe` quand on compile pour Windows
+//! (spec 004, spec #70), et passe le commit au code par `ARCANUM_COMMIT` pour la fenêtre « À propos »
+//! (spec #33).
 
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=build/version_resource.rs");
     commit::pass_to_code();
     // La cible, pas la machine qui compile : `cfg!(windows)` décrirait celle-ci.
     if std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("windows") {
-        windows::embed_icon();
+        windows::embed_resources();
     }
 }
+
+// Spec #70, C1 : champs construits hors de `winresource`, testés sur toutes les plateformes.
+#[cfg(windows)]
+#[path = "build/version_resource.rs"]
+mod version_resource;
 
 #[cfg(windows)]
 mod windows {
     use std::path::PathBuf;
 
-    pub fn embed_icon() {
+    use super::version_resource::version_resource;
+
+    /// Icône (spec 004) et ressource de version (spec #70, C1 : nom du produit et version exigés
+    /// par la SignPath Foundation).
+    pub fn embed_resources() {
         let ico = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .join("..")
             .join("..")
@@ -28,10 +39,22 @@ mod windows {
         println!("cargo:rerun-if-changed={}", ico.display());
         let mut resource = winresource::WindowsResource::new();
         resource.set_icon(&ico.to_string_lossy());
-        // Spec 004, L1 : sans compilateur de ressources, l'exe se compile sans icône de fichier.
+        let version = version_resource(env!("CARGO_PKG_VERSION"));
+        for (name, value) in &version.strings {
+            resource.set(name, value);
+        }
+        resource.set_version_info(
+            winresource::VersionInfo::FILEVERSION,
+            version.numeric_version,
+        );
+        resource.set_version_info(
+            winresource::VersionInfo::PRODUCTVERSION,
+            version.numeric_version,
+        );
+        // Spec 004, L1 : sans compilateur de ressources, l'exe se compile sans icône ni version.
         if let Err(error) = resource.compile() {
             println!(
-                "cargo:warning=icône non embarquée dans iter-arcanum.exe (rc.exe ou windres introuvable ?) : {error}"
+                "cargo:warning=ressources non embarquées dans iter-arcanum.exe (rc.exe ou windres introuvable ?) : {error}"
             );
         }
     }
@@ -40,9 +63,9 @@ mod windows {
 // Compilation croisée vers Windows depuis Linux : hors périmètre, l'exe n'a pas d'icône de fichier.
 #[cfg(not(windows))]
 mod windows {
-    pub fn embed_icon() {
+    pub fn embed_resources() {
         println!(
-            "cargo:warning=icône non embarquée : compilation croisée vers Windows non prise en charge"
+            "cargo:warning=icône et version non embarquées : compilation croisée vers Windows non prise en charge"
         );
     }
 }

@@ -21,9 +21,9 @@ Licenses
 - Sounds in assets/sounds/ (music, ambiences, sound effects) are NOT under
   CC BY-SA 4.0: each file keeps the license chosen by its author (CC0, CC BY,
   CC BY-SA, OGA-BY). assets/sounds/LICENSES.md gives, for every file, its title,
-  author, source and license; it is the reference for credits. A file marked
-  non-commercial there (CC BY-NC, CC BY-NC-SA, or Sampling+ 1.0 for an
-  unmodified copy) may not be reused commercially.
+  author, source and license; it is the reference for credits. Non-commercial
+  licenses are refused, so every sound may be reused commercially under its
+  own license.
 
 
 What these licenses do not cover

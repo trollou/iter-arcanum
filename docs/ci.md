@@ -49,7 +49,7 @@ Si le runner refuse l'enregistrement de l'écran, la capture sort noire ; les lo
 - **tag `v*`** : release. Brouillon pour `vX.Y.Z`, pre-release pour `vX.Y.Z-rc.N` ;
 - **à la main** (onglet Actions, depuis `main`) : essai à blanc, le job `publier` ne tourne pas ;
 - **PR prête qui touche l'empaquetage** (`release.yml`, `scripts/empaqueter.sh`, `scripts/essai-lancement.sh`,
-  `scripts/controler-version.sh`, `packaging/**`, `crates/arcanum-ui/build.rs`) : essai à blanc (spec #33, D11), car
+  `scripts/controler-version.sh`, `packaging/**`, `crates/arcanum-ui/build.rs`, `crates/arcanum-ui/build/**`) : essai à blanc (spec #33, D11), car
   GitHub refuse `workflow_dispatch` tant que le fichier n'est pas sur `main`. Une PR ordinaire ne le lance pas.
 
 Jobs : `controles` (version du tag, `cargo deny check` complet, bloquant), `verifier` (`ci.yml` appelé par
@@ -57,6 +57,13 @@ Jobs : `controles` (version du tag, `cargo deny check` complet, bloquant), `veri
 construction, empaquetage, `dumpbin` sous Windows, essai de lancement, archive en artefact `archive-<os>`), `publier`
 (tag seulement, seul job en `contents: write`). Pas de cache enregistré. Les archives d'un essai à blanc se téléchargent
 depuis la page de l'exécution (pas depuis un fil cloud : proxy 403).
+
+Signature Windows (spec #70, détail dans `docs/release.md`) : dans `construire`, l'entrée Windows contrôle la ressource
+de version de l'exe, puis l'envoie à SignPath par `signpath/github-action-submit-signing-request` (épinglée par
+empreinte, v3.2) et vérifie la signature. Elle lit le secret **`SIGNPATH_API_TOKEN`** et la variable
+**`SIGNPATH_ORGANIZATION_ID`** du dépôt ; sans le secret (ou sur une PR), elle n'envoie rien et avertit. Politique
+`release-signing` sur un tag final, `test-signing` en essai à blanc, rien sur un tag `-rc.N`. `publier` lit aussi le
+secret, pour la ligne de signature en tête des notes.
 
 ## Contrôle qualité
 

@@ -1,7 +1,8 @@
 name: Release
 
 # Spec #33 : un tag vX.Y.Z (ou vX.Y.Z-rc.N) poussé sur main construit, empaquette et publie le jeu
-# pour Windows, Linux et macOS. Procédure : docs/release.md.
+# pour Windows, Linux et macOS. Procédure : docs/release.md. Spec #70 : l'exe Windows du tag final
+# est signé par la SignPath Foundation (docs/release.md, Signature Windows).
 # - push d'un tag v* : release (brouillon pour vX.Y.Z, pre-release pour vX.Y.Z-rc.N, D3) ;
 # - à la main (onglet Actions, depuis main) : essai à blanc, rien n'est publié (E9) ;
 # - PR prête qui touche l'empaquetage : essai à blanc (D11), GitHub refusant workflow_dispatch
@@ -19,6 +20,7 @@ on:
       - scripts/controler-version.sh
       - packaging/**
       - crates/arcanum-ui/build.rs
+      - crates/arcanum-ui/build/**
 
 # Lecture seule partout ; seul le job publier écrit (contents: write).
 permissions:
@@ -116,6 +118,85 @@ jobs:
           $deps = & $dumpbin /dependents target\x86_64-pc-windows-msvc\release\iter-arcanum.exe
           $deps
           if ($deps -match 'VCRUNTIME140') { throw "iter-arcanum.exe dépend de VCRUNTIME140.dll" }
+      # Spec #70, E1 : la ressource de version nomme le produit et porte la version de Cargo.toml
+      # (celle du tag sans son -rc.N). Sur toute exécution : elle ne dépend pas de SignPath.
+      - if: runner.os == 'Windows'
+        name: Ressource de version de l'exécutable Windows
+        shell: pwsh
+        run: |
+          $info = (Get-Item target\x86_64-pc-windows-msvc\release\iter-arcanum.exe).VersionInfo
+          $info | Format-List ProductName, ProductVersion, FileVersion, FileDescription, OriginalFilename
+          $attendue = $env:VERSION -replace '-rc\.\d+$', ''
+          if ($info.ProductName -ne 'Iter Arcanum') { throw "ProductName « $($info.ProductName) », attendu « Iter Arcanum »" }
+          if ($info.ProductVersion -ne $attendue) { throw "ProductVersion « $($info.ProductVersion) », attendu « $attendue »" }
+      # Spec #70 : politique de signature de l'exécution. Tag final : release-signing (approbation de
+      # Mathieu) ; essai à blanc : test-signing (E7) ; tag -rc.N : rien, sans avertissement (Q2) ;
+      # PR ou secret absent (avant l'admission, fork) : rien, avec un avertissement (E5, Q4).
+      - if: runner.os == 'Windows'
+        id: signature
+        name: Choix de la signature
+        env:
+          JETON: ${{ secrets.SIGNPATH_API_TOKEN }}
+          EVENEMENT: ${{ github.event_name }}
+        run: |
+          politique=
+          if [[ "$GITHUB_REF_TYPE" == tag && "$GITHUB_REF_NAME" == *-rc.* ]]; then
+            echo "tag de test : exe Windows non signé (spec #70, Q2)"
+          elif [ "$EVENEMENT" = pull_request ]; then
+            echo "::warning::exe Windows non signé (essai d'une PR)"
+          elif [ -z "$JETON" ]; then
+            echo "::warning::exe Windows non signé (secret SIGNPATH_API_TOKEN absent)"
+          elif [ "$GITHUB_REF_TYPE" = tag ]; then
+            politique=release-signing
+          else
+            politique=test-signing
+          fi
+          echo "politique=$politique" >> "$GITHUB_OUTPUT"
+      # E6 : seul l'exe part chez SignPath, non compressé.
+      - if: steps.signature.outputs.politique != ''
+        id: exe-a-signer
+        uses: actions/upload-artifact@v7
+        with:
+          path: target/x86_64-pc-windows-msvc/release/iter-arcanum.exe
+          archive: false
+          overwrite: true
+          if-no-files-found: error
+      # E3 : l'action écrit le lien de la demande (« You can view the signing request here ») avant
+      # d'attendre, au plus 2 heures (Q3) ; au-delà, le job échoue et se relance une fois la demande
+      # approuvée. L1, L2 : refus ou SignPath injoignable font échouer le job, sans repli.
+      - if: steps.signature.outputs.politique != ''
+        name: Demande de signature
+        # v3.2
+        uses: signpath/github-action-submit-signing-request@a2c5b60d9c75f073142b653c354b632eedce097b
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: iter-arcanum
+          signing-policy-slug: ${{ steps.signature.outputs.politique }}
+          artifact-configuration-slug: exe-windows
+          github-artifact-id: ${{ steps.exe-a-signer.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 7200
+          output-artifact-directory: signe
+          skip-decompress: true
+      # E2 : l'exe signé remplace l'exe construit (E4 : c'est lui qu'on empaquette et qu'on essaie).
+      - if: steps.signature.outputs.politique != ''
+        name: Contrôle de la signature
+        shell: pwsh
+        env:
+          POLITIQUE: ${{ steps.signature.outputs.politique }}
+        run: |
+          $exe = 'target\x86_64-pc-windows-msvc\release\iter-arcanum.exe'
+          Copy-Item signe\iter-arcanum.exe $exe -Force
+          $sig = Get-AuthenticodeSignature $exe
+          $sig | Format-List Status, StatusMessage, SignerCertificate, TimeStamperCertificate
+          if ($env:POLITIQUE -eq 'release-signing') {
+            if ($sig.Status -ne 'Valid') { throw "signature invalide : $($sig.Status)" }
+            if ($sig.SignerCertificate.Subject -notmatch 'SignPath Foundation') { throw "certificat inattendu : $($sig.SignerCertificate.Subject)" }
+            if (-not $sig.TimeStamperCertificate) { throw "signature sans horodatage" }
+          } elseif ($sig.Status -eq 'NotSigned') {
+            throw "exe non signé après la demande ($env:POLITIQUE)"
+          }
       # E4, E5, E7 : archive, contenu vérifié par le script.
       - name: Empaqueter
         run: scripts/empaqueter.sh "${{ matrix.os }}" "$VERSION" archives
@@ -154,7 +235,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
+          JETON: ${{ secrets.SIGNPATH_API_TOKEN }}
         run: |
+          # Spec #70, C5 : les notes commencent par un renvoi à la politique de signature ; gh place
+          # --notes avant les notes générées.
+          politique="[Code signing policy](https://github.com/${GITHUB_REPOSITORY}/blob/main/README.md#code-signing-policy)"
+          if [[ "$TAG" != *-rc.* && -n "$JETON" ]]; then
+            notes="Windows executable signed by the SignPath Foundation: see the $politique."
+          else
+            notes="The Windows executable of this version is not signed: see the $politique."
+          fi
           if [[ "$TAG" == *-rc.* ]]; then
             mode=--prerelease
           else
@@ -165,4 +255,4 @@ jobs:
               gh release delete "$rc" --yes
             done
           fi
-          gh release create "$TAG" archives/* --title "Iter Arcanum ${TAG#v}" --generate-notes --verify-tag "$mode"
+          gh release create "$TAG" archives/* --title "Iter Arcanum ${TAG#v}" --notes "$notes" --generate-notes --verify-tag "$mode"
