@@ -102,7 +102,7 @@ impl IterArcanumApp {
             ui.vertical(|ui| {
                 ui.set_width(widths[0]);
                 ui.strong(&screen.units.header);
-                // Spec 058, C30 : l'emplacement libre de Loyauté sans faille.
+                // Spec 058, C30 : l'emplacement de Loyauté sans faille, libre ou occupé.
                 if let Some(token) = &screen.units.bonds_token {
                     ui.add(egui::Label::new(token).wrap());
                 }

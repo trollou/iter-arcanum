@@ -46,7 +46,16 @@ pub(super) fn units_section(
         header: catalog.format(
             "units.header",
             &[
-                ("count", &view.units.len().to_string()),
+                // Issue #26 : l'unité sous Loyauté ne prend pas de jeton ordinaire.
+                (
+                    "count",
+                    &view
+                        .units
+                        .iter()
+                        .filter(|owned| Some(owned.card) != view.bonds_unit)
+                        .count()
+                        .to_string(),
+                ),
                 ("command", &view.command_tokens.to_string()),
             ],
         ),
@@ -85,13 +94,18 @@ pub(super) fn units_section(
             })
             .collect(),
         empty: view.units.is_empty().then(|| catalog.text("units.none")),
-        // Spec 058, C30 : le jeton de Loyauté sans faille, tant qu'il est libre.
-        bonds_token: (view.bonds_unit.is_none()
-            && view
-                .skills
-                .iter()
-                .any(|owned| owned.skill == arcanum_core::Skill::BondsOfLoyalty))
-        .then(|| catalog.text("skill.bonds_token")),
+        // Spec 058, C30 : le jeton de Loyauté sans faille, libre ou occupé (issue #26).
+        bonds_token: view
+            .skills
+            .iter()
+            .any(|owned| owned.skill == arcanum_core::Skill::BondsOfLoyalty)
+            .then(|| match view.bonds_unit {
+                None => catalog.text("skill.bonds_token"),
+                Some(unit) => catalog.format(
+                    "skill.bonds_token_used",
+                    &[("name", &catalog.text(unit.unit.label_key()))],
+                ),
+            }),
     }
 }
 

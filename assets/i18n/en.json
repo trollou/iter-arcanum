@@ -1908,6 +1908,7 @@
     "no_dice": "Who Needs Magic: no Source die this turn",
     "interaction_influence": "Interaction Influence: {amount}",
     "bonds_token": "Loyalty token: recruit for 5 less",
+    "bonds_token_used": "Loyalty token: {name}",
     "bonds_recruit": "Recruit under Loyalty: {name} ({cost})",
     "sideways": "Sideways: {value}",
     "with_leadership": "With Leadership: {effect}"
