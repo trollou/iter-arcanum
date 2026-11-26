@@ -19,9 +19,10 @@ use crate::{
     WindowRequest, catalog_or_empty, illustration_paint, image_paint, image_uri, svg_size,
 };
 
-/// Fixe le thème du jeu, quel que soit celui du système (issue #66).
+/// Fixe le thème sombre, celui pour lequel le jeu est dessiné, quel que soit celui du système :
+/// egui suit sinon le système, d'où un fond blanc sous Windows en mode clair (issue #66).
 pub fn apply_theme(ctx: &egui::Context) {
-    let _ = ctx;
+    ctx.set_theme(egui::ThemePreference::Dark);
 }
 
 /// Textures des illustrations à dessiner dans une fenêtre (spec 072) : seulement celles chargées.
