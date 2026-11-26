@@ -81,7 +81,7 @@ Le type, le milestone et les dépendances portent l'essentiel ; il ne reste que 
 | Label | Pour |
 |---|---|
 | `règle` | règle du jeu en jeu (livret ambigu, contradiction, effet de carte) |
-| `bilan` | née d'un bilan de fin de spec |
+| `bilan` | née d'un bilan de fin de spec ; aussi mis sur la PR qui la règle, pour la ranger en « Bilans » dans les notes de version (spec #33, `.github/release.yml`) |
 | `à trancher` | une question attend Mathieu : règle, choix de solution, ou intérêt contesté par le fil ; à retirer une fois tranchée |
 | `question ouverte` | point ouvert sorti d'un fichier Markdown (voir [Points ouverts](#points-ouverts)) |
 | `réservé` | **Mathieu s'en occupe : Claude ne la traite pas**, ni correction, ni branche, ni PR (lire et citer reste permis) |

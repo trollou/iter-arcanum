@@ -182,6 +182,9 @@ pub enum Command {
     /// Fenêtre des préférences (spec 080) : l'ouvrir (ou la fermer), la fermer.
     OpenPreferences,
     ClosePreferences,
+    /// Fenêtre « À propos » (spec #33) : l'ouvrir (ou la fermer), la fermer.
+    OpenAbout,
+    CloseAbout,
     /// Choisir la langue des préférences : sa place dans la liste des langues disponibles, `None`
     /// pour la langue du système. Une place et non la `Language`, pour que `Command` reste `Copy`.
     SetLanguage(Option<usize>),

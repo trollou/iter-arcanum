@@ -62,3 +62,4 @@ Les touches n'agissent jamais quand un champ de saisie a le focus, sauf Entrée 
 | F11 | Passer en plein écran ou en sortir | Toujours, lancement compris | [074](specs/074-barre-de-menu.md) |
 | Ctrl+, | Ouvrir ou fermer la fenêtre des préférences | Toujours, lancement compris | [080](specs/080-preferences.md) |
 | Échap | Fermer la fenêtre des préférences (avant toute autre fenêtre) | Fenêtre des préférences ouverte | [080](specs/080-preferences.md) |
+| Échap | Fermer la fenêtre « À propos » (avant toute autre fenêtre ; jamais ouverte en même temps que les préférences) | Fenêtre « À propos » ouverte | [#33](specs/issue-33-release.md) |

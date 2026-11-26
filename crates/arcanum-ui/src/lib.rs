@@ -1,6 +1,7 @@
 //! Client du jeu : affichage et saisie uniquement (spec 002).
 //! Tout ce qui se teste sans fenêtre est ici ; `main.rs` ne fait que lancer eframe.
 
+mod about;
 mod app;
 mod assets;
 mod board;
@@ -27,6 +28,10 @@ mod screen;
 mod session;
 mod sound;
 
+pub use about::{
+    AboutWindow, REPOSITORY_URL, SOUND_CREDITS_FILE, about_window, build_version_label,
+    short_commit, version_label,
+};
 pub use app::IterArcanumApp;
 pub use assets::{
     ASSETS_ENV_VAR, AssetsError, assets_candidates, catalog_or_empty, find_assets_dir,

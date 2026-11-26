@@ -1,4 +1,4 @@
-//! Fenêtres : chargement (spec 024), préférences (spec 080) et fin de partie (spec 063) ; l'écran de nouvelle partie est
+//! Fenêtres : chargement (spec 024), préférences (spec 080), « À propos » (spec #33) et fin de partie (spec 063) ; l'écran de nouvelle partie est
 //! dans `new_game.rs` (spec 078).
 
 use super::widgets::{enabled_shortcut_button, shortcut_button};
@@ -10,9 +10,10 @@ use super::widgets::color_swatch;
 use super::window_cards::{card_rows, natural_width, window_limits};
 use super::{IterArcanumApp, Thumbnails};
 use crate::{
-    AltarWindow, ArtifactChoice, CARD_GAP, Command, CrystalChoice, MeditationWindow, OffersWindow,
-    PreferencesWindow, PreparationWindow, ReclaimWindow, ScoreWindow, SkillChoiceWindow,
-    SkillOffer, TacticCard, TacticDecision, TacticWindow, TokenChoice, volume_value_label,
+    AboutWindow, AltarWindow, ArtifactChoice, Button, CARD_GAP, Command, CrystalChoice,
+    MeditationWindow, OffersWindow, PreferencesWindow, PreparationWindow, ReclaimWindow,
+    ScoreWindow, SkillChoiceWindow, SkillOffer, TacticCard, TacticDecision, TacticWindow,
+    TokenChoice, volume_value_label,
 };
 
 /// Largeur d'une colonne de la fenêtre Offres (spec 050).
@@ -90,6 +91,10 @@ impl IterArcanumApp {
                 self.client.command(command);
                 ctx.request_repaint();
             }
+        }
+        // Spec #33 : « À propos », exclusive des préférences (C7).
+        if let Some(window) = self.client.about_window(&self.catalog) {
+            clicked = about_window(ctx, &window, &self.catalog).or(clicked);
         }
         if let Some(deadline) = self.volume_save_at {
             let now = ctx.input(|input| input.time);
@@ -233,18 +238,9 @@ fn preferences_window(
                 ui.colored_label(ui.visuals().warn_fg_color, not_saved);
             }
             ui.add_space(8.0);
-            ui.with_layout(egui::Layout::right_to_left(egui::Align::Min), |ui| {
-                if shortcut_button(
-                    ui,
-                    &window.close.label,
-                    window.close.shortcut.as_deref(),
-                    catalog,
-                )
-                .clicked()
-                {
-                    clicked = Some(window.close.command);
-                }
-            });
+            if close_button(ui, &window.close, catalog) {
+                clicked = Some(window.close.command);
+            }
         });
     if !open {
         clicked = Some(window.close.command);
@@ -254,6 +250,52 @@ fn preferences_window(
         volumes,
         keyboard_volume,
     }
+}
+
+/// Le bouton « Fermer » des préférences et d'« À propos », calé à droite ; `true` s'il est cliqué.
+fn close_button(ui: &mut egui::Ui, close: &Button, catalog: &Catalog) -> bool {
+    ui.with_layout(egui::Layout::right_to_left(egui::Align::Min), |ui| {
+        shortcut_button(ui, &close.label, close.shortcut.as_deref(), catalog).clicked()
+    })
+    .inner
+}
+
+/// Fenêtre « À propos » (spec #33, C4) : centrée, comme les préférences ; la croix fait comme
+/// « Fermer ». Le lien « Code source » ouvre le navigateur.
+fn about_window(ctx: &egui::Context, window: &AboutWindow, catalog: &Catalog) -> Option<Command> {
+    let mut clicked = None;
+    let mut open = true;
+    // Plus large que les préférences : les lignes de licence tiennent sur une ligne.
+    egui::Window::new(&window.title)
+        .min_width(title_min_width(ctx, &window.title).max(480.0))
+        .collapsible(false)
+        .resizable(false)
+        .open(&mut open)
+        .order(egui::Order::Foreground)
+        .anchor(egui::Align2::CENTER_CENTER, vec2(0.0, 0.0))
+        .show(ctx, |ui| {
+            ui.heading(&window.name);
+            ui.label(&window.version);
+            ui.add_space(12.0);
+            ui.label(&window.license_code);
+            ui.label(&window.license_assets);
+            ui.add_space(8.0);
+            ui.label(egui::RichText::new(&window.unofficial).weak());
+            ui.add_space(8.0);
+            ui.add(egui::Hyperlink::from_label_and_url(
+                &window.repository_label,
+                &window.repository_url,
+            ));
+            ui.label(&window.sounds);
+            ui.add_space(8.0);
+            if close_button(ui, &window.close, catalog) {
+                clicked = Some(window.close.command);
+            }
+        });
+    if !open {
+        clicked = Some(window.close.command);
+    }
+    clicked
 }
 
 /// Fenêtre de fin (spec 063), centrée, avec « Nouvelle partie… » (spec 065) : la commande cliquée.
