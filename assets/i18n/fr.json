@@ -1082,7 +1082,9 @@
     "failed": "Chargement impossible (voir les logs).",
     "error": {
       "unreadable": "Fichier illisible.",
-      "other_version": "Sauvegarde d'une autre version du jeu.",
+      "newer_version": "Sauvegarde d'une version plus récente du jeu.",
+      "too_old": "Sauvegarde trop ancienne : l'ouvrir avec une version intermédiaire du jeu, puis la sauvegarder de nouveau.",
+      "not_migratable": "Sauvegarde d'une ancienne version du jeu, qui ne se charge plus.",
       "invalid": "Sauvegarde invalide."
     },
     "unreadable": "{name} · {reason}"

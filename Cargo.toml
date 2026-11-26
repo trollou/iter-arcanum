@@ -42,6 +42,8 @@ directories = "6"
 # fuseaux du système sous Linux et macOS, base des fuseaux embarquée sous Windows (options par défaut).
 jiff = "1"
 tempfile = "3"
+# Spec #52 (Q6) : empreinte du format des sauvegardes, en dev-dependency d'arcanum-persistance seulement.
+serde-reflection = "0.7"
 # Spec 081 (ADR 0010) : son, sans les options par défaut (ni mp3, ni flac, ni wav, ni dbus sous Linux).
 # Sous Linux, cpal demande libasound2-dev (ALSA) pour compiler.
 kira = { version = "0.12", default-features = false, features = ["cpal", "ogg", "vorbis"] }
