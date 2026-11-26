@@ -19,6 +19,11 @@ use crate::{
     WindowRequest, catalog_or_empty, illustration_paint, image_paint, image_uri, svg_size,
 };
 
+/// Fixe le thème du jeu, quel que soit celui du système (issue #66).
+pub fn apply_theme(ctx: &egui::Context) {
+    let _ = ctx;
+}
+
 /// Textures des illustrations à dessiner dans une fenêtre (spec 072) : seulement celles chargées.
 type Thumbnails = BTreeMap<Illustration, SizedTexture>;
 
@@ -428,5 +433,25 @@ impl IterArcanumApp {
             self.client.command(command);
             ui.ctx().request_repaint();
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Issue #66 : Windows en mode clair donnait le fond blanc d'egui ; le jeu est dessiné en sombre.
+    #[test]
+    fn theme_stays_dark_when_system_is_light() {
+        let ctx = egui::Context::default();
+        apply_theme(&ctx);
+        let input = egui::RawInput {
+            system_theme: Some(egui::Theme::Light),
+            ..Default::default()
+        };
+        let mut output = ctx.run_pass(input, |_| {});
+        // Aucune texture à envoyer : pas de rendu dans ce test.
+        output.textures_delta.clear();
+        assert_eq!(ctx.theme(), egui::Theme::Dark);
     }
 }
