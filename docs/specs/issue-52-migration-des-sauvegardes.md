@@ -166,8 +166,12 @@ Deux sortes de changements incompatibles, deux moyens de les trouver :
 
 - Les 51 parties préparées de `scripts/parties/` **telles qu'au tag `v0.1.0`**, recopiées dans `tests/temoins/v0.1.0/` (elles
   continuent ensuite d'être régénérées dans `scripts/parties/`, les témoins jamais).
-- Une ou deux vraies parties jouées par Mathieu avec le binaire de la release v0.1.0 (sauvegarde manuelle en fin de partie, et
-  si possible en plein combat), qui couvrent ce que les parties préparées n'ont pas.
+- Les deux parcours de fin de jalon de `parcours_j6.rs` (spec 069), joués sur le code du tag `v0.1.0` et sauvegardés en fin
+  de partie : la partie complète (Conquête en solitaire, Tovak contre le fantôme Goldyx, six manches, mission échouée) et
+  l'épisode de la conquête des cités (combats de cité, unités, retraite, mission accomplie).
+- En option, une vraie partie jouée par Mathieu avec le binaire de la release, s'il en fournit une.
+- Couverture mesurée le 2026-11-26 (script jetable, variantes de `Event` présentes) : parties préparées 56 sur 153, avec la
+  partie complète du J6 63, avec l'épisode 74.
 - Le fil d'implémentation mesure les variantes de `Event` présentes dans l'ensemble des témoins et note le compte dans la PR ;
   l'empreinte (C12) couvre les variantes absentes.
 
@@ -236,7 +240,7 @@ Aucun.
 - `docs/release.md` (créé par la spec #33), deux étapes :
   - avant le tag : rien de plus que la CI (C10 à C12 vérifient déjà que les sauvegardes des versions gardées se chargent) ;
   - juste après le tag, dans la PR qui passe à `X.Y.Z-dev` : ajouter `tests/temoins/v<X.Y.Z>/` (parties préparées du tag, plus
-    une vraie partie de Mathieu jouée avec le binaire s'il en fournit une) et `tests/format/v<X.Y.Z>.yaml` (copie de
+    sauvegardes des parcours de fin de jalon, une vraie partie de Mathieu en option) et `tests/format/v<X.Y.Z>.yaml` (copie de
     `sauvegarde.yaml`), donner à `PREVIOUS_RELEASE_FORMAT` la valeur de `EVENT_FORMAT_VERSION` ; s'il y a alors plus de trois
     versions gardées, supprimer les témoins et l'empreinte de la plus ancienne, avancer `OLDEST_SUPPORTED_FORMAT` et retirer
     les migrations qui partent d'un format plus ancien.
@@ -267,41 +271,17 @@ Aucun.
   qu'ils contiennent (56 sur 153) ; l'empreinte voit tous les types. L'essai de faisabilité (`trace_type` sur `SaveGame`, avec
   les sérialisations faites main de `RngUsage` et de `rng_positions`) n'a pas été lancé dans le fil de rédaction : le fil
   d'implémentation le fait en premier, et si le traçage échoue, revient à Mathieu avant de passer aux témoins seuls.
+- **Q2, Q3, Q4, Q5, Q8** (Mathieu, 2026-11-26, recommandations retenues) : la migration travaille sur le JSON
+  (`serde_json::Value`) du fichier entier ; un journal migré qui se rejoue autrement se charge quand même (L2) ; pas de copie
+  de secours avant migration (C5, C6) ; les préférences gardent leur lecture tolérante, sans migration ; trois messages de
+  refus distincts (`NewerVersion`, `TooOld`, `NotMigratable`).
 
 ## Questions ouvertes
 
-**Q2 — Sur quoi travaille la migration ?**
-(a) Sur le JSON (`serde_json::Value`) du fichier entier. (b) Sur des copies figées des anciens types Rust (`v1::Event`…),
-converties vers les nouveaux.
-*Recommandation : (a).* `Event` et ce qu'il porte font près de 3 000 lignes : les figer à chaque version alourdirait le code
-pour rien, alors qu'une migration ne touche en général qu'un champ ou une variante. Le témoin (C10) vérifie qu'elle est juste.
-
-**Q3 — Un journal migré se rejoue en un état différent : que faire ?**
-(a) Charger quand même ; le témoin (C10) et l'empreinte (C12) servent à le voir avant la release, et la migration à le
-corriger (L2). (b) Comparer à chaque chargement le résumé recalculé au résumé du fichier, et refuser s'ils diffèrent.
-*Recommandation : (a).* Le rejeu n'exécute que des faits (`apply`), pas la validation : une règle corrigée ne le casse pas.
-Seul un `apply` qui change de sens le peut, et c'est un changement incompatible que la migration doit traiter. Refuser au
-chargement priverait le joueur d'une partie jouable pour un écart de résumé parfois anodin.
-
-**Q4 — Garder une copie de secours avant migration ?**
-(a) Non : la migration se fait en mémoire, le fichier n'est réécrit que par une nouvelle sauvegarde (C5, C6). (b) Oui : copie
-de l'ancien fichier dans un sous-dossier avant la première écriture au nouveau format.
-*Recommandation : (a).* Une sauvegarde manuelle n'est jamais écrasée ; seule `auto.json` l'est, et elle l'est déjà à chaque
-tour. Une copie n'aiderait que si la migration se trompe sans échouer, ce que les témoins doivent empêcher.
-
-**Q5 — Même mécanisme pour les préférences ?**
-(a) Non : leur lecture tolérante (spec 080, C3 et C4) reste ; `PREFERENCES_VERSION` ne change que si un champ change de sens,
-et une conversion ad hoc suffira alors. (b) Oui : migration et témoins aussi.
-*Recommandation : (a).* Quatre réglages, tous avec une valeur par défaut : au pire le joueur refait un réglage.
-
 **Q7 — Quels témoins pour la v0.1.0 ?**
-(a) Les parties préparées du tag `v0.1.0` et une ou deux vraies parties de Mathieu jouées avec le binaire de la release.
-(b) Les parties préparées seules.
-*Recommandation : (a).* Les parties préparées sont déjà de vraies sauvegardes produites par le code du tag, sans rien à
-écrire ; une vraie partie couvre combats, niveaux et fin de partie mieux qu'elles. Mathieu fournit sa sauvegarde dans la
-bibliothèque du projet quand il a joué ; sans elle, (b) suffit pour commencer.
-
-**Q8 — Des messages distincts selon la raison du refus ?**
-(a) Oui, `NewerVersion`, `TooOld` et `NotMigratable` séparés (C4, C7, C13). (b) Garder un seul message « autre version ».
-*Recommandation : (a).* Les trois appellent un geste différent : mettre le jeu à jour, passer par la version intermédiaire, ou
-renoncer à la partie.
+(a) Les parties préparées du tag `v0.1.0` et les deux parcours de fin de jalon (J6) sauvegardés, plus une vraie partie de
+Mathieu en option. (b) Les parties préparées et une vraie partie de Mathieu obligatoire.
+*Recommandation : (a)*, proposée par Mathieu. Les parcours du J6 apportent ce qui manquait aux parties préparées (fin de
+manche, fantôme, combats de cité, retraite, Blessures, fin de partie : 74 variantes sur 153 au lieu de 56) et se refont à
+chaque release sans effort de Mathieu. Une vraie partie reste un plus (niveaux, sorts et artefacts variés), mais n'est plus
+indispensable : l'empreinte (C12) couvre la forme des variantes jamais jouées.
