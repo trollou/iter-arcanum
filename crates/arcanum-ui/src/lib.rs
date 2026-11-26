@@ -32,7 +32,7 @@ pub use about::{
     AboutWindow, REPOSITORY_URL, SOUND_CREDITS_FILE, about_window, build_version_label,
     short_commit, version_label,
 };
-pub use app::IterArcanumApp;
+pub use app::{IterArcanumApp, apply_theme};
 pub use assets::{
     ASSETS_ENV_VAR, AssetsError, assets_candidates, catalog_or_empty, find_assets_dir,
     load_catalog, repository_assets_dir,

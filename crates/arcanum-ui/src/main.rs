@@ -91,6 +91,8 @@ fn main() -> eframe::Result {
         Box::new(|creation| {
             // Chargeurs d'images d'egui_extras : fichiers et SVG (spec 011).
             egui_extras::install_image_loaders(&creation.egui_ctx);
+            // Thème sombre, même si le système est en clair (issue #66).
+            arcanum_ui::apply_theme(&creation.egui_ctx);
             Ok(Box::new(
                 IterArcanumApp::new(client, catalog, images_dir)
                     .with_assets_candidates(candidates)
