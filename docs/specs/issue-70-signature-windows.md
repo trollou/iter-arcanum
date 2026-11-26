@@ -1,6 +1,6 @@
 # #70 — Signer l'exécutable Windows
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-26 : Q1, Q3 à Q6 comme recommandé ; Q2 : rc non signées)
 - Issue : #70 (milestone v0.2.0)
 - Dépend de : spec #33 (mécanisme de release, fusionnée : PR #54) ; spec 004 (icône embarquée par `build.rs`) ;
   spec 081 (licences des sons)
@@ -208,16 +208,16 @@ Aucun.
 - Installateur Windows (MSI, MSIX) et magasin Microsoft (D9 de #33).
 - Le plan B (certificat individuel), sauf refus de la fondation (L4).
 
-## Questions ouvertes
+## Décisions (Mathieu, 2026-11-26)
 
 - **Q1 — Service.** (a) SignPath Foundation, gratuit, éditeur « SignPath Foundation », sur dossier ; (b) Azure Artifact
   Signing, payant, éditeur Mathieu, mais fermé aux particuliers hors États-Unis et Canada ; (c) certificat individuel
-  (Certum), payant, mal automatisable. **Recommandé : (a)**, plan B (c) si refus.
+  (Certum), payant, mal automatisable. **Décidé : (a)**, plan B (c) si refus.
 - **Q2 — Signer les tags de test.** (a) oui, `-rc.N` aussi ; (b) seulement le tag final. **Décidé (Mathieu, 2026-11-26) :
   (b)**, les rc restent non signées pour aller plus vite ; avis à revoir plus tard peut-être.
 - **Q3 — Durée d'attente de l'approbation.** (a) 2 heures, puis échec et relance du job ; (b) 6 heures (maximum d'un job
   GitHub), runner occupé tout ce temps ; (c) 10 minutes (valeur par défaut de l'action), Mathieu doit approuver aussitôt.
-  **Recommandé : (a)** : Mathieu pose le tag et approuve dans la foulée, la relance couvre l'oubli.
+  **Décidé : (a)** : Mathieu pose le tag et approuve dans la foulée, la relance couvre l'oubli.
 - **Q4 — Sans secret.** (a) publier sans signer avec un avertissement, jusqu'à l'admission ; (b) refuser tout tag sans
   signature. **Décidé (Mathieu, 2026-11-26) : (a)** : la v0.2.0 n'attend pas la décision de la fondation, et L2 empêche le
   repli une fois le secret posé.
@@ -227,5 +227,5 @@ Aucun.
   **Décidé (Mathieu, 2026-11-26) : (a)** : la condition vaudra pour chaque release, un test la garde. ADR 0010 et
   `.claude/rules/arcanum-audio.md` mis à jour dans la même PR.
 - **Q6 — D6.** Cette spec remplace D6 pour Windows (« signature gratuite par SignPath Foundation ») et la garde pour macOS.
-  Faut-il un ADR ? **Recommandé : non**, la décision est consignée ici et dans `docs/release.md`, comme D6 l'était dans
+  Faut-il un ADR ? **Décidé : non**, la décision est consignée ici et dans `docs/release.md`, comme D6 l'était dans
   l'issue #33.
