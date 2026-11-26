@@ -14,7 +14,7 @@ path = "src/main.rs"
 [dependencies]
 log.workspace = true
 directories.workspace = true
-chrono.workspace = true
+jiff.workspace = true
 arcanum-audio = { path = "../arcanum-audio" }
 arcanum-core = { path = "../arcanum-core" }
 arcanum-i18n = { path = "../arcanum-i18n" }

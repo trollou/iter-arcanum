@@ -10,7 +10,8 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, PoisonError};
 
-use chrono::{DateTime, Local, SecondsFormat, TimeZone};
+use jiff::ZonedDateTime;
+use jiff::tz::Offset;
 use log::{Level, LevelFilter, Log, Metadata, Record};
 
 pub use platform::{macos_logs_dir, user_base_dir, user_logs_dir};
@@ -136,17 +137,17 @@ pub fn is_enabled(target: &str, level: Level, ours: LevelFilter) -> bool {
 }
 
 /// `horodatage gravité cible: message`, horodatage RFC 3339 à la milliseconde, `Z` pour un décalage nul.
-pub fn format_line<Tz: TimeZone>(
-    time: &DateTime<Tz>,
-    level: Level,
-    target: &str,
-    message: &str,
-) -> String
-where
-    Tz::Offset: Display,
-{
-    let timestamp = time.to_rfc3339_opts(SecondsFormat::Millis, true);
-    format!("{timestamp} {:<5} {target}: {message}\n", level.as_str())
+pub fn format_line(time: &ZonedDateTime, level: Level, target: &str, message: &str) -> String {
+    let offset = if time.offset() == Offset::UTC {
+        "Z".to_string()
+    } else {
+        time.strftime("%:z").to_string()
+    };
+    let timestamp = time.strftime("%Y-%m-%dT%H:%M:%S%.3f");
+    format!(
+        "{timestamp}{offset} {:<5} {target}: {message}\n",
+        level.as_str()
+    )
 }
 
 fn rotated_path(dir: &Path, rank: usize) -> PathBuf {
@@ -253,7 +254,7 @@ impl Log for ArcanumLogger {
             return;
         }
         let line = format_line(
-            &Local::now(),
+            &ZonedDateTime::now(),
             record.level(),
             record.target(),
             &record.args().to_string(),

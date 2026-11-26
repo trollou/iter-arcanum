@@ -38,8 +38,9 @@ image = { version = "0.25", default-features = false, features = ["png"] }
 log = "0.4"
 # Spec 003 : dossiers utilisateur Windows et Linux (ADR 0004).
 directories = "6"
-# Spec 003 : heure locale des logs, horloge seule.
-chrono = { version = "0.4", default-features = false, features = ["clock"] }
+# Spec 003 : heure locale des logs et des sauvegardes. Issue #55 : jiff remplace chrono, non maintenu ;
+# fuseaux du système sous Linux et macOS, base des fuseaux embarquée sous Windows (options par défaut).
+jiff = "1"
 tempfile = "3"
 # Spec 081 (ADR 0010) : son, sans les options par défaut (ni mp3, ni flac, ni wav, ni dbus sous Linux).
 # Sous Linux, cpal demande libasound2-dev (ALSA) pour compiler.

@@ -10,7 +10,7 @@ use arcanum_core::{GameConfig, Hero, PlayerEvent, PlayerId, ScenarioId, filter_e
 use arcanum_i18n::{Catalog, Language};
 use arcanum_persistance::preferences::{Preferences, Volumes, save as save_preferences_file};
 use arcanum_persistance::{SaveEntry, SaveError, SaveSummary, list, load, save};
-use chrono::{DateTime, Local};
+use jiff::ZonedDateTime;
 
 use crate::new_game::{SEED_MAX_CHARS, dummy_hero, form_config, form_of};
 use crate::{
@@ -85,7 +85,7 @@ pub struct ClientSession {
     launch_load: Option<Vec<SaveEntry>>,
     autosave: Option<Autosave>,
     saves_dir: Option<PathBuf>,
-    clock: fn() -> DateTime<Local>,
+    clock: fn() -> ZonedDateTime,
     seed_source: fn() -> u64,
     /// Change à chaque partie lancée ou chargée : l'application recadre alors le plateau de jeu.
     generation: u64,
@@ -140,7 +140,7 @@ impl ClientSession {
             launch_load: None,
             autosave,
             saves_dir,
-            clock: Local::now,
+            clock: ZonedDateTime::now,
             seed_source: clock_seed,
             generation: 0,
             fullscreen: false,
@@ -277,7 +277,7 @@ impl ClientSession {
         }
     }
 
-    pub fn with_clock(mut self, clock: fn() -> DateTime<Local>) -> Self {
+    pub fn with_clock(mut self, clock: fn() -> ZonedDateTime) -> Self {
         self.clock = clock;
         self
     }

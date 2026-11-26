@@ -3,7 +3,8 @@
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
-use chrono::{DateTime, Local, SecondsFormat};
+use jiff::ZonedDateTime;
+use jiff::fmt::strtime;
 
 /// Dossier des sauvegardes imposé, prioritaire sur tout le reste.
 pub const SAVE_DIR_ENV_VAR: &str = "ARCANUM_SAVE_DIR";
@@ -33,19 +34,25 @@ pub fn user_data_dir() -> Option<PathBuf> {
 }
 
 /// Nom de fichier d'une sauvegarde : date et heure locales, sans `:` (interdit sous Windows).
-pub fn save_stem(now: &DateTime<Local>) -> String {
-    now.format("%Y-%m-%d_%H-%M-%S").to_string()
+pub fn save_stem(now: &ZonedDateTime) -> String {
+    now.strftime("%Y-%m-%d_%H-%M-%S").to_string()
 }
 
+/// RFC 3339 à la seconde, décalage numérique (jamais `Z`) : format des sauvegardes déjà écrites.
+const SAVED_AT_FORMAT: &str = "%Y-%m-%dT%H:%M:%S%:z";
+
 /// Date du résumé d'une sauvegarde, RFC 3339 : l'ordre alphabétique suit l'ordre des dates.
-pub fn saved_at(now: &DateTime<Local>) -> String {
-    now.to_rfc3339_opts(SecondsFormat::Secs, false)
+pub fn saved_at(now: &ZonedDateTime) -> String {
+    now.strftime(SAVED_AT_FORMAT).to_string()
 }
 
 /// Date affichée dans la liste des sauvegardes : « 2026-10-27 18:00 ».
 pub fn display_date(saved_at: &str) -> String {
-    DateTime::parse_from_rfc3339(saved_at).map_or_else(
-        |_| saved_at.to_string(),
-        |date| date.format("%Y-%m-%d %H:%M").to_string(),
-    )
+    // L'heure affichée est celle écrite, dans le décalage de l'écriture.
+    strtime::parse(SAVED_AT_FORMAT, saved_at)
+        .and_then(|written| written.to_datetime())
+        .map_or_else(
+            |_| saved_at.to_string(),
+            |date| date.strftime("%Y-%m-%d %H:%M").to_string(),
+        )
 }
