@@ -17,9 +17,9 @@ pub const FREE_LICENSES: [&str; 6] = [
     "OGA-BY 3.0",
 ];
 
-/// Licences non commerciales, permises en second choix seulement (Q12).
-/// Sampling+ 1.0 : le fichier tel quel ne se distribue que pour un usage non commercial (Mathieu,
-/// 2026-11-20, pour le hibou).
+/// Licences non commerciales, refusées (spec #70, Q5 : la SignPath Foundation refuse tout composant
+/// non libre). Sampling+ 1.0 en fait partie : le fichier tel quel ne se distribue que pour un usage
+/// non commercial. Nommées pour que l'erreur dise pourquoi.
 pub const NON_COMMERCIAL_LICENSES: [&str; 5] = [
     "CC BY-NC 3.0",
     "CC BY-NC 4.0",
@@ -33,8 +33,6 @@ pub const NON_COMMERCIAL_LICENSES: [&str; 5] = [
 pub struct LicenseReport {
     /// Fichiers relevés par `LICENSES.md` (chemins relatifs au dossier des sons, avec `/`).
     pub files: Vec<String>,
-    /// Ceux sous licence non commerciale, à remplacer si le projet change d'avis.
-    pub non_commercial: Vec<String>,
     /// Les manquements, un par phrase.
     pub errors: Vec<String>,
 }
@@ -56,7 +54,9 @@ pub fn check_licenses(dir: &Path) -> LicenseReport {
             report.errors.push(format!("{file} : ligne sans fichier"));
         }
         if NON_COMMERCIAL_LICENSES.contains(&license.as_str()) {
-            report.non_commercial.push(file.clone());
+            report.errors.push(format!(
+                "{file} : licence non commerciale refusée ({license})"
+            ));
         } else if !FREE_LICENSES.contains(&license.as_str()) {
             report
                 .errors
