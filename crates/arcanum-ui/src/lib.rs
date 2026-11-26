@@ -1,6 +1,7 @@
 //! Client du jeu : affichage et saisie uniquement (spec 002).
 //! Tout ce qui se teste sans fenêtre est ici ; `main.rs` ne fait que lancer eframe.
 
+mod about;
 mod app;
 mod assets;
 mod board;
@@ -92,6 +93,10 @@ pub use logging::{
     LevelChoice, LogDirChoice, LogDirSource, PreparedLogFile, choose_logs_dir, format_line,
     init_logging, install_panic_hook, is_enabled, macos_logs_dir, parse_level, prepare_log_file,
     rotate_log_files, startup_message, user_base_dir, user_logs_dir,
+};
+pub use about::{
+    AboutWindow, REPOSITORY_URL, SOUND_CREDITS_FILE, about_window, build_version_label, short_commit,
+    version_label,
 };
 pub use menu_bar::{MenuBar, MenuEntry, MenuItem, MenuState, menu_bar};
 pub use new_game::{

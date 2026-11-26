@@ -635,6 +635,8 @@ impl GameSession {
             | Command::CancelQuit
             | Command::OpenPreferences
             | Command::ClosePreferences
+            | Command::OpenAbout
+            | Command::CloseAbout
             | Command::SetLanguage(_)
             | Command::SetFullscreenAtLaunch(_)
             | Command::SetAnimations(_)

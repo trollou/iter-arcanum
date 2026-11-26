@@ -92,6 +92,8 @@ fn menu_lists_commands_with_keys() {
             None,
             // Spec 080 C13
             Some(("Préférences…", Some(ctrl(",").as_str()))),
+            // Spec #33 C3
+            Some(("À propos…", None)),
             None,
             Some(("Quitter", Some(ctrl("Q").as_str()))),
         ]
@@ -107,6 +109,7 @@ fn menu_lists_commands_with_keys() {
             Command::Recenter,
             Command::ToggleFullscreen,
             Command::OpenPreferences,
+            Command::OpenAbout,
             Command::Quit,
         ]
     );

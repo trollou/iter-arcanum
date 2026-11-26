@@ -194,6 +194,12 @@ impl ClientSession {
         })
     }
 
+    /// La fenêtre « À propos », si elle est ouverte (spec #33, C4).
+    pub fn about_window(&self, catalog: &Catalog) -> Option<crate::AboutWindow> {
+        let _ = catalog;
+        None
+    }
+
     /// Commandes de la fenêtre des préférences ; `true` si traitée.
     fn preferences_command(&mut self, command: Command) -> bool {
         match command {

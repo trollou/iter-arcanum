@@ -259,7 +259,8 @@ fn screen_at_start_shows_hand_and_play_buttons() {
     session.run_frame();
     let screen = session.screen(&french());
 
-    assert_eq!(screen.title, "Iter Arcanum (prototype)");
+    // Spec #33 C11 (D13) : « (prototype) » retiré du titre.
+    assert_eq!(screen.title, "Iter Arcanum");
     assert_eq!(screen.hand_title, "Main");
     assert_eq!(screen.hand.len(), 5);
     assert_eq!(screen.hand_empty, None);
