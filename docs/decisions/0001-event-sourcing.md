@@ -40,3 +40,18 @@ Toute modification de l'état de partie passe par des événements historisés.
   témoin par version (une vraie sauvegarde gardée dans les tests, qui doit toujours se charger) et les migrations.
 - **Un générateur par usage** (ADR 0007, spec 038) : la sauvegarde garde la position de chaque générateur, et non plus d'un seul.
 - **Pas de mode debug d'annulation libre** (décision de Mathieu, 2026-10-27) : le retour en arrière s'arrête toujours au point de non-retour.
+
+## Révision (spec #52, proposée, à valider avec la spec)
+
+- **Migration à partir de la v0.1.0** : remplace « Pas de migration avant la fin du J6 ». Le format de la v0.1.0 est le
+  format 1. Une sauvegarde d'une version publiée se charge avec toutes les versions suivantes ; une sauvegarde plus récente que
+  le jeu est refusée.
+- **Changement compatible ou non** : compatible si une sauvegarde de la version publiée précédente se lit et se rejoue à
+  l'identique sans rien faire (variante ajoutée, champ avec `#[serde(default)]`) ; sinon incompatible, ce qui comprend un
+  `apply` qui change de sens.
+- **Un numéro de format au plus par version publiée** : le premier changement incompatible d'un cycle passe
+  `EVENT_FORMAT_VERSION` à N+1 et écrit la migration N → N+1, que les suivants du même cycle complètent.
+- **Migrations sur le JSON** (`serde_json::Value`), pures, enchaînées du format de la sauvegarde au format courant, en mémoire :
+  le fichier n'est jamais réécrit par un chargement.
+- **Contrôle** : une empreinte du format (forme JSON de tous les types sauvegardés), commitée et comparée à chaque
+  `cargo test`, et des sauvegardes témoins de chaque version publiée, qui doivent toujours se charger et se rejouer.
