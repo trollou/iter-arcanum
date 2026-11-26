@@ -283,13 +283,15 @@ fn menu_lists_preferences_before_quit() {
     // Spec 080 C13
     let bar = sandbox().menu_bar(&french());
     let lines = menu_lines(&bar);
-    let tail: Vec<_> = lines[lines.len() - 5..].to_vec();
+    let tail: Vec<_> = lines[lines.len() - 6..].to_vec();
     assert_eq!(
         tail,
         [
             Some(("Plein écran".to_owned(), Some("F11".to_owned()), true)),
             None,
             Some(("Préférences…".to_owned(), Some(ctrl(",")), true)),
+            // Spec #33 C3 : « À propos… » juste après.
+            Some(("À propos…".to_owned(), None, true)),
             None,
             Some(("Quitter".to_owned(), Some(ctrl("Q")), true)),
         ]

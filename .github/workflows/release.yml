@@ -1,0 +1,168 @@
+name: Release
+
+# Spec #33 : un tag vX.Y.Z (ou vX.Y.Z-rc.N) poussé sur main construit, empaquette et publie le jeu
+# pour Windows, Linux et macOS. Procédure : docs/release.md.
+# - push d'un tag v* : release (brouillon pour vX.Y.Z, pre-release pour vX.Y.Z-rc.N, D3) ;
+# - à la main (onglet Actions, depuis main) : essai à blanc, rien n'est publié (E9) ;
+# - PR prête qui touche l'empaquetage : essai à blanc (D11), GitHub refusant workflow_dispatch
+#   tant que le fichier n'est pas sur main.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - .github/workflows/release.yml
+      - scripts/empaqueter.sh
+      - scripts/essai-lancement.sh
+      - scripts/controler-version.sh
+      - packaging/**
+      - crates/arcanum-ui/build.rs
+
+# Lecture seule partout ; seul le job publier écrit (contents: write).
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  controles:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      # E1 : version du tag = version de Cargo.toml, refus d'une version -dev ; sans tag, celle de
+      # Cargo.toml.
+      - id: version
+        env:
+          TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: echo "version=$(scripts/controler-version.sh "$TAG")" >> "$GITHUB_OUTPUT"
+      # E2 (D5) : licences, interdits, sources et avis de sécurité, bloquants.
+      # v2.1.4 : cargo-deny 0.22.1, la version de l'essai de la spec.
+      - uses: EmbarkStudios/cargo-deny-action@81891abc19297b21343b15ef67dc61e4aea74fda
+        with:
+          command: check
+          rust-version: stable
+
+  # E3 : fmt, clippy et test sur les trois OS, sans les recopier. Pas sur une PR : ci.yml y tourne
+  # déjà de lui-même.
+  verifier:
+    if: github.event_name != 'pull_request'
+    uses: ./.github/workflows/ci.yml
+
+  construire:
+    needs: [controles, verifier]
+    # verifier sauté (PR) n'empêche pas la construction ; verifier en échec, si.
+    if: >-
+      !cancelled() && needs.controles.result == 'success' &&
+      (needs.verifier.result == 'success' || needs.verifier.result == 'skipped')
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows
+            runner: windows-latest
+            cibles: x86_64-pc-windows-msvc
+          # glibc 2.35 : le runner fixe la plus ancienne glibc exigée.
+          - os: linux
+            runner: ubuntu-22.04
+            cibles: x86_64-unknown-linux-gnu
+          # D7 : binaire universel, assemblé par lipo dans empaqueter.sh.
+          - os: macos
+            runner: macos-latest
+            cibles: aarch64-apple-darwin,x86_64-apple-darwin
+    runs-on: ${{ matrix.runner }}
+    env:
+      VERSION: ${{ needs.controles.outputs.version }}
+      MACOSX_DEPLOYMENT_TARGET: "11.0"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev pkg-config xvfb
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          toolchain: stable
+          targets: ${{ matrix.cibles }}
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0
+        with:
+          save-if: false
+          key: release-${{ matrix.os }}
+      - name: Construire
+        env:
+          CIBLES: ${{ matrix.cibles }}
+          # Windows : C runtime lié statiquement, sans VCRUNTIME140.dll (E6) ; ignoré ailleurs.
+          RUSTFLAGS: ${{ matrix.os == 'windows' && '-C target-feature=+crt-static' || '' }}
+        run: |
+          if [ "${{ matrix.os }}" = linux ]; then
+            cargo build -p arcanum-ui --release
+          else
+            for cible in ${CIBLES//,/ }; do cargo build -p arcanum-ui --release --target "$cible"; done
+          fi
+      # E6 : l'exécutable Windows ne dépend pas de VCRUNTIME140.dll.
+      - if: runner.os == 'Windows'
+        name: Dépendances de l'exécutable Windows
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $dumpbin = & $vswhere -latest -products * -find "VC\Tools\MSVC\**\bin\Hostx64\x64\dumpbin.exe" | Select-Object -First 1
+          $deps = & $dumpbin /dependents target\x86_64-pc-windows-msvc\release\iter-arcanum.exe
+          $deps
+          if ($deps -match 'VCRUNTIME140') { throw "iter-arcanum.exe dépend de VCRUNTIME140.dll" }
+      # E4, E5, E7 : archive, contenu vérifié par le script.
+      - name: Empaqueter
+        run: scripts/empaqueter.sh "${{ matrix.os }}" "$VERSION" archives
+      # E7, E8 : lancement depuis l'archive dépaquetée (Xvfb sous Linux).
+      - name: Essai de lancement
+        run: |
+          archive="$(ls archives/*)"
+          if [ "${{ matrix.os }}" = linux ]; then
+            xvfb-run -a scripts/essai-lancement.sh linux "$archive"
+          else
+            scripts/essai-lancement.sh "${{ matrix.os }}" "$archive"
+          fi
+      - uses: actions/upload-artifact@v7
+        with:
+          name: archive-${{ matrix.os }}
+          path: archives/*
+          if-no-files-found: error
+
+  # E9 : tag seulement, jamais en essai à blanc. E10 : brouillon pour vX.Y.Z, pre-release pour -rc.N.
+  publier:
+    needs: [controles, construire]
+    if: github.ref_type == 'tag' && needs.construire.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: archive-*
+          path: archives
+          merge-multiple: true
+      - name: Sommes de contrôle
+        run: cd archives && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - name: Release GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if [[ "$TAG" == *-rc.* ]]; then
+            mode=--prerelease
+          else
+            mode=--draft
+            # Issue #64 : les notes partent de la release précédente ; sans ses pre-releases (tags gardés),
+            # c'est la release finale précédente, et non le dernier tag de test de cette version.
+            for rc in $(gh release list --limit 100 --json tagName --jq '.[].tagName' | grep -F "$TAG-rc." || true); do
+              gh release delete "$rc" --yes
+            done
+          fi
+          gh release create "$TAG" archives/* --title "Iter Arcanum ${TAG#v}" --generate-notes --verify-tag "$mode"

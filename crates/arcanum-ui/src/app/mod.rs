@@ -16,8 +16,14 @@ use eframe::egui::{
 use crate::{
     BOARD_BACKGROUND, BoardCamera, ClientSession, Illustration, IllustrationIndex, ImageId,
     ImageLoad, ImagePaint, ImageWarnings, KEY_BINDINGS, KeyModifier, SourceLine, WALK_STEP_SECONDS,
-    WindowRequest, catalog_or_empty, illustration_paint, image_paint, svg_size,
+    WindowRequest, catalog_or_empty, illustration_paint, image_paint, image_uri, svg_size,
 };
+
+/// Fixe le thème sombre, celui pour lequel le jeu est dessiné, quel que soit celui du système :
+/// egui suit sinon le système, d'où un fond blanc sous Windows en mode clair (issue #66).
+pub fn apply_theme(ctx: &egui::Context) {
+    ctx.set_theme(egui::ThemePreference::Dark);
+}
 
 /// Textures des illustrations à dessiner dans une fenêtre (spec 072) : seulement celles chargées.
 type Thumbnails = BTreeMap<Illustration, SizedTexture>;
@@ -205,7 +211,7 @@ impl IterArcanumApp {
             return ImagePaint::Fallback(fallback);
         };
         let path = image.path(images_dir);
-        let uri = format!("file://{}", path.display());
+        let uri = image_uri(&path);
         let height = svg_size(rect.height() * pixels_per_point);
         let load =
             match ui
@@ -232,7 +238,7 @@ impl IterArcanumApp {
             return None;
         }
         let path = illustration.path(self.images_dir.as_ref()?);
-        let uri = format!("file://{}", path.display());
+        let uri = image_uri(&path);
         // Mipmaps : le PNG de 512 px reste net réduit en vignette.
         let options = TextureOptions {
             mipmap_mode: Some(TextureFilter::Linear),
@@ -428,5 +434,25 @@ impl IterArcanumApp {
             self.client.command(command);
             ui.ctx().request_repaint();
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Issue #66 : Windows en mode clair donnait le fond blanc d'egui ; le jeu est dessiné en sombre.
+    #[test]
+    fn theme_stays_dark_when_system_is_light() {
+        let ctx = egui::Context::default();
+        apply_theme(&ctx);
+        let input = egui::RawInput {
+            system_theme: Some(egui::Theme::Light),
+            ..Default::default()
+        };
+        let mut output = ctx.run_pass(input, |_| {});
+        // Aucune texture à envoyer : pas de rendu dans ce test.
+        output.textures_delta.clear();
+        assert_eq!(ctx.theme(), egui::Theme::Dark);
     }
 }

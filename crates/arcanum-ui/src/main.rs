@@ -1,5 +1,8 @@
 //! Lance la fenêtre du jeu (spec 002).
 
+// Spec #33 : pas de console sous Windows pour un exécutable release ; les logs vont dans un fichier (spec 003).
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use arcanum_audio::{AudioPlayer, KiraPlayer, SOUNDS_DIR, SilentPlayer, SoundBank};
 use arcanum_persistance::preferences::PREFERENCES_FILE;
 use arcanum_ui::{
@@ -88,6 +91,8 @@ fn main() -> eframe::Result {
         Box::new(|creation| {
             // Chargeurs d'images d'egui_extras : fichiers et SVG (spec 011).
             egui_extras::install_image_loaders(&creation.egui_ctx);
+            // Thème sombre, même si le système est en clair (issue #66).
+            arcanum_ui::apply_theme(&creation.egui_ctx);
             Ok(Box::new(
                 IterArcanumApp::new(client, catalog, images_dir)
                     .with_assets_candidates(candidates)

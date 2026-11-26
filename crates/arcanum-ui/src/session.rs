@@ -7,7 +7,7 @@ use arcanum_core::{
 };
 use arcanum_i18n::Catalog;
 use arcanum_persistance::{LoadError, SaveEntry, SaveError, SaveGame, list, load, save, save_auto};
-use chrono::{DateTime, Local};
+use jiff::ZonedDateTime;
 
 use crate::departure::DepartureTracker;
 use crate::{
@@ -82,7 +82,7 @@ pub struct GameSession {
     /// Dossier des sauvegardes (spec 024) ; sans dossier, sauvegarder échoue proprement.
     saves_dir: Option<PathBuf>,
     /// Horloge du nom et du résumé des sauvegardes ; fixée par les tests.
-    clock: fn() -> DateTime<Local>,
+    clock: fn() -> ZonedDateTime,
     notice: Option<Notice>,
     /// Fenêtre de chargement ouverte, avec les sauvegardes listées à l'ouverture.
     load_entries: Option<Vec<SaveEntry>>,
@@ -126,7 +126,7 @@ impl GameSession {
             mode: ScreenMode::Normal,
             combat: CombatChoice::default(),
             saves_dir: None,
-            clock: Local::now,
+            clock: ZonedDateTime::now,
             notice: None,
             load_entries: None,
             autosaved_len: None,
@@ -148,7 +148,7 @@ impl GameSession {
         self
     }
 
-    pub fn with_clock(mut self, clock: fn() -> DateTime<Local>) -> Self {
+    pub fn with_clock(mut self, clock: fn() -> ZonedDateTime) -> Self {
         self.clock = clock;
         self
     }
@@ -635,6 +635,8 @@ impl GameSession {
             | Command::CancelQuit
             | Command::OpenPreferences
             | Command::ClosePreferences
+            | Command::OpenAbout
+            | Command::CloseAbout
             | Command::SetLanguage(_)
             | Command::SetFullscreenAtLaunch(_)
             | Command::SetAnimations(_)

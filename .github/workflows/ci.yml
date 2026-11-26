@@ -1,17 +1,38 @@
 name: CI
 
 # Dépôt public : minutes illimitées, Windows et macOS compris (spec 082, Q6 ; spec #7, Q2).
-# - PR : Linux, Windows et macOS au complet, sans filtre de chemins, une fois la PR prête (un brouillon ne
-#   lance rien) ;
+# - PR : Linux, Windows et macOS au complet, une fois la PR prête (un brouillon ne lance rien), sauf si
+#   elle ne touche que de la doc (filtre `paths` ci-dessous, issue #72) ;
 # - main : à chaque fusion, les trois OS, ce qui enregistre aussi le cache ;
 # - à la main (onglet Actions) : tout, sur les trois OS.
 on:
   pull_request:
     # ready_for_review : le passage de brouillon à prête lance la CI.
     types: [opened, synchronize, reopened, ready_for_review]
+    # Issue #72 : une PR qui ne touche que la doc ne lance rien. Le dernier motif qui correspond
+    # l'emporte : tout, sauf le Markdown, docs/ et .claude/, sauf les fichiers lus par un test.
+    # Les fichiers non Markdown de docs/ (images des specs, SVG, PDF égaré) restent dans la CI pour
+    # le garde-fou depot_public.rs, qui inspecte tous les fichiers suivis. Un test qui se met à lire
+    # un autre fichier de doc : l'ajouter aux exceptions.
+    paths:
+      - '**'
+      - '!**.md'
+      - '!.claude/**'
+      - '!LICENSE'
+      - '!NOTICE'
+      - 'docs/**'
+      - '!docs/**.md'
+      # Exceptions : fichiers Markdown lus par un test.
+      - 'assets/**'
+      - 'docs/reference/bac-a-sable.md'
+      - 'docs/verification-manuelle.md'
+      # Matériel de tiers, refusé par depot_public.rs (et ignoré par .gitignore).
+      - 'docs/regles/**'
   push:
     branches: [main]
   workflow_dispatch:
+  # Spec #33 : appelé tel quel par release.yml, pour ne pas recopier fmt, clippy et test.
+  workflow_call:
 
 # Cache (issue : quota de 10 Go plein, éditions de liens en « Bus error ») :
 # - seul main enregistre le cache ; les PR le lisent sans en créer, au lieu d'un cache de

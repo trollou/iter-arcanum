@@ -259,7 +259,8 @@ fn screen_at_start_shows_hand_and_play_buttons() {
     session.run_frame();
     let screen = session.screen(&french());
 
-    assert_eq!(screen.title, "Iter Arcanum (prototype)");
+    // Spec #33 C11 (D13) : « (prototype) » retiré du titre.
+    assert_eq!(screen.title, "Iter Arcanum");
     assert_eq!(screen.hand_title, "Main");
     assert_eq!(screen.hand.len(), 5);
     assert_eq!(screen.hand_empty, None);
@@ -441,19 +442,42 @@ fn assets_dir_is_the_first_candidate_with_french() {
     assert_eq!(catalog.text("language.name"), "Premier");
 }
 
-// Spec 002, C14.
+// Spec 002, C14 ; spec #33, C9 : candidat du paquet `.app` après celui de l'exécutable.
 #[test]
 fn assets_candidates_are_in_priority_order() {
     let env = PathBuf::from("depuis-env");
     let exe_dir = PathBuf::from("bin");
+    let bundle = exe_dir.join("..").join("Resources").join("assets");
     assert_eq!(
         assets_candidates(Some(env.clone()), Some(exe_dir.clone())),
-        vec![env, exe_dir.join("assets"), repository_assets_dir()]
+        vec![
+            env,
+            exe_dir.join("assets"),
+            bundle.clone(),
+            repository_assets_dir()
+        ]
     );
     assert_eq!(
         assets_candidates(None, Some(exe_dir.clone())),
-        vec![exe_dir.join("assets"), repository_assets_dir()]
+        vec![exe_dir.join("assets"), bundle, repository_assets_dir()]
     );
+}
+
+// Spec #33, C10 : `Iter Arcanum.app/Contents/MacOS/iter-arcanum` trouve `Contents/Resources/assets`.
+#[test]
+fn assets_are_found_in_app_bundle_resources() {
+    let root = std::env::temp_dir().join(format!("arcanum-app-{}", std::process::id()));
+    let contents = root.join("Iter Arcanum.app").join("Contents");
+    let macos = contents.join("MacOS");
+    let i18n = contents.join("Resources").join("assets").join("i18n");
+    std::fs::create_dir_all(&macos).expect("dossier MacOS");
+    std::fs::create_dir_all(&i18n).expect("dossier i18n");
+    std::fs::write(i18n.join("fr.json"), "{}").expect("fr.json");
+
+    let found = find_assets_dir(&assets_candidates(None, Some(macos.clone())));
+
+    let _ = std::fs::remove_dir_all(&root);
+    assert_eq!(found, Ok(macos.join("..").join("Resources").join("assets")));
 }
 
 // Spec 002, C15.

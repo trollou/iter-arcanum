@@ -256,7 +256,8 @@ fn bar_stays_during_combat() {
     let bar = support::bar_of(&view, &catalog);
     assert_eq!(bar.title, "Menu");
     // Spec 080 C13 : Préférences… et son séparateur ajoutés.
-    assert_eq!(bar.items.len(), 12);
+    // Spec #33 : « À propos… » ajouté au Menu.
+    assert_eq!(bar.items.len(), 13);
     // Spec 080 C14 : Préférences… reste actif en combat.
     assert!(bar.items.iter().any(|item| matches!(
         item,

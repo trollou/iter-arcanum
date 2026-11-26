@@ -10,7 +10,7 @@ use arcanum_core::{GameConfig, Hero, PlayerEvent, PlayerId, ScenarioId, filter_e
 use arcanum_i18n::{Catalog, Language};
 use arcanum_persistance::preferences::{Preferences, Volumes, save as save_preferences_file};
 use arcanum_persistance::{SaveEntry, SaveError, SaveSummary, list, load, save};
-use chrono::{DateTime, Local};
+use jiff::ZonedDateTime;
 
 use crate::new_game::{SEED_MAX_CHARS, dummy_hero, form_config, form_of};
 use crate::{
@@ -85,7 +85,7 @@ pub struct ClientSession {
     launch_load: Option<Vec<SaveEntry>>,
     autosave: Option<Autosave>,
     saves_dir: Option<PathBuf>,
-    clock: fn() -> DateTime<Local>,
+    clock: fn() -> ZonedDateTime,
     seed_source: fn() -> u64,
     /// Change à chaque partie lancée ou chargée : l'application recadre alors le plateau de jeu.
     generation: u64,
@@ -105,6 +105,8 @@ pub struct ClientSession {
     languages: LanguageChoices,
     /// Fenêtre des préférences ouverte.
     preferences_open: bool,
+    /// Spec #33 : la fenêtre « À propos » ouverte ; jamais en même temps que les préférences (C7).
+    about_open: bool,
     /// Le dernier enregistrement des préférences a échoué (C21).
     preferences_not_saved: bool,
     /// Spec 081 : les événements déjà entendus, et si la partie suivante s'entend depuis son
@@ -138,7 +140,7 @@ impl ClientSession {
             launch_load: None,
             autosave,
             saves_dir,
-            clock: Local::now,
+            clock: ZonedDateTime::now,
             seed_source: clock_seed,
             generation: 0,
             fullscreen: false,
@@ -149,6 +151,7 @@ impl ClientSession {
             preferences_path: None,
             languages: LanguageChoices::default(),
             preferences_open: false,
+            about_open: false,
             preferences_not_saved: false,
             heard: HeardCursor::default(),
             hear_from_start: false,
@@ -194,10 +197,24 @@ impl ClientSession {
         })
     }
 
+    /// La fenêtre « À propos », si elle est ouverte (spec #33, C4).
+    pub fn about_window(&self, catalog: &Catalog) -> Option<crate::AboutWindow> {
+        self.about_open.then(|| crate::about_window(catalog))
+    }
+
+    /// L'une des deux fenêtres de la session (préférences, « À propos ») est ouverte : la partie
+    /// et l'écran de lancement n'agissent pas (spec 080 L4, spec #33 C6).
+    fn dialog_open(&self) -> bool {
+        self.preferences_open || self.about_open
+    }
+
     /// Commandes de la fenêtre des préférences ; `true` si traitée.
     fn preferences_command(&mut self, command: Command) -> bool {
         match command {
-            Command::OpenPreferences => self.preferences_open = !self.preferences_open,
+            Command::OpenPreferences => {
+                self.preferences_open = !self.preferences_open;
+                self.about_open = false;
+            }
             Command::ClosePreferences => self.preferences_open = false,
             Command::SetLanguage(choice) => {
                 let Some(language) = self.languages.language_of(choice) else {
@@ -260,7 +277,7 @@ impl ClientSession {
         }
     }
 
-    pub fn with_clock(mut self, clock: fn() -> DateTime<Local>) -> Self {
+    pub fn with_clock(mut self, clock: fn() -> ZonedDateTime) -> Self {
         self.clock = clock;
         self
     }
@@ -390,6 +407,12 @@ impl ClientSession {
                     .push(WindowRequest::Fullscreen(!self.fullscreen));
             }
             Command::Quit => self.quit(),
+            // Spec #33 C5, C7 : bascule comme les préférences, et ferme celles-ci.
+            Command::OpenAbout => {
+                self.about_open = !self.about_open;
+                self.preferences_open = false;
+            }
+            Command::CloseAbout => self.about_open = false,
             _ => return false,
         }
         true
@@ -488,7 +511,7 @@ impl ClientSession {
     pub fn command(&mut self, command: Command) {
         // Spec 080, L4 : la fenêtre des préférences ouverte, la partie et l'écran de lancement
         // n'agissent pas.
-        if self.window_command(command) || self.preferences_open {
+        if self.window_command(command) || self.dialog_open() {
             return;
         }
         if self.launch_load.is_some() {
@@ -520,14 +543,15 @@ impl ClientSession {
             (false, Shortcut::Preferences) => Some(Command::OpenPreferences),
             // Spec 080 : Échap ferme la fenêtre des préférences avant toute autre (C22).
             (false, Shortcut::Cancel) if self.preferences_open => Some(Command::ClosePreferences),
+            (false, Shortcut::Cancel) if self.about_open => Some(Command::CloseAbout),
             (false, _) => None,
         };
         if let Some(command) = window {
             self.window_command(command);
             return;
         }
-        // L4 : les autres touches ne jouent pas derrière la fenêtre des préférences.
-        if self.preferences_open {
+        // L4 : les autres touches ne jouent pas derrière les préférences ni « À propos ».
+        if self.dialog_open() {
             return;
         }
         if self.launch_load.is_some() {

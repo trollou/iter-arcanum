@@ -32,10 +32,18 @@ pub fn repository_assets_dir() -> PathBuf {
         .join("assets")
 }
 
-/// Emplacements candidats, par ordre de priorité : variable d'environnement, à côté de l'exécutable, dépôt.
+/// Emplacements candidats, par ordre de priorité : variable d'environnement, à côté de l'exécutable,
+/// ressources du paquet `.app` (`Contents/MacOS/../Resources/assets`, spec #33), dépôt.
+/// Le candidat `.app` est proposé partout, sans `#[cfg]` : ailleurs il n'existe pas (ADR 0004).
 pub fn assets_candidates(env: Option<PathBuf>, exe_dir: Option<PathBuf>) -> Vec<PathBuf> {
+    let beside_exe = exe_dir.into_iter().flat_map(|dir| {
+        [
+            dir.join("assets"),
+            dir.join("..").join("Resources").join("assets"),
+        ]
+    });
     env.into_iter()
-        .chain(exe_dir.map(|dir| dir.join("assets")))
+        .chain(beside_exe)
         .chain([repository_assets_dir()])
         .collect()
 }

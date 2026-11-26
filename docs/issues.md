@@ -76,7 +76,7 @@ Les modèles de `.github/ISSUE_TEMPLATE/` (un par type) le préremplissent :
 
 ## Labels
 
-Le type, le milestone et les dépendances portent l'essentiel ; il ne reste que cinq labels, tous facultatifs :
+Le type, le milestone et les dépendances portent l'essentiel. Les **issues** n'ont que cinq labels, tous facultatifs :
 
 | Label | Pour |
 |---|---|
@@ -86,7 +86,17 @@ Le type, le milestone et les dépendances portent l'essentiel ; il ne reste que 
 | `question ouverte` | point ouvert sorti d'un fichier Markdown (voir [Points ouverts](#points-ouverts)) |
 | `réservé` | **Mathieu s'en occupe : Claude ne la traite pas**, ni correction, ni branche, ni PR (lire et citer reste permis) |
 
-Les labels de Dependabot (`dependencies`, `rust`, `github_actions`) ne servent qu'à ses PR. Une issue en double ou abandonnée
+Chaque **PR** porte, dès sa création, un label de catégorie qui la range dans les notes de version (issue #64,
+`.github/release.yml`) :
+
+| Label | Pour |
+|---|---|
+| `changement` | ce qui change le jeu pour le joueur : spec, nouveauté, amélioration |
+| `correction` | correction d'un bug du jeu (issue `Bug`) |
+| `outillage` | tout le reste : doc, README, CI, scripts, méthode, CLAUDE.md, référence qualité |
+
+Les labels de Dependabot (`dependencies`, `rust`, `github_actions`) ne servent qu'à ses PR ; `dependencies` les range en
+« Outillage et documentation ». Une issue en double ou abandonnée
 se ferme avec le motif de GitHub (`duplicate`, `not planned`), pas par un label.
 
 ## Points ouverts

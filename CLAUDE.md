@@ -66,7 +66,8 @@ iter-arcanum/
 │   └── arcanum-ui/          # client eframe/egui : affichage et saisie uniquement
 ├── assets/i18n/        # un JSON par langue : fr.json (référence), en.json…
 ├── assets/sounds/      # musiques, ambiances, effets en Ogg Vorbis ; licence de chaque fichier dans LICENSES.md
-├── scripts/            # outils de développement (verifier.sh, vérification manuelle sous Xvfb)
+├── scripts/            # outils de développement (verifier.sh, vérification manuelle sous Xvfb, empaquetage)
+├── packaging/          # modèles d'empaquetage des releases (Info.plist du paquet macOS)
 ├── docs/
 │   ├── architecture.md # carte du code et recettes
 │   ├── issues-privees.md # titres des issues et PR du dépôt privé citées (« issue privée N »)
@@ -121,10 +122,11 @@ Dans un fil, vérifier avec `scripts/verifier.sh` (bash, donc Git Bash sous Wind
 - **Jamais de matériel de tiers ici** : rien de `../mage-knight/docs/regles/` ne se copie dans ce dépôt (ni page du livret, ni scan, ni extrait long de la FAQ ou du compendium) ; on y renvoie (`MKUE p. 7, 5.b`, `Compendium, Combat S34`). Deux barrières : `.gitignore` (`docs/regles/`, `*.pdf`) et le test `crates/arcanum-core/tests/depot_public.rs`, lancé avant chaque push et par la CI. Une fuite poussée resterait dans l'historique public.
 - Jamais de commit direct sur `main`. Une branche par spec ou par tâche, puis une pull request vers `main`.
 - Nom de branche parlant, en minuscules et sans accents, créé avant le premier commit (jamais le nom automatique `claude/…`) : `feature/<n° issue>-<sujet>` pour une spec (rédaction et implémentation sur la même branche, ex. `feature/32-cartes-des-fenetres`), `fix/<n° issue>-<sujet>` pour une issue (ex. `fix/25-defausse-main-vide`), `docs/<sujet>` ou `chore/<sujet>` pour la doc ou l'outillage.
+- **Toute PR porte un label de catégorie** dès sa création, pour les notes de version : `changement`, `correction` ou `outillage` (`docs/issues.md`, Labels).
 - **Toute PR porte `Closes #N`** (ou `Fixes #N`) dans sa description, dès sa création, pour chaque issue qu'elle règle, y compris la PR de rédaction d'une spec, qui deviendra celle de son implémentation : GitHub lie ainsi l'issue à la PR (suivi du projet) et la ferme à la fusion. Après la fusion, vérifier que l'issue est fermée ; sinon la fermer en renvoyant à la PR (`docs/issues.md`).
 - Ouvrir la PR **en brouillon** une fois `scripts/verifier.sh` vert en local, et ne la passer « prête » qu'à la toute fin (dernier fil d'une spec en plusieurs fils) : un brouillon ne lance pas la CI.
 - Seul Mathieu fusionne une pull request, et seulement si la CI est verte, sauf la PR d'une issue sans question ouverte, que le fil fusionne lui-même (`docs/issues.md`). Pas de `push --force` ni de réécriture d'historique sur `main`.
-- La CI (`.github/workflows/ci.yml`) tourne sous Linux, Windows et macOS sur chaque PR prête, sans filtre de chemins, et sur `main` à chaque fusion ; un brouillon ne lance rien. Détail (déclencheurs, cache, Dependabot, suppression des branches à la fusion) : `docs/ci.md`, à mettre à jour dans la PR qui change `.github/`.
+- La CI (`.github/workflows/ci.yml`) tourne sous Linux, Windows et macOS sur chaque PR prête qui ne touche pas que la doc (filtre de chemins, issue #72), et sur `main` à chaque fusion ; un brouillon ne lance rien. Détail (déclencheurs, cache, Dependabot, suppression des branches à la fusion) : `docs/ci.md`, à mettre à jour dans la PR qui change `.github/`. Release (tag `vX.Y.Z`, correctif) : `docs/release.md`.
 - Messages de commit en français, à l'impératif, une première ligne courte qui cite la spec ou l'issue concernée (ex. `Implémente la spec #32 Cartes des fenêtres`).
 - Un commit = une étape cohérente (spec, tests, implémentation, refactor). Ne pas mélanger plusieurs specs dans un même commit. Les commits locaux peuvent être rouges (tests en phase TDD) ; on ne pousse que du vert.
 - Fins de ligne en LF, imposées par `.gitattributes`. `target/` n'est jamais versionné.
