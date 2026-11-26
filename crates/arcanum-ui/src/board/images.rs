@@ -379,8 +379,39 @@ pub fn illustration_paint(
     }
 }
 
+/// Adresse `file://` d'une image pour les chargeurs d'egui (issue #62).
+pub fn image_uri(path: &Path) -> String {
+    let _ = path;
+    todo!()
+}
+
 fn warn_once(path: &Path, reason: &str, warnings: &mut ImageWarnings) {
     if warnings.reported.insert(path.to_path_buf()) {
         log::warn!("image illisible {} : {reason}", path.display());
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Issue #62 : egui_extras lit `file://C:\…` comme un hôte réseau (`\\C:\…`) ; il attend `file:///C:\…`.
+    #[test]
+    fn image_uri_of_a_windows_path_has_three_slashes() {
+        let path = Path::new(r"C:\Jeux\iter-arcanum-0.1.0\assets\images\terrain\forest.svg");
+        assert_eq!(
+            image_uri(path),
+            r"file:///C:\Jeux\iter-arcanum-0.1.0\assets\images\terrain\forest.svg"
+        );
+    }
+
+    // Issue #62 : un chemin Unix commence déjà par `/`, l'adresse ne change pas.
+    #[test]
+    fn image_uri_of_a_unix_path_keeps_its_leading_slash() {
+        let path = Path::new("/home/joueur/iter-arcanum/assets/images/terrain/forest.svg");
+        assert_eq!(
+            image_uri(path),
+            "file:///home/joueur/iter-arcanum/assets/images/terrain/forest.svg"
+        );
     }
 }

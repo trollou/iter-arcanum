@@ -48,8 +48,8 @@ pub use board::{
     WALK_STEP_SECONDS, ZOOM_STEP, animation_repaint, animation_scale, animation_time,
     board_action_image, board_animated, board_images, board_screen, enemy_color, feature_color,
     feature_image, figure_image, flag_image, hero_color, hero_figure_image, hero_image, hex_center,
-    hex_corners, illustration_paint, image_paint, night_veil, point_to_hex, relief_image, svg_size,
-    terrain_color, terrain_image, time_of_day_image,
+    hex_corners, illustration_paint, image_paint, image_uri, night_veil, point_to_hex,
+    relief_image, svg_size, terrain_color, terrain_image, time_of_day_image,
 };
 pub use client::{ClientSession, QuitWindow, WindowRequest, clock_seed};
 pub use controls::{

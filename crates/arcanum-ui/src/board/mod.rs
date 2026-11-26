@@ -15,8 +15,8 @@ pub use images::{
     BOARD_ACTION_KINDS, BOARD_BACKGROUND, FOG_IMAGE, FORBIDDEN_COLOR, FORBIDDEN_IMAGE, ImageId,
     ImageLoad, ImagePaint, ImageWarnings, board_action_image, board_images, enemy_color,
     feature_color, feature_image, figure_image, flag_image, hero_color, hero_figure_image,
-    hero_image, illustration_paint, image_paint, night_veil, relief_image, svg_size, terrain_color,
-    terrain_image, time_of_day_image,
+    hero_image, illustration_paint, image_paint, image_uri, night_veil, relief_image, svg_size,
+    terrain_color, terrain_image, time_of_day_image,
 };
 pub use screen::{
     ANIMATION_SCALE_ENV_VAR, BOARD_ACTION_DIAMETER, BREATHING_AMPLITUDE, BREATHING_PERIOD,
