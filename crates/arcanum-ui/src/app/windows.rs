@@ -10,10 +10,10 @@ use super::widgets::color_swatch;
 use super::window_cards::{card_rows, natural_width, window_limits};
 use super::{IterArcanumApp, Thumbnails};
 use crate::{
-    AboutWindow, AltarWindow, ArtifactChoice, CARD_GAP, Command, CrystalChoice, MeditationWindow,
-    OffersWindow, PreferencesWindow, PreparationWindow, ReclaimWindow, ScoreWindow,
-    SkillChoiceWindow, SkillOffer, TacticCard, TacticDecision, TacticWindow, TokenChoice,
-    volume_value_label,
+    AboutWindow, AltarWindow, ArtifactChoice, Button, CARD_GAP, Command, CrystalChoice,
+    MeditationWindow, OffersWindow, PreferencesWindow, PreparationWindow, ReclaimWindow,
+    ScoreWindow, SkillChoiceWindow, SkillOffer, TacticCard, TacticDecision, TacticWindow,
+    TokenChoice, volume_value_label,
 };
 
 /// Largeur d'une colonne de la fenêtre Offres (spec 050).
@@ -238,18 +238,9 @@ fn preferences_window(
                 ui.colored_label(ui.visuals().warn_fg_color, not_saved);
             }
             ui.add_space(8.0);
-            ui.with_layout(egui::Layout::right_to_left(egui::Align::Min), |ui| {
-                if shortcut_button(
-                    ui,
-                    &window.close.label,
-                    window.close.shortcut.as_deref(),
-                    catalog,
-                )
-                .clicked()
-                {
-                    clicked = Some(window.close.command);
-                }
-            });
+            if close_button(ui, &window.close, catalog) {
+                clicked = Some(window.close.command);
+            }
         });
     if !open {
         clicked = Some(window.close.command);
@@ -259,6 +250,14 @@ fn preferences_window(
         volumes,
         keyboard_volume,
     }
+}
+
+/// Le bouton « Fermer » des préférences et d'« À propos », calé à droite ; `true` s'il est cliqué.
+fn close_button(ui: &mut egui::Ui, close: &Button, catalog: &Catalog) -> bool {
+    ui.with_layout(egui::Layout::right_to_left(egui::Align::Min), |ui| {
+        shortcut_button(ui, &close.label, close.shortcut.as_deref(), catalog).clicked()
+    })
+    .inner
 }
 
 /// Fenêtre « À propos » (spec #33, C4) : centrée, comme les préférences ; la croix fait comme
@@ -289,18 +288,9 @@ fn about_window(ctx: &egui::Context, window: &AboutWindow, catalog: &Catalog) ->
             ));
             ui.label(&window.sounds);
             ui.add_space(8.0);
-            ui.with_layout(egui::Layout::right_to_left(egui::Align::Min), |ui| {
-                if shortcut_button(
-                    ui,
-                    &window.close.label,
-                    window.close.shortcut.as_deref(),
-                    catalog,
-                )
-                .clicked()
-                {
-                    clicked = Some(window.close.command);
-                }
-            });
+            if close_button(ui, &window.close, catalog) {
+                clicked = Some(window.close.command);
+            }
         });
     if !open {
         clicked = Some(window.close.command);
