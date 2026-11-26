@@ -10,7 +10,7 @@ members = [
 
 [workspace.package]
 edition = "2024"
-version = "0.1.0"
+version = "0.2.0-dev"
 publish = false
 # Code sous GPL v3 ou ultérieure ; visuels et libellés de assets/ sous CC BY-SA 4.0 (voir NOTICE).
 license = "GPL-3.0-or-later"
