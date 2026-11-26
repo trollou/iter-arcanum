@@ -50,14 +50,13 @@ Avant le tag, rien de plus que la CI : les tests `temoins` et `format` d'arcanum
 des versions gardées se chargent. Juste après le tag, dans la PR qui passe à `X.Y+1.0-dev`
 (`crates/arcanum-persistance/`) :
 
-1. `tests/temoins/vX.Y.Z/` : les parties préparées du tag (`scripts/parties/*.json`), plus les deux parcours de fin de jalon
-   (`parcours_j6.rs`) joués sur le code du tag et sauvegardés en fin de partie (copie de travail du tag, où
-   `parcours_j6.rs` et `support/` sont recopiés dans `crates/arcanum-persistance/tests/` avec, en fin de
-   `parcours_conquete_en_solitaire` et d'`episode`, un `save` de `SaveGame::from_runner`), et une vraie partie de Mathieu
-   en option. Les témoins ne sont jamais régénérés.
-2. `tests/format/vX.Y.Z.yaml` : copie de `tests/format/sauvegarde.yaml`.
-3. `PREVIOUS_RELEASE_FORMAT` (`src/migration.rs`) prend la valeur de `EVENT_FORMAT_VERSION`.
-4. S'il y a alors plus de trois versions gardées : supprimer les témoins et l'empreinte de la plus ancienne, donner à
+1. `scripts/temoins-release.sh vX.Y.Z` (issue #84) écrit, depuis une copie de travail du tag, `tests/temoins/vX.Y.Z/` :
+   les parties préparées du tag (`scripts/parties/*.json`) et les parcours de fin de jalon joués sur le code du tag,
+   sauvegardés en fin de partie (le script dit lesquels ; au jalon suivant, changer ses variables `PARCOURS` et
+   `TEST_TEMOINS`), et `tests/format/vX.Y.Z.yaml`, copie de `tests/format/sauvegarde.yaml` du tag. Il refuse d'écraser
+   des témoins existants : ils ne sont jamais régénérés. Une vraie partie de Mathieu s'y ajoute en option.
+2. `PREVIOUS_RELEASE_FORMAT` (`src/migration.rs`) prend la valeur de `EVENT_FORMAT_VERSION`.
+3. S'il y a alors plus de trois versions gardées : supprimer les témoins et l'empreinte de la plus ancienne, donner à
    `OLDEST_SUPPORTED_FORMAT` le format de la nouvelle plus ancienne, et retirer de `MIGRATIONS` les migrations qui partent
    d'un format plus ancien. Le test `migration_chain_matches_supported_versions` vérifie l'accord.
 

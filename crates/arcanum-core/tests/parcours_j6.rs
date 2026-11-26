@@ -956,7 +956,8 @@ fn knocked_out(events: &[Event]) -> bool {
         .any(|event| matches!(event, Event::KnockedOut { .. }))
 }
 
-fn episode(seed: u64) {
+/// Rend la partie jouée : `scripts/temoins-release.sh` la sauvegarde comme témoin (issue #84).
+fn episode(seed: u64) -> Parcours {
     let base = episode_setup(seed);
     let setup = base.clone().figure(episode_start(&base));
     let mut p = Parcours::arranged_choosing_tactics(&setup);
@@ -1221,6 +1222,7 @@ fn episode(seed: u64) {
         fame_before + defeated,
         "C19 : gloire des défenseurs"
     );
+    p
 }
 
 // C13 à C19 : l'épisode de la conquête, depuis l'état posé.
