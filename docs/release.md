@@ -38,7 +38,29 @@ En local (Linux, fil cloud) : `cargo build -p arcanum-ui --release`, puis
    tête des notes générées, puis « Publish release ». Les notes listent les PR fusionnées depuis la release finale
    précédente (le workflow supprime d'abord les pre-releases `-rc.N` de la version, pas leurs tags), rangées par label de
    PR en « Changements », « Corrections de bugs » et « Outillage et documentation » (`.github/release.yml`, issue #64).
-4. Par une PR : `version = "X.Y+1.0-dev"` (D2). Un tag posé sur une version `-dev` est refusé.
+4. Par une PR : `version = "X.Y+1.0-dev"` (D2). Un tag posé sur une version `-dev` est refusé. La même PR garde les
+   sauvegardes de la version publiée (voir ci-dessous).
+
+## Garder les sauvegardes d'une version publiée
+
+Une sauvegarde de l'une des trois dernières versions publiées se charge avec la version courante (spec #52, ADR 0001).
+Avant le tag, rien de plus que la CI : les tests `temoins` et `format` d'arcanum-persistance vérifient que les sauvegardes
+des versions gardées se chargent. Juste après le tag, dans la PR qui passe à `X.Y+1.0-dev`
+(`crates/arcanum-persistance/`) :
+
+1. `tests/temoins/vX.Y.Z/` : les parties préparées du tag (`scripts/parties/*.json`), plus les deux parcours de fin de jalon
+   (`parcours_j6.rs`) joués sur le code du tag et sauvegardés en fin de partie (copie de travail du tag, où
+   `parcours_j6.rs` et `support/` sont recopiés dans `crates/arcanum-persistance/tests/` avec, en fin de
+   `parcours_conquete_en_solitaire` et d'`episode`, un `save` de `SaveGame::from_runner`), et une vraie partie de Mathieu
+   en option. Les témoins ne sont jamais régénérés.
+2. `tests/format/vX.Y.Z.yaml` : copie de `tests/format/sauvegarde.yaml`.
+3. `PREVIOUS_RELEASE_FORMAT` (`src/migration.rs`) prend la valeur de `EVENT_FORMAT_VERSION`.
+4. S'il y a alors plus de trois versions gardées : supprimer les témoins et l'empreinte de la plus ancienne, donner à
+   `OLDEST_SUPPORTED_FORMAT` le format de la nouvelle plus ancienne, et retirer de `MIGRATIONS` les migrations qui partent
+   d'un format plus ancien. Le test `migration_chain_matches_supported_versions` vérifie l'accord.
+
+Un correctif `X.Y.Z+1` compte comme une version publiée s'il change le format ; sinon, ses sauvegardes sont celles de
+`X.Y.Z`.
 
 ## Faire un correctif `X.Y.Z+1`
 

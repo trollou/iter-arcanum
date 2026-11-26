@@ -1,6 +1,6 @@
 # #52 — Migration des sauvegardes
 
-- Statut : validée (Mathieu, 2026-11-26)
+- Statut : implémentée (2026-11-26) ; validée par Mathieu le 2026-11-26
 - Issue : #52 (milestone v0.2.0)
 - Dépend de : spec 024 (sauvegarde et retour en arrière), spec 038 (un générateur par usage), tag `v0.1.0` (#49), #55 (remplacer
   `chrono`, avant celle-ci)
