@@ -7,6 +7,7 @@ pub(super) fn unit_actions(
     state: &GameState,
     player: PlayerId,
     action: &Action,
+    rngs: &mut GameRngs,
 ) -> Result<Vec<Event>, ActionError> {
     match action {
         Action::ActivateUnit { .. } => activation_events(state, player, action),
@@ -24,6 +25,15 @@ pub(super) fn unit_actions(
                     unit: *unit,
                 },
             });
+            // Issue #8 : plus de Bannière de terreur pour annuler une invocation, elle reprend.
+            let after = events.iter().fold(state.clone(), apply);
+            let released = after
+                .player(player)
+                .and_then(|p| p.combat.as_ref().map(|combat| (p, combat)))
+                .is_some_and(|(p, combat)| combat.summons_held && !fear_holds_summons(p, combat));
+            if released {
+                events.extend(release_summons_events(&after, player, rngs)?);
+            }
             Ok(events)
         }
         Action::AssignBanner { card, unit } => {

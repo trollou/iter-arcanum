@@ -65,6 +65,9 @@ pub enum Action {
     StartCombat,
     /// Passer à la phase suivante du combat (spec 031).
     NextCombatPhase,
+    /// Laisser les Invocateurs tirer leur créature, au début de la phase de parade, au lieu d'annuler
+    /// leur attaque par la Bannière de terreur (issue #8).
+    CallSummons,
     /// Terminer le combat depuis la phase d'attaque (spec 031).
     EndCombat,
     /// Choisir les cibles d'une attaque, dans l'ordre du combat (spec 031), par leur jeton

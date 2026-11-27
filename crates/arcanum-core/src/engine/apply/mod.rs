@@ -149,6 +149,7 @@ fn apply_event(mut state: GameState, event: &Event) -> GameState {
         | Event::HandParalyzed { .. }
         | Event::EnemySummoned { .. }
         | Event::SummonedEnemyDiscarded { .. }
+        | Event::SummonsHeld { .. }
         | Event::KnockedOut { .. }
         | Event::MoveSpentAsAttack { .. }
         | Event::InfluenceSpentAsBlock { .. }

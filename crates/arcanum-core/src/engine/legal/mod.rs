@@ -229,6 +229,12 @@ pub(super) fn available_actions(state: &GameState, player: PlayerId) -> Vec<Acti
     }
     match moment(p) {
         Moment::Engaging => return engaging_actions(state, player),
+        // Issue #8 : l'invocation en attente, seulement les bannières ou le tirage.
+        Moment::Fighting(combat) if combat.summons_held => {
+            let mut actions = banner_use_actions(p);
+            actions.push(Action::CallSummons);
+            return actions;
+        }
         Moment::Fighting(combat) => {
             let mut actions = card_actions(state, player);
             actions.extend(unit_actions(state, player));

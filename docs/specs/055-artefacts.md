@@ -95,9 +95,10 @@ Noms français des artefacts : ceux des cartes françaises (glossaire, issue pri
 - **Base** (carte, version *Lost Legion* ; Compendium, *Banner of Fear* Q1, Q2, S3, S4) : l'unité porteuse gagne une capacité. En
   **phase de parade**, si l'unité est **disponible et non blessée**, l'épuiser : un ennemi pas vaincu, pas paré, qui attaque encore,
   reçoit `DoesNotAttack` ; **Gloire +1**. L'unité n'utilise aucune autre capacité avec ; la bannière reste (rendue disponible,
-  l'unité peut recommencer). Ce n'est pas une parade (Q1). Tous les ennemis du jeu de base n'ont qu'une attaque. Pas contre des
-  **Invocateurs** ni leur créature : le moteur tire la créature au début de la phase de parade (spec 033), avant que la bannière
-  puisse servir, et annuler l'attaque de la créature n'est pas permis (Q6). Simplification provisoire (Q4, issue #8).
+  l'unité peut recommencer). Ce n'est pas une parade (Q1). Tous les ennemis du jeu de base n'ont qu'une attaque. Contre un
+  **Invocateur**, seulement avant le tirage de sa créature : au début de la phase de parade, l'invocation attend tant que la
+  bannière peut servir (issue #8, qui remplace la simplification provisoire de Q4) ; l'attaque de la créature tirée ne s'annule
+  pas (Q6).
 - **Renforcé** (carte, version *Lost Legion* ; Compendium, *Banner of Fear* Q2) : **jusqu'à 3 ennemis** reçoivent `DoesNotAttack`,
   choisis en jouant la carte. Mêmes moments et mêmes cibles que Tourbillon (spec 054) : phase à distance ou de parade, ennemis
   qui attaquent encore ; en phase à distance, contre des Invocateurs aussi (aucune créature tirée).
@@ -304,8 +305,13 @@ Données nouvelles (noms indicatifs, forme dans l'ADR 0008) :
   (`banner_of_fear_cancels_attack`) — carte ; Compendium, *Banner of Fear* S3.
 - **C16** — Paysans blessés ou épuisés, phase à distance ou d'attaque, ennemi paré : `UseBanner` pas proposé
   (`banner_of_fear_needs_ready_unwounded_unit`) — Compendium, *Banner of Fear* S4.
-- **C17** — Contre des Orc Summoners et leur créature en phase de parade : ni les Summoners ni la créature ne sont une cible
-  (`banner_of_fear_not_against_summoners`) — Compendium, *Banner of Fear* Q5, Q6 ; issue #8.
+- **C17** — Contre des Orc Summoners (révisé par l'issue #8) : au début de la phase de parade, tant qu'une unité disponible et
+  non blessée porte la Bannière de terreur, l'invocation attend ; seules restent les bannières et « Laisser invoquer ». Annulée,
+  aucune créature n'est tirée, Gloire +1, et l'invocation reprend dès qu'aucune bannière ne peut plus servir
+  (`banner_of_fear_cancels_summoning_before_draw`). Laissée faire, la créature tirée n'est pas une cible
+  (`banner_of_fear_not_against_summoned_creature`). Sans bannière utilisable, la créature est tirée aussitôt
+  (`summoning_not_held_without_usable_banner_of_fear`) — MKUE p. 9, *Block Phase* 2 ; Compendium, *Banner of Fear* Q5, Q6,
+  *Combat* S23.
 - **C18** — Phase à distance contre Prowlers, Swordsmen, Wolf Riders et Diggers : Bannière de peur renforcée sur trois d'entre eux,
   Diggers (Fortifié) compris : aucun des trois n'attaque ; quatre cibles : refusé (`banner_of_fear_strong_three_enemies`) — carte,
   version *Lost Legion*.
@@ -509,7 +515,8 @@ Mathieu accepte les réponses proposées (« ok avec le reste »), appliquées d
 2. **Q2 — Bannières en fin de manche.** **Décision : une fenêtre de choix** (garder ou reprendre chaque bannière assignée).
 3. **Q3 — Gloire « ce tour ».** **Décision : tout le tour**, avant la carte comprise.
 4. **Q4 — Bannière de peur contre les Invocateurs.** Ni l'Invocateur ni sa créature ne sont une cible ; gênant mais pas
-   bloquant, **reporté, issue #8** (moment avant le tirage de la créature).
+   bloquant, **reporté, issue #8** (moment avant le tirage de la créature). Réglé par l'issue #8 : l'invocation attend le choix de la
+   bannière (C17).
 5. **Q5 — Bannière de protection renforcée.** **Décision : toutes les Blessures reçues jetées, sans choix.**
 6. **Q6 — Amulette du soleil.** **Décision : jetons de ruines face cachée retournés en la jouant**, ruines révélées ce tour face
    visible, défenseurs voisins révélés, y compris ceux déjà voisins.

@@ -143,7 +143,8 @@ fn multisets<T: Copy>(items: &[T], size: usize) -> Vec<Vec<T>> {
 
 /// Spec 055 : les bannières qui servent. Terreur (carte, *Lost Legion* ; Compendium, *Banner of
 /// Fear* S3, S4) : en phase de parade, l'unité porteuse disponible et non blessée, contre chaque
-/// ennemi qui attaque encore (pas un Invocateur, issue #8). Courage (Compendium, *Banner of
+/// ennemi qui attaque encore ; un Invocateur seulement avant le tirage de sa créature (issue #8).
+/// Courage (Compendium, *Banner of
 /// Courage* S1) : hors combat, la bannière face visible, l'unité porteuse épuisée.
 pub(super) fn banner_use_actions(p: &PlayerState) -> Vec<Action> {
     let mut actions = Vec::new();

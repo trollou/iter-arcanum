@@ -38,6 +38,7 @@ pub(super) fn combat_actions(
             Ok(events)
         }
         Action::NextCombatPhase => next_phase_events(state, player, rngs),
+        Action::CallSummons => release_summons_events(state, player, rngs),
         Action::EndCombat => decide_end_combat(state, player, rngs),
         Action::DeclareAttack { targets } => Ok(vec![Event::AttackDeclared {
             player,

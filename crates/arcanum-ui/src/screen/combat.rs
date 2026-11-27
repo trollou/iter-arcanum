@@ -198,6 +198,8 @@ pub fn combat_screen(
         .find_map(|(index, action)| {
             let key = match action {
                 Action::NextCombatPhase => "combat.next_phase",
+                // Issue #8 : l'invocation attend le choix de la Bannière de terreur.
+                Action::CallSummons => "combat.call_summons",
                 Action::EndCombat => "combat.end",
                 _ => return None,
             };

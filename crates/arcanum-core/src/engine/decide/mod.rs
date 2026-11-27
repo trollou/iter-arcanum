@@ -61,6 +61,7 @@ pub fn decide(
         Action::Challenge { .. }
         | Action::StartCombat
         | Action::NextCombatPhase
+        | Action::CallSummons
         | Action::EndCombat
         | Action::DeclareAttack { .. }
         | Action::ResolveAttack
@@ -90,7 +91,7 @@ pub fn decide(
         | Action::TakeUnitReward { .. }
         | Action::DeclineUnitReward => progression_actions(state, player, action, rngs),
         Action::ActivateUnit { .. } | Action::UseBanner { .. } | Action::AssignBanner { .. } => {
-            unit_actions(state, player, action)
+            unit_actions(state, player, action, rngs)
         }
     }?;
     Ok(with_grail(
