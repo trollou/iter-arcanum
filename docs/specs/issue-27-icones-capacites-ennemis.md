@@ -214,6 +214,8 @@ Aucun : l'écran n'ajoute aucune action.
 
 Chaque question a une recommandation ; la spec est écrite avec elle.
 
+Mathieu (2026-11-27) : recommandations acceptées pour Q1 à Q4 et Q6, et pour les dessins de Q5 sauf l'Invocation (en attente de la relecture complète de la spec avant validation).
+
 - **Q1 — Quelles capacités ?** Recommandé : les cinq des ennemis du jeu (Fortifié, Vif, Brutal, Toxique, Paralysant) et
   l'Invocation. L'issue cite « assassin » : l'Assassinat n'existe que sur des ennemis des extensions, absents du jeu ; dessiner
   son icône maintenant ne servirait à rien. Autre choix : dessiner aussi les sept capacités des extensions dès maintenant.
@@ -229,5 +231,9 @@ Chaque question a une recommandation ; la spec est écrite avec elle.
 - **Q5 — Les dessins de la planche conviennent-ils ?** Tour crénelée (Fortifié), oiseau aux ailes déployées (Vif), tête de démon
   cornue (Brutal), goutte verte (Toxique), silhouette de pierre fissurée (Paralysant), cercle brun à trois griffes (Invocation).
   Recommandé : les garder ; dites lesquels retoucher sinon.
+  **Invocation, à trancher** : Mathieu craint que l'icône ronde se confonde avec la rondache des Parades et que les griffes ne
+  soient pas assez claires. Deux variantes sans forme ronde ([comparaison](images/issue-27-icones/invocation-variantes.png)) :
+  **A** (`summon_a.svg`), une griffe qui sort d'un portail ovale au sol ; **B** (`summon_b.svg`), une tête de monstre cornue qui
+  en sort. Recommandé : A, la griffe reste lisible à 16 px et ne ressemble à aucune autre icône.
 - **Q6 — Repérer une capacité donnée par la cité ?** Recommandé : même icône, « (cité) » dans le titre de l'infobulle seulement
   (C8). Autre choix : un petit repère sur l'icône (contour de la couleur de la cité), vérifié à l'œil.
