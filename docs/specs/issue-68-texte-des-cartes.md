@@ -1,6 +1,6 @@
 # #68 — Texte des cartes et des compétences
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-27)
 - Issue : #68 (Bug, milestone v0.2.0, Effort Medium : spec codée en un fil)
 - Dépend de : spec #11 (bouton « i » et texte complet), spec #32 (cartes des fenêtres), spec #27 (repères `[[…]]` à
   icône dans un texte), spec 071 (icônes), spec 050 (textes écrits des cartes), spec 055 (artefacts) ; toutes implémentées
@@ -226,24 +226,17 @@ Aucun.
   pluriel des libellés à « (s) » (« carte(s) »), qui demande une règle de pluriel dans arcanum-i18n.
 - Remplacer davantage de texte par des icônes dans la zone de jeu, ou agrandir les icônes : Epic #96 (ergonomie).
 
-## Questions ouvertes
+## Décisions (Mathieu, 2026-11-27)
 
-Q1 à Q4 : Mathieu suit les propositions (2026-11-27) ; il relit le tableau des textes français avant le codage
-(`/mnt/project-files/specs/068/textes-fr-avant-apres.md`). Elles seront reportées en décisions à la validation.
-
-- **Q1 — Proximité avec le texte du jeu.** L'issue demande des textes « plus proches de ceux du jeu de base », et le
-  CLAUDE.md interdit tout texte officiel dans le jeu public. Proposé : même sens, même ordre, même découpage en phrases que
-  la carte, mais nos mots, sans copier ni traduire mot à mot la transcription ; l'anglais aussi (c'est là que le risque de
-  recopier est le plus grand). Convient-il ?
-- **Q2 — Icônes dans les textes.** Proposé : le repère à icône devant chaque mot-clé de points des textes complets, des
-  compétences et des tactiques (`[[move]]Mouvement 4` : icône puis mot), comme `[[swift]]Vif` aujourd'hui. Autres choix :
-  l'icône à la place du mot (« [icône] 4 », plus court, mais le joueur doit connaître les icônes) ; ou pas d'icône, laissée à
-  l'Epic #96.
-- **Q3 — Capacités d'unité.** Ce sont des boutons. Proposé : les reprendre selon les règles des boutons (plus de « ; » ni
-  de « (min. 0) »), sans texte complet ni « i » pour une unité. Ou les laisser telles quelles.
-- **Q4 — Un fil ou deux.** Environ 150 textes à écrire dans chaque langue. Proposé : un seul fil (Effort Medium), qui écrit
-  le français, le fait relire par Mathieu sur le tableau avant / après, puis écrit l'anglais. Ou deux fils : français, puis
-  anglais.
-- **Q5 — Couleur sur les boutons.** Les boutons d'effet (« Jeton bleu », « Cristal rouge ») passent par un texte simple.
-  Proposé : les colorer aussi (egui accepte un texte mis en forme sur un bouton), pour que la règle soit la même partout. Ou
-  seulement dans les textes à repères (« i », fenêtres, infobulles), les boutons gardant leur pastille de mana.
+- **Q1 — Proximité avec le texte du jeu** : même sens, même ordre, même découpage en phrases que la carte, dans nos mots,
+  sans copier ni traduire mot à mot la transcription, en français comme en anglais.
+- **Q2 — Icônes dans les textes** : repère à icône devant le mot-clé (`[[move]]Mouvement 4`).
+- **Q3 — Capacités d'unité** : reprises selon les règles des boutons, sans texte complet ni « i ».
+- **Q4 — Un seul fil** d'implémentation. Les textes français sont déjà relus et validés par Mathieu dans le tableau
+  avant / après `/mnt/project-files/specs/068/textes-fr-avant-apres.md` (fichiers du projet, hors dépôt) : le fil de code
+  les reprend tels quels, balises de couleur et repères ajoutés, puis écrit l'anglais sur le même modèle.
+- **Q5 — Couleur sur les boutons** : oui, les boutons colorent aussi les mots de couleur de mana (texte mis en forme egui).
+  Un cas de test le vérifie sur le bouton Jeton bleu de Concentration (C11 étendu : le libellé du bouton garde la balise
+  jusqu'à l'affichage, au lieu de passer par `plain_text`).
+- **Menace renforcée et Nobles manières** : leur changement de Réputation et de Gloire est immédiat (version *Lost Legion*,
+  spec 040, Compendium *Threaten* S1, *Noble Manners* S3) : les textes disent « aussitôt », pas de bug.
