@@ -339,7 +339,7 @@ fn discard_choice_lists_the_other_cards() {
     assert_eq!(screen.hand.len(), 4);
     assert!(screen.hand.iter().all(|card| card.name != "Improvisation"));
     for card in &screen.hand {
-        assert_eq!(labels(&card.plays), ["Défausser cette carte"]);
+        assert_eq!(labels(&card.plays), ["Défausser"]);
         assert!(card.sideways.is_empty());
     }
 }

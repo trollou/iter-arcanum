@@ -226,7 +226,7 @@ fn decompose_chooses_the_card_to_destroy() {
         .text;
     assert!(prompt.contains("détruire"), "{prompt}");
     let pick = &hand_card(&screen, rage).plays[0];
-    assert_eq!(pick.label, "Détruire cette carte");
+    assert_eq!(pick.label, "Détruire");
     assert_eq!(
         pick.command,
         Command::Play(index_of(
@@ -281,7 +281,7 @@ fn training_chooses_destroyed_card_then_offer_card() {
         ..start
     };
     let pick = &hand_card(&screen, march).plays[0];
-    assert_eq!(pick.label, "Détruire cette carte");
+    assert_eq!(pick.label, "Détruire");
     assert_eq!(pick.command, Command::ChooseGain(chosen));
     assert!(hand_card(&screen, determination).plays.is_empty());
     assert!(screen.discard_prompt.is_some());

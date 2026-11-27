@@ -517,7 +517,7 @@ fn modes_keep_their_card_buttons() {
     assert!(march.basic_effects.is_empty());
     assert!(march.strong_effects.is_empty());
     let labels: Vec<&str> = march.plays.iter().map(|b| b.label.as_str()).collect();
-    assert_eq!(labels, ["Défausser cette carte"]);
+    assert_eq!(labels, ["Défausser"]);
 }
 
 // Spec 073 C19 bis : en mode Concentration, la carte à renforcer montre dans son bloc renforcé un

@@ -872,7 +872,7 @@ fn concentration_mode_lists_targets() {
         ["Marche", "Rage"]
     );
     let pick = &hand_card(&screen, "Rage").plays[0];
-    assert_eq!(pick.label, "Défausser cette carte");
+    assert_eq!(pick.label, "Défausser");
 
     // Puis le mana de Concentration : dé vert ou dé or.
     let mode = boost_mode(pick.command);
