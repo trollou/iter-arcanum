@@ -6,7 +6,7 @@
 
 *Iter Arcanum* (Latin for "the journey of the arcana") is a single-player desktop game **heavily inspired by the Mage Knight board game**. You play a hero who explores a realm, fights enemies, recruits units, conquers sites and grows stronger, turn after turn, by playing cards.
 
-It runs on **Windows**, **Linux** and **macOS**. The game is displayed in your system language when it is **French or English**, and in English otherwise. To force a language for one session, pass `--lang fr` or `--lang en` (for example `iter-arcanum --lang en`, or `cargo run -p arcanum-ui --release -- --lang en` from the sources). **Menu > Preferences…** (or **Ctrl+,**, **Cmd+,** on macOS, also on the launch screen) picks the language, whether the game starts in full screen, and four volumes (master, music, ambience, sound effects); these preferences are kept in `preferences.json` in your user configuration folder (`~/.config/iter-arcanum/` on Linux, `%APPDATA%\iter-arcanum\config\` on Windows, `~/Library/Application Support/iter-arcanum/` on macOS), or in the repository's `config/` folder when launched from the sources with `cargo run`. The `ARCANUM_CONFIG_DIR` environment variable picks another folder.
+It runs on **Windows**, **Linux** and **macOS**, in **English** or **French** (your system language by default). **Menu > Preferences…** (**Ctrl+,**) changes the language, full screen and sound volumes.
 
 This is a work in progress, at its first public version (0.1.0): two scenarios of the base game are playable from start to finish, solo, with all the cards of the base game (see below).
 
@@ -50,7 +50,7 @@ Download the archive for your system from the [latest release](https://github.co
 
 Keep the `assets/` folder next to the executable: the game reads its texts, images and sounds from it (on macOS, they are inside the application). Preferences, saves and logs go to your user folders (see below), never next to the executable, so you can replace the folder with a newer version without losing anything.
 
-**On Windows**, the executable of a release is signed by the SignPath Foundation (see [Code signing policy](#code-signing-policy)): SmartScreen and Smart App Control let it run. Test versions (`-rc`) and versions before signing was in place (v0.1.0) are not signed:
+**On Windows**, code signing by the SignPath Foundation is in progress (see [Code signing policy](#code-signing-policy)): until it is in place, the executable is not signed, so Windows warns you:
 
 - SmartScreen shows "Windows protected your PC". Click **More info**, then **Run anyway**.
 - On Windows 11, Smart App Control blocks unsigned applications, with no per-application exception. You can only run such a version by turning it off (**Windows Security > App & browser control > Smart App Control settings**); decide whether you accept that for your computer.
@@ -134,11 +134,15 @@ The game writes a log file at each launch:
 
 Attach it when you report a problem in the [repository issues](https://github.com/trollou/iter-arcanum/issues).
 
+Your preferences are kept in `preferences.json`, in `%APPDATA%\iter-arcanum\config\` on Windows, `~/.config/iter-arcanum/` on Linux and `~/Library/Application Support/iter-arcanum/` on macOS (the repository's `config/` folder with `cargo run`). Delete it to go back to the default settings.
+
 ## Contributing
 
 For development (method, architecture, tests), see [`CLAUDE.md`](CLAUDE.md).
 
 ## Code signing policy
+
+Our application to the SignPath Foundation is in progress: no release is signed yet. Once it is accepted:
 
 Free code signing provided by SignPath.io, certificate by SignPath Foundation.
 
