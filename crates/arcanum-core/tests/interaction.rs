@@ -348,9 +348,10 @@ fn interact_only_on_a_village_or_monastery() {
     refused(&plain, Action::Interact);
 }
 
-// C9 — MKUE p. 6, 6.e ; p. 8, 2.a : points perdus, puis le bonus.
+// C9 — MKUE p. 6, 6.e ; p. 8, 2.a : mouvement perdu, puis le bonus. Variante maison (issue #95) :
+// l'influence jouée avant l'interaction est gardée et le bonus s'y ajoute.
 #[test]
-fn interacting_loses_unspent_points_then_adds_the_bonus() {
+fn interacting_keeps_unspent_influence_and_adds_the_bonus() {
     let [march, promise, rage, _] = village_hand();
     let state = at_village(&village_hand(), 2);
     let state = done(&state, basic(march));
@@ -370,7 +371,7 @@ fn interacting_loses_unspent_points_then_adds_the_bonus() {
     );
     let state = events.iter().fold(state, apply);
     assert_eq!(state.move_points(SOLO), 0);
-    assert_eq!(state.influence_points(SOLO), 1);
+    assert_eq!(state.influence_points(SOLO), 3);
     assert_eq!(
         state.interaction(SOLO),
         Some(Interaction {
@@ -565,7 +566,7 @@ fn interacting_can_be_undone() {
     play(&mut runner, &puppet, basic(march));
     play(&mut runner, &puppet, basic(promise));
     play(&mut runner, &puppet, Action::Interact);
-    assert_eq!(runner.state().influence_points(SOLO), 1);
+    assert_eq!(runner.state().influence_points(SOLO), 3);
     assert_eq!(runner.undo(), Ok(()));
     let state = runner.state();
     assert_eq!(state.move_points(SOLO), 2);
@@ -785,7 +786,8 @@ fn noble_manners_fame_counts_for_level() {
     );
 }
 
-// C12 — Compendium, *Threaten* S1 ; MKUE p. 6, 6.e : Menace avant d'interagir baisse le bonus.
+// C12 — Compendium, *Threaten* S1 : Menace avant d'interagir baisse le bonus ; variante maison
+// (issue #95) : ses 5 d'influence restent, le malus s'y ajoute.
 #[test]
 fn threaten_before_interacting_lowers_the_bonus() {
     let state = at_village(&norowas_hand(), -1);
@@ -794,7 +796,7 @@ fn threaten_before_interacting_lowers_the_bonus() {
     assert_eq!(state.reputation(SOLO), Reputation::new(-2));
     let state = done(&state, Action::Interact);
     assert_eq!(state.interaction(SOLO).map(|i| i.bonus), Some(-1));
-    assert_eq!(state.influence_points(SOLO), -1);
+    assert_eq!(state.influence_points(SOLO), 4);
 }
 
 // L4 — spec 063 : au dernier tour, l'interaction est permise et sa gloire compte au décompte.

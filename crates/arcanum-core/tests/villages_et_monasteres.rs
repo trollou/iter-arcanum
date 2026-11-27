@@ -391,6 +391,25 @@ fn village_sells_healing_for_three() {
     assert!(!legal(&twice).contains(&Action::BuyHealing));
 }
 
+// C7b — variante maison (issue #95), contre MKUE p. 6, 6.e : l'influence jouée avant l'interaction
+// reste et paie les achats, comme si elle avait été jouée après.
+#[test]
+fn influence_played_before_interacting_still_buys() {
+    let state = apply(
+        at_village(),
+        &Event::CardPlayed {
+            player: SOLO,
+            card: card(Promise, 1),
+            play: CardPlay::Sideways(SidewaysEffect::Influence),
+            effect: Effect::Influence(6),
+        },
+    );
+    let state = done(&state, Action::Interact);
+    assert_eq!(state.influence_points(SOLO), 6);
+    let twice = done(&done(&state, Action::BuyHealing), Action::BuyHealing);
+    assert_eq!(twice.healing_points(SOLO), 2);
+}
+
 // C8 — carte du monastère : 2 influence le point.
 #[test]
 fn monastery_sells_healing_for_two() {

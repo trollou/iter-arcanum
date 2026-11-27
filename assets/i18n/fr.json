@@ -1184,7 +1184,7 @@
   },
   "interaction": {
     "button": "Interagir avec les habitants",
-    "lost_points": "Interagir fait perdre : {move} mouvement, {influence} influence",
+    "lost_points": "Interagir fait perdre : {move} mouvement",
     "header": "Interaction : {site}",
     "city_shields": "Boucliers dans la cité : Influence +{bonus}"
   },

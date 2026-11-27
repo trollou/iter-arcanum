@@ -42,7 +42,7 @@ pub(super) fn reputation_line(view: &PlayerView, catalog: &Catalog) -> String {
 }
 
 /// Le bouton « Interagir avec les habitants », quand l'interaction est légale, et la ligne qui
-/// nomme les points qu'elle ferait perdre (MKUE p. 6, 6.e).
+/// nomme le mouvement qu'elle ferait perdre (MKUE p. 6, 6.e).
 pub(super) fn interact_button(
     view: &PlayerView,
     legal_actions: &[Action],
@@ -59,13 +59,11 @@ pub(super) fn interact_button(
         command: Command::Play(index),
         shortcut: shortcut_label(Shortcut::Interact, catalog),
     };
-    let warning = (view.move_points > 0 || view.influence_points > 0).then(|| {
+    // Issue #95 : l'influence jouée avant reste (variante maison), seul le mouvement se perd.
+    let warning = (view.move_points > 0).then(|| {
         catalog.format(
             "interaction.lost_points",
-            &[
-                ("move", &view.move_points.to_string()),
-                ("influence", &with_minus(view.influence_points)),
-            ],
+            &[("move", &view.move_points.to_string())],
         )
     });
     (Some(button), warning)
