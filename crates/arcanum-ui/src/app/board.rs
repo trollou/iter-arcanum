@@ -48,6 +48,40 @@ const ACTION_FIGHT_FILL: Color32 = Color32::from_rgb(0x9E, 0x1B, 0x1B);
 const GHOST_FILL: Color32 = Color32::from_rgba_premultiplied(0x29, 0x28, 0x20, 0x29);
 
 impl IterArcanumApp {
+    /// Infobulle de survol à côté du curseur (spec 037) : sans délai, même quand la souris bouge,
+    /// et pas pendant un glissement du plateau (L1). `hovered` est faux quand une fenêtre recouvre
+    /// le plateau (L3).
+    fn show_hover_tooltip(
+        &mut self,
+        response: &egui::Response,
+        lines: &[String],
+        alert: Option<usize>,
+    ) {
+        if lines.is_empty() || !response.hovered() || response.dragged() {
+            return;
+        }
+        // Un identifiant par contenu : egui ne remesure une infobulle qu'à son ouverture, et garderait
+        // sinon la largeur de la précédente quand le curseur passe d'une case à l'autre.
+        egui::Tooltip::always_open(
+            response.ctx.clone(),
+            response.layer_id,
+            response.id.with(lines),
+            egui::PopupAnchor::Pointer,
+        )
+        .width(HOVER_TOOLTIP_WIDTH)
+        .show(|ui| {
+            for (index, line) in lines.iter().enumerate() {
+                // Spec 043, C36 : l'avertissement d'assaut en rouge et en gras.
+                if alert == Some(index) {
+                    ui.label(egui::RichText::new(line).strong().color(ASSAULT_HOVER));
+                } else {
+                    // Spec #27, C17 et C19 : l'icône devant le nom d'une capacité.
+                    self.marked_label(ui, line, egui::RichText::new);
+                }
+            }
+        });
+    }
+
     pub(super) fn board(
         &mut self,
         ui: &mut egui::Ui,
@@ -204,7 +238,7 @@ impl IterArcanumApp {
             self.client.command(command);
             ui.ctx().request_repaint();
         }
-        show_hover_tooltip(&response, &screen.hover_lines, screen.hover_alert);
+        self.show_hover_tooltip(&response, &screen.hover_lines, screen.hover_alert);
         if let Some(delay) = animation_repaint(animated, ui.input(|input| input.focused)) {
             ui.ctx().request_repaint_after(delay);
         }
@@ -467,10 +501,14 @@ fn site_panel(
                                 purchase.command.is_some(),
                                 egui::Button::new(&purchase.label).wrap(),
                             );
+                            // Spec #27, C21 : l'infobulle d'un bouton, sans repère d'icône.
                             let response = match &purchase.tooltip {
-                                Some(tooltip) => response
-                                    .on_hover_text(tooltip)
-                                    .on_disabled_hover_text(tooltip),
+                                Some(tooltip) => {
+                                    let tooltip = crate::plain_text(tooltip, catalog);
+                                    response
+                                        .on_hover_text(&tooltip)
+                                        .on_disabled_hover_text(&tooltip)
+                                }
                                 None => response,
                             };
                             if response.clicked() {
@@ -505,34 +543,6 @@ fn site_panel(
 
 /// Largeur du menu du site, en points.
 const SITE_PANEL_WIDTH: f32 = 240.0;
-
-/// Infobulle de survol à côté du curseur (spec 037) : sans délai, même quand la souris bouge,
-/// et pas pendant un glissement du plateau (L1). `hovered` est faux quand une fenêtre recouvre
-/// le plateau (L3).
-fn show_hover_tooltip(response: &egui::Response, lines: &[String], alert: Option<usize>) {
-    if lines.is_empty() || !response.hovered() || response.dragged() {
-        return;
-    }
-    // Un identifiant par contenu : egui ne remesure une infobulle qu'à son ouverture, et garderait
-    // sinon la largeur de la précédente quand le curseur passe d'une case à l'autre.
-    egui::Tooltip::always_open(
-        response.ctx.clone(),
-        response.layer_id,
-        response.id.with(lines),
-        egui::PopupAnchor::Pointer,
-    )
-    .width(HOVER_TOOLTIP_WIDTH)
-    .show(|ui| {
-        for (index, line) in lines.iter().enumerate() {
-            // Spec 043, C36 : l'avertissement d'assaut en rouge et en gras.
-            if alert == Some(index) {
-                ui.label(egui::RichText::new(line).strong().color(ASSAULT_HOVER));
-            } else {
-                ui.label(line);
-            }
-        }
-    });
-}
 
 /// Teinte des éléments debout la nuit : le voile, appliqué à l'image plutôt que posé dessus, pour
 /// que les marques du jeu dessinées après lui restent claires (spec 075, L8).

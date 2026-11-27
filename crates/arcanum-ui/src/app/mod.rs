@@ -288,6 +288,8 @@ impl eframe::App for IterArcanumApp {
 
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         let ctx = ui.ctx().clone();
+        // Spec #27 : les icônes des repères, pour les textes qui en portent.
+        self.store_marker_icons(ui);
         // Spec 074 : l'état de la fenêtre pour la case Plein écran, et la croix qui fait comme
         // Quitter (C16).
         let (fullscreen, close) = ctx.input(|input| {

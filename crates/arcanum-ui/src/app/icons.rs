@@ -62,10 +62,9 @@ impl IterArcanumApp {
             ui.spacing_mut().item_spacing.x = 2.0;
             match self.icon_image(ui, value.icon.image(), size) {
                 Some(response) => {
-                    response.on_hover_text(&value.tooltip);
+                    icon_tooltip(response, value);
                     if !value.value.is_empty() {
-                        ui.label(text(value.value.clone()))
-                            .on_hover_text(&value.tooltip);
+                        icon_tooltip(ui.label(text(value.value.clone())), value);
                     }
                 }
                 None => {
@@ -148,6 +147,33 @@ impl IterArcanumApp {
                 self.icon_value(ui, value, false);
             }
         });
+    }
+
+    /// Un texte à repères d'icône (spec #27), voir `marked_label`.
+    pub(super) fn marked_label(
+        &mut self,
+        ui: &mut egui::Ui,
+        text: &str,
+        style: impl Fn(String) -> egui::RichText,
+    ) {
+        marked_label(ui, text, style, &self.catalog);
+    }
+
+    /// Les textures des icônes des repères à la hauteur du texte, gardées pour l'image dans le
+    /// contexte egui : les dessins sans accès à l'application (fenêtres de cartes) les y lisent.
+    pub(super) fn store_marker_icons(&mut self, ui: &egui::Ui) {
+        let size = ui.text_style_height(&egui::TextStyle::Body);
+        let textures: MarkerIcons = MarkerIcons(
+            crate::ICON_MARKERS
+                .iter()
+                .filter_map(|&(_, icon)| {
+                    self.icon_texture(ui, icon.image(), size)
+                        .map(|texture| (icon, texture))
+                })
+                .collect(),
+        );
+        ui.ctx()
+            .data_mut(|data| data.insert_temp(egui::Id::unique(MARKER_ICONS), textures));
     }
 
     /// Une rangée d'icônes sans valeur (capacités d'un ennemi, spec #27) ; rien si elle est vide.
@@ -279,6 +305,67 @@ impl IterArcanumApp {
                 response.on_hover_text(&token.tooltip);
             }
         });
+    }
+}
+
+const MARKER_ICONS: &str = "marker_icons";
+
+/// Les textures des icônes des repères (`store_marker_icons`).
+#[derive(Clone, Default)]
+struct MarkerIcons(std::collections::HashMap<Icon, TextureId>);
+
+/// Un texte à repères d'icône (spec #27) : chaque repère devient l'icône, à la hauteur du texte,
+/// avec son nom et sa règle en infobulle ; sans fichier d'icône, son nom. Un texte sans repère
+/// s'écrit tel quel. `style` met en forme chaque morceau de texte ; le tout est replié s'il est
+/// long.
+pub(super) fn marked_label(
+    ui: &mut egui::Ui,
+    text: &str,
+    style: impl Fn(String) -> egui::RichText,
+    catalog: &arcanum_i18n::Catalog,
+) {
+    if !text.contains("[[") {
+        ui.add(egui::Label::new(style(text.to_string())).wrap());
+        return;
+    }
+    let icons: MarkerIcons = ui
+        .ctx()
+        .data(|data| data.get_temp(egui::Id::unique(MARKER_ICONS)))
+        .unwrap_or_default();
+    let size = ui.text_style_height(&egui::TextStyle::Body);
+    ui.horizontal_wrapped(|ui| {
+        ui.spacing_mut().item_spacing.x = 0.0;
+        for piece in crate::icon_pieces(text, catalog) {
+            match piece {
+                ValuePiece::Text(words) => {
+                    ui.add(egui::Label::new(style(words)).wrap());
+                }
+                ValuePiece::Icon(value) => match icons.0.get(&value.icon) {
+                    Some(&texture) => {
+                        let (rect, response) =
+                            ui.allocate_exact_size(Vec2::splat(size), Sense::hover());
+                        ui.painter().image(texture, rect, full_uv(), Color32::WHITE);
+                        icon_tooltip(response, &value);
+                    }
+                    None => {
+                        ui.label(style(value.tooltip.clone()));
+                    }
+                },
+            }
+        }
+    });
+}
+
+/// L'infobulle d'une icône : son nom, ou son nom en gras et sa règle dessous, repliée (spec #27,
+/// « Infobulle à deux étages »).
+pub(super) fn icon_tooltip(response: Response, value: &IconValue) -> Response {
+    match &value.rule {
+        None => response.on_hover_text(&value.tooltip),
+        Some(rule) => response.on_hover_ui(|ui| {
+            ui.set_max_width(320.0);
+            ui.strong(&value.tooltip);
+            ui.add(egui::Label::new(rule).wrap());
+        }),
     }
 }
 

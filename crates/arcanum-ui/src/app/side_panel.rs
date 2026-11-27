@@ -136,7 +136,7 @@ impl IterArcanumApp {
             ui.horizontal_top(|ui| {
                 color_swatch(ui, line.color);
                 ui.add(egui::Label::new(&line.text).wrap())
-                    .on_hover_text(&line.tooltip);
+                    .on_hover_text(crate::plain_text(&line.tooltip, &self.catalog));
             });
         }
         if let Some(empty) = &screen.play_area_empty {
@@ -146,7 +146,7 @@ impl IterArcanumApp {
         if let Some(list) = &screen.modifiers {
             ui.strong(&list.title);
             for line in &list.lines {
-                ui.add(egui::Label::new(line).wrap());
+                self.marked_label(ui, line, egui::RichText::new);
             }
         }
         // Ce tour : les faits, puis les récompenses en attente (C28, C29).
@@ -187,13 +187,18 @@ impl IterArcanumApp {
             ui.add_space(6.0);
             ui.horizontal(|ui| {
                 for button in &screen.bottom_buttons {
-                    let hint = bottom_hint(
-                        button.tooltip.as_deref(),
-                        button.shortcut.as_deref(),
+                    // Spec #27, C21 : un bouton et son infobulle, sans repère d'icône.
+                    let hint = crate::plain_text(
+                        &bottom_hint(
+                            button.tooltip.as_deref(),
+                            button.shortcut.as_deref(),
+                            &self.catalog,
+                        ),
                         &self.catalog,
                     );
+                    let label = crate::plain_text(&button.label, &self.catalog);
                     let response = ui
-                        .add_enabled(button.command.is_some(), egui::Button::new(&button.label))
+                        .add_enabled(button.command.is_some(), egui::Button::new(label))
                         .on_hover_text(&hint)
                         .on_disabled_hover_text(&hint);
                     if response.clicked() {

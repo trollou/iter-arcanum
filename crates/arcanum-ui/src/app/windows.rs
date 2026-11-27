@@ -6,6 +6,7 @@ use eframe::egui::{self, Color32, Sense, TextStyle, Vec2, vec2};
 
 use arcanum_i18n::Catalog;
 
+use super::icons::marked_label;
 use super::widgets::color_swatch;
 use super::window_cards::{card_rows, natural_width, window_limits};
 use super::{IterArcanumApp, Thumbnails};
@@ -758,7 +759,7 @@ pub(super) fn skill_choice_window(
                         ui.strong(&offer.name);
                         ui.weak(&offer.usage);
                     });
-                    ui.add(egui::Label::new(&offer.text).wrap());
+                    marked_label(ui, &offer.text, egui::RichText::new, catalog);
                     if let Some(take) = &offer.take
                         && shortcut_button(ui, &take.label, take.shortcut.as_deref(), catalog)
                             .clicked()
