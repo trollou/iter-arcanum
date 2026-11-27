@@ -889,12 +889,16 @@ pub struct PurchaseButton {
     pub shortcut: Option<String>,
 }
 
-/// Fenêtre « Récompense : prenez un artefact » (spec 041) : les artefacts tirés, chacun avec son
-/// bouton « Prendre ».
+/// Fenêtre de choix (spec #20) : seulement les cartes à prendre maintenant, en cartes hors zone,
+/// chacune avec « Prendre » : artefact (spec 041), sort (spec 043), action avancée ou unité d'une
+/// récompense (spec 045), carte d'un effet « gagner » (spec 056).
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct ArtifactChoice {
+pub struct CardChoiceWindow {
     pub title: String,
     pub cards: Vec<super::OfferCardView>,
+    /// « Renoncer » (unité d'une récompense), « Annuler » (effet « gagner ») ; rien pour un choix
+    /// qu'on ne refuse pas.
+    pub close: Option<Button>,
 }
 
 /// Fenêtre « Offrande : 3 mana bleu, 7 Gloire » (spec 045, C34) : une ligne-bouton par paiement

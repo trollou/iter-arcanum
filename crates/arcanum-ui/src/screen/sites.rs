@@ -276,8 +276,8 @@ pub(super) fn artifact_choice(
     view: &PlayerView,
     legal_actions: &[Action],
     catalog: &Catalog,
-) -> Option<ArtifactChoice> {
-    (!view.drawn_artifacts.is_empty()).then(|| ArtifactChoice {
+) -> Option<CardChoiceWindow> {
+    (!view.drawn_artifacts.is_empty()).then(|| CardChoiceWindow {
         title: catalog.text("reward.choose_artifact"),
         cards: view
             .drawn_artifacts
@@ -292,6 +292,7 @@ pub(super) fn artifact_choice(
                 ..super::hand::window_card(card, catalog)
             })
             .collect(),
+        close: None,
     })
 }
 
@@ -412,8 +413,8 @@ pub(super) fn spell_choice(
     view: &PlayerView,
     legal_actions: &[Action],
     catalog: &Catalog,
-) -> Option<ArtifactChoice> {
-    (view.spell_choices > 0).then(|| ArtifactChoice {
+) -> Option<CardChoiceWindow> {
+    (view.spell_choices > 0).then(|| CardChoiceWindow {
         title: catalog.text("reward.choose_spell"),
         cards: offered_spells(view)
             .into_iter()
@@ -427,6 +428,7 @@ pub(super) fn spell_choice(
                 ..super::hand::window_card(card, catalog)
             })
             .collect(),
+        close: None,
     })
 }
 

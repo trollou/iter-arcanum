@@ -12,7 +12,9 @@ use super::windows::{
     tactic_window, token_window,
 };
 use super::{IterArcanumApp, Thumbnails, full_uv};
-use crate::{ArtifactChoice, Command, DummySection, GameScreen, HeroPortrait, ImageId, ImagePaint};
+use crate::{
+    CardChoiceWindow, Command, DummySection, GameScreen, HeroPortrait, ImageId, ImagePaint,
+};
 
 /// Portrait du héros dans le panneau (spec 065).
 const PORTRAIT_SIZE: f32 = 48.0;
@@ -309,7 +311,7 @@ impl IterArcanumApp {
     }
 
     /// Les vignettes d'une fenêtre de choix de l'artefact ou du sort (spec 072, C6).
-    fn choice_thumbnails(&mut self, ctx: &egui::Context, window: &ArtifactChoice) -> Thumbnails {
+    fn choice_thumbnails(&mut self, ctx: &egui::Context, window: &CardChoiceWindow) -> Thumbnails {
         self.thumbnails(ctx, window.cards.iter().map(|card| card.illustration))
     }
 

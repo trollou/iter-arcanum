@@ -10,7 +10,7 @@ use super::widgets::color_swatch;
 use super::window_cards::{card_rows, natural_width, window_limits};
 use super::{IterArcanumApp, Thumbnails};
 use crate::{
-    AboutWindow, AltarWindow, ArtifactChoice, Button, CARD_GAP, Command, CrystalChoice,
+    AboutWindow, AltarWindow, Button, CARD_GAP, CardChoiceWindow, Command, CrystalChoice,
     MeditationWindow, OffersWindow, PreferencesWindow, PreparationWindow, ReclaimWindow,
     ScoreWindow, SkillChoiceWindow, SkillOffer, TacticCard, TacticDecision, TacticWindow,
     TokenChoice, volume_value_label,
@@ -564,7 +564,7 @@ pub(super) fn meditation_window(
 
 pub(super) fn artifact_window(
     ctx: &egui::Context,
-    window: &ArtifactChoice,
+    window: &CardChoiceWindow,
     id: &'static str,
     thumbnails: &Thumbnails,
     catalog: &Catalog,
