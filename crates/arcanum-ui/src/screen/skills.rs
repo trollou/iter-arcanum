@@ -603,10 +603,114 @@ pub(super) fn skill_unit_prompt(
 /// La fenêtre du niveau pair (spec #20, C1 à C8) : après les choix de l'artefact et du sort, tant
 /// que la compétence ou l'action avancée d'un niveau pair attend.
 pub(super) fn level_choice_window(
-    _view: &PlayerView,
-    _legal_actions: &[Action],
-    _mode: &ScreenMode,
-    _catalog: &Catalog,
+    view: &PlayerView,
+    legal_actions: &[Action],
+    mode: &ScreenMode,
+    catalog: &Catalog,
 ) -> Option<LevelChoiceWindow> {
-    None
+    let level = super::offers::choosing_level(view);
+    let pending =
+        !view.skill_choice.is_empty() || (view.advanced_action_choices > 0 && level.is_some());
+    if !pending || !view.drawn_artifacts.is_empty() || view.spell_choices > 0 {
+        return None;
+    }
+    let offer: Vec<CardId> = view
+        .offers
+        .get(&arcanum_core::Offer::AdvancedActions)
+        .map_or(&[][..], Vec::as_slice)
+        .iter()
+        .filter_map(|card| card.deed())
+        .collect();
+    // L2 : l'encadré ne vaut que pour une compétence prenable.
+    let selected = match mode {
+        ScreenMode::ChoosingLevelSkill(skill) => view
+            .skill_choice_cards
+            .iter()
+            .find(|(takeable, _)| takeable == skill),
+        _ => None,
+    };
+    let skill_offer = |skill: Skill, own_note: Option<String>| {
+        let takeable = view
+            .skill_choice_cards
+            .iter()
+            .any(|(takeable, _)| *takeable == skill);
+        // C7 : offre vide, la compétence se prend seule.
+        let take = legal_actions
+            .iter()
+            .position(|action| *action == Action::ChooseSkill { skill })
+            .filter(|_| offer.is_empty())
+            .map(|index| Button {
+                label: catalog.text("offers.take"),
+                command: Command::Play(index),
+                shortcut: None,
+            });
+        SkillOffer {
+            skill,
+            name: catalog.text(&skill.label_key()),
+            usage: usage_text(skill, catalog),
+            text: catalog.text(&skill.text_key()),
+            selected: selected.is_some_and(|(chosen, _)| *chosen == skill),
+            select: (takeable && !offer.is_empty()).then_some(Command::SelectSkill(skill)),
+            take,
+            note: (!takeable).then_some(own_note).flatten(),
+        }
+    };
+    let choosing_skill = !view.skill_choice.is_empty();
+    let common_note = catalog.text("skill.choice.common_note");
+    let advanced_actions = offer
+        .iter()
+        .enumerate()
+        .map(|(place, &card)| {
+            let command = if choosing_skill {
+                selected
+                    .filter(|(_, cards)| cards.contains(&card))
+                    .map(|_| Command::TakeLevelReward(card))
+            } else {
+                // La compétence du niveau déjà prise : la carte seule.
+                legal_actions
+                    .iter()
+                    .position(|action| *action == Action::GainAdvancedAction { card })
+                    .map(Command::Play)
+            };
+            // C3 : une compétence de l'offre commune impose la dernière place.
+            let tooltip = (command.is_none()
+                && selected.is_some_and(|(skill, _)| !view.skill_choice.contains(skill)))
+            .then(|| common_note.clone());
+            LevelCard {
+                card: super::hand::window_card(card, catalog),
+                take: PurchaseButton {
+                    label: catalog.text("offers.take"),
+                    shortcut: command.and_then(|_| crate::take_label(place + 1, catalog)),
+                    command,
+                    tooltip,
+                },
+            }
+        })
+        .collect();
+    Some(LevelChoiceWindow {
+        title: catalog.format(
+            "level_choice.title",
+            &[("level", &level.unwrap_or(view.level).to_string())],
+        ),
+        revealed_title: catalog.text("skill.choice.revealed"),
+        revealed: view
+            .skill_choice
+            .iter()
+            .map(|&skill| skill_offer(skill, None))
+            .collect(),
+        common_title: catalog.text("skill.choice.common"),
+        common_note,
+        common: if choosing_skill {
+            view.common_skills
+                .iter()
+                .map(|common| skill_offer(common.skill, Some(catalog.text("skill.choice.own"))))
+                .collect()
+        } else {
+            Vec::new()
+        },
+        advanced_actions_title: catalog.text("offers.advanced_actions"),
+        advanced_actions,
+        hint: (choosing_skill && selected.is_none() && !offer.is_empty())
+            .then(|| catalog.text("level_choice.skill_first")),
+    })
 }

@@ -51,7 +51,6 @@ pub(crate) use artifacts::artifact_enemy_toggles;
 use artifacts::*;
 use board_actions::board_action_buttons;
 use boost::*;
-pub(crate) use choices::choosing_reward_advanced_action;
 use choices::*;
 pub use combat::*;
 pub use dummy::dummy_discard_window;

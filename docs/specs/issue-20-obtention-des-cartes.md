@@ -71,10 +71,13 @@ Changements de l'écran (`arcanum-ui`) :
   `advanced_action_reward`, `unit_reward` et `gain_choice` (`Option<CardChoiceWindow>`). Une seule s'affiche à la fois, dans
   l'ordre du moteur.
 - **`LevelChoiceWindow`** remplace `SkillChoiceWindow` (`GameScreen::skill_choice` devient `level_choice`) : le titre, les
-  compétences révélées et l'offre commune comme aujourd'hui (`SkillOffer`, avec `selected: bool` au lieu de `take`), la note
-  de l'offre commune, puis **`advanced_actions: Vec<OfferCardView>`** (l'offre d'actions avancées dans son ordre, « Prendre »
-  actif ou grisé selon la compétence encadrée, C2 à C4) et **`hint: Option<String>`** (« Choisissez d'abord une
-  compétence. » tant qu'aucune n'est encadrée).
+  compétences révélées et l'offre commune comme aujourd'hui (`SkillOffer`, avec `selected: bool` et `select:
+  Option<Command>`, la commande qui l'encadre ; `take` ne reste que pour l'offre d'actions avancées vide, C7), la note
+  de l'offre commune, puis **`advanced_actions: Vec<LevelCard>`** (l'offre d'actions avancées dans son ordre : la carte
+  hors zone et son « Prendre » en `PurchaseButton`, actif ou grisé selon la compétence encadrée, avec la note de l'offre
+  commune en infobulle quand il est grisé, C2 à C4) et **`hint: Option<String>`** (« Choisissez d'abord une
+  compétence. » tant qu'aucune n'est encadrée). Précisé à l'implémentation (fil moteur) : un `OfferCardView` ne sait
+  pas dire un « Prendre » grisé ni son infobulle.
 - **Compétence encadrée** : un état de l'écran, jamais du moteur, comme la tactique encadrée (spec 060,
   `ScreenMode::ChoosingTactic`) : `ScreenMode::ChoosingLevelSkill(Skill)`, posé par `Command::SelectSkill(Skill)`.
   `Command::TakeLevelReward(CardId)` joue `ChooseSkill` de la compétence encadrée puis `GainAdvancedAction` de la carte,

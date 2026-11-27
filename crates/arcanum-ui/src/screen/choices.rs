@@ -7,7 +7,7 @@ use super::*;
 
 /// Vrai pendant le choix de l'action avancée d'une récompense : une carte attend et aucun niveau
 /// pair n'est à servir, la récompense passant avant les niveaux (spec 045, C24, C41).
-pub(crate) fn choosing_reward_advanced_action(view: &PlayerView) -> bool {
+fn choosing_reward_advanced_action(view: &PlayerView) -> bool {
     view.advanced_action_choices > 0
         && view.drawn_artifacts.is_empty()
         && view.spell_choices == 0
