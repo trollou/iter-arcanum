@@ -238,9 +238,9 @@ Affichage (arcanum-ui) :
   carte à défausser, ne relève aucun manque ; les 20 cartes ont un nom en français et en anglais (`every_card_key_exists_in_french`).
 - **C24** — Choix de la carte à défausser : cliquer « Jouer : Mouvement 3… » d'Improvisation ne joue rien encore ; l'écran passe en mode
   choix : un bandeau « Improvisation : Mouvement 3. Choisissez la carte à défausser. » avec un bouton « Annuler » ; Improvisation n'est
-  plus listée dans la main ; chaque autre carte n'a plus qu'un bouton « Défausser cette carte » ; pas de menu de côté
+  plus listée dans la main ; chaque autre carte n'a plus qu'un bouton « Défausser » ; pas de menu de côté
   (`discard_choice_lists_the_other_cards`).
-- **C25** — En mode choix, cliquer « Défausser cette carte » sur Marche envoie l'action `PlayCard` d'Improvisation (Mouvement 3, défausser
+- **C25** — En mode choix, cliquer « Défausser » sur Marche envoie l'action `PlayCard` d'Improvisation (Mouvement 3, défausser
   Marche) et quitte le mode choix (`choosing_a_card_to_discard_plays_improvisation`).
 - **C26** — En mode choix, « Annuler » ou la touche Échap quitte le mode sans rien jouer : main, points et défausse inchangés
   (`discard_choice_can_be_cancelled`).
@@ -291,7 +291,7 @@ Ajoutés dans `fr.json` et `en.json`. Les clés du jeu jouet (`toy.card.name`, `
 | `play.basic_discarding` | `effect` | Jouer : {effect}… | Play: {effect}… |
 | `play.sideways` | — | Jouer de côté | Play sideways |
 | `discard_choice.prompt` | `card`, `effect` | {card} : {effect}. Choisissez la carte à défausser. | {card}: {effect}. Choose the card to discard. |
-| `discard_choice.pick` | — | Défausser cette carte | Discard this card |
+| `discard_choice.pick` | — | Défausser | Discard |
 | `discard_choice.cancel` | — | Annuler | Cancel |
 | `play_area.title` | — | Zone de jeu | Play area |
 | `play_area.empty` | — | Aucune carte jouée | No card played |

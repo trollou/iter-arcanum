@@ -111,7 +111,7 @@ De haut en bas (maquettes) :
   texte, puis un bouton d'effet par option renforcée et un par option payante (spec 025).
 - En mode fin du tour, la case « Défausser » dans l'en-tête, à droite du nom, pour qu'elle se voie sans survol (issue
   privée 282) ; en mode choix de la carte à défausser, le bouton
-  « Défausser cette carte » à la place des boutons d'effet ; en mode Concentration, les options renforcées de la carte à
+  « Défausser » à la place des boutons d'effet ; en mode Concentration, les options renforcées de la carte à
   renforcer, bonus compris, en boutons d'effet actifs du bloc renforcé (C19 bis) ; « siège seulement » (spec 032) sous
   l'effet de base. Comme aujourd'hui, ailleurs.
 

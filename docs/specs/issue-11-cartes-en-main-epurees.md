@@ -199,7 +199,7 @@ La PR d'implémentation la copie en `assets/images/ui/info.svg` et ajoute `Icon:
   texte, icône ou cristal, pastille comprise. Aujourd'hui seuls les boutons texte sont mesurés avant d'être posés
   (`effect_button`), d'où Magie pure renforcée et la 3e capacité des Illusionnistes hors de la carte (vérification à l'œil,
   `actions-avancees`, maquette [après](images/issue-11-cartes-en-main-epurees/maquette-actions-avancees.png)).
-- **Mode choix** : les boutons « Défausser cette carte » à la place des boutons d'effet, sans texte (C6 ; vérification à
+- **Mode choix** : les boutons « Défausser » à la place des boutons d'effet, sans texte (C6 ; vérification à
   l'œil).
 
 Parties préparées existantes, sans en ajouter : `main-blessures` (Marche, Promesse, Rage, Blessures), `actions-avancees`

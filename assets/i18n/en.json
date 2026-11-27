@@ -897,10 +897,10 @@
   },
   "discard_choice": {
     "prompt": "{card}: {effect}. Choose the card to discard.",
-    "pick": "Discard this card",
+    "pick": "Discard",
     "cancel": "Cancel",
     "destroy_prompt": "{card}: {effect}. Choose the card to throw away.",
-    "destroy": "Throw away this card"
+    "destroy": "Throw away"
   },
   "play_area": {
     "title": "Play area",

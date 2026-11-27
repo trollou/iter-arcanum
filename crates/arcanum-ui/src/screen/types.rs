@@ -506,7 +506,7 @@ pub struct HandCard {
     pub color: Option<BasicColor>,
     /// Texte de l'effet de base.
     pub effect: String,
-    /// Boutons sous la carte : effet de base, ou « Défausser cette carte » en mode choix.
+    /// Boutons sous la carte : effet de base, ou « Défausser » en mode choix.
     pub plays: Vec<Button>,
     /// Un bouton-icône par effet de côté légal, dans l'ordre Mouvement, Influence, Attaque,
     /// Parade (spec 071, C14) ; vide en mode choix.
