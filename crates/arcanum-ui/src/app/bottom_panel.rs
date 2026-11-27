@@ -403,9 +403,7 @@ impl IterArcanumApp {
                 &card.strong_colors,
             );
             if card.show_text {
-                self.marked_label(ui, &card.strong_text, |text| {
-                    egui::RichText::new(text).weak()
-                });
+                self.marked_label(ui, &card.strong_text, super::icons::weak_text);
             }
             clicked = self.effect_buttons(ui, &card.strong_effects).or(clicked);
         }
@@ -660,21 +658,26 @@ impl IterArcanumApp {
                 .add_enabled(button.command.is_some(), widget)
                 .on_hover_text(&tooltip)
                 .on_disabled_hover_text(&tooltip);
-            // Spec #27, C13 : « ×2 si » et l'icône Vif, qui a son infobulle, après le bouton.
             if let Some(condition) = &button.condition {
-                ui.label(&condition.text);
-                match self.icon_image(ui, condition.icon.icon.image(), EFFECT_ICON) {
-                    Some(icon) => {
-                        icon_tooltip(icon, &condition.icon);
-                    }
-                    None => {
-                        ui.label(&condition.icon.tooltip);
-                    }
-                }
+                self.effect_condition(ui, condition);
             }
             response.clicked().then_some(button.command).flatten()
         })
         .inner
+    }
+
+    /// Spec #27, C13 : « ×2 si » et l'icône Vif, qui a son infobulle, après le bouton ; sans
+    /// fichier d'icône, son nom.
+    fn effect_condition(&mut self, ui: &mut egui::Ui, condition: &crate::EffectCondition) {
+        ui.label(&condition.text);
+        match self.icon_image(ui, condition.icon.icon.image(), EFFECT_ICON) {
+            Some(icon) => {
+                icon_tooltip(icon, &condition.icon);
+            }
+            None => {
+                ui.label(&condition.icon.tooltip);
+            }
+        }
     }
 
     /// Le bandeau du choix en cours posé par-dessus le bas de `area`, le plateau ou l'écran de

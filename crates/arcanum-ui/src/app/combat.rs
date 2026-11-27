@@ -242,7 +242,7 @@ impl IterArcanumApp {
                         self.icon_row(ui, &enemy.abilities);
 
                         if let Some(status) = &enemy.status {
-                            self.marked_label(ui, status, |text| egui::RichText::new(text).weak());
+                            self.marked_label(ui, status, super::icons::weak_text);
                         }
                         // Spec 033 : la créature invoquée, puis l'enjeu de la parade.
                         if let Some(summoned) = &enemy.summoned {

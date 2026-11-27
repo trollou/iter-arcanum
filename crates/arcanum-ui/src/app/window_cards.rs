@@ -120,7 +120,7 @@ fn window_card(
                         // Un sort a pour pastilles sa couleur puis le noir (spec #11, C7).
                         let spell = card.strong_colors.last() == Some(&ManaColor::Black);
                         strong_separator(ui, spell, &card.strong_heading, &card.strong_colors);
-                        marked_label(ui, strong, |text| egui::RichText::new(text).weak(), catalog);
+                        marked_label(ui, strong, super::icons::weak_text, catalog);
                     }
                     lines => {
                         for line in lines {

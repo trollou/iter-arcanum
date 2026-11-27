@@ -310,6 +310,11 @@ impl IterArcanumApp {
 
 const MARKER_ICONS: &str = "marker_icons";
 
+/// Un morceau de texte estompé, pour `marked_label`.
+pub(super) fn weak_text(text: String) -> egui::RichText {
+    egui::RichText::new(text).weak()
+}
+
 /// Les textures des icônes des repères (`store_marker_icons`).
 #[derive(Clone, Default)]
 struct MarkerIcons(std::collections::HashMap<Icon, TextureId>);
