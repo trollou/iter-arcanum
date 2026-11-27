@@ -383,8 +383,17 @@ fn combat_shows_city_bonus() {
     // Cité rouge : Gardiens (attaque physique 3) brutaux.
     let red = to_block_phase(&city_combat(TileId::Core(8), vec![guardsmen()]));
     let guards = enemy_card(&red, guardsmen(), &catalog);
-    let abilities = guards.abilities.clone().unwrap_or_default();
-    assert!(abilities.contains("brutal (cité)"), "{abilities}");
+    // Spec #27, C8 : Fortifié puis Brutal, titré « Brutal (cité) », avec la règle de Brutal.
+    let titles: Vec<&str> = guards
+        .abilities
+        .iter()
+        .map(|value| value.tooltip.as_str())
+        .collect();
+    assert_eq!(titles, ["Fortifié", "Brutal (cité)"]);
+    assert_eq!(
+        guards.abilities[1].rule.as_deref(),
+        Some("S'il n'est pas paré, il inflige le double de son attaque.")
+    );
     assert!(
         stakes(&guards)
             .iter()
@@ -393,10 +402,12 @@ fn combat_shows_city_bonus() {
         guards.stakes
     );
     // Hors de la cité rouge, rien de gagné.
-    let abilities = enemy_card(&white, guardsmen(), &catalog)
+    let titles: Vec<String> = enemy_card(&white, guardsmen(), &catalog)
         .abilities
-        .unwrap_or_default();
-    assert!(!abilities.contains("(cité)"), "{abilities}");
+        .into_iter()
+        .map(|value| value.tooltip)
+        .collect();
+    assert_eq!(titles, ["Fortifié"]);
 }
 
 // --- Interaction ---

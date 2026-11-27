@@ -1061,11 +1061,14 @@ fn block_phase_shows_summoned_monster_and_stakes() {
     assert_eq!(summoned.token, minotaur());
     assert_eq!(summoned.title, "Invoque : Minotaure");
     assert_eq!(summoned.note, "retirée après les dégâts, sans gloire");
-    assert_eq!(summoned.abilities.as_deref(), Some("Capacités : brutal"));
-    assert_eq!(
-        screen.enemies[1].abilities.as_deref(),
-        Some("Capacités : brutal")
-    );
+    // Spec #27, C7 : l'icône Brutal, dans la carte de la créature et dans celle d'un ennemi
+    // ordinaire (les Cogneurs, brutaux eux aussi).
+    let brutal = |abilities: &[arcanum_ui::IconValue]| -> Vec<arcanum_ui::Icon> {
+        abilities.iter().map(|value| value.icon).collect()
+    };
+    let brutal_icon = arcanum_ui::Icon::Ability(arcanum_core::EnemyAbility::Brutal);
+    assert_eq!(brutal(&summoned.abilities), [brutal_icon]);
+    assert_eq!(brutal(&screen.enemies[1].abilities), [brutal_icon]);
     assert_eq!(
         summoners.block.as_ref().map(|button| button.label.as_str()),
         Some("Parer")

@@ -151,6 +151,9 @@ pub struct IconValue {
     pub icon: Icon,
     pub value: String,
     pub tooltip: String,
+    /// La règle affichée sous le nom dans l'infobulle (spec #27) : capacités, résistances et
+    /// attaques élémentaires d'un ennemi ; `None` ailleurs.
+    pub rule: Option<String>,
 }
 
 impl IconValue {
@@ -191,6 +194,7 @@ pub fn icon_value(icon: Icon, value: impl Into<String>, catalog: &Catalog) -> Ic
         icon,
         value: value.into(),
         tooltip: catalog.text(icon.name_key()),
+        rule: None,
     }
 }
 

@@ -93,8 +93,8 @@ pub struct EnemyCard {
     pub family: String,
     /// Armure, attaque à l'icône de son élément (ou « invocation »), Gloire (spec 071, C8 et C9).
     pub values: Vec<crate::ValuePiece>,
-    /// « Capacités : vif », s'il en a (spec 033).
-    pub abilities: Option<String>,
+    /// Ses capacités, une icône chacune, sans valeur, avec leur règle (spec 033 ; spec #27, C3).
+    pub abilities: Vec<crate::IconValue>,
     /// Ses résistances, une icône chacune, sans valeur (spec 032 ; spec 071, C10).
     pub resistances: Vec<crate::IconValue>,
     /// « paré » ou « vaincu », ou ce qui l'empêche d'être ciblé (« fortifié : siège seulement ») ;
@@ -128,8 +128,8 @@ pub struct SummonedCard {
     pub title: String,
     /// Ses valeurs en icônes, comme celles de la carte d'ennemi (spec 071, C11).
     pub values: Vec<crate::ValuePiece>,
-    /// « Capacités : brutal », s'il en a.
-    pub abilities: Option<String>,
+    /// Ses capacités en icônes, comme celles de la carte d'ennemi (spec #27, C7).
+    pub abilities: Vec<crate::IconValue>,
     /// « retirée après les dégâts, sans gloire ».
     pub note: String,
 }
@@ -292,7 +292,7 @@ pub fn combat_screen(
                         attack_value(token),
                         catalog,
                     ),
-                    abilities: token_abilities(token, catalog),
+                    abilities: Vec::new(),
                     note: catalog.text("combat.enemy.summoned_note"),
                 }),
                 stakes: (combat.phase == CombatPhase::Block && !enemy.defeated && !enemy.blocked)
@@ -825,6 +825,7 @@ fn in_progress_panel(
         icon,
         value: format!("{points} / {needed}"),
         tooltip: catalog.text(key),
+        rule: None,
     };
     // L'effet joué par chaque carte de l'attaque ou de la parade en cours.
     let played: Vec<(CardId, Option<Effect>)> = combat
@@ -1003,7 +1004,12 @@ fn combat_enemy_values(enemy: &CombatEnemy, catalog: &Catalog) -> Vec<crate::Val
 
 /// « Capacités : fortifié, brutal (cité) » : celles du jeton, puis celles gagnées de sa cité
 /// (spec 062, C39).
-fn enemy_abilities(enemy: &CombatEnemy, catalog: &Catalog) -> Option<String> {
+fn enemy_abilities(_enemy: &CombatEnemy, _catalog: &Catalog) -> Vec<crate::IconValue> {
+    Vec::new()
+}
+
+#[allow(dead_code)]
+fn enemy_abilities_old(enemy: &CombatEnemy, catalog: &Catalog) -> Option<String> {
     let mut abilities: Vec<String> = enemy
         .token
         .enemy()

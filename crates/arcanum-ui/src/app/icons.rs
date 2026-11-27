@@ -150,6 +150,18 @@ impl IterArcanumApp {
         });
     }
 
+    /// Une rangée d'icônes sans valeur (capacités d'un ennemi, spec #27) ; rien si elle est vide.
+    pub(super) fn icon_row(&mut self, ui: &mut egui::Ui, values: &[IconValue]) {
+        if values.is_empty() {
+            return;
+        }
+        ui.horizontal_wrapped(|ui| {
+            for value in values {
+                self.icon_value(ui, value, false);
+            }
+        });
+    }
+
     /// Une ligne du panneau : ses icônes, puis son texte, replié s'il est long.
     pub(super) fn icon_line(&mut self, ui: &mut egui::Ui, line: &IconLine, strong: bool) {
         ui.horizontal_wrapped(|ui| {

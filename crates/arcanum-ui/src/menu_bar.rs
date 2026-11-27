@@ -193,6 +193,7 @@ fn tile_decks(view: &PlayerView, catalog: &Catalog) -> Vec<IconValue> {
             icon,
             tooltip: catalog.format(key, &[("count", &count)]),
             value: count,
+            rule: None,
         }
     })
     .collect()

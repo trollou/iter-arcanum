@@ -239,9 +239,8 @@ impl IterArcanumApp {
                         let name = egui::RichText::new(&enemy.name).strong();
                         ui.label(if enemy.defeated { name.weak() } else { name });
                         self.value_pieces(ui, &enemy.values, &enemy.resistances);
-                        if let Some(abilities) = &enemy.abilities {
-                            ui.label(abilities);
-                        }
+                        // Spec #27 : ses capacités, une icône chacune.
+                        self.icon_row(ui, &enemy.abilities);
 
                         if let Some(status) = &enemy.status {
                             ui.weak(status);
@@ -253,9 +252,7 @@ impl IterArcanumApp {
                                 .show(ui, |ui| {
                                     ui.label(egui::RichText::new(&summoned.title).strong());
                                     self.value_pieces(ui, &summoned.values, &[]);
-                                    if let Some(abilities) = &summoned.abilities {
-                                        ui.label(abilities);
-                                    }
+                                    self.icon_row(ui, &summoned.abilities);
                                     ui.weak(&summoned.note);
                                 });
                         }

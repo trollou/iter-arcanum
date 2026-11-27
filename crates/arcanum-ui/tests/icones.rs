@@ -163,6 +163,7 @@ fn value(icon: Icon, value: &str, tooltip: &str) -> IconValue {
         icon,
         value: value.into(),
         tooltip: tooltip.into(),
+        rule: None,
     }
 }
 
@@ -238,7 +239,18 @@ fn icon(icon: Icon, value: &str, tooltip: &str) -> ValuePiece {
         icon,
         value: value.into(),
         tooltip: tooltip.into(),
+        rule: None,
     })
+}
+
+/// Une valeur à icône qui porte sa règle (spec #27).
+fn ruled(icon: Icon, value: &str, tooltip: &str, rule: &str) -> IconValue {
+    IconValue {
+        icon,
+        value: value.into(),
+        tooltip: tooltip.into(),
+        rule: Some(rule.into()),
+    }
 }
 
 /// Combat engagé contre ce seul ennemi, posé à côté du village.
@@ -277,7 +289,7 @@ fn bar_stays_during_combat() {
 }
 
 // Spec 071, C8 : Armure, épée de feu, Gloire (Mages de feu : armure 5, attaque de feu 6,
-// gloire 5).
+// gloire 5). Spec #27, C11 : l'attaque de feu de l'ennemi porte sa règle.
 #[test]
 fn enemy_card_values_use_icons() {
     let catalog = french();
@@ -286,19 +298,28 @@ fn enemy_card_values_use_icons() {
         screen.enemies[0].values,
         [
             icon(Icon::Armor, "5", "Armure"),
-            icon(
+            ValuePiece::Icon(ruled(
                 attack_icon(AttackKind::Melee, Element::Fire),
                 "6",
-                "Attaque de feu"
-            ),
+                "Attaque de feu",
+                "Seules les Parades de glace et de feu glacé comptent en entier ; les autres, à moitié."
+            )),
             icon(Icon::Fame, "5", "Gloire"),
         ]
     );
+    // Une attaque physique n'a pas de règle.
+    let screen = combat_of(&fighting(Enemy::Prowlers), &catalog);
+    assert!(
+        matches!(&screen.enemies[0].values[1], ValuePiece::Icon(value) if value.rule.is_none()),
+        "{:?}",
+        screen.enemies[0].values
+    );
 }
 
-// Spec 071, C9 : l'attaque d'un Invocateur reste écrite (spec 033).
+// Spec 071, C9 ; spec #27, C6 : l'attaque d'un Invocateur s'affiche avec l'icône Invocation,
+// sans valeur, avec sa règle.
 #[test]
-fn summoner_attack_stays_text() {
+fn summoner_attack_uses_icon() {
     let catalog = french();
     let screen = combat_of(&fighting(Enemy::OrcSummoners), &catalog);
     let definition = Enemy::OrcSummoners.definition();
@@ -306,10 +327,72 @@ fn summoner_attack_stays_text() {
         screen.enemies[0].values,
         [
             icon(Icon::Armor, &definition.armor.to_string(), "Armure"),
-            ValuePiece::Text("invocation".into()),
+            ValuePiece::Icon(ruled(
+                Icon::Summon,
+                "",
+                "Invocation",
+                &catalog.text("icon.rule.summon")
+            )),
             icon(Icon::Fame, &definition.fame.to_string(), "Gloire"),
         ]
     );
+}
+
+// Spec #27, C3 : Glaceurs (Fortifié, Vif, Paralysant) : trois icônes dans l'ordre de
+// `enemies.ron`, sans valeur, nommées et avec leur règle.
+#[test]
+fn abilities_use_icons() {
+    let catalog = french();
+    let screen = combat_of(&fighting(Enemy::Freezers), &catalog);
+    let abilities: Vec<(Icon, &str, &str, bool)> = screen.enemies[0]
+        .abilities
+        .iter()
+        .map(|value| {
+            (
+                value.icon,
+                value.value.as_str(),
+                value.tooltip.as_str(),
+                value.rule.is_some(),
+            )
+        })
+        .collect();
+    assert_eq!(
+        abilities,
+        [
+            (Icon::Ability(EnemyAbility::Fortified), "", "Fortifié", true),
+            (Icon::Ability(EnemyAbility::Swift), "", "Vif", true),
+            (
+                Icon::Ability(EnemyAbility::Paralyze),
+                "",
+                "Paralysant",
+                true
+            ),
+        ]
+    );
+}
+
+// Spec #27, C4 : la règle de Vif (Chevaucheurs de loups : armure 4, attaque 3, Vif).
+#[test]
+fn ability_tooltip_gives_rule() {
+    let catalog = french();
+    let screen = combat_of(&fighting(Enemy::WolfRiders), &catalog);
+    assert_eq!(
+        screen.enemies[0].abilities,
+        [ruled(
+            Icon::Ability(EnemyAbility::Swift),
+            "",
+            "Vif",
+            "Pour le parer, il faut une Parade du double de son attaque."
+        )]
+    );
+}
+
+// Spec #27, C5 : Rôdeurs, sans capacité, sans icône de capacité.
+#[test]
+fn no_ability_no_icon() {
+    let catalog = french();
+    let screen = combat_of(&fighting(Enemy::Prowlers), &catalog);
+    assert!(screen.enemies[0].abilities.is_empty());
 }
 
 // Spec 071, C10 : une icône par résistance, sans valeur, à la place des badges (spec 032).
@@ -318,25 +401,27 @@ fn resistances_use_icons() {
     let catalog = french();
     // Gardiens d'Altem : résistances au feu, à la glace et physique.
     let screen = combat_of(&fighting(Enemy::AltemGuardsmen), &catalog);
-    // Dans l'ordre de la définition de l'ennemi.
-    let resistances: Vec<(Icon, &str, &str)> = screen.enemies[0]
-        .resistances
-        .iter()
-        .map(|value| (value.icon, value.value.as_str(), value.tooltip.as_str()))
-        .collect();
+    // Dans l'ordre de la définition de l'ennemi. Spec #27, C10 : chacune a sa règle.
     assert_eq!(
-        resistances,
+        screen.enemies[0].resistances,
         [
-            (Icon::Resistance(Resistance::Fire), "", "Résistance au feu"),
-            (
+            ruled(
+                Icon::Resistance(Resistance::Fire),
+                "",
+                "Résistance au feu",
+                &catalog.text("icon.rule.resistance_fire")
+            ),
+            ruled(
                 Icon::Resistance(Resistance::Ice),
                 "",
-                "Résistance à la glace"
+                "Résistance à la glace",
+                &catalog.text("icon.rule.resistance_ice")
             ),
-            (
+            ruled(
                 Icon::Resistance(Resistance::Physical),
                 "",
-                "Résistance physique"
+                "Résistance physique",
+                &catalog.text("icon.rule.resistance_physical")
             ),
         ]
     );
