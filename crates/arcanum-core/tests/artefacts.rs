@@ -3,7 +3,7 @@
 
 use arcanum_core::{
     Action, AdvancedAction, Artifact, ArtifactChoices, CardId, CardPlay, DeedCard, DestroyedFrom,
-    Effect, EnemyToken, Event, GameState, Hex, ManaColor, TimeOfDay, Unit, UnitCard, apply,
+    Effect, EnemyColor, EnemyToken, Event, GameState, Hex, ManaColor, TimeOfDay, Unit, UnitCard, apply,
     legal_actions,
 };
 
@@ -1164,10 +1164,18 @@ fn banner_of_fear_needs_ready_unwounded_unit() {
     assert!(banner_uses(&attack).is_empty());
 }
 
-// Spec 055 C17 — Compendium, *Banner of Fear* Q5, Q6 ; issue #8 : ni l'Invocateur ni sa
-// créature.
-#[test]
-fn banner_of_fear_not_against_summoners() {
+fn summoned_by(state: &GameState, summoner: EnemyToken) -> Option<EnemyToken> {
+    state.combat(SOLO).and_then(|combat| {
+        combat
+            .enemies
+            .iter()
+            .find(|enemy| enemy.token == summoner)
+            .and_then(|enemy| enemy.summoned)
+    })
+}
+
+/// Un combat contre des Orc Summoners, les Paysans portant la Bannière de terreur.
+fn fear_against_summoners() -> GameState {
     let fear = artifact(BannerOfFear);
     let decor = Decor {
         hand: vec![fear, card(March, 1)],
@@ -1175,8 +1183,52 @@ fn banner_of_fear_not_against_summoners() {
         placed: vec![(orc_summoners(), ORCS_2)],
         ..Decor::default()
     };
-    let state = done(&decor.fighting(), assign_banner(fear, peasants()));
-    assert!(banner_uses(&to_block_phase(&state)).is_empty());
+    done(&decor.fighting(), assign_banner(fear, peasants()))
+}
+
+// Spec 055 C17 ; issue #8 — MKUE p. 9, *Block Phase* 2 ; Compendium, *Banner of Fear* Q5,
+// *Combat* S23 : au début de la phase de parade, l'invocation attend le choix de la Bannière de
+// terreur. Annulée, aucune créature n'est tirée, Gloire +1.
+#[test]
+fn banner_of_fear_cancels_summoning_before_draw() {
+    let state = to_block_phase(&fear_against_summoners());
+    assert_eq!(summoned_by(&state, orc_summoners()), None);
+    let cancel = use_banner(peasants(), Some(orc_summoners()));
+    assert_eq!(
+        legal_actions(&state, SOLO),
+        vec![cancel.clone(), Action::CallSummons]
+    );
+    let brown = state.enemy_pile(EnemyColor::Brown).len();
+    let fame_before = state.fame(SOLO);
+    let state = done(&state, cancel);
+    assert!(does_not_attack(&state, orc_summoners()));
+    assert_eq!(summoned_by(&state, orc_summoners()), None);
+    assert_eq!(state.enemy_pile(EnemyColor::Brown).len(), brown);
+    assert_eq!(state.fame(SOLO), fame_before + 1);
+    // Plus de bannière à jouer : la phase de parade reprend son cours.
+    assert!(legal_actions(&state, SOLO).contains(&Action::NextCombatPhase));
+    assert!(!legal_actions(&state, SOLO).contains(&Action::CallSummons));
+}
+
+// Spec 055 C17 ; issue #8 — Compendium, *Banner of Fear* Q6, *Combat* S23 : l'invocation
+// laissée faire, la créature tirée n'est pas une cible de la bannière.
+#[test]
+fn banner_of_fear_not_against_summoned_creature() {
+    let state = to_block_phase(&fear_against_summoners());
+    let state = done(&state, Action::CallSummons);
+    assert!(summoned_by(&state, orc_summoners()).is_some());
+    assert!(banner_uses(&state).is_empty());
+    assert!(!legal_actions(&state, SOLO).contains(&Action::CallSummons));
+}
+
+// Issue #8 — MKUE p. 9, *Block Phase* 2 : sans Bannière de terreur utilisable (unité blessée),
+// la créature est tirée aussitôt, comme avant.
+#[test]
+fn summoning_not_held_without_usable_banner_of_fear() {
+    let state = apply(fear_against_summoners(), &wound_unit(peasants()));
+    let state = to_block_phase(&state);
+    assert!(summoned_by(&state, orc_summoners()).is_some());
+    assert!(!legal_actions(&state, SOLO).contains(&Action::CallSummons));
 }
 
 // Spec 055 C18, L3 — carte (Lost Legion) : renforcée, jusqu'à 3 ennemis n'attaquent pas.

@@ -475,6 +475,9 @@ pub struct Combat {
     pub double_physical: bool,
     /// Les ennemis vaincus ou détruits, dans l'ordre : l'ordre des Boucliers d'une cité (spec 062).
     pub defeat_order: Vec<EnemyToken>,
+    /// Au début de la phase de parade, l'invocation attend le choix de la Bannière de terreur
+    /// (issue #8).
+    pub summons_held: bool,
 }
 
 impl Combat {
@@ -616,6 +619,7 @@ impl Combat {
             unit_activated: false,
             double_physical: false,
             defeat_order: Vec::new(),
+            summons_held: false,
             on_block_success: Vec::new(),
         }
     }

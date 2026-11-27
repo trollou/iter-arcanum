@@ -29,6 +29,8 @@ pub(super) fn blocks_undo(event: &Event) -> bool {
         | Event::PoisonWoundsDiscarded { .. }
         | Event::HandParalyzed { .. }
         | Event::SummonedEnemyDiscarded { .. }
+        // Issue #8 : public, aucun hasard.
+        | Event::SummonsHeld { .. }
         // Spec 034 : rien de caché, aucun hasard.
         | Event::KnockedOut { .. }
         // Spec 058 : publics, aucun hasard.
@@ -136,6 +138,10 @@ pub(super) fn filter(event: &Event, _viewer: PlayerId) -> PlayerEvent {
         Event::SummonedEnemyDiscarded { player, summoner } => PlayerEvent::SummonedEnemyDiscarded {
             player: *player,
             summoner: *summoner,
+        },
+        Event::SummonsHeld { player, held } => PlayerEvent::SummonsHeld {
+            player: *player,
+            held: *held,
         },
         // Spec 034 : les cartes défaussées sont publiques.
         Event::KnockedOut { player, cards } => PlayerEvent::KnockedOut {

@@ -304,6 +304,13 @@ pub enum Event {
         player: PlayerId,
         summoner: EnemyToken,
     },
+    /// Au début de la phase de parade, l'invocation attend (`held`) que la Bannière de terreur
+    /// puisse l'annuler avant le tirage, ou reprend son cours (issue #8 ; Compendium, *Combat*
+    /// S23).
+    SummonsHeld {
+        player: PlayerId,
+        held: bool,
+    },
     /// Un Soin jette ces Blessures de la main : elles retournent à la pile de blessures (spec 034).
     WoundsHealed {
         player: PlayerId,
@@ -1021,6 +1028,7 @@ impl Event {
             | Event::HandParalyzed { .. }
             | Event::EnemySummoned { .. }
             | Event::SummonedEnemyDiscarded { .. }
+            | Event::SummonsHeld { .. }
             | Event::KnockedOut { .. }
             | Event::MoveSpentAsAttack { .. }
             | Event::InfluenceSpentAsBlock { .. }
@@ -1318,6 +1326,10 @@ pub enum PlayerEvent {
     SummonedEnemyDiscarded {
         player: PlayerId,
         summoner: EnemyToken,
+    },
+    SummonsHeld {
+        player: PlayerId,
+        held: bool,
     },
     WoundsHealed {
         player: PlayerId,

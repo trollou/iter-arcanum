@@ -61,6 +61,7 @@ pub fn decide(
         Action::Challenge { .. }
         | Action::StartCombat
         | Action::NextCombatPhase
+        | Action::CallSummons
         | Action::EndCombat
         | Action::DeclareAttack { .. }
         | Action::ResolveAttack

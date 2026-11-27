@@ -176,6 +176,7 @@ pub(super) fn combat_event(state: &mut GameState, event: &Event) {
             summoner,
             token,
         } => apply_summon(state, *player, *summoner, *token),
+        Event::SummonsHeld { .. } => {}
         Event::SummonedEnemyDiscarded { player, summoner } => {
             apply_dismiss(state, *player, *summoner)
         }
