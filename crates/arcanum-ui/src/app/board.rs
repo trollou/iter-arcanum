@@ -512,7 +512,12 @@ fn site_panel(
                         for purchase in screen.recruit.iter().chain(&screen.purchases) {
                             let response = ui.add_enabled(
                                 purchase.command.is_some(),
-                                egui::Button::new(&purchase.label).wrap(),
+                                egui::Button::new(super::widgets::rich_text(
+                                    ui.style(),
+                                    &purchase.label,
+                                    catalog,
+                                ))
+                                .wrap(),
                             );
                             // Spec #20 (C21 à C23, L4) : la carte hors zone de l'achat au survol,
                             // achat grisé compris ; le texte pour un achat sans carte.
@@ -525,10 +530,11 @@ fn site_panel(
                                 }
                                 // Spec #27, C21 : l'infobulle d'un bouton, sans repère d'icône.
                                 (None, Some(tooltip)) => {
-                                    let tooltip = crate::plain_text(tooltip, catalog);
+                                    let tooltip =
+                                        super::widgets::rich_text(ui.style(), tooltip, catalog);
                                     response
-                                        .on_hover_text(&tooltip)
-                                        .on_disabled_hover_text(&tooltip)
+                                        .on_hover_text(tooltip.clone())
+                                        .on_disabled_hover_text(tooltip)
                                 }
                                 (None, None) => response,
                             };
@@ -541,7 +547,14 @@ fn site_panel(
                         .into_iter()
                         .flatten()
                     {
-                        ui.add(egui::Label::new(&prompt.text).wrap());
+                        ui.add(
+                            egui::Label::new(super::widgets::rich_text(
+                                ui.style(),
+                                &prompt.text,
+                                catalog,
+                            ))
+                            .wrap(),
+                        );
                         ui.horizontal_wrapped(|ui| {
                             for button in &prompt.buttons {
                                 if shortcut_button(

@@ -90,7 +90,7 @@ impl IterArcanumApp {
                 }
             });
             for note in &tactic.notes {
-                ui.add(egui::Label::new(note).wrap());
+                ui.add(egui::Label::new(rich_text(ui.style(), note, &self.catalog)).wrap());
             }
             for tactic_button in &tactic.buttons {
                 clicked = button(self, ui, tactic_button).or(clicked);
@@ -155,8 +155,9 @@ impl IterArcanumApp {
         }
         // Ce tour : les faits, puis les récompenses en attente (C28, C29).
         ui.strong(&screen.this_turn_title);
+        // Issue #106 : les couleurs de mana nommées (cristal gagné, dés lancés) en couleur.
         for line in &screen.turn_facts {
-            ui.add(egui::Label::new(line).wrap());
+            ui.add(egui::Label::new(rich_text(ui.style(), line, &self.catalog)).wrap());
         }
         for line in [
             &screen.reward_pending,
@@ -171,7 +172,7 @@ impl IterArcanumApp {
         .into_iter()
         .flatten()
         {
-            ui.add(egui::Label::new(line).wrap());
+            ui.add(egui::Label::new(rich_text(ui.style(), line, &self.catalog)).wrap());
         }
         if let Some(nothing) = &screen.nothing_this_turn {
             ui.weak(nothing);
@@ -377,7 +378,7 @@ impl IterArcanumApp {
         });
         self.dummy_crystals(ui, &dummy.crystals);
         for line in [&dummy.skills, &dummy.last_turn] {
-            ui.add(egui::Label::new(line).wrap());
+            ui.add(egui::Label::new(rich_text(ui.style(), line, &self.catalog)).wrap());
         }
         if let Some(announced) = &dummy.announced {
             ui.add(

@@ -991,7 +991,7 @@
     "sideways_effect": "Jouer de côté : {effect}",
     "strong": "Renforcer : {effect}",
     "strong_discarding": "Renforcer : {effect}…",
-    "strong_no_mana": "Il faut un mana {color} : un dé {color} ou or de la Source, un cristal ou un jeton {color}.",
+    "strong_no_mana": "Il faut un mana {color} : un dé {color} ou <gold>or</gold> de la Source, un cristal ou un jeton {color}.",
     "strong_die_taken": "Dé du tour déjà pris : il faut un cristal ou un jeton {color}.",
     "throw_away": "Détruire : {effect}",
     "assign_banner": "Assigner à une unité"
@@ -1112,7 +1112,7 @@
   "mana_choice": {
     "prompt": "{card} renforcée : {effect}. Choisissez le mana à payer.",
     "die": "Dé {color}",
-    "gold_die": "Dé or (vaut {color})",
+    "gold_die": "Dé <gold>or</gold> (vaut {color})",
     "crystal": "Cristal {color} ({count} sur {limit})",
     "cancel": "Annuler",
     "prompt_basic": "{card} : {effect}. Choisissez le mana à payer.",
@@ -1764,7 +1764,7 @@
     "mana_claim_per_turn": "un jeton {color} par tour",
     "unit_armor_bonus": "unités Armure +{amount}",
     "fame_per_unit_attack_or_block": "Gloire +1 par unité qui attaque ou pare",
-    "endless_mana": "mana {color} et noir illimité ; Gloire +1 par sort {color}",
+    "endless_mana": "mana {color} et <black>noir</black> illimité ; Gloire +1 par sort {color}",
     "fame_per_enemy_defeated": "Gloire +1 par ennemi vaincu",
     "double_physical_attacks": "Attaques physiques doublées en phase d'attaque",
     "throw_away_received_wounds": "fin du tour : jeter les Blessures reçues",

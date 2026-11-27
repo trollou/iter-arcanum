@@ -69,7 +69,7 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
     let colored = |key, color| {
         catalog.format(
             key,
-            &[("color", &super::source::tagged_color_name(color, catalog))],
+            &[("color", &super::source::color_name(color, catalog))],
         )
     };
     let (key, amount) = match effect {
@@ -192,11 +192,8 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return catalog.format(
                 "effect.crystal_and_token",
                 &[
-                    (
-                        "crystal",
-                        &super::source::tagged_color_name(crystal, catalog),
-                    ),
-                    ("token", &super::source::tagged_mana_name(token, catalog)),
+                    ("crystal", &super::source::color_name(crystal, catalog)),
+                    ("token", &super::source::mana_name(token, catalog)),
                 ],
             );
         }
@@ -205,7 +202,7 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
                 "effect.draw_and_token",
                 &[
                     ("cards", &cards.to_string()),
-                    ("token", &super::source::tagged_color_name(token, catalog)),
+                    ("token", &super::source::color_name(token, catalog)),
                 ],
             );
         }
@@ -214,8 +211,8 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return catalog.format(
                 "effect.gain_tokens",
                 &[
-                    ("first", &super::source::tagged_mana_name(first, catalog)),
-                    ("second", &super::source::tagged_mana_name(second, catalog)),
+                    ("first", &super::source::mana_name(first, catalog)),
+                    ("second", &super::source::mana_name(second, catalog)),
                 ],
             );
         }
@@ -260,11 +257,8 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return catalog.format(
                 "effect.wound_crystal_and_token",
                 &[
-                    (
-                        "crystal",
-                        &super::source::tagged_color_name(crystal, catalog),
-                    ),
-                    ("token", &super::source::tagged_mana_name(token, catalog)),
+                    ("crystal", &super::source::color_name(crystal, catalog)),
+                    ("token", &super::source::mana_name(token, catalog)),
                 ],
             );
         }

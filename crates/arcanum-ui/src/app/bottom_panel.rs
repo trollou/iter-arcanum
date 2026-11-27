@@ -391,7 +391,7 @@ impl IterArcanumApp {
         // boutons d'effet.
         if choosing {
             for button in card.paid_plays.iter().chain(&card.strong_plays) {
-                clicked = strong_button(ui, button).or(clicked);
+                clicked = strong_button(ui, button, &self.catalog).or(clicked);
             }
         }
         if !card.strong_text.is_empty() && (card.color.is_some() || card.card.card().is_artifact())
@@ -773,7 +773,7 @@ impl IterArcanumApp {
                 ui.horizontal_wrapped(|ui| {
                     marked_label(ui, &prompt.text, egui::RichText::new, &self.catalog);
                     for button in &prompt.colors {
-                        clicked = strong_button(ui, button).or(clicked);
+                        clicked = strong_button(ui, button, &self.catalog).or(clicked);
                     }
                     if shortcut_button(
                         ui,
