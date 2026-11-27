@@ -283,7 +283,8 @@ Chaque cas devient au moins un test (nom indicatif entre parenthèses).
   effets (texte calculé, ou texte écrit par nous suivi de « pas encore codé : se joue de côté ») ; unités avec nom, régulière ou
   élite, niveau, coût, armure, résistances, lieux de recrutement, capacités (texte). Sous chaque colonne : « Pioche : N ».
   Consultation seule : on ne prend rien ici en dehors du choix ci-dessous (recruter : spec 042, acheter : 041 à 043).
-- **Choix d'une action avancée** : à la fin d'un tour à niveau pair, la fenêtre s'ouvre seule, titrée « Niveau 2 : choisissez une
+- **Choix d'une action avancée** (remplacé par la fenêtre du niveau pair de la [spec #20](issue-20-obtention-des-cartes.md), qui prend compétence et action
+  avancée ensemble ; la fenêtre Offres n'est plus que de consultation) : à la fin d'un tour à niveau pair, la fenêtre s'ouvre seule, titrée « Niveau 2 : choisissez une
   action avancée », avec un bouton « Prendre » sous chaque action avancée ; elle ne se ferme pas tant que le choix est en attente
   (« Voir le plateau » comme en combat n'est pas nécessaire : rien d'autre n'est jouable). Le bandeau du niveau gagné (spec 035)
   reste au tour suivant.

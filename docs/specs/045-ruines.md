@@ -278,13 +278,15 @@ Décompte, sauvegarde, vue, joueur de test :
   « Prendre » reste jusqu'au second (`artifact_window_keeps_two`, `PlayerView::drawn_artifacts`, `artifact_rewards`).
 - **C39** — Récompense unité : la fenêtre Offres s'ouvre comme pour l'action avancée (spec 050), un bouton « Prendre » par unité de
   l'offre, touches 1 à 3 ; sans jeton libre, « Prendre » ouvre le choix de l'unité à renvoyer (spec 042) et « Renoncer » est
-  proposé (`unit_reward_window`, `PlayerView::unit_rewards`, `command_tokens`, `units`).
+  proposé (`unit_reward_window`, `PlayerView::unit_rewards`, `command_tokens`, `units`). Depuis la [spec #20](issue-20-obtention-des-cartes.md) : une fenêtre de
+  choix des seules unités de l'offre, « Renoncer » sous les cartes, au lieu de la fenêtre Offres.
 - **C40** — Nuit : le message d'un trajet arrêté par une ruine révélée (« Ruines révélées : le trajet s'arrête ») sous les points,
   jusqu'à l'action suivante (`panel_announces_revealed_ruins`, `PlayerView::revealed_ruins`).
 - **C41** — Récompense action avancée (issue privée 140) : la fenêtre Offres du choix titre « Récompense : prenez une action
   avancée » ; avec un niveau pair le même tour, le choix de la récompense vient d'abord (C24) et garde ce titre, puis celui du
   niveau reprend « Niveau 2 : choisissez une action avancée » (`advanced_action_reward_window`,
-  `PlayerView::advanced_action_choices`, `levels_gained`).
+  `PlayerView::advanced_action_choices`, `levels_gained`). Depuis la [spec #20](issue-20-obtention-des-cartes.md) : une fenêtre de choix des seules actions
+  avancées de l'offre ; celle du niveau est la fenêtre du niveau pair.
 
 ## Cas limites et refus
 
@@ -374,7 +376,8 @@ aucun caractère hors de la police (pas de flèche : « pour 7 Gloire »).
   `reward.decline_unit`.
 - **Action avancée de récompense** (C41, issue privée 140) : la fenêtre Offres du choix titre `reward.choose_advanced_action` tant que le choix en
   cours vient de la récompense (choix en attente plus nombreux que les niveaux pairs du tour non encore servis), puis
-  `offers.choose_advanced_action` pour le niveau.
+  `offers.choose_advanced_action` pour le niveau. Depuis la [spec #20](issue-20-obtention-des-cartes.md) : fenêtres de choix (`CardChoiceWindow`) et fenêtre du
+  niveau pair, la fenêtre Offres n'est plus ouverte d'office.
 - **Trajet arrêté** (C40, `PlayerView::revealed_ruins`) : ligne `ruins.revealed` sous les points.
 
 ```

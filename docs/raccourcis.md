@@ -35,11 +35,12 @@ Les touches n'agissent jamais quand un champ de saisie a le focus, sauf Entrée 
 | ↑ / ↓ | Cocher le scénario ou le héros précédent ou suivant de la liste, sans boucler | Écran de nouvelle partie ouvert, hors champ de saisie | [078](specs/078-nouvelle-partie-en-etapes.md) |
 | ← / → | Passer à l'étape d'avant ou d'après : Scénario, Héros, Options | Écran de nouvelle partie ouvert, hors champ de saisie | [078](specs/078-nouvelle-partie-en-etapes.md), [061](specs/061-joueur-fantome.md) |
 | Échap | Fermer la fenêtre de nouvelle partie | Partie en cours, fenêtre de nouvelle partie ouverte (sans effet au lancement) | [065](specs/065-nouvelle-partie.md) |
-| O | Ouvrir ou fermer la fenêtre Offres | Partie, hors mode choix et hors choix d'action avancée | [050](specs/050-offres-et-cartes-gagnees.md) |
-| Échap | Fermer la fenêtre Offres | Fenêtre Offres ouverte, hors choix d'action avancée | [050](specs/050-offres-et-cartes-gagnees.md) |
+| O | Ouvrir ou fermer la fenêtre Offres (consultation) | Partie, hors mode choix et hors choix de carte (niveau pair, récompense, effet « gagner ») | [050](specs/050-offres-et-cartes-gagnees.md), [#20](specs/issue-20-obtention-des-cartes.md) |
+| Échap | Fermer la fenêtre Offres | Fenêtre Offres ouverte | [050](specs/050-offres-et-cartes-gagnees.md), [#20](specs/issue-20-obtention-des-cartes.md) |
+| Échap | Annuler le choix de la carte d'un effet « gagner » (Entraînement, Don pour la magie renforcé, Livre de sagesse) | Fenêtre de choix d'un effet « gagner » ouverte | [#20](specs/issue-20-obtention-des-cartes.md) |
 | D | Ouvrir ou fermer la fenêtre de la défausse | Partie, hors mode choix, défausse non vide | [073](specs/073-panneaux.md) |
 | Échap | Fermer la fenêtre de la défausse (avant la fenêtre Offres) | Fenêtre de la défausse ouverte | [073](specs/073-panneaux.md) |
-| 1, 2, 3 | Prendre l'action avancée en 1re, 2e, 3e place | Choix d'action avancée en attente | [050](specs/050-offres-et-cartes-gagnees.md) |
+| 1, 2, 3 | Prendre la carte en 1re, 2e, 3e place | Fenêtre du niveau pair, une compétence encadrée (prend aussi la compétence) ; fenêtre de choix d'une récompense ou d'un effet « gagner » | [050](specs/050-offres-et-cartes-gagnees.md), [#20](specs/issue-20-obtention-des-cartes.md) |
 | 1 à 6 | Encadrer la tactique de ce numéro (sans effet sur une place vide) ; les autres touches de jeu n'agissent pas | Fenêtre du choix de la tactique ouverte | [060](specs/060-tactiques.md) |
 | Entrée | Prendre la tactique encadrée | Fenêtre du choix de la tactique ouverte, une tactique encadrée | [060](specs/060-tactiques.md) |
 | Échap | Annuler le choix des dés d'Appel du mana ou des cartes de Méditation nocturne | Partie, en mode choix des dés ou des cartes d'une tactique | [060](specs/060-tactiques.md) |

@@ -366,7 +366,8 @@ Schéma indicatif du panneau du bas (spec 073 l'avait réservé, à droite de la
   fenêtre de l'action avancée : les deux compétences révélées (nom, fréquence, texte), un bouton « Prendre » chacune ; dessous,
   l'offre commune avec sa note, chaque compétence prenable ou non (`skill.choice.own`). Puis la fenêtre Offres en mode choix
   d'action avancée, comme aujourd'hui, avec seule la dernière carte prenable après une compétence de l'offre commune
-  (C4 à C8, `PlayerView::skill_choice`, `common_skills`, `lowest_advanced_action_only`).
+  (C4 à C8, `PlayerView::skill_choice`, `common_skills`, `lowest_advanced_action_only`). Depuis la [spec #20](issue-20-obtention-des-cartes.md) : une seule
+  fenêtre du niveau pair, compétence encadrée puis « Prendre » sur l'action avancée, qui prend les deux.
 - **Bandeau** du niveau pair au tour suivant : `level.gained_even` (C11).
 
 Partie préparée pour la vérification à l'œil (`docs/verification-manuelle.md`) :
