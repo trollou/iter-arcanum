@@ -65,6 +65,7 @@ use level::*;
 use mana::*;
 use meditation::*;
 pub use offers::{OfferCardView, OfferColumn, OffersWindow, offers_window, offers_window_in};
+pub(crate) use panels::choosing_card;
 pub use panels::discard_window;
 use panels::*;
 use play_area::*;

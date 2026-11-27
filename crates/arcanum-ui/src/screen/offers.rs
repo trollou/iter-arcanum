@@ -5,18 +5,12 @@ use arcanum_core::{CommonCard, Offer, UnitCard, UnitRank};
 use super::*;
 use crate::enemy_text::resistance_key;
 
-/// La fenêtre Offres, déjà traduite.
+/// La fenêtre Offres, déjà traduite : consultation seulement, toujours fermable (spec #20, C18).
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct OffersWindow {
-    /// « Offres », ou pendant un choix « Niveau 2 : choisissez une action avancée » ou le titre
-    /// d'une récompense (spec 045).
+    /// « Offres ».
     pub title: String,
-    /// Faux pendant le choix d'une action avancée : la fenêtre reste ouverte.
-    pub closable: bool,
     pub close: Button,
-    /// « Renoncer », pendant le choix de l'unité de récompense sans jeton de commandement libre
-    /// (spec 045, C39).
-    pub decline: Option<Button>,
     /// Actions avancées, sorts, unités ; chacune dans l'ordre de l'offre.
     pub columns: Vec<OfferColumn>,
 }
@@ -49,7 +43,7 @@ pub struct OfferCardView {
     pub strong_colors: Vec<ManaColor>,
 }
 
-/// Calculée depuis la vue et les actions légales (les « Prendre » pendant le choix).
+/// Calculée depuis la vue et les actions légales (les effets du tour qui agissent sur l'offre).
 pub fn offers_window(
     view: &PlayerView,
     legal_actions: &[Action],
@@ -58,30 +52,16 @@ pub fn offers_window(
     offers_window_in(view, legal_actions, &ScreenMode::Normal, catalog)
 }
 
-/// La fenêtre Offres dans ce mode de l'écran : « Prendre » la carte d'Entraînement ou de Don pour
-/// la magie, « Apprendre » une action avancée avec Apprentissage (spec 056).
+/// La fenêtre Offres dans ce mode de l'écran. Ses seuls boutons sont ceux des effets du tour qui
+/// agissent sur l'offre (spec #20, Q2) : « Apprendre » (Apprentissage, spec 056), « Lancer » (Don
+/// pour la magie, spec 054), « Utiliser : … » et « Recruter (gratuit) » (spec 057) ; les choix de
+/// carte ont leur fenêtre.
 pub fn offers_window_in(
     view: &PlayerView,
     legal_actions: &[Action],
-    mode: &ScreenMode,
+    _mode: &ScreenMode,
     catalog: &Catalog,
 ) -> OffersWindow {
-    // Spec 056 : la carte d'Entraînement ou de Don pour la magie ; la fenêtre se ferme en annulant.
-    let gaining = super::gain::choosing_offer_card(mode, legal_actions);
-    let choosing = view.advanced_action_choices > 0;
-    // Spec 045 : le choix de l'unité de récompense vient après celui des actions avancées.
-    let choosing_unit = !choosing && view.unit_choices > 0;
-    let title = match choosing_level(view) {
-        Some(level) if choosing => catalog.format(
-            "offers.choose_advanced_action",
-            &[("level", &level.to_string())],
-        ),
-        // Spec 045, C41 : sans niveau pair à servir, le choix vient d'une récompense, prise
-        // avant les niveaux (C24).
-        None if choosing => catalog.text("reward.choose_advanced_action"),
-        _ if choosing_unit => catalog.text("reward.choose_unit"),
-        _ => catalog.text("offers.title"),
-    };
     let view_modifiers: Vec<ModifierKind> = view
         .modifiers
         .iter()
@@ -96,10 +76,11 @@ pub fn offers_window_in(
             .map_or(&[][..], Vec::as_slice)
             .iter()
             .map(|&card| {
-                let mut shown = offer_card(card, legal_actions, catalog);
-                if gaining {
-                    shown.take = super::gain::gain_take(card, view, legal_actions, mode, catalog);
-                } else if let Some(learn) = learn_button(card, view, legal_actions, catalog) {
+                let mut shown = match card {
+                    CommonCard::Deed(deed) => super::hand::window_card(deed, catalog),
+                    CommonCard::Unit(unit) => unit_card(unit, catalog),
+                };
+                if let Some(learn) = learn_button(card, view, legal_actions, catalog) {
                     shown.take = Some(learn);
                 } else if let Some(cast) =
                     super::spells::cast_offer_button(card, view, legal_actions, catalog)
@@ -107,55 +88,31 @@ pub fn offers_window_in(
                     // Spec 054 : un sort de l'offre lancé avec Don pour la magie.
                     shown.take = Some(cast);
                 }
-                let mut view = shown;
-                if let CommonCard::Unit(unit) = card
-                    && choosing_unit
-                {
-                    view.take = unit_reward_take(unit, legal_actions, catalog);
-                }
                 // Spec 057 : Appel aux armes et Appel à la gloire.
-                if let CommonCard::Unit(unit) = card
-                    && !choosing_unit
-                {
-                    view.uses = offer_unit_uses(unit, legal_actions, catalog);
+                if let CommonCard::Unit(unit) = card {
+                    shown.uses = offer_unit_uses(unit, legal_actions, catalog);
                     if let Some(recruit) =
                         free_recruit_take(unit, &view_modifiers, legal_actions, catalog)
                     {
-                        view.take = Some(recruit);
+                        shown.take = Some(recruit);
                     }
                 }
                 // Spec 041 : une action avancée dans l'offre d'unités vient d'un monastère.
                 if offer == Offer::Units && matches!(card, CommonCard::Deed(_)) {
-                    view.mark = Some(catalog.text("offers.monastery_card"));
+                    shown.mark = Some(catalog.text("offers.monastery_card"));
                 }
-                view
+                shown
             })
             .collect(),
     };
     OffersWindow {
-        title,
-        closable: !choosing && !choosing_unit,
+        title: catalog.text("offers.title"),
         close: Button {
             label: catalog.text("offers.close"),
-            command: if gaining {
-                Command::CancelChoice
-            } else {
-                Command::CloseOffers
-            },
-            // Spec 071, C23 : Échap, seulement quand la fenêtre se ferme.
-            shortcut: (!choosing && !choosing_unit)
-                .then(|| shortcut_label(Shortcut::Cancel, catalog))
-                .flatten(),
+            command: Command::CloseOffers,
+            // Spec 071, C23 : Échap.
+            shortcut: shortcut_label(Shortcut::Cancel, catalog),
         },
-        decline: legal_actions
-            .iter()
-            .position(|action| *action == Action::DeclineUnitReward)
-            .filter(|_| choosing_unit)
-            .map(|index| Button {
-                label: catalog.text("reward.decline_unit"),
-                command: Command::Play(index),
-                shortcut: None,
-            }),
         columns: vec![
             column(Offer::AdvancedActions, "offers.advanced_actions"),
             column(Offer::Spells, "offers.spells"),

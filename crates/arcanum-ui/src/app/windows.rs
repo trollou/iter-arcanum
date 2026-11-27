@@ -362,16 +362,14 @@ pub(super) fn offers_window(
     let mut clicked = None;
     let mut open = true;
     let (max_width, max_height) = window_limits(ctx);
-    let mut frame = egui::Window::new(&window.title)
+    let frame = egui::Window::new(&window.title)
         .id(egui::Id::unique("offers_window"))
         .min_width(title_min_width(ctx, &window.title))
         .max_width(max_width)
         .collapsible(false)
         .resizable(false)
-        .anchor(egui::Align2::CENTER_CENTER, vec2(0.0, 0.0));
-    if window.closable {
-        frame = frame.open(&mut open);
-    }
+        .anchor(egui::Align2::CENTER_CENTER, vec2(0.0, 0.0))
+        .open(&mut open);
     frame.show(ctx, |ui| {
         let id = egui::Id::unique("offers_rows");
         egui::ScrollArea::vertical()
@@ -418,22 +416,15 @@ pub(super) fn offers_window(
                     offer(ui, index, max_width, None);
                 }
             });
-        if window.closable
-            && shortcut_button(
-                ui,
-                &window.close.label,
-                window.close.shortcut.as_deref(),
-                catalog,
-            )
-            .clicked()
+        if shortcut_button(
+            ui,
+            &window.close.label,
+            window.close.shortcut.as_deref(),
+            catalog,
+        )
+        .clicked()
         {
             clicked = Some(window.close.command);
-        }
-        // Spec 045 : « Renoncer » à l'unité de récompense, sans jeton de commandement libre.
-        if let Some(decline) = &window.decline
-            && shortcut_button(ui, &decline.label, decline.shortcut.as_deref(), catalog).clicked()
-        {
-            clicked = Some(decline.command);
         }
     });
     if !open {

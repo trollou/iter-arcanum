@@ -100,7 +100,8 @@ fn offers_window_lists_the_three_offers() {
     let seen = view(&state, SOLO);
     let window = offers_window(&seen, &[], &catalog);
     assert_eq!(window.title, "Offres");
-    assert!(window.closable);
+    // Spec #20 (test modifié) : `closable` retiré, la fenêtre Offres se ferme toujours.
+    assert_eq!(window.close.command, Command::CloseOffers);
     let titles: Vec<&str> = window.columns.iter().map(|c| c.title.as_str()).collect();
     assert_eq!(titles, ["Actions avancées", "Sorts", "Unités"]);
     for column in &window.columns {

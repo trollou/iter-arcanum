@@ -197,7 +197,7 @@ pub(super) fn bottom_buttons(
     let choice = catalog.text("end_turn.disabled.choice");
     let offers_reason = if fighting {
         Some(catalog.text("offers.disabled.combat"))
-    } else if !matches!(state.mode, ScreenMode::Normal) {
+    } else if !matches!(state.mode, ScreenMode::Normal) || choosing_card(view) {
         Some(choice.clone())
     } else {
         None
@@ -298,4 +298,14 @@ pub(super) fn pile_window(
             shortcut: shortcut_label(Shortcut::Cancel, catalog),
         },
     })
+}
+
+/// Spec #20, C19 : un choix de carte de fin de tour attend (artefact, sort, compétence, action
+/// avancée, unité) ; la fenêtre Offres reste fermée.
+pub(crate) fn choosing_card(view: &PlayerView) -> bool {
+    !view.drawn_artifacts.is_empty()
+        || view.spell_choices > 0
+        || !view.skill_choice.is_empty()
+        || view.advanced_action_choices > 0
+        || view.unit_choices > 0
 }

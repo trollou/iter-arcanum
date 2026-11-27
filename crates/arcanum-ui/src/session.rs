@@ -713,7 +713,10 @@ impl GameSession {
                 self.mode = ScreenMode::PickingTacticDice(picks);
             }
             Command::ReopenScore => self.score_closed = false,
-            Command::OpenOffers => self.offers_open = true,
+            // Spec #20, C19 : pas pendant un choix de carte.
+            Command::OpenOffers => {
+                self.offers_open = !crate::screen::choosing_card(&self.view());
+            }
             Command::CloseOffers => self.offers_open = false,
             // Spec 073 : la fenêtre de la défausse (étape 10).
             Command::OpenDiscard => {
