@@ -274,7 +274,7 @@ fn hover_describes_ruins() {
 
     let altar = lines(Ruins::default());
     assert!(altar.contains(&"Ruines".to_string()), "{altar:?}");
-    assert!(altar.contains(&"Autel : offrande de 3 mana bleu pour 7 Gloire".to_string()));
+    assert!(altar.contains(&"Autel : offrande de 3 mana <blue>bleu</blue> pour 7 Gloire".to_string()));
     no_shield_word(&altar);
 
     let unit = lines(Ruins {
