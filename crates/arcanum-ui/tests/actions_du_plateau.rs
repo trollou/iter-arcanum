@@ -186,7 +186,7 @@ fn board_action_tooltip_carries_the_warning() {
         interact.tooltip,
         [
             "Interagir avec les habitants",
-            "Interagir fait perdre : 2 mouvement, 0 influence",
+            "Interagir fait perdre : 2 mouvement",
             "Raccourci : I",
         ]
     );

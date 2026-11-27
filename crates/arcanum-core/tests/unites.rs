@@ -819,9 +819,10 @@ fn a_spent_or_wounded_unit_can_be_disbanded() {
     assert_eq!(state.units(SOLO), &[OwnedUnit::recruited(guardsmen())]);
 }
 
-// L3 — spec 040 : l'influence d'avant l'interaction est perdue.
+// L3 — spec 040, variante maison (issue #95) : l'influence d'une unité activée avant
+// l'interaction reste.
 #[test]
-fn influence_before_interacting_is_lost() {
+fn influence_before_interacting_is_kept() {
     let state = Units {
         owned: vec![peasants()],
         ..Units::default()
@@ -830,7 +831,7 @@ fn influence_before_interacting_is_lost() {
     let state = done(&state, activate(peasants(), 1, 0));
     assert_eq!(state.influence_points(SOLO), 2);
     let state = done(&state, Action::Interact);
-    assert_eq!(state.influence_points(SOLO), 0);
+    assert_eq!(state.influence_points(SOLO), 2);
 }
 
 // L8 — Compendium, *Resting* S3 : activer une unité n'empêche pas le repos.

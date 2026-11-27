@@ -73,7 +73,12 @@ unités avec la 042. Cette spec pose le cadre que ces deux specs remplissent (Q1
 - **Pas au repos** (MKUE p. 6, 7) : après une interaction, la fin du tour ne propose plus de repos, comme après un déplacement
   (spec 034).
 - **Points perdus** (MKUE p. 6, 6.e ; Compendium, *Influence* S1) : au moment où l'interaction commence, les points de mouvement
-  **et d'influence** non dépensés sont perdus, comme au défi et à la provocation (spec 030). L'interface prévient (Interface).
+  non dépensés sont perdus, comme au défi et à la provocation (spec 030). L'interface prévient (Interface).
+- **Variante maison : l'influence reste** (Mathieu, 2026-11-27, issue #95) : contre MKUE p. 6, 6.e, l'influence jouée avant
+  l'interaction est gardée, pour que l'ordre des clics ne coûte rien au joueur ; le bonus de réputation s'y ajoute. Seule
+  l'interaction la garde : défi, incendie, aventure et assaut la perdent toujours (sinon Diplomatie bloquerait avec de l'influence
+  du déplacement). Effet sur le jeu jugé négligeable : le reste de Learning après son achat servirait à l'interaction ; les bonus
+  « pendant l'interaction » (Nobles manières) restent réservés aux cartes jouées après.
 - **Bonus de réputation** (MKUE p. 8, 2.a et 5.a ; Compendium, *Influence* S2) : aussitôt après, le bonus ou malus de la case de
   réputation devient l'influence de départ de l'interaction. Il est appliqué **une fois** : un changement de réputation ensuite
   ne le change plus ce tour. Un malus donne une **influence négative** (Compendium, *Influence* S1, exemple du monastère) : les
@@ -90,7 +95,7 @@ unités avec la 042. Cette spec pose le cadre que ces deux specs remplissent (Q1
 ```
 Début du tour, figurine sur le village (2, −3), réputation +2 (bonus +1)
   Marche (Mouvement 2)                  ┐ phase de déplacement : bouger, explorer
-  …                                     ┘ (Promesse jouée ici : son Influence 2 sera perdue)
+  …                                     ┘ (Promesse jouée ici : son Influence 2 reste, issue #95)
   Interact                              → InteractionStarted { site: Village, bonus: +1 }
                                           mouvement 0, influence +1 (bonus), plus de déplacement
   Nobles manières renforcée (dé blanc)  → CardPlayed, influence 5 ; FameGained 1 ; ReputationChanged +1
@@ -173,15 +178,15 @@ Interagir :
 - **C8** — Étant donné la figurine sur le village du bac à sable (2, −3), réputation 0, alors `Interact` est légale ; sur la plaine
   (2, −2), non (`interact_only_on_a_village_or_monastery`) — MKUE p. 8, 1.
 - **C9** — Étant donné 3 points de mouvement et 2 d'influence non dépensés, réputation +2, quand le joueur interagit, alors
-  `InteractionStarted { bonus: +1 }` ; mouvement 0, influence 1 (`interacting_loses_unspent_points_then_adds_the_bonus`) — MKUE
-  p. 6, 6.e ; p. 8, 2.a.
+  `InteractionStarted { bonus: +1 }` ; mouvement 0, influence 3 (`interacting_keeps_unspent_influence_and_adds_the_bonus`) —
+  MKUE p. 6, 6.e ; p. 8, 2.a ; variante maison (issue #95).
 - **C10** — Réputation −4 (malus −2), interaction sans carte jouée : influence −2 ; puis Promesse : influence 0
   (`a_penalty_gives_negative_influence`) — Compendium, *Influence* S1.
 - **C11** — Pendant l'interaction, une carte qui fait changer la réputation (Nobles manières renforcée) ne change pas l'influence
   déjà comptée : le bonus reste celui du début (`the_bonus_is_applied_once`) — MKUE p. 8, 2.a et 5.a.
 - **C12** — Réputation −1 (bonus 0), Menace renforcée jouée **avant** d'interagir : réputation −2 aussitôt, puis l'interaction donne
-  le malus −1, et les 5 d'influence de Menace sont perdus (`threaten_before_interacting_lowers_the_bonus`) — Compendium,
-  *Threaten* S1 ; MKUE p. 6, 6.e.
+  le malus −1, qui s'ajoute aux 5 d'influence de Menace : 4 (`threaten_before_interacting_lowers_the_bonus`) — Compendium,
+  *Threaten* S1 ; variante maison (issue #95).
 - **C13** — Après `Interact` : plus de `MoveHero`, `FollowRoute`, `Explore`, `Challenge`, ni `AnnounceEndOfRound` ; plus de
   deuxième `Interact` ; les fins de tour n'ont pas de repos (`interacting_is_the_action_of_the_turn`) — MKUE p. 6, 6.d et 7.
 - **C14** — Pendant l'interaction, Marche ne se joue que de côté pour Influence 1 ; Improvisation n'offre que Influence 3 ; un soin
@@ -257,7 +262,7 @@ nouveaux ne sont pas filtrés.
 | `reputation.line` | `reputation`, `bonus` | Réputation : {reputation} · bonus d'interaction {bonus} | Reputation: {reputation} · interaction bonus {bonus} |
 | `reputation.line_x` | — | Réputation : X · interaction impossible | Reputation: X · no interaction |
 | `interaction.button` | — | Interagir avec les habitants | Interact with the locals |
-| `interaction.lost_points` | `move`, `influence` | Interagir fait perdre : {move} mouvement, {influence} influence | Interacting loses: {move} move, {influence} influence |
+| `interaction.lost_points` | `move` | Interagir fait perdre : {move} mouvement | Interacting loses: {move} move |
 | `interaction.header` | `site` | Interaction : {site} | Interaction: {site} |
 | `interaction.nothing_to_buy` | — | Rien à acheter ici pour l'instant | Nothing to buy here yet |
 | `effect.influence_reputation` | `amount`, `reputation` | Influence {amount} ; Réputation {reputation} | Influence {amount}; Reputation {reputation} |
@@ -274,7 +279,7 @@ Les nombres signés s'écrivent avec leur signe (+1, −2, 0). `{bonus}` de `eff
 - **Panneau latéral** : `reputation.line` (ou `reputation.line_x`) sous la ligne de gloire et de niveau (spec 035). Pas de dessin
   de la piste : du texte suffit, visuels provisoires.
 - **Bouton « Interagir avec les habitants »** sous les points, quand `Interact` est légale ; dessous, `interaction.lost_points`
-  quand il reste des points de mouvement ou d'influence (ils seraient perdus, C9).
+  quand il reste des points de mouvement (ils seraient perdus, C9 ; l'influence reste, issue #95).
 - **En interaction** : `interaction.header` en tête des points, puis `interaction.nothing_to_buy` ; la ligne `points.line`
   montre l'influence signée. Les specs 041 et 042 remplacent la ligne « Rien à acheter » par leurs achats.
 - **Main** : les textes calculés des nouvelles formes d'effet (`effect.influence_reputation`, `effect.influence_in_interaction`).
