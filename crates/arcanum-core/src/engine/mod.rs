@@ -61,7 +61,7 @@ pub use legal::{
 };
 pub(crate) use legal::{
     after_forced_withdrawal, combinations, forced_withdrawal_path, must_announce_end_of_round,
-    recruitable_units, turn_action_taken, wings_of_night_castable,
+    recruitable_units, skill_choice_cards, turn_action_taken, wings_of_night_castable,
 };
 
 /// Quel joueur doit choisir, et quel type de choix.

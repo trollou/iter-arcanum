@@ -477,7 +477,7 @@ fn base_view(state: &GameState, player: PlayerId) -> PlayerView {
             })
             .collect(),
         lowest_advanced_action_only: state.lowest_advanced_action_only(player),
-        skill_choice_cards: Vec::new(),
+        skill_choice_cards: crate::engine::skill_choice_cards(state, player),
         set_aside: state.set_aside(player).to_vec(),
         extra_turn: state.extra_turn(player),
         meditation: state.player(player).and_then(|p| p.meditation.clone()),
