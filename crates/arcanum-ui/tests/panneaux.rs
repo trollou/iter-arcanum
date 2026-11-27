@@ -380,7 +380,7 @@ fn effect_button_tooltips() {
     );
     assert_eq!(
         march.strong_effects[0].tooltip,
-        "Renforcer : Mouvement 4\nIl faut un mana vert : un dé vert ou or de la Source, un cristal ou un jeton vert."
+        "Renforcer : Mouvement 4\nIl faut un mana <green>vert</green> : un dé <green>vert</green> ou <gold>or</gold> de la Source, un cristal ou un jeton <green>vert</green>."
     );
 }
 
@@ -694,8 +694,8 @@ fn unit_option_opens_mana_choice() {
     assert_eq!(
         labels,
         [
-            "Parade de feu 4 · Dé rouge",
-            "Parade de feu 4 · Cristal rouge (1 sur 3)"
+            "Parade de feu 4 · Dé <red>rouge</red>",
+            "Parade de feu 4 · Cristal <red>rouge</red> (1 sur 3)"
         ]
     );
 }
@@ -829,7 +829,7 @@ fn spent_tokens_shown() {
         spent,
         [(
             ManaColor::Basic(BasicColor::Blue),
-            "Jeton de mana bleu : dépensé ce tour"
+            "Jeton de mana <blue>bleu</blue> : dépensé ce tour"
         )]
     );
 }

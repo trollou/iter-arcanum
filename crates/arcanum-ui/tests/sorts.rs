@@ -263,7 +263,8 @@ fn strong_spell_at_night_pays_color_then_black() {
     assert!(
         labels
             .iter()
-            .any(|label| label.contains("Cristal rouge") && label.contains("Jeton noir")),
+            .any(|label| label.contains("Cristal <red>rouge</red>")
+                && label.contains("Jeton <black>noir</black>")),
         "{labels:?}"
     );
 }
@@ -301,7 +302,10 @@ fn tremor_chooses_its_enemy_and_names_its_options() {
     assert_eq!(labels.len(), 2, "{labels:?}");
     assert!(labels[0].contains(&enemy_name(swordsmen(), &catalog)));
     assert!(labels[1].contains(&enemy_name(prowlers(), &catalog)));
-    assert!(labels[0].contains("Cristal vert"), "{labels:?}");
+    assert!(
+        labels[0].contains("Cristal <green>vert</green>"),
+        "{labels:?}"
+    );
 }
 
 // Issue #107 : un libellé écrit par option, de base et renforcée, en fr et en en.
@@ -547,7 +551,7 @@ fn magic_talent_offers_cast_button_on_spells_of_its_color() {
     assert!(
         lines
             .iter()
-            .any(|line| line.ends_with(": un sort rouge de l'offre")),
+            .any(|line| line.ends_with(": un sort <red>rouge</red> de l'offre")),
         "{lines:?}"
     );
     let state = done(&state, declare(&[prowlers()]));

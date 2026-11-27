@@ -188,7 +188,9 @@ fn strong_button_explains_missing_mana() {
     assert!(!button.enabled);
     assert_eq!(
         button.tooltip.as_deref(),
-        Some("Il faut un mana vert : un dé vert ou or de la Source, un cristal ou un jeton vert.")
+        Some(
+            "Il faut un mana <green>vert</green> : un dé <green>vert</green> ou <gold>or</gold> de la Source, un cristal ou un jeton <green>vert</green>."
+        )
     );
 
     // Le dé bleu pris pour Endurance : plus de dé ce tour.
@@ -207,7 +209,7 @@ fn strong_button_explains_missing_mana() {
     assert!(!button.enabled);
     assert_eq!(
         button.tooltip.as_deref(),
-        Some("Dé du tour déjà pris : il faut un cristal ou un jeton vert.")
+        Some("Dé du tour déjà pris : il faut un cristal ou un jeton <green>vert</green>.")
     );
 }
 
@@ -265,7 +267,11 @@ fn mana_choice_lists_payments() {
     let labels: Vec<&str> = prompt.payments.iter().map(|b| b.label.as_str()).collect();
     assert_eq!(
         labels,
-        ["Dé vert", "Dé or (vaut vert)", "Cristal vert (1 sur 3)"]
+        [
+            "Dé <green>vert</green>",
+            "Dé <gold>or</gold> (vaut <green>vert</green>)",
+            "Cristal <green>vert</green> (1 sur 3)"
+        ]
     );
     let actions: Vec<Action> = prompt
         .payments
@@ -385,14 +391,14 @@ fn panel_shows_taken_die() {
     let names = |dice: &[arcanum_ui::SourceDie]| {
         dice.iter().map(|die| die.name.clone()).collect::<Vec<_>>()
     };
-    assert_eq!(names(&source.dice), ["or"]);
+    assert_eq!(names(&source.dice), ["<gold>or</gold>"]);
     assert_eq!(source.taken_title.as_deref(), Some("pris :"));
-    assert_eq!(names(&source.taken), ["vert"]);
+    assert_eq!(names(&source.taken), ["<green>vert</green>"]);
     assert_eq!(
         source.taken[0].tooltip,
-        "Dé de mana vert : pris ce tour, relancé à la fin du tour."
+        "Dé de mana <green>vert</green> : pris ce tour, relancé à la fin du tour."
     );
-    assert_eq!(names(&source.depleted), ["noir"]);
+    assert_eq!(names(&source.depleted), ["<black>noir</black>"]);
 }
 
 // Spec 022 C29
@@ -429,8 +435,8 @@ fn play_area_names_the_mana_paid() {
     assert_eq!(
         lines(&state),
         [
-            "Marche (renforcée, dé vert) : Mouvement 4",
-            "Endurance (renforcée, cristal bleu) : Mouvement 4"
+            "Marche (renforcée, dé <green>vert</green>) : Mouvement 4",
+            "Endurance (renforcée, cristal <blue>bleu</blue>) : Mouvement 4"
         ]
     );
     let gold = play(
@@ -440,7 +446,10 @@ fn play_area_names_the_mana_paid() {
             play: strong(0, ManaPayment::Die(0)),
         },
     );
-    assert_eq!(lines(&gold), ["Promesse (renforcée, dé or) : Influence 4"]);
+    assert_eq!(
+        lines(&gold),
+        ["Promesse (renforcée, dé <gold>or</gold>) : Influence 4"]
+    );
 }
 
 // Spec 022 C30

@@ -561,16 +561,16 @@ fn panel_offers_spells_at_mage_tower() {
         purchases,
         [
             (
-                "Acheter : Éclair de feu (7 + mana rouge)".to_string(),
+                "Acheter : Éclair de feu (7 + mana <red>rouge</red>)".to_string(),
                 Some(Command::ChooseSpellMana(fireball()))
             ),
             // Ni dé bleu ni cristal bleu.
             (
-                "Acheter : Tempête de neige (7 + mana bleu)".to_string(),
+                "Acheter : Tempête de neige (7 + mana <blue>bleu</blue>)".to_string(),
                 None
             ),
             (
-                "Acheter : Exposition (7 + mana blanc)".to_string(),
+                "Acheter : Exposition (7 + mana <white>blanc</white>)".to_string(),
                 Some(Command::ChooseSpellMana(expose()))
             ),
         ]

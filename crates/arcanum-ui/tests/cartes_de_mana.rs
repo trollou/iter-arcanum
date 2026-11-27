@@ -320,7 +320,7 @@ fn play_area_shows_mana_tokens() {
     );
     assert_eq!(
         tokens.tokens[0].tooltip,
-        "Jeton de mana bleu : à utiliser ce tour, rendu à la réserve à la fin du tour."
+        "Jeton de mana <blue>bleu</blue> : à utiliser ce tour, rendu à la réserve à la fin du tour."
     );
     assert_eq!(
         screen.play_area[0].text,
@@ -377,7 +377,7 @@ fn hand_shows_mana_options() {
     assert_eq!(
         red.tooltip.as_deref(),
         Some(
-            "Il faut un mana rouge : un dé rouge ou or de la Source, un cristal ou un jeton rouge."
+            "Il faut un mana <red>rouge</red> : un dé <red>rouge</red> ou <gold>or</gold> de la Source, un cristal ou un jeton <red>rouge</red>."
         )
     );
     assert_eq!(
@@ -417,7 +417,7 @@ fn mana_choice_lists_tokens() {
         .expect("bandeau du choix du mana");
     assert_eq!(
         labels(prompt.payments.iter().map(|b| &b.label)),
-        ["Dé bleu", "Jeton bleu"]
+        ["Dé <blue>bleu</blue>", "Jeton <blue>bleu</blue>"]
     );
     let token = action_of(&state, prompt.payments[1].command);
     assert_eq!(
@@ -430,7 +430,7 @@ fn mana_choice_lists_tokens() {
     let after = play(&state, token);
     assert_eq!(
         screen_of(&after, &catalog).play_area[0].text,
-        "Endurance (renforcée, jeton bleu) : Mouvement 4"
+        "Endurance (renforcée, jeton <blue>bleu</blue>) : Mouvement 4"
     );
 }
 
@@ -465,7 +465,10 @@ fn crystallize_chooses_its_mana() {
     );
     assert_eq!(
         labels(prompt.payments.iter().map(|b| &b.label)),
-        ["Cristal rouge (1 sur 3)", "Jeton rouge"]
+        [
+            "Cristal <red>rouge</red> (1 sur 3)",
+            "Jeton <red>rouge</red>"
+        ]
     );
     assert_eq!(
         action_of(&state, prompt.payments[0].command),
@@ -619,7 +622,12 @@ fn set_die_mode_chooses_die_then_color() {
     let prompt = screen.set_dice_prompt.as_ref().expect("bandeau");
     assert_eq!(
         labels(prompt.colors.iter().map(|button| &button.label)),
-        ["rouge", "bleu", "blanc", "vert"]
+        [
+            "<red>rouge</red>",
+            "<blue>bleu</blue>",
+            "<white>blanc</white>",
+            "<green>vert</green>"
+        ]
     );
     assert!(screen.source.dice.iter().all(|die| die.pick.is_none()));
     assert_eq!(
@@ -666,7 +674,10 @@ fn set_die_mode_then_chooses_mana() {
     let prompt = screen.mana_prompt.expect("choix du mana");
     assert_eq!(
         labels(prompt.payments.iter().map(|button| &button.label)),
-        ["Dé blanc", "Cristal blanc (1 sur 3)"]
+        [
+            "Dé <white>blanc</white>",
+            "Cristal <white>blanc</white> (1 sur 3)"
+        ]
     );
     assert_eq!(
         action_of(&state, prompt.payments[0].command),
@@ -792,7 +803,7 @@ fn panel_shows_set_die() {
     assert_eq!(source.taken[0].color, basic(Green));
     assert_eq!(
         source.taken[0].tooltip,
-        "Dé de mana vert : mis sur vert ce tour, rendu sans être relancé."
+        "Dé de mana <green>vert</green> : mis sur <green>vert</green> ce tour, rendu sans être relancé."
     );
 }
 
@@ -888,7 +899,10 @@ fn concentration_mode_lists_targets() {
     );
     assert_eq!(
         labels(prompt.payments.iter().map(|b| &b.label)),
-        ["Dé vert", "Dé or (vaut vert)"]
+        [
+            "Dé <green>vert</green>",
+            "Dé <gold>or</gold> (vaut <green>vert</green>)"
+        ]
     );
     assert_eq!(
         action_of(&state, prompt.payments[0].command),
@@ -920,7 +934,7 @@ fn concentration_mode_lists_targets() {
             .map(|line| line.text.as_str())
             .collect::<Vec<_>>(),
         [
-            "Concentration (renforcée, dé vert) : Effet renforcé d'une autre carte, gratuit, +2",
+            "Concentration (renforcée, dé <green>vert</green>) : Effet renforcé d'une autre carte, gratuit, +2",
             "Marche (renforcée gratuitement) : Mouvement 6"
         ]
     );
@@ -963,7 +977,12 @@ fn concentration_with_mana_draw_sets_a_die() {
     let prompt = screen.set_dice_prompt.expect("bandeau");
     assert_eq!(
         labels(prompt.colors.iter().map(|b| &b.label)),
-        ["rouge", "bleu", "blanc", "vert"]
+        [
+            "<red>rouge</red>",
+            "<blue>bleu</blue>",
+            "<white>blanc</white>",
+            "<green>vert</green>"
+        ]
     );
     assert_eq!(
         action_of(&state, prompt.colors[2].command),

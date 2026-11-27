@@ -258,14 +258,14 @@ fn unit_ability_buttons() {
         payments,
         [
             (
-                "Soin 2 · Dé vert",
+                "Soin 2 · Dé <green>vert</green>",
                 Command::Play(index_of(
                     &state,
                     &activate(herbalists(), 0, 0, &[ManaPayment::Die(GREEN_DIE)])
                 ))
             ),
             (
-                "Soin 2 · Cristal vert (1 sur 3)",
+                "Soin 2 · Cristal <green>vert</green> (1 sur 3)",
                 Command::Play(index_of(
                     &state,
                     &activate(herbalists(), 0, 0, &[ManaPayment::Crystal])
@@ -648,12 +648,12 @@ fn rejuvenate_offers_one_button_per_unit() {
                 Command::Play(index_of(&state, &ready(guardsmen())))
             ),
             (
-                "Renforcer : Rendre disponible une unité de niveau 3 au plus · Paysans · Dé vert",
+                "Renforcer : Rendre disponible une unité de niveau 3 au plus · Paysans · Dé <green>vert</green>",
                 Command::Play(index_of(&state, &strong(peasants())))
             ),
             (
                 "Renforcer : Rendre disponible une unité de niveau 3 au plus · Gardes d'Utem · Dé \
-                 vert",
+                 <green>vert</green>",
                 Command::Play(index_of(&state, &strong(guardsmen())))
             ),
         ]

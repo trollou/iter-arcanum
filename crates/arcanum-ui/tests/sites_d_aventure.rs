@@ -553,7 +553,7 @@ fn panel_announces_adventure_rewards() {
     let screen = screen_of(&dungeon_won(ManaColor::Basic(BasicColor::Green)), &catalog);
     assert_eq!(
         screen.reward_die.as_deref(),
-        Some("Dé de récompense : vert, un artefact")
+        Some("Dé de récompense : <green>vert</green>, un artefact")
     );
     assert_eq!(
         screen.reward_pending.as_deref(),
@@ -563,7 +563,7 @@ fn panel_announces_adventure_rewards() {
         screen_of(&dungeon_won(ManaColor::Gold), &catalog)
             .reward_die
             .as_deref(),
-        Some("Dé de récompense : or, un sort")
+        Some("Dé de récompense : <gold>or</gold>, un sort")
     );
     assert_eq!(
         screen_of(&Adventure::default().state(), &catalog).reward_die,
@@ -610,10 +610,10 @@ fn crystal_color_window() {
     assert_eq!(
         labels_and_commands(&window.colors),
         [
-            ("rouge", &None),
-            ("bleu", &choose(BasicColor::Blue)),
-            ("blanc", &choose(BasicColor::White)),
-            ("vert", &choose(BasicColor::Green)),
+            ("<red>rouge</red>", &None),
+            ("<blue>bleu</blue>", &choose(BasicColor::Blue)),
+            ("<white>blanc</white>", &choose(BasicColor::White)),
+            ("<green>vert</green>", &choose(BasicColor::Green)),
         ]
     );
     // Spec 071, C22 : 1 à 4, dans l'ordre des couleurs.
@@ -762,10 +762,13 @@ fn end_turn_sends_the_glade_choice() {
 fn panel_announces_glade_token() {
     let catalog = french();
     for (time, text) in [
-        (TimeOfDay::Day, "Clairière magique : +1 jeton de mana or"),
+        (
+            TimeOfDay::Day,
+            "Clairière magique : +1 jeton de mana <gold>or</gold>",
+        ),
         (
             TimeOfDay::Night,
-            "Clairière magique : +1 jeton de mana noir",
+            "Clairière magique : +1 jeton de mana <black>noir</black>",
         ),
     ] {
         let state = marched(

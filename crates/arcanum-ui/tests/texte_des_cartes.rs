@@ -325,3 +325,47 @@ fn mana_colors_are_tagged_in_texts() {
         .count();
     assert!(tagged >= 30, "{tagged} textes balisés");
 }
+
+/// Les clés qui reçoivent une couleur de mana calculée (`{color}`, `{token}`, `{crystal}`…) :
+/// invites de paiement, infobulles des dés et des jetons, lignes de la zone de jeu (issue #106).
+fn color_parameter_keys(catalog: &Catalog) -> Vec<String> {
+    catalog
+        .keys()
+        .into_iter()
+        .filter(|key| {
+            catalog.parameters(key).is_some_and(|parameters| {
+                ["color", "token", "crystal"]
+                    .iter()
+                    .any(|name| parameters.contains(*name))
+            })
+        })
+        .collect()
+}
+
+// Issue #106 (C12 étendu) : les textes à couleur calculée balisent aussi les mots de couleur
+// qu'ils écrivent eux-mêmes (« Dé <gold>or</gold> (vaut {color}) »), les mêmes dans les deux
+// langues.
+#[test]
+fn mana_colors_are_tagged_in_color_parameter_texts() {
+    let (fr, en) = (catalog("fr"), catalog("en"));
+    let keys = color_parameter_keys(&fr);
+    assert!(keys.len() >= 40, "{} clés", keys.len());
+    let mut faults = Vec::new();
+    for key in &keys {
+        for (language, catalog) in [("fr", &fr), ("en", &en)] {
+            let untagged = untagged_colors(&catalog.text(key), language);
+            if !untagged.is_empty() {
+                faults.push(format!("{language} {key} : {untagged:?}"));
+            }
+        }
+        if tags(&fr.text(key)) != tags(&en.text(key)) {
+            faults.push(format!("{key} : balises différentes en fr et en en"));
+        }
+    }
+    assert!(
+        faults.is_empty(),
+        "{} fautes :\n{}",
+        faults.len(),
+        faults.join("\n")
+    );
+}
