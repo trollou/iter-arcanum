@@ -320,7 +320,7 @@ l'avenant) :
 Ajouts de l'implémentation (fil écran, signalés dans la PR) : `effect.crystal_from_die` sans `{color}` (« Dé de la Source :
 cristal de sa couleur, puis relancer le dé », l'effet ne connaît pas le dé avant le choix) ; le bouton « Apprendre » sous
 `offers.learn` (section `offers` existante) ; `discard_choice.destroy_prompt` et `discard_choice.destroy` (« Choisissez la carte à
-détruire », « Détruire cette carte »), `play_area.line_destroying` (« Rage détruite » dans la zone de jeu),
+détruire », « Détruire »), `play_area.line_destroying` (« Rage détruite » dans la zone de jeu),
 `concentration.maximal_prompt` (cible d'Effet maximum), `gain_choice.prompt` (carte à prendre dans la fenêtre Offres),
 `die_choice.prompt` (dé de Tempête de mana), `modifier.return_spent_crystals_list` (cristaux à rendre, C33).
 

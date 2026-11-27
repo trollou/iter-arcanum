@@ -897,10 +897,10 @@
   },
   "discard_choice": {
     "prompt": "{card} : {effect}. Choisissez la carte à défausser.",
-    "pick": "Défausser cette carte",
+    "pick": "Défausser",
     "cancel": "Annuler",
     "destroy_prompt": "{card} : {effect}. Choisissez la carte à détruire.",
-    "destroy": "Détruire cette carte"
+    "destroy": "Détruire"
   },
   "play_area": {
     "title": "Zone de jeu",

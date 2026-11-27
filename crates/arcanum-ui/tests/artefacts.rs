@@ -697,7 +697,7 @@ fn book_of_wisdom_destroys_then_takes() {
     let [button] = destroy.plays.as_slice() else {
         panic!("{:?}", destroy.plays);
     };
-    assert_eq!(button.label, "Détruire cette carte");
+    assert_eq!(button.label, "Détruire");
     assert!(held(&screen, card(March, 1)).plays.is_empty());
 }
 

@@ -307,7 +307,22 @@ impl IterArcanumApp {
         // L'encart de côté, ou la case « Défausser » en fin du tour (issue privée 282), se pose d'abord à
         // droite : le nom, tronqué au besoin, prend la place qui reste à gauche.
         let row = vec2(ui.available_width(), ui.spacing().interact_size.y);
+        // Issue #69 : les boutons du mode choix (« Défausser », « Détruire ») se posent en haut à
+        // droite, comme la case « Défausser » de la fin du tour et « Prendre » des fenêtres.
+        let choosing = card.basic_effects.is_empty()
+            && card.strong_effects.is_empty()
+            && card.unit_plays.is_empty()
+            && !card.plays.is_empty();
         ui.allocate_ui_with_layout(row, Layout::right_to_left(Align::Center), |ui| {
+            if choosing {
+                for button in &card.plays {
+                    if shortcut_button(ui, &button.label, button.shortcut.as_deref(), &self.catalog)
+                        .clicked()
+                    {
+                        clicked = Some(button.command);
+                    }
+                }
+            }
             if !card.sideways.is_empty() {
                 clicked = self
                     .sideways_buttons(ui, sideways_title, &card.sideways)
@@ -372,20 +387,9 @@ impl IterArcanumApp {
             ui.colored_label(RESISTANCE_TEXT, note);
         }
         clicked = self.effect_buttons(ui, &card.basic_effects).or(clicked);
-        // Mode choix (défausse, Concentration…) : les boutons d'aujourd'hui, à la place des
+        // Mode choix (défausse, Concentration…) : son bouton est dans l'en-tête, à la place des
         // boutons d'effet.
-        // Une rangée vide prendrait de la place : la Blessure déborderait (spec 077, L3).
-        if card.basic_effects.is_empty() && card.strong_effects.is_empty() && !card.plays.is_empty()
-        {
-            ui.horizontal_wrapped(|ui| {
-                for button in &card.plays {
-                    if shortcut_button(ui, &button.label, button.shortcut.as_deref(), &self.catalog)
-                        .clicked()
-                    {
-                        clicked = Some(button.command);
-                    }
-                }
-            });
+        if choosing {
             for button in card.paid_plays.iter().chain(&card.strong_plays) {
                 clicked = strong_button(ui, button).or(clicked);
             }
@@ -443,12 +447,31 @@ impl IterArcanumApp {
     }
 
     /// Une unité posée (spec 073, « Unité ») : en-tête, bande d'illustration (spec 077), armure et
-    /// résistances, état,
-    /// puis un bouton d'effet par option ; « Renvoyer » à leur place pendant le choix.
+    /// résistances, état, puis un bouton d'effet par option ; pendant le choix, « Renvoyer » en haut
+    /// à droite à leur place (issue #69).
     fn unit_tile(&mut self, ui: &mut egui::Ui, line: &UnitLine) -> Option<Command> {
         let mut clicked = None;
         ui.spacing_mut().item_spacing.y = 3.0;
-        ui.add(egui::Label::new(egui::RichText::new(&line.text).strong()).truncate());
+        // Issue #69 : « Renvoyer » et la case « cible » en haut à droite, comme sur une carte.
+        let row = vec2(ui.available_width(), ui.spacing().interact_size.y);
+        ui.allocate_ui_with_layout(row, Layout::right_to_left(Align::Center), |ui| {
+            if let Some(button) = &line.disband
+                && shortcut_button(ui, &button.label, button.shortcut.as_deref(), &self.catalog)
+                    .clicked()
+            {
+                clicked = Some(button.command);
+            }
+            // Issue privée 258 : l'unité visée par le sort en cours se coche.
+            if let Some(toggle) = &line.spell_target {
+                let mut checked = toggle.checked;
+                if ui.checkbox(&mut checked, &toggle.label).changed() {
+                    clicked = Some(toggle.command);
+                }
+            }
+            ui.with_layout(Layout::left_to_right(Align::Center), |ui| {
+                ui.add(egui::Label::new(egui::RichText::new(&line.text).strong()).truncate());
+            });
+        });
         if let Some(texture) = self.illustration_texture(ui.ctx(), line.illustration) {
             art_band(ui, texture);
         }
@@ -459,13 +482,6 @@ impl IterArcanumApp {
             }
         });
         ui.add(egui::Label::new(&line.state).wrap());
-        // Issue privée 258 : l'unité visée par le sort en cours se coche.
-        if let Some(toggle) = &line.spell_target {
-            let mut checked = toggle.checked;
-            if ui.checkbox(&mut checked, &toggle.label).changed() {
-                clicked = Some(toggle.command);
-            }
-        }
         // Spec 055 : la bannière portée, grisée si retournée, son nom en infobulle ; ses capacités.
         if let Some(banner) = &line.banner {
             let text = egui::RichText::new(format!("⚑ {}", banner.name));
@@ -484,15 +500,8 @@ impl IterArcanumApp {
                 clicked = Some(button.command);
             }
         }
-        match &line.disband {
-            Some(button) => {
-                if shortcut_button(ui, &button.label, button.shortcut.as_deref(), &self.catalog)
-                    .clicked()
-                {
-                    clicked = Some(button.command);
-                }
-            }
-            None => clicked = self.effect_buttons(ui, &line.effects).or(clicked),
+        if line.disband.is_none() {
+            clicked = self.effect_buttons(ui, &line.effects).or(clicked);
         }
         clicked
     }

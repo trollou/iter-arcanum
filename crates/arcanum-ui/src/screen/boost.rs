@@ -162,7 +162,7 @@ pub(super) fn boosted_effect_text(
 }
 
 /// Carte de la main en mode Concentration : ses options renforcées quand on choisit la carte,
-/// « Défausser cette carte » quand on choisit la défausse ; rien sinon.
+/// « Défausser » quand on choisit la défausse ; rien sinon.
 pub(super) fn boost_hand_card(
     card: CardId,
     view: &PlayerView,

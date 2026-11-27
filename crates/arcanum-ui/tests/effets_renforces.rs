@@ -335,7 +335,7 @@ fn improvisation_strong_chooses_discard_then_mana() {
     );
     let rage_view = hand_card(&screen, "Rage");
     assert_eq!(rage_view.plays.len(), 1);
-    assert_eq!(rage_view.plays[0].label, "Défausser cette carte");
+    assert_eq!(rage_view.plays[0].label, "Défausser");
     assert_eq!(
         rage_view.plays[0].command,
         Command::ChooseMana {

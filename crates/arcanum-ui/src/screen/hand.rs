@@ -121,7 +121,7 @@ pub(super) fn hand_card(
         Vec::new()
     };
     plays.extend(unit_plays.iter().cloned());
-    // Spec 073 : en mode choix, « Défausser cette carte » remplace les boutons d'effet.
+    // Spec 073 : en mode choix, « Défausser » remplace les boutons d'effet.
     let (basic_effects, strong_effects) = match choice {
         None => live_effects(card, view, legal_actions, catalog),
         Some(_) => (Vec::new(), Vec::new()),
@@ -448,7 +448,7 @@ fn ready_unit_buttons(
     buttons
 }
 
-/// « Défausser cette carte », ou « Détruire cette carte » pour Décomposition (spec 056).
+/// « Défausser », ou « Détruire » pour Décomposition (spec 056).
 fn pick_label(card: CardId, strong: bool, catalog: &Catalog) -> String {
     catalog.text(if destroys(card, strong) {
         "discard_choice.destroy"

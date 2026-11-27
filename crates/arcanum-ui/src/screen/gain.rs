@@ -169,7 +169,7 @@ pub(crate) fn choosing_offer_card(mode: &ScreenMode, legal_actions: &[Action]) -
     )
 }
 
-/// Carte de la main pendant le choix : « Détruire cette carte » sur chaque carte permise, à
+/// Carte de la main pendant le choix : « Détruire » sur chaque carte permise, à
 /// l'étape de la carte à détruire.
 pub(super) fn gain_hand_card(
     card: CardId,
