@@ -2,8 +2,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use arcanum_core::{
-    Action, BasicColor, CardPlay, DieSetting, Event, GameConfig, GameRunner, Hex, InProgress,
-    PlayerId, PlayerView, UndoStatus, view,
+    Action, BasicColor, CardId, CardPlay, DieSetting, Event, GameConfig, GameRunner, Hex,
+    InProgress, PlayerId, PlayerView, UndoStatus, view,
 };
 use arcanum_i18n::Catalog;
 use arcanum_persistance::{LoadError, SaveEntry, SaveError, SaveGame, list, load, save, save_auto};
@@ -421,16 +421,13 @@ impl GameSession {
         discard_window(&self.view(), catalog)
     }
 
-    /// La fenêtre Offres, ouverte pour consultation ou d'office pendant le choix d'une action
-    /// avancée (spec 050) ou de la carte d'Entraînement et de Don pour la magie (spec 056).
+    /// La fenêtre Offres, ouverte pour consultation (spec 050, spec #20).
     pub fn offers_window(&self, catalog: &Catalog) -> Option<OffersWindow> {
         let view = self.view();
         let legal = self.legal_actions();
-        (self.offers_open
-            || self.is_choosing_advanced_action()
-            || self.is_choosing_unit_reward()
-            || crate::screen::choosing_offer_card(&self.mode, &legal))
-        .then(|| offers_window_in(&view, &legal, &self.mode, catalog))
+        // Spec #20, C18 : seulement à la demande ; chaque choix de carte a sa fenêtre.
+        self.offers_open
+            .then(|| offers_window_in(&view, &legal, &self.mode, catalog))
     }
 
     /// Choix d'une action avancée en attente (spec 050), après ceux de l'artefact (spec 041) et du
@@ -442,6 +439,54 @@ impl GameSession {
             && view.spell_choices == 0
             // Spec 051, C6 : la compétence du niveau d'abord.
             && view.skill_choice.is_empty()
+    }
+
+    /// Spec #20, C5 : la compétence encadrée, puis l'action avancée, légale une fois la
+    /// compétence jouée ; rien si la compétence encadrée ne laisse pas prendre cette carte.
+    fn take_level_reward(&mut self, card: CardId) {
+        let ScreenMode::ChoosingLevelSkill(skill) = self.mode else {
+            return;
+        };
+        let allowed = self
+            .view()
+            .skill_choice_cards
+            .iter()
+            .any(|(takeable, cards)| *takeable == skill && cards.contains(&card));
+        let Some(index) = self
+            .legal_actions()
+            .iter()
+            .position(|action| *action == Action::ChooseSkill { skill })
+            .filter(|_| allowed)
+        else {
+            return;
+        };
+        self.command(Command::Play(index));
+        self.run_frame();
+        if let Some(index) = self
+            .legal_actions()
+            .iter()
+            .position(|action| *action == Action::GainAdvancedAction { card })
+        {
+            self.command(Command::Play(index));
+        }
+    }
+
+    /// Spec #20, C10 : pendant le choix d'une compétence de niveau pair, 1 à 3 prennent la carte de
+    /// cette place si la compétence encadrée la laisse prendre ; les autres touches de jeu n'agissent
+    /// pas.
+    fn level_shortcut(&mut self, shortcut: Shortcut) {
+        let Shortcut::Take(place) = shortcut else {
+            return;
+        };
+        let card = self
+            .view()
+            .offers
+            .get(&arcanum_core::Offer::AdvancedActions)
+            .and_then(|offer| offer.get(usize::from(place).wrapping_sub(1)))
+            .and_then(|card| card.deed());
+        if let Some(card) = card {
+            self.take_level_reward(card);
+        }
     }
 
     /// Choix de l'unité de la récompense en attente (spec 045), après tous les autres choix de la
@@ -644,6 +689,9 @@ impl GameSession {
             | Command::SaveVolumes => {}
             // Spec 060 : la tactique encadrée, les cartes et les dés cochés.
             Command::SelectTactic(tactic) => self.mode = ScreenMode::ChoosingTactic(tactic),
+            // Spec #20 : la compétence encadrée n'est jouée qu'avec la carte (Q1).
+            Command::SelectSkill(skill) => self.mode = ScreenMode::ChoosingLevelSkill(skill),
+            Command::TakeLevelReward(card) => self.take_level_reward(card),
             Command::ToggleTacticCard(card) => {
                 let mut picks = match &self.mode {
                     ScreenMode::PickingTacticCards(picks) => picks.clone(),
@@ -665,7 +713,10 @@ impl GameSession {
                 self.mode = ScreenMode::PickingTacticDice(picks);
             }
             Command::ReopenScore => self.score_closed = false,
-            Command::OpenOffers => self.offers_open = true,
+            // Spec #20, C19 : pas pendant un choix de carte.
+            Command::OpenOffers => {
+                self.offers_open = !crate::screen::choosing_card(&self.view());
+            }
             Command::CloseOffers => self.offers_open = false,
             // Spec 073 : la fenêtre de la défausse (étape 10).
             Command::OpenDiscard => {
@@ -939,6 +990,18 @@ impl GameSession {
             if let Shortcut::Take(place) = shortcut {
                 self.take_nth(place, |action| matches!(action, Action::TakeSpell { .. }));
             }
+            return;
+        }
+        // Spec #20 : pendant le choix de la compétence d'un niveau pair, la fenêtre du niveau.
+        if !self.view().skill_choice.is_empty()
+            && !self.is_choosing_artifact()
+            && !self.is_choosing_spell()
+            && !matches!(
+                shortcut,
+                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
+            )
+        {
+            self.level_shortcut(shortcut);
             return;
         }
         // Spec 050 : pendant le choix d'une action avancée, 1, 2 et 3 prennent une carte ; O, Échap,

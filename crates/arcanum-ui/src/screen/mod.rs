@@ -17,6 +17,7 @@ mod adventure;
 mod artifacts;
 mod board_actions;
 mod boost;
+mod choices;
 mod combat;
 mod dummy;
 mod effects;
@@ -50,13 +51,13 @@ pub(crate) use artifacts::artifact_enemy_toggles;
 use artifacts::*;
 use board_actions::board_action_buttons;
 use boost::*;
+use choices::*;
 pub use combat::*;
 pub use dummy::dummy_discard_window;
 use dummy::*;
 use effects::*;
 use end_turn::*;
 use enemies::provoked_banner;
-pub(crate) use gain::choosing_offer_card;
 use gain::*;
 use hand::*;
 use interaction::*;
@@ -64,6 +65,7 @@ use level::*;
 use mana::*;
 use meditation::*;
 pub use offers::{OfferCardView, OfferColumn, OffersWindow, offers_window, offers_window_in};
+pub(crate) use panels::choosing_card;
 pub use panels::discard_window;
 use panels::*;
 use play_area::*;
@@ -169,11 +171,18 @@ pub struct GameScreen {
     /// « Récompense en fin de tour : 1 artefact(s) », sous les points (spec 041).
     pub reward_pending: Option<String>,
     /// Fenêtre du choix de l'artefact, à la fin du tour (spec 041).
-    pub artifact_choice: Option<ArtifactChoice>,
+    pub artifact_choice: Option<CardChoiceWindow>,
     /// « Récompense en fin de tour : 1 sort(s) », sous les points (spec 043, C45).
     pub spell_reward_pending: Option<String>,
     /// Fenêtre « Récompense : prenez un sort », à la fin du tour (spec 043, C43).
-    pub spell_choice: Option<ArtifactChoice>,
+    pub spell_choice: Option<CardChoiceWindow>,
+    /// Fenêtre « Récompense : prenez une action avancée » (spec #20, C11).
+    pub advanced_action_reward: Option<CardChoiceWindow>,
+    /// Fenêtre « Récompense : prenez une unité de l'offre » (spec #20, C12).
+    pub unit_reward: Option<CardChoiceWindow>,
+    /// Fenêtre de la carte d'un effet « gagner » : Entraînement, Don pour la magie renforcé, Livre
+    /// de sagesse (spec #20, C14 à C16).
+    pub gain_choice: Option<CardChoiceWindow>,
     /// « Assaut repoussé : retour sur la case de départ », après une retraite, jusqu'à la fin du
     /// tour (spec 043, C40).
     pub withdrawal: Option<String>,
@@ -226,8 +235,8 @@ pub struct GameScreen {
     pub units: UnitsSection,
     /// Spec 051 : la section Compétences, avec au moins une compétence gagnée.
     pub skills: Option<SkillsSection>,
-    /// Spec 051 : la fenêtre du choix de compétence d'un niveau pair.
-    pub skill_choice: Option<SkillChoiceWindow>,
+    /// Spec #20 : la fenêtre du niveau pair, compétence et action avancée ensemble.
+    pub level_choice: Option<LevelChoiceWindow>,
     /// Bandeau du choix d'une capacité d'unité : option, mana ou unité visée (spec 042).
     pub unit_prompt: Option<ManaPrompt>,
     /// « Jeter une Blessure (1) », « Soigner Gardes d'Utem (2) », hors combat (spec 042).
@@ -352,6 +361,7 @@ pub fn game_screen(
         | ScreenMode::Casting(_)
         | ScreenMode::ChoosingDestination(_)
         | ScreenMode::ChoosingTactic(_)
+        | ScreenMode::ChoosingLevelSkill(_)
         | ScreenMode::PickingTacticCards(_)
         | ScreenMode::PickingTacticDice(_) => (None, None, None),
     };
@@ -698,6 +708,9 @@ pub fn game_screen(
         spell_reward_pending: spell_reward_pending(view, catalog)
             .filter(|_| !replaced_by_ruin_rewards(view)),
         spell_choice: spell_choice(view, legal_actions, catalog),
+        advanced_action_reward: advanced_action_reward(view, legal_actions, catalog),
+        unit_reward: unit_reward(view, legal_actions, catalog),
+        gain_choice: gain_choice(view, legal_actions, mode, catalog),
         withdrawal: withdrawal(view, catalog),
         keep_hand_limit: keep_hand_limit(view, catalog),
         level_stats: level_stats(view, catalog),
@@ -742,7 +755,7 @@ pub fn game_screen(
             .or_else(|| skill_unit_prompt(mode, legal_actions, catalog)),
         units: units_section(view, legal_actions, mode, catalog),
         skills: skills_section(view, legal_actions, catalog),
-        skill_choice: skill_choice_window(view, legal_actions, catalog),
+        level_choice: level_choice_window(view, legal_actions, mode, catalog),
         unit_prompt: unit_prompt(view, legal_actions, mode, catalog),
         healing: healing_buttons(legal_actions, catalog),
         player_level: player_level(view, catalog),

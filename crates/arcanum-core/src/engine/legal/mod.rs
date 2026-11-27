@@ -210,16 +210,8 @@ pub(super) fn available_actions(state: &GameState, player: PlayerId) -> Vec<Acti
     // Spec 050 : à la fin d'un tour à niveau pair, seulement le choix de l'action avancée, dans
     // l'ordre de l'offre ; spec 051 : une fois la compétence de ce niveau choisie.
     if p.advanced_action_choices > p.skill_choices {
-        let offer = state.offer(Offer::AdvancedActions);
-        // Spec 051 : après une compétence de l'offre commune, la carte en dernière place.
-        let from = if p.lowest_advanced_action_only {
-            offer.len().saturating_sub(1)
-        } else {
-            0
-        };
-        return offer[from..]
-            .iter()
-            .filter_map(|card| card.deed())
+        return level_advanced_actions(state, p.lowest_advanced_action_only)
+            .into_iter()
             .map(|card| Action::GainAdvancedAction { card })
             .collect();
     }
@@ -558,6 +550,41 @@ fn meditation_actions(p: &PlayerState) -> Vec<Action> {
     hand_choices(&p.hand, 1, 5)
         .into_iter()
         .map(|cards| Action::MidnightMeditation { cards })
+        .collect()
+}
+
+/// Spec 051 : les actions avancées de l'offre prenables au niveau pair, dans l'ordre de l'offre ;
+/// après une compétence de l'offre commune, seulement la carte en dernière place (MKUE p. 11,
+/// 6.b ; FAQ p3). Partagée avec la vue (spec #20, `PlayerView::skill_choice_cards`).
+pub(crate) fn level_advanced_actions(state: &GameState, lowest_only: bool) -> Vec<CardId> {
+    let offer = state.offer(Offer::AdvancedActions);
+    let from = if lowest_only {
+        offer.len().saturating_sub(1)
+    } else {
+        0
+    };
+    offer[from..]
+        .iter()
+        .filter_map(|card| card.deed())
+        .collect()
+}
+
+/// Spec #20 : pendant le choix d'un niveau pair, chaque compétence prenable et les actions
+/// avancées qu'elle laisse prendre ensuite : toutes pour une révélée, la dernière place pour une
+/// de l'offre commune (MKUE p. 11, 6.b). Vide hors de ce choix.
+pub(crate) fn skill_choice_cards(state: &GameState, player: PlayerId) -> Vec<(Skill, Vec<CardId>)> {
+    let Some(p) = state.player(player) else {
+        return Vec::new();
+    };
+    legal_actions(state, player)
+        .into_iter()
+        .filter_map(|action| match action {
+            Action::ChooseSkill { skill } => Some((
+                skill,
+                level_advanced_actions(state, !p.skill_choice.contains(&skill)),
+            )),
+            _ => None,
+        })
         .collect()
 }
 

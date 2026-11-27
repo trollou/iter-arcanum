@@ -701,6 +701,36 @@ fn book_of_wisdom_destroys_then_takes() {
     assert!(held(&screen, card(March, 1)).plays.is_empty());
 }
 
+// Spec #20, C16 — spec 055 : la carte écartée par le Livre de sagesse choisie, la fenêtre de choix
+// ne montre que les actions avancées de sa couleur.
+#[test]
+fn book_of_wisdom_gain_in_choice_window() {
+    let catalog = french();
+    let book = artifact(BookOfWisdom);
+    let blood_rage = advanced(arcanum_core::AdvancedAction::BloodRage);
+    let ice_bolt = advanced(arcanum_core::AdvancedAction::IceBolt);
+    let rage = card(Rage, 1);
+    let state = Decor {
+        hand: vec![book, rage, card(March, 1)],
+        extra: advanced_offer(&[ice_bolt, blood_rage]),
+        ..Decor::default()
+    }
+    .state();
+    let choice = arcanum_ui::GainChoice {
+        card: book,
+        option: 0,
+        strong: false,
+        discard: Some(rage),
+        gain: None,
+    };
+    let window = screen_in(&state, &ScreenMode::ChoosingGain(choice), &catalog)
+        .gain_choice
+        .expect("fenêtre de choix de la carte");
+    let names: Vec<&str> = window.cards.iter().map(|card| card.name.as_str()).collect();
+    assert_eq!(names, [catalog.text(blood_rage.card().label_key())]);
+    assert!(window.cards[0].take.is_some());
+}
+
 // Spec 055 C25 — Anneau de rubis renforcé : « illimité (rouge) » dans le choix du mana.
 #[test]
 fn endless_mana_in_mana_choice() {

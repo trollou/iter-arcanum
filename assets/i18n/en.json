@@ -1401,7 +1401,6 @@
     "spells": "Spells",
     "units": "Units",
     "take": "Take",
-    "choose_advanced_action": "Level {level}: choose an Advanced Action",
     "button": "Offers…",
     "unsupported": "{text} (not coded yet: play it sideways)",
     "close": "Close",
@@ -1684,8 +1683,13 @@
     "crystal": "Blood Ritual: pay a basic mana for a crystal?",
     "decline": "No thanks"
   },
+  "level_choice": {
+    "title": "Level {level}: choose a Skill and an Advanced Action",
+    "skill_first": "Choose a Skill first."
+  },
   "gain_choice": {
-    "prompt": "{card}: {effect}. Choose the card in the Offers window."
+    "prompt": "{card}: {effect}. Choose the card in the window.",
+    "title": "{card}: choose the card"
   },
   "die_choice": {
     "prompt": "{card}: choose a die from the Source."
@@ -1910,7 +1914,6 @@
     "motivation_blocked": "Another Motivation was used: not before the end of your next turn",
     "pile": "Pile: {count}",
     "choice": {
-      "title": "Level {level}: choose a Skill",
       "revealed": "Revealed Skills",
       "common": "Common Skill offer",
       "common_note": "Taking a Skill from the common offer means taking the lowest Advanced Action.",

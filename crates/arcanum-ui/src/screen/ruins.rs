@@ -173,6 +173,7 @@ pub(super) fn altar_lines(
             let enabled = !tributes.is_empty();
             AltarLines {
                 button: Some(PurchaseButton {
+                    card: None,
                     label: catalog.text("ruins.altar.tribute"),
                     command: enabled.then_some(Command::OpenAltar),
                     tooltip: None,

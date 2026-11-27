@@ -1401,7 +1401,6 @@
     "spells": "Sorts",
     "units": "Unités",
     "take": "Prendre",
-    "choose_advanced_action": "Niveau {level} : choisissez une action avancée",
     "button": "Offres…",
     "unsupported": "{text} (pas encore codé : se joue de côté)",
     "close": "Fermer",
@@ -1684,8 +1683,13 @@
     "crystal": "Rituel de sang : payer un mana de base pour un cristal ?",
     "decline": "Non merci"
   },
+  "level_choice": {
+    "title": "Niveau {level} : choisir une compétence et une action avancée",
+    "skill_first": "Choisissez d'abord une compétence."
+  },
   "gain_choice": {
-    "prompt": "{card} : {effect}. Choisissez la carte dans la fenêtre Offres."
+    "prompt": "{card} : {effect}. Choisissez la carte dans la fenêtre.",
+    "title": "{card} : choisissez la carte"
   },
   "die_choice": {
     "prompt": "{card} : choisissez un dé de la Source."
@@ -1910,7 +1914,6 @@
     "motivation_blocked": "Une autre Motivation a servi : pas avant la fin du prochain tour",
     "pile": "Pile : {count}",
     "choice": {
-      "title": "Niveau {level} : choisir une compétence",
       "revealed": "Compétences révélées",
       "common": "Offre de compétences communes",
       "common_note": "Prendre une compétence de l'offre commune impose l'action avancée en dernière place.",

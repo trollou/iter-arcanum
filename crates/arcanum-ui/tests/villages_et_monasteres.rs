@@ -179,20 +179,16 @@ fn panel_offers_healing_purchase() {
 #[test]
 fn panel_offers_advanced_actions_at_monastery() {
     let catalog = french();
-    let text = {
+    // Spec #20, C21 (test modifié) : la carte hors zone de la fenêtre Offres en infobulle, au lieu
+    // du texte.
+    let card = {
         let window = offers_window(&view(&at_monastery(), SOLO), &[], &catalog);
         let units = window.columns.last().expect("colonne des unités");
-        let lines = &units
-            .cards
-            .last()
-            .expect("Bouclier de glace dans l'offre d'unités")
-            .lines;
-        // Spec #32 : la carte de l'offre n'a plus « Renforcé : », que l'infobulle garde (test
-        // modifié).
-        format!(
-            "{}\n{}",
-            lines[0],
-            catalog.format("card.strong", &[("effect", &lines[1])])
+        bare(
+            units
+                .cards
+                .last()
+                .expect("Bouclier de glace dans l'offre d'unités"),
         )
     };
     let poor = interacting(&at_monastery(), Site::Monastery, 5);
@@ -207,8 +203,10 @@ fn panel_offers_advanced_actions_at_monastery() {
             ),
         ]
     );
-    // Le texte de l'action avancée en infobulle, pas celui du soin.
-    assert_eq!(purchases[0].tooltip.as_ref(), Some(&text));
+    // L4 : la carte de l'achat grisé quand même, pas de carte pour le soin.
+    assert_eq!(purchases[0].card.as_ref(), Some(&card));
+    assert_eq!(purchases[0].tooltip, None);
+    assert_eq!(purchases[1].card, None);
     assert_eq!(purchases[1].tooltip, None);
     let rich = interacting(&at_monastery(), Site::Monastery, 6);
     let purchases = screen_of(&rich, &catalog).purchases;
@@ -219,7 +217,17 @@ fn panel_offers_advanced_actions_at_monastery() {
             &Action::BuyAdvancedAction { card: ice_shield() }
         )))
     );
-    assert_eq!(purchases[0].tooltip, Some(text));
+    assert_eq!(purchases[0].card, Some(card));
+}
+
+/// Spec #20 : la carte hors zone de la fenêtre Offres, sans ses boutons ni sa marque.
+fn bare(card: &arcanum_ui::OfferCardView) -> arcanum_ui::OfferCardView {
+    arcanum_ui::OfferCardView {
+        take: None,
+        mark: None,
+        uses: Vec::new(),
+        ..card.clone()
+    }
 }
 
 // C36 — MKUE p. 7, 5.f : l'action avancée du monastère suit les unités, marquée « monastère ».

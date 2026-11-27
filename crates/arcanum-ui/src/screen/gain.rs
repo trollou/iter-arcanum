@@ -162,7 +162,7 @@ pub(super) fn active_gain(
 }
 
 /// Vrai pendant le choix de la carte dans la fenêtre Offres, qui s'ouvre alors d'office.
-pub(crate) fn choosing_offer_card(mode: &ScreenMode, legal_actions: &[Action]) -> bool {
+pub(super) fn choosing_offer_card(mode: &ScreenMode, legal_actions: &[Action]) -> bool {
     matches!(
         active_gain(mode, legal_actions),
         Some((_, _, GainStage::Offer))

@@ -516,6 +516,36 @@ fn spell_purchases(state: &GameState, card: CardId) -> Vec<usize> {
         .collect()
 }
 
+// Spec #20, C22 : à la tour de mage conquise, chaque achat de sort porte la carte hors zone de
+// son sort, celle de la fenêtre Offres.
+#[test]
+fn spell_purchases_show_cards() {
+    let catalog = french();
+    let state = at_conquered_tower(8);
+    let window = arcanum_ui::offers_window(&view(&state, SOLO), &[], &catalog);
+    let cards: Vec<Option<arcanum_ui::OfferCardView>> = window.columns[1]
+        .cards
+        .iter()
+        .map(|card| Some(bare(card)))
+        .collect();
+    let purchases: Vec<Option<arcanum_ui::OfferCardView>> = screen_of(&state, &catalog)
+        .purchases
+        .into_iter()
+        .map(|purchase| purchase.card)
+        .collect();
+    assert_eq!(purchases, cards);
+}
+
+/// Spec #20 : la carte hors zone de la fenêtre Offres, sans ses boutons ni sa marque.
+fn bare(card: &arcanum_ui::OfferCardView) -> arcanum_ui::OfferCardView {
+    arcanum_ui::OfferCardView {
+        take: None,
+        mark: None,
+        uses: Vec::new(),
+        ..card.clone()
+    }
+}
+
 // C41 — À une tour de mage conquise : un bouton « Acheter : Éclair de feu (7 + mana rouge) » par
 // sort de l'offre, grisé si l'influence ou le mana manque ; le choix du mana ensuite.
 #[test]

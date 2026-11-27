@@ -8,14 +8,17 @@ use arcanum_core::{
 };
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
-    BoostChoice, Command, DiscardChoice, GainChoice, GameScreen, HandCard, OffersWindow,
-    ScreenMode, ScreenPhase, game_screen, offers_window_in, repository_assets_dir,
+    BoostChoice, CardChoiceWindow, Command, DiscardChoice, GainChoice, GameScreen, HandCard,
+    OffersWindow, ScreenMode, ScreenPhase, game_screen, repository_assets_dir,
 };
 
 // L'arène des tests d'arcanum-core, partagée plutôt que recopiée.
 #[path = "../../arcanum-core/tests/arene/mod.rs"]
 mod arene;
 use arene::*;
+
+mod support;
+use support::session_of;
 
 use AdvancedAction::*;
 use arcanum_core::BasicAction::{Determination, Improvisation, March, Promise, Rage, Threaten};
@@ -56,6 +59,10 @@ impl Default for Decor {
 
 impl Decor {
     fn state(&self) -> GameState {
+        self.events().iter().fold(GameState::default(), apply)
+    }
+
+    fn events(&self) -> Vec<Event> {
         let mut events = Sandbox {
             time: TimeOfDay::Day,
             figure: Some(PLAIN_W),
@@ -71,7 +78,7 @@ impl Decor {
             events.extend(spell_offer(&self.spells));
         }
         events.extend(self.extra.iter().cloned());
-        events.iter().fold(GameState::default(), apply)
+        events
     }
 }
 
@@ -102,13 +109,12 @@ fn screen_of(state: &GameState, catalog: &Catalog) -> GameScreen {
     screen_in(state, &ScreenMode::Normal, catalog)
 }
 
-fn offers_in(state: &GameState, mode: &ScreenMode, catalog: &Catalog) -> OffersWindow {
-    offers_window_in(
-        &view(state, SOLO),
-        &legal_actions(state, SOLO),
-        mode,
-        catalog,
-    )
+/// Spec #20 (tests modifiés) : la fenêtre de choix de la carte d'un effet « gagner », au lieu de
+/// la fenêtre Offres.
+fn gain_window(state: &GameState, mode: &ScreenMode, catalog: &Catalog) -> CardChoiceWindow {
+    screen_in(state, mode, catalog)
+        .gain_choice
+        .expect("fenêtre de choix de la carte")
 }
 
 fn hand_card(screen: &GameScreen, card: CardId) -> &HandCard {
@@ -135,9 +141,18 @@ fn played(state: &GameState, command: Option<Command>) -> Option<Action> {
     }
 }
 
-/// Le bouton « Prendre » ou « Apprendre » de cette carte de l'offre.
-fn take_of(window: &OffersWindow, column: usize, name: &str) -> Option<(String, Command)> {
-    window.columns[column]
+fn offers_in(state: &GameState, mode: &ScreenMode, catalog: &Catalog) -> OffersWindow {
+    arcanum_ui::offers_window_in(
+        &view(state, SOLO),
+        &legal_actions(state, SOLO),
+        mode,
+        catalog,
+    )
+}
+
+/// Le bouton « Apprendre » de cette carte de l'offre d'actions avancées.
+fn offer_take(window: &OffersWindow, name: &str) -> Option<(String, Command)> {
+    window.columns[0]
         .cards
         .iter()
         .find(|card| card.name == name)
@@ -145,6 +160,23 @@ fn take_of(window: &OffersWindow, column: usize, name: &str) -> Option<(String, 
         .take
         .as_ref()
         .map(|button| (button.label.clone(), button.command))
+}
+
+/// Le bouton « Prendre » de cette carte de la fenêtre de choix.
+fn take_of(window: &CardChoiceWindow, name: &str) -> Option<(String, Command)> {
+    window
+        .cards
+        .iter()
+        .find(|card| card.name == name)
+        .unwrap_or_else(|| panic!("carte de la fenêtre : {name}"))
+        .take
+        .as_ref()
+        .map(|button| (button.label.clone(), button.command))
+}
+
+/// Les noms des cartes de la fenêtre de choix.
+fn names(window: &CardChoiceWindow) -> Vec<&str> {
+    window.cards.iter().map(|card| card.name.as_str()).collect()
 }
 
 fn basic_play(
@@ -237,6 +269,10 @@ fn decompose_chooses_the_card_to_destroy() {
 }
 
 fn training_state() -> GameState {
+    training_events().iter().fold(GameState::default(), apply)
+}
+
+fn training_events() -> Vec<Event> {
     Decor {
         hand: vec![
             advanced(Training),
@@ -253,7 +289,7 @@ fn training_state() -> GameState {
         ],
         ..Decor::default()
     }
-    .state()
+    .events()
 }
 
 // Spec 056 C29 ; carte Entraînement ; Compendium, *Training* S3 : la carte détruite, puis l'action
@@ -286,23 +322,54 @@ fn training_chooses_destroyed_card_then_offer_card() {
     assert!(hand_card(&screen, determination).plays.is_empty());
     assert!(screen.discard_prompt.is_some());
 
-    let window = offers_in(&state, &ScreenMode::ChoosingGain(chosen), &catalog);
+    // Spec #20, C14 (test modifié) : la fenêtre de choix ne montre que Chemins de traverse ; la
+    // fenêtre Offres ne s'ouvre pas.
+    let window = gain_window(&state, &ScreenMode::ChoosingGain(chosen), &catalog);
+    assert_eq!(window.title, "Entraînement : choisissez la carte");
     let path_finding = advanced(PathFinding);
+    assert_eq!(names(&window), [catalog.text("card.path_finding.name")]);
     assert_eq!(
-        take_of(&window, 0, &catalog.text("card.path_finding.name")).map(|(_, command)| command),
-        Some(Command::Play(index_of(
-            &state,
-            &basic_play(training, Some(march), Some(path_finding), None)
-        )))
+        take_of(&window, &catalog.text("card.path_finding.name")),
+        Some((
+            "Prendre".to_string(),
+            Command::Play(index_of(
+                &state,
+                &basic_play(training, Some(march), Some(path_finding), None)
+            ))
+        ))
     );
     assert_eq!(
-        take_of(&window, 0, &catalog.text("card.fire_bolt.name")),
-        None
+        window
+            .close
+            .as_ref()
+            .map(|button| (button.label.as_str(), button.command)),
+        Some(("Annuler", Command::CancelChoice))
     );
-    assert_eq!(
-        take_of(&window, 0, &catalog.text("card.agility.name")),
-        None
-    );
+}
+
+// Spec #20, C14, C18, L3 : la fenêtre Offres ne s'ouvre pas pendant le choix de la carte ;
+// Échap annule le choix.
+#[test]
+fn training_gain_in_choice_window() {
+    let catalog = french();
+    let chosen = GainChoice {
+        card: advanced(Training),
+        option: 0,
+        strong: false,
+        discard: Some(card(March, 1)),
+        gain: None,
+    };
+    let mut session = session_of(training_events());
+    session.command(Command::ChooseGain(chosen));
+    assert!(session.screen(&catalog).gain_choice.is_some());
+    assert!(session.offers_window(&catalog).is_none());
+    // La touche O reste sans effet pendant le choix (C19).
+    session.shortcut(arcanum_ui::Shortcut::Offers);
+    assert!(session.offers_window(&catalog).is_none());
+    session.shortcut(arcanum_ui::Shortcut::Cancel);
+    let screen = session.screen(&catalog);
+    assert!(screen.gain_choice.is_none());
+    assert!(screen.discard_prompt.is_none());
 }
 
 // Spec 056 C30 ; carte Entraînement renforcée : la carte d'offre, puis le mana.
@@ -328,14 +395,14 @@ fn strong_training_chooses_offer_card_then_mana() {
         discard: Some(rage),
         ..start
     };
-    let window = offers_in(&state, &ScreenMode::ChoosingGain(chosen), &catalog);
+    let window = gain_window(&state, &ScreenMode::ChoosingGain(chosen), &catalog);
     let fire_bolt = advanced(FireBolt);
     let with_gain = GainChoice {
         gain: Some(fire_bolt),
         ..chosen
     };
     assert_eq!(
-        take_of(&window, 0, &catalog.text("card.fire_bolt.name")).map(|(_, command)| command),
+        take_of(&window, &catalog.text("card.fire_bolt.name")).map(|(_, command)| command),
         Some(Command::ChooseGain(with_gain))
     );
     let screen = screen_in(&state, &ScreenMode::ChoosingGain(with_gain), &catalog);
@@ -394,9 +461,11 @@ fn strong_magic_talent_chooses_spell_in_offers() {
     );
     assert_eq!(card_shown.strong_effects[usize::from(white)].command, None);
 
-    let window = offers_in(&state, &ScreenMode::ChoosingGain(start), &catalog);
+    // Spec #20, C15 (test modifié) : la fenêtre de choix ne montre que le sort rouge.
+    let window = gain_window(&state, &ScreenMode::ChoosingGain(start), &catalog);
+    assert_eq!(names(&window), [spell_name(Spell::Fireball, &catalog)]);
     let fireball =
-        take_of(&window, 1, &spell_name(Spell::Fireball, &catalog)).map(|(_, command)| command);
+        take_of(&window, &spell_name(Spell::Fireball, &catalog)).map(|(_, command)| command);
     let action = played(&state, fireball);
     assert!(
         matches!(
@@ -407,10 +476,6 @@ fn strong_magic_talent_chooses_spell_in_offers() {
             }) if gained == spell(Spell::Fireball)
         ),
         "{fireball:?}"
-    );
-    assert_eq!(
-        take_of(&window, 1, &spell_name(Spell::Snowstorm, &catalog)),
-        None
     );
 }
 
@@ -658,7 +723,7 @@ fn learning_button_on_advanced_actions_offer() {
     let window = offers_in(&state, &ScreenMode::Normal, &catalog);
     let path_finding = advanced(PathFinding);
     assert_eq!(
-        take_of(&window, 0, &catalog.text("card.path_finding.name")),
+        offer_take(&window, &catalog.text("card.path_finding.name")),
         Some((
             "Apprendre (6 Influence)".to_string(),
             Command::Play(index_of(

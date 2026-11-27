@@ -544,6 +544,34 @@ fn city_interaction_buttons() {
             purchases(state, &catalog)
         );
     }
+
+    // Spec #20, C22, C23 (test modifié) : dans la cité verte, chaque achat d'action avancée de
+    // l'offre porte sa carte hors zone ; la carte cachée du dessus de la pioche, l'artefact de la
+    // rouge et l'unité d'élite de la blanche, aucune.
+    let window = arcanum_ui::offers_window(&view(&green, SOLO), &[], &catalog);
+    let mut wanted: Vec<Option<arcanum_ui::OfferCardView>> = window.columns[0]
+        .cards
+        .iter()
+        .map(|card| {
+            Some(arcanum_ui::OfferCardView {
+                take: None,
+                mark: None,
+                uses: Vec::new(),
+                ..card.clone()
+            })
+        })
+        .collect();
+    wanted.push(None);
+    let cards = |state: &GameState| -> Vec<Option<arcanum_ui::OfferCardView>> {
+        screen_of(state, &catalog)
+            .purchases
+            .into_iter()
+            .map(|purchase| purchase.card)
+            .collect()
+    };
+    assert_eq!(cards(&green), wanted);
+    assert_eq!(cards(&red), [None]);
+    assert_eq!(cards(&white), [None]);
 }
 
 // --- Limite de main ---
