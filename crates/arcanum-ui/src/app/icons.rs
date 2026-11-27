@@ -137,6 +137,9 @@ impl IterArcanumApp {
                     ValuePiece::Text(text) => {
                         ui.label(text);
                     }
+                    ValuePiece::Colored { text, color } => {
+                        ui.colored_label(super::widgets::mana_text_color(*color), text);
+                    }
                 }
                 ui.add_space(4.0);
             }
@@ -344,6 +347,10 @@ pub(super) fn marked_label(
             match piece {
                 ValuePiece::Text(words) => {
                     ui.add(egui::Label::new(style(words)).wrap());
+                }
+                ValuePiece::Colored { text, color } => {
+                    let text = style(text).color(super::widgets::mana_text_color(color));
+                    ui.add(egui::Label::new(text).wrap());
                 }
                 ValuePiece::Icon(value) => match icons.0.get(&value.icon) {
                     Some(&texture) => {

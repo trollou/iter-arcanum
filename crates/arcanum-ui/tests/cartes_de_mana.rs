@@ -1132,3 +1132,31 @@ fn every_mana_card_key_exists_in_french() {
     assert_eq!(catalog.gaps(), vec![]);
     assert_eq!(english.gaps(), vec![]);
 }
+
+// Spec #68 C11 (Q5) : le texte calculé d'un gain de mana porte la balise de sa couleur, jusqu'au
+// bouton.
+#[test]
+fn computed_mana_text_is_color_tagged() {
+    let catalog = french();
+    assert_eq!(
+        arcanum_ui::effect_text(arcanum_core::Effect::GainToken(Blue), &catalog),
+        "Jeton <blue>bleu</blue>"
+    );
+    let concentration = card(Concentration, 1);
+    let state = state_with(
+        &[concentration, card(March, 1)],
+        &[basic(Green), basic(Red)],
+    );
+    let screen = screen_of(&state, &catalog);
+    let faces: Vec<_> = hand_card(&screen, "Concentration")
+        .basic_effects
+        .iter()
+        .map(|button| button.face.clone())
+        .collect();
+    assert!(
+        faces.contains(&arcanum_ui::EffectFace::Text(
+            "Jeton <blue>bleu</blue>".into()
+        )),
+        "{faces:?}"
+    );
+}

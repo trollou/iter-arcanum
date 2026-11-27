@@ -269,3 +269,25 @@ fn unit_mana_ability_texts_start_with_mana() {
         assert_eq!(catalog.gaps(), vec![], "langue {language}");
     }
 }
+
+// Spec #68 C2 : le « i » d'une action de base montre ses textes complets, pas les effets calculés.
+#[test]
+fn basic_action_info_shows_its_full_text() {
+    let catalog = french();
+    let concentration = held_alone(card(Concentration, 1), &catalog);
+    let info = concentration
+        .info
+        .expect("Concentration a un texte complet");
+    assert_eq!(info.basic, catalog.text("card.concentration.basic_text"));
+    assert_eq!(info.strong, catalog.text("card.concentration.strong_text"));
+    assert!(!info.basic.starts_with('⟦'), "{}", info.basic);
+}
+
+// Spec #68 C8 : le recto d'un artefact montre son texte complet.
+#[test]
+fn artifact_face_shows_full_text() {
+    let catalog = french();
+    let ring = held_alone(artifact(Artifact::RubyRing), &catalog);
+    assert_eq!(ring.effect, catalog.text("card.ruby_ring.basic_text"));
+    assert_eq!(ring.strong_text, catalog.text("card.ruby_ring.strong_text"));
+}

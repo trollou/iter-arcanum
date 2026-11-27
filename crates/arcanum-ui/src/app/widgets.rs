@@ -207,6 +207,19 @@ pub(super) fn mana_color(color: ManaColor) -> Color32 {
     }
 }
 
+/// La couleur d'un mot de couleur de mana dans un texte (spec #68, règle 8) : une variante
+/// claire de la pastille, lisible sur le fond sombre ; le noir devient un gris violacé clair.
+pub(super) fn mana_text_color(color: ManaColor) -> Color32 {
+    match color {
+        ManaColor::Basic(BasicColor::Red) => Color32::from_rgb(0xF0, 0x6E, 0x5E),
+        ManaColor::Basic(BasicColor::Blue) => Color32::from_rgb(0x6F, 0xA8, 0xEC),
+        ManaColor::Basic(BasicColor::White) => Color32::WHITE,
+        ManaColor::Basic(BasicColor::Green) => Color32::from_rgb(0x6C, 0xC4, 0x70),
+        ManaColor::Gold => Color32::from_rgb(0xEC, 0xC2, 0x4A),
+        ManaColor::Black => Color32::from_rgb(0xB0, 0xA2, 0xCC),
+    }
+}
+
 /// Couleurs provisoires des cartes (spec 013).
 pub(super) fn card_color(color: BasicColor) -> Color32 {
     match color {

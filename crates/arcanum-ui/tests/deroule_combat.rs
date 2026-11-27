@@ -1218,7 +1218,7 @@ fn values_text(pieces: &[ValuePiece]) -> String {
         .iter()
         .map(|piece| match piece {
             ValuePiece::Icon(value) => value.fallback_text(),
-            ValuePiece::Text(text) => text.clone(),
+            ValuePiece::Text(text) | ValuePiece::Colored { text, .. } => text.clone(),
         })
         .collect::<Vec<_>>()
         .join(" · ")

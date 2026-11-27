@@ -186,6 +186,11 @@ pub struct IconButton {
 pub enum ValuePiece {
     Icon(IconValue),
     Text(String),
+    /// Un mot de couleur de mana, dans sa couleur (spec #68, balise `<red>…</red>`).
+    Colored {
+        text: String,
+        color: ManaColor,
+    },
 }
 
 /// Les noms des repères d'icône `[[nom]]` d'un libellé (spec #27, Q3 et Q4), et leur icône.
