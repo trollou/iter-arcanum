@@ -18,15 +18,14 @@ fn usage_text(skill: Skill, catalog: &Catalog) -> String {
     }
 }
 
-/// Nom, fréquence, « Hors combat » s'il y a lieu, puis le texte : l'infobulle de la ligne.
+/// Le nom, puis le texte : l'infobulle de la ligne. Le texte dit déjà la fréquence et « hors
+/// combat » (spec #68), qui ne se répètent pas au-dessus de lui (issue #105).
 fn skill_tooltip(skill: Skill, catalog: &Catalog) -> String {
-    let mut lines = vec![catalog.text(&skill.label_key()), usage_text(skill, catalog)];
-    if skill.definition().out_of_combat {
-        lines.push(catalog.text("skill.out_of_combat"));
-    }
-    lines.push(catalog.text(&skill.text_key()));
-    lines.retain(|line| !line.is_empty());
-    lines.join("\n")
+    format!(
+        "{}\n{}",
+        catalog.text(&skill.label_key()),
+        catalog.text(&skill.text_key())
+    )
 }
 
 /// L'état qui grise la compétence, `None` quand elle est prête, ou au centre avec son avantage à

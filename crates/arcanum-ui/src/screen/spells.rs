@@ -38,6 +38,9 @@ pub(super) fn spell_option_label(
     let Some(&points) = options.get(usize::from(option)) else {
         return String::new();
     };
+    if let Some(label) = option_written_label(card, strong, option, catalog) {
+        return label;
+    }
     let points = against_combat(points, combat);
     let kinds = effect.option_modifiers(option);
     if options.len() == 1
@@ -56,6 +59,27 @@ pub(super) fn spell_option_label(
             .map(|kind| super::play_area::modifier_text(*kind, catalog)),
     );
     parts.join(", ")
+}
+
+/// Le libellé écrit propre à une option, `basic_label_<n>` ou `strong_label_<n>` (n compté depuis
+/// 1), quand la carte en a un : Secousse dit qui vise chaque option (issue #107).
+fn option_written_label(
+    card: CardId,
+    strong: bool,
+    option: u8,
+    catalog: &Catalog,
+) -> Option<String> {
+    let (basic, strong_key) = card.card().unsupported_text_keys()?;
+    let n = u16::from(option) + 1;
+    let key = if strong {
+        strong_key.replace(".strong_text", &format!(".strong_label_{n}"))
+    } else {
+        basic.replace(".basic_text", &format!(".basic_label_{n}"))
+    };
+    catalog
+        .parameters(&key)
+        .is_some()
+        .then(|| catalog.text(&key))
 }
 
 /// L'effet obtenu contre les ennemis affrontés de `combat` (Déluge de flammes, spec 054, Q4).
