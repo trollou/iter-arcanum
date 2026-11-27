@@ -1,6 +1,6 @@
 # Plan de développement — spec #20 Obtention des cartes
 
-- Statut : en cours (fil 1 moteur et écrans calculés, 2026-11-27 ; Effort High : deux fils).
+- Statut : fil 1 (étapes 1 à 6) fait le 2026-11-27 ; fil 2 (étapes 7 à 9) à faire. Effort High : deux fils.
 - Spec : [`issue-20-obtention-des-cartes.md`](../issue-20-obtention-des-cartes.md). Branche :
   `feature/20-obtention-des-cartes`.
 - Méthode : celle de `CLAUDE.md` (tests rouges, code minimal, refactor ; `scripts/verifier.sh` vert avant chaque push).
