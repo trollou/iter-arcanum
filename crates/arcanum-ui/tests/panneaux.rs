@@ -612,7 +612,7 @@ fn unit_mana_ability_omits_mana_prefix() {
     let ability = &screen.units.units[0].effects[1];
     assert_eq!(
         ability.face,
-        EffectFace::Text("Un ennemi non fortifié n'attaque pas".into())
+        EffectFace::Text("Un ennemi [[fortified]]non fortifié n'attaque pas".into())
     );
     assert_eq!(ability.color, Some(ManaColor::Basic(BasicColor::White)));
 }

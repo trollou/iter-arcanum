@@ -198,16 +198,75 @@ pub const ICON_MARKERS: [(&str, Icon); 6] = [
     ("summon", Icon::Summon),
 ];
 
+/// Un morceau d'un texte à repères : du texte, ou une icône et ce qui la suit (un mot collé, ou
+/// rien).
+enum Marked<'a> {
+    Text(&'a str),
+    Icon { icon: Icon, before_word: bool },
+}
+
+/// Découpe un texte en texte et en repères connus ; un repère inconnu reste du texte.
+fn marked(text: &str) -> Vec<Marked<'_>> {
+    let mut pieces = Vec::new();
+    let mut rest = text;
+    while let Some(start) = rest.find("[[") {
+        let after = &rest[start + 2..];
+        let Some(end) = after.find("]]") else { break };
+        let Some(&(_, icon)) = ICON_MARKERS.iter().find(|(name, _)| *name == &after[..end]) else {
+            pieces.push(Marked::Text(&rest[..start + 2]));
+            rest = after;
+            continue;
+        };
+        if start > 0 {
+            pieces.push(Marked::Text(&rest[..start]));
+        }
+        rest = &after[end + 2..];
+        let before_word = rest.chars().next().is_some_and(char::is_alphanumeric);
+        pieces.push(Marked::Icon { icon, before_word });
+    }
+    if !rest.is_empty() {
+        pieces.push(Marked::Text(rest));
+    }
+    pieces
+}
+
 /// Découpe un texte à repères en morceaux de texte et en icônes, sans valeur, nommées et avec
 /// leur règle (spec #27, C15) ; un texte sans repère donne un seul morceau.
-pub fn icon_pieces(text: &str, _catalog: &Catalog) -> Vec<ValuePiece> {
-    vec![ValuePiece::Text(text.to_string())]
+pub fn icon_pieces(text: &str, catalog: &Catalog) -> Vec<ValuePiece> {
+    marked(text)
+        .into_iter()
+        .map(|piece| match piece {
+            Marked::Text(text) => ValuePiece::Text(text.to_string()),
+            Marked::Icon { icon, .. } => ValuePiece::Icon(enemy_icon_value(icon, "", catalog)),
+        })
+        .collect()
 }
 
 /// Le texte sans repère (spec #27, C15 et C21) : un repère suivi d'un mot disparaît, un repère
-/// seul devient le nom de son icône (« Vif »).
-pub fn plain_text(text: &str, _catalog: &Catalog) -> String {
-    text.to_string()
+/// seul devient le nom de son icône (« Vif »). Deux repères seuls à la suite (« doublement
+/// fortifié ») donnent deux noms séparés d'une espace.
+pub fn plain_text(text: &str, catalog: &Catalog) -> String {
+    let mut plain = String::new();
+    let mut after_name = false;
+    for piece in marked(text) {
+        match piece {
+            Marked::Text(text) => {
+                plain.push_str(text);
+                after_name = false;
+            }
+            Marked::Icon {
+                before_word: true, ..
+            } => after_name = false,
+            Marked::Icon { icon, .. } => {
+                if after_name {
+                    plain.push(' ');
+                }
+                plain.push_str(&catalog.text(icon.name_key()));
+                after_name = true;
+            }
+        }
+    }
+    plain
 }
 
 /// Une valeur à icône, son nom traduit en infobulle.
