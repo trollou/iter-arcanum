@@ -1,5 +1,9 @@
 # Iter Arcanum
 
+> **⚠ Early version: rules knowledge required**
+>
+> Iter Arcanum does not teach the game yet. To play the current versions, you need to already know the rules of the *Mage Knight* board game, which inspired it. A learning tutorial is planned for a future release.
+
 *Iter Arcanum* (Latin for "the journey of the arcana") is a single-player desktop game **heavily inspired by the Mage Knight board game**. You play a hero who explores a realm, fights enemies, recruits units, conquers sites and grows stronger, turn after turn, by playing cards.
 
 It runs on **Windows**, **Linux** and **macOS**. The game is displayed in your system language when it is **French or English**, and in English otherwise. To force a language for one session, pass `--lang fr` or `--lang en` (for example `iter-arcanum --lang en`, or `cargo run -p arcanum-ui --release -- --lang en` from the sources). **Menu > Preferences…** (or **Ctrl+,**, **Cmd+,** on macOS, also on the launch screen) picks the language, whether the game starts in full screen, and four volumes (master, music, ambience, sound effects); these preferences are kept in `preferences.json` in your user configuration folder (`~/.config/iter-arcanum/` on Linux, `%APPDATA%\iter-arcanum\config\` on Windows, `~/Library/Application Support/iter-arcanum/` on macOS), or in the repository's `config/` folder when launched from the sources with `cargo run`. The `ARCANUM_CONFIG_DIR` environment variable picks another folder.
