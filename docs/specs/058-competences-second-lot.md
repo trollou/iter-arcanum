@@ -460,6 +460,7 @@ Clés nouvelles, en fr et en :
 | `skill.no_dice` | — | Magie inutile : plus de dé de la Source ce tour | Who Needs Magic: no Source die this turn |
 | `skill.interaction_influence` | `amount` | Influence d'interaction : {amount} | Interaction Influence: {amount} |
 | `skill.bonds_token` | — | Jeton de Loyauté : recrutement −5 | Loyalty token: recruit for 5 less |
+| `skill.bonds_token_used` | `name` | Jeton de Loyauté : {name} | Loyalty token: {name} |
 | `skill.bonds_recruit` | `name`, `cost` | Recruter sous Loyauté : {name} ({cost}) | Recruit under Loyalty: {name} ({cost}) |
 | `skill.choose_die` | `skill` | {skill} : choisir le dé | {skill}: choose the die |
 | `skill.sideways` | `value` | De côté : {value} | Sideways: {value} |
@@ -520,7 +521,9 @@ les compétences (elle reste pour les cartes). Aucun symbole hors des polices du
   `PlayerView::interaction_influence`).
 - **Magie inutile à +3** : rappel `skill.no_dice` dans les effets en cours, dés de la Source grisés (C6,
   `PlayerView::source_dice_forbidden`).
-- **Loyauté sans faille** : dans la section Unités, un emplacement de plus marqué `skill.bonds_token` ; dans l'offre d'unités,
+- **Loyauté sans faille** : dans la section Unités, un emplacement de plus marqué `skill.bonds_token`
+  quand le jeton est libre, `skill.bonds_token_used` quand il porte son unité, qui ne compte pas dans l'en-tête `units.header`
+  (issue #26) ; dans l'offre d'unités,
   un bouton `skill.bonds_recruit` à côté de « Recruter » quand le jeton est libre (C29 à C32, `PlayerView::bonds_unit`).
 - Placement des bandeaux et des boutons : vérification à l'œil.
 

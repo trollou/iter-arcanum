@@ -1908,6 +1908,7 @@
     "no_dice": "Magie inutile : plus de dé de la Source ce tour",
     "interaction_influence": "Influence d'interaction : {amount}",
     "bonds_token": "Jeton de Loyauté : recrutement −5",
+    "bonds_token_used": "Jeton de Loyauté : {name}",
     "bonds_recruit": "Recruter sous Loyauté : {name} ({cost})",
     "sideways": "De côté : {value}",
     "with_leadership": "Avec Charisme : {effect}"
