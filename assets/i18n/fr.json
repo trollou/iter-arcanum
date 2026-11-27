@@ -1661,8 +1661,13 @@
     "crystal": "Rituel de sang : payer un mana de base pour un cristal ?",
     "decline": "Non merci"
   },
+  "level_choice": {
+    "title": "Niveau {level} : choisir une compétence et une action avancée",
+    "skill_first": "Choisissez d'abord une compétence."
+  },
   "gain_choice": {
-    "prompt": "{card} : {effect}. Choisissez la carte dans la fenêtre Offres."
+    "prompt": "{card} : {effect}. Choisissez la carte dans la fenêtre.",
+    "title": "{card} : choisissez la carte"
   },
   "die_choice": {
     "prompt": "{card} : choisissez un dé de la Source."

@@ -1661,8 +1661,13 @@
     "crystal": "Blood Ritual: pay a basic mana for a crystal?",
     "decline": "No thanks"
   },
+  "level_choice": {
+    "title": "Level {level}: choose a Skill and an Advanced Action",
+    "skill_first": "Choose a Skill first."
+  },
   "gain_choice": {
-    "prompt": "{card}: {effect}. Choose the card in the Offers window."
+    "prompt": "{card}: {effect}. Choose the card in the window.",
+    "title": "{card}: choose the card"
   },
   "die_choice": {
     "prompt": "{card}: choose a die from the Source."
