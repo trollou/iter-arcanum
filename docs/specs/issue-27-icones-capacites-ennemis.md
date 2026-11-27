@@ -53,14 +53,16 @@ définition du jeton, `CombatEnemy::city_abilities`). Ce que l'écran gagne :
   `None` partout où rien ne change (Mouvement, Armure, résistances des unités…).
 - **Carte d'ennemi** (`EnemyCard`) : `abilities` devient une liste de valeurs à icône (`Vec<IconValue>`, sans valeur, avec
   règle), au lieu de `Option<String>` ; de même pour `SummonedCard::abilities`.
-- **Condition d'un bouton d'effet** : le visage à icône d'un effet (`EffectFace::Icon`) peut porter une condition, un court texte
-  suivi d'une icône (« ×2 si » et Vif) ; seule la Parade vive (`Effect::SwiftBlock`) en a une.
+- **Condition d'un bouton d'effet** : un bouton d'effet (`EffectButton::condition`, `EffectCondition`) peut porter une
+  condition, un court texte suivi d'une icône (« ×2 si » et Vif), dessinée après le bouton ; seule la Parade vive
+  (`Effect::SwiftBlock`) en a une. (Implémentation : un champ du bouton plutôt qu'une variante du visage, pour ne pas toucher
+  aux visages existants.)
 - **Texte à icônes** (Q3, Q4) : un libellé de `assets/i18n/*.json` peut contenir un **repère d'icône** `[[nom]]`, placé juste
   devant le mot qu'il illustre (« Capacités : [[brutal]]brutal » sur le plateau), ou **seul à la place du mot** dans l'écran de
   combat, où l'icône a son infobulle (« À parer : {block} ([[swift]], 2 × {attack}) » ; Mathieu, revue de la PR #85). Les noms sont ceux des six icônes nouvelles :
   `fortified`, `swift`, `brutal`, `poison`, `paralyze`, `summon`. Les champs de l'écran restent des `String` qui portent leurs
   repères ; une fonction pure d'arcanum-ui, `icon_pieces(text, catalog) -> Vec<ValuePiece>`, les découpe en morceaux de texte et
-  en icônes (sans valeur, avec nom et règle en infobulle), et `plain_text(text)` retire les repères suivis d'un mot et remplace un repère seul par le nom de l'icône (« Vif »). L'application dessine ces
+  en icônes (sans valeur, avec nom et règle en infobulle), et `plain_text(text, catalog)` retire les repères suivis d'un mot et remplace un repère seul par le nom de l'icône (« Vif »). L'application dessine ces
   morceaux partout où le texte s'affiche dans un libellé ou une infobulle ; là où egui n'accepte que du texte (libellé d'un
   bouton, titre de fenêtre, journal), elle affiche `plain_text` : le mot reste, sans icône.
 
