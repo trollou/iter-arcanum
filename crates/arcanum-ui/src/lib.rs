@@ -68,7 +68,7 @@ pub use icon::{
 };
 pub use icons::{
     CRYSTAL_EMPTY_IMAGE, Icon, IconButton, IconValue, ValuePiece, attack_icon, block_icon,
-    crystal_image, hero_emblem, icon_value, ui_images,
+    crystal_image, enemy_icon_value, hero_emblem, icon_value, ui_images,
 };
 pub use illustrations::{
     Illustration, IllustrationFamily, IllustrationIndex, card_illustration, hero_illustration,

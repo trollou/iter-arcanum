@@ -198,6 +198,38 @@ pub fn icon_value(icon: Icon, value: impl Into<String>, catalog: &Catalog) -> Ic
     }
 }
 
+/// Une valeur à icône d'un ennemi (spec #27, C3 à C11) : son nom, puis sa règle quand l'icône en
+/// a une (capacité, invocation, résistance, attaque élémentaire).
+pub fn enemy_icon_value(icon: Icon, value: impl Into<String>, catalog: &Catalog) -> IconValue {
+    IconValue {
+        rule: enemy_rule_key(icon).map(|key| catalog.text(key)),
+        ..icon_value(icon, value, catalog)
+    }
+}
+
+/// La clé de la règle d'une icône d'ennemi ; `None` pour une icône sans règle (attaque physique,
+/// Armure, Gloire…).
+fn enemy_rule_key(icon: Icon) -> Option<&'static str> {
+    Some(match icon {
+        Icon::Ability(EnemyAbility::Fortified) => "icon.rule.fortified",
+        Icon::Ability(EnemyAbility::Swift) => "icon.rule.swift",
+        Icon::Ability(EnemyAbility::Brutal) => "icon.rule.brutal",
+        Icon::Ability(EnemyAbility::Poison) => "icon.rule.poison",
+        Icon::Ability(EnemyAbility::Paralyze) => "icon.rule.paralyze",
+        Icon::Summon => "icon.rule.summon",
+        Icon::Resistance(Resistance::Physical) => "icon.rule.resistance_physical",
+        Icon::Resistance(Resistance::Fire) => "icon.rule.resistance_fire",
+        Icon::Resistance(Resistance::Ice) => "icon.rule.resistance_ice",
+        Icon::Attack { element, .. } => match element {
+            Element::Fire => "icon.rule.attack_fire",
+            Element::Ice => "icon.rule.attack_ice",
+            Element::ColdFire => "icon.rule.attack_cold_fire",
+            Element::Physical => return None,
+        },
+        _ => return None,
+    })
+}
+
 /// L'icône d'une attaque : sa sorte et son élément (C2).
 pub fn attack_icon(kind: AttackKind, element: Element) -> Icon {
     Icon::Attack { kind, element }

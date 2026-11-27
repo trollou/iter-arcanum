@@ -52,19 +52,6 @@ pub fn token_lines(token: EnemyToken, catalog: &Catalog) -> Vec<String> {
     lines
 }
 
-/// « Capacités : vif, toxique », s'il en a (carte d'ennemi de l'écran de combat, spec 033).
-pub fn token_abilities(token: EnemyToken, catalog: &Catalog) -> Option<String> {
-    let abilities: Vec<String> = token
-        .enemy()
-        .definition()
-        .abilities
-        .iter()
-        .map(|ability| catalog.text(ability_key(*ability)))
-        .collect();
-    (!abilities.is_empty())
-        .then(|| catalog.format("enemy.abilities", &[("list", &join(&abilities))]))
-}
-
 /// « armure 3, attaque 4, gloire 2 » (spec 030 ; carte d'ennemi de l'écran de combat, spec 031).
 pub fn token_values(token: EnemyToken, catalog: &Catalog) -> String {
     let definition = token.enemy().definition();
