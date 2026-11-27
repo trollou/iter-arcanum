@@ -64,8 +64,8 @@
       "enemy_space": "Case occupée par un ennemi errant",
       "provokes": "Provoque : {enemies}",
       "assault": "⚔ Assaut : Réputation −1, combat obligatoire",
-      "defender_fortified": "Défenseur fortifié : siège seulement à distance",
-      "defender_fortified_twice": "Défenseur doublement fortifié : aucun tir à distance",
+      "defender_fortified": "Défenseur [[fortified]]fortifié : siège seulement à distance",
+      "defender_fortified_twice": "Défenseur doublement [[fortified]]fortifié : aucun tir à distance",
       "adventure": {
         "enemies_waiting": "Vous y attendent : {enemies}",
         "fight": "Entrer : combat, récompense : {reward}"
@@ -83,8 +83,8 @@
         "face_down": "Défenseurs face cachée : {groups}",
         "bonus_white": "Bonus des défenseurs : Armure +1",
         "bonus_blue": "Bonus des défenseurs : attaque de glace ou de feu +2, de feu glacé +1",
-        "bonus_red": "Bonus des défenseurs : brutal si leur attaque est physique",
-        "bonus_green": "Bonus des défenseurs : toxique si leur attaque est physique",
+        "bonus_red": "Bonus des défenseurs : [[brutal]]brutal si leur attaque est physique",
+        "bonus_green": "Bonus des défenseurs : [[poison]]toxique si leur attaque est physique",
         "shields": "Vos Boucliers : {count}",
         "leader": "Conquise : vous en êtes le Seigneur",
         "offer_white": "On y recrute toutes les unités ; unité d'élite ajoutée à l'offre pour 2 Influence",
@@ -304,11 +304,11 @@
     "abilities": "Capacités : {list}",
     "resistances": "Résistances : {list}",
     "ability": {
-      "fortified": "fortifié",
-      "swift": "vif",
-      "brutal": "brutal",
-      "poison": "toxique",
-      "paralyze": "paralysant"
+      "fortified": "[[fortified]]fortifié",
+      "swift": "[[swift]]vif",
+      "brutal": "[[brutal]]brutal",
+      "poison": "[[poison]]toxique",
+      "paralyze": "[[paralyze]]paralysant"
     },
     "element": {
       "physical": "physique",
@@ -603,14 +603,14 @@
     "expose": {
       "name": "Exposition",
       "strong_name": "Exposition de masse",
-      "basic_text": "Un ennemi perd fortifications et résistances ; Attaque à distance 2",
-      "strong_text": "Tous les ennemis perdent leurs fortifications ou leurs résistances ; Attaque à distance 3"
+      "basic_text": "Un ennemi perd [[fortified]]fortifications et résistances ; Attaque à distance 2",
+      "strong_text": "Tous les ennemis perdent leurs [[fortified]]fortifications ou leurs résistances ; Attaque à distance 3"
     },
     "tremor": {
       "name": "Secousse",
       "strong_name": "Tremblement de terre",
       "basic_text": "Un ennemi Armure -3, ou tous Armure -2 (min. 1)",
-      "strong_text": "Un ennemi Armure -3 (-6 si fortifié), ou tous -2 (-4 si fortifiés) (min. 1)"
+      "strong_text": "Un ennemi Armure -3 (-6 si [[fortified]]fortifié), ou tous -2 (-4 si [[fortified]]fortifiés) (min. 1)"
     },
     "flame_wall": {
       "name": "Mur de flammes",
@@ -820,7 +820,8 @@
     "cold_fire_block": "Parade de feu glacé {amount}",
     "cold_toughness_strong": "Parade de glace {base} + {bonus} (capacités de l'ennemi paré)",
     "ice_block_per_ability": "Parade de glace {amount}, +1 par capacité de l'ennemi paré",
-    "swift_block": "Parade {amount}, double contre Vif",
+    "swift_block": "Parade {amount}, double contre [[swift]]Vif",
+    "double_if": "×2 si",
     "ready_unit": "Rendre disponible une unité de niveau {level} au plus",
     "token_and_crystal": "Jeton et cristal {color}",
     "gain_tokens": "Jetons {first} et {second}",
@@ -1105,18 +1106,18 @@
     "enemy": {
       "blocked": "paré",
       "defeated": "vaincu",
-      "siege_only": "fortifié : siège seulement",
-      "summons": "Invoque : {monster}",
+      "siege_only": "[[fortified]] : siège seulement",
+      "summons": "[[summon]] : {monster} invoqué",
       "summoned_note": "retirée après les dégâts, sans gloire",
       "stakes_block": "À parer : {block}",
       "stakes_damage": "Si non paré : {damage} dégâts, {wounds} blessure(s)",
-      "swift_block": "{block} (vif, 2 × {attack})",
-      "brutal_damage": "{damage} (brutal, 2 × {attack})",
-      "site_fortified": "fortifié (site)",
-      "fortified_twice": "doublement fortifié : pas de cible à distance",
+      "swift_block": "{block} ([[swift]], 2 × {attack})",
+      "brutal_damage": "{damage} ([[brutal]], 2 × {attack})",
+      "site_fortified": "[[fortified]] (site)",
+      "fortified_twice": "[[fortified]][[fortified]] : pas de cible à distance",
       "armor_reduced": "Armure {armor} (au lieu de {printed})",
       "does_not_attack": "n'attaque pas",
-      "no_fortification": "plus fortifié",
+      "no_fortification": "[[fortified]] perdu",
       "no_resistances": "plus de résistances",
       "no_fire_resistance": "plus de résistance au Feu",
       "destroyed": "détruit",
@@ -1140,9 +1141,9 @@
       "success": "réussie",
       "failure": "ratée",
       "damage_enemy": "Dégâts : {enemy}, {damage} : {count} blessure(s)",
-      "brutal": "brutal 2 × {attack} = {damage}",
-      "poison": "toxique : {count} de plus dans la défausse",
-      "paralyze": "paralysant : {count} carte(s) défaussée(s) de la main",
+      "brutal": "[[brutal]] 2 × {attack} = {damage}",
+      "poison": "[[poison]] : {count} de plus dans la défausse",
+      "paralyze": "[[paralyze]] : {count} carte(s) défaussée(s) de la main",
       "knocked_out": "Assommé : {count} carte(s) défaussée(s) de la main",
       "reputation": "Réputation {amount}",
       "unit_damage": "{name} : {wounds} Blessure(s)",
@@ -1154,7 +1155,7 @@
       "physical": "résistance physique ({enemies})",
       "fire": "résistance au feu ({enemies})",
       "ice": "résistance à la glace ({enemies})",
-      "fortified": "fortifié ({enemies}) : attaques de siège seulement"
+      "fortified": "[[fortified]] ({enemies}) : attaques de siège seulement"
     },
     "block_efficient": {
       "fire": "Contre une attaque de feu, les parades autres que de glace et de feu glacé sont divisées par deux",
@@ -1166,8 +1167,8 @@
       "siege_only": "siège seulement"
     },
     "calculation": "Divisées par deux : {halved} ÷ 2 = {halved_sum} · Autres : {full}",
-    "summon_warning": "Au début de la phase de parade, {enemies} invoquent une créature (donjon) : pas de retour en arrière après.",
-    "swift_line": "Vif : il faut parer le double de son attaque, 2 × {attack} = {block}",
+    "summon_warning": "Au début de la phase de parade, {enemies} [[summon]]invoquent une créature (donjon) : pas de retour en arrière après.",
+    "swift_line": "[[swift]] : il faut parer le double de son attaque, 2 × {attack} = {block}",
     "night_rules": "Règles de Nuit : le mana or ne paie rien",
     "move_as_attack": "Mouvement en Attaque ({move} restant)",
     "move_as_ranged": "2 Mouvement en Attaque à distance ({move} restant)",
@@ -1273,7 +1274,7 @@
     "utem_guardsmen": {
       "name": "Gardes d'Utem",
       "ability_1": "Attaque 2",
-      "ability_2": "Parade 4 ; compte double contre un ennemi Vif"
+      "ability_2": "Parade 4 ; compte double contre un ennemi [[swift]]Vif"
     },
     "utem_swordsmen": {
       "name": "Guerriers d'Utem",
@@ -1289,7 +1290,7 @@
     "illusionists": {
       "name": "Illusionnistes",
       "ability_1": "Influence 4",
-      "ability_2": "(mana blanc) Un ennemi non fortifié n'attaque pas",
+      "ability_2": "(mana blanc) Un ennemi [[fortified]]non fortifié n'attaque pas",
       "ability_3": "Cristal blanc"
     },
     "red_cape_monks": {
@@ -1354,7 +1355,7 @@
     "altem_guardians": {
       "name": "Gardiens d'Altem",
       "ability_1": "Attaque 5",
-      "ability_2": "Parade 8 ; compte double contre un ennemi Vif",
+      "ability_2": "Parade 8 ; compte double contre un ennemi [[swift]]Vif",
       "ability_3": "(mana vert) Vos unités gagnent toutes les résistances ce tour"
     },
     "cost": "Coût : Influence {influence}",
@@ -1526,6 +1527,7 @@
       "cold_fire": "Parade de feu glacé"
     },
     "ranged_or_siege": "Attaque à distance ou de siège",
+    "summon": "Invocation",
     "resistance": {
       "physical": "Résistance physique",
       "fire": "Résistance au feu",
@@ -1534,6 +1536,27 @@
     "tile": {
       "countryside": "Tuile de campagne",
       "core": "Tuile royaume"
+    },
+    "ability": {
+      "fortified": "Fortifié",
+      "swift": "Vif",
+      "brutal": "Brutal",
+      "poison": "Toxique",
+      "paralyze": "Paralysant"
+    },
+    "rule": {
+      "fortified": "Pendant les attaques à distance, seules les attaques de siège l'atteignent ; aucune s'il défend aussi un site fortifié.",
+      "swift": "Pour le parer, il faut une Parade du double de son attaque.",
+      "brutal": "S'il n'est pas paré, il inflige le double de son attaque.",
+      "poison": "Une unité qu'il blesse reçoit deux Blessures. Pour chaque Blessure qu'il met dans la main du héros, une autre va dans la défausse.",
+      "paralyze": "Une unité qu'il blesse est détruite. Si le héros prend une Blessure en main, il défausse toutes ses cartes qui ne sont pas des Blessures.",
+      "summon": "Au début de la phase de parade, une créature tirée de la pile du donjon prend sa place pour la parade et les dégâts, puis est défaussée.",
+      "resistance_physical": "Les attaques physiques, cartes jouées de côté comprises, ne comptent qu'à moitié contre lui.",
+      "resistance_fire": "Les attaques de feu ne comptent qu'à moitié contre lui, et le feu glacé aussi s'il résiste à la glace. Il ignore les autres effets des cartes rouges et des capacités d'unité payées en mana rouge.",
+      "resistance_ice": "Les attaques de glace ne comptent qu'à moitié contre lui, et le feu glacé aussi s'il résiste au feu. Il ignore les autres effets des cartes bleues et des capacités d'unité payées en mana bleu.",
+      "attack_fire": "Seules les Parades de glace et de feu glacé comptent en entier ; les autres, à moitié.",
+      "attack_ice": "Seules les Parades de feu et de feu glacé comptent en entier ; les autres, à moitié.",
+      "attack_cold_fire": "Seules les Parades de feu glacé comptent en entier ; les autres, à moitié."
     }
   },
   "shortcut": {
@@ -1632,7 +1655,7 @@
     "ignore_site_fortifications": "fortifications des sites ignorées",
     "deferred_attack": "{attack} en phase d'attaque",
     "cast_from_offer": "un sort {color} de l'offre",
-    "by_fortification": "{plain} ({fortified} si fortifié)",
+    "by_fortification": "{plain} ({fortified} si [[fortified]]fortifié)",
     "space_bending": "cases à 2 comme voisines, sans provoquer",
     "time_bending": "tour supplémentaire à la fin du tour",
     "unit_from_offer": "une unité de l'offre ce tour",

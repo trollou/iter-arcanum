@@ -2,7 +2,7 @@
 
 use std::fs;
 
-use arcanum_core::{AttackKind, Element, Hero, Resistance};
+use arcanum_core::{AttackKind, Element, EnemyAbility, Hero, Resistance};
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
     Icon, IconValue, attack_icon, block_icon, hero_emblem, repository_assets_dir, ui_images,
@@ -25,7 +25,8 @@ fn every_icon_image_exists() {
     let images = ui_images();
     // 26 icônes nommées (spec 074, C8 : les deux dos de tuile), 6 cristaux pleins et
     // l'emplacement vide, 4 emblèmes de héros ; le « i » des cartes de la main (spec #11).
-    assert_eq!(images.len(), 38);
+    // Spec #27, C1 : les cinq capacités des ennemis et l'invocation.
+    assert_eq!(images.len(), 44);
     assert!(images.contains(&Icon::Info.image()));
     for icon in Icon::all() {
         assert!(
@@ -46,7 +47,8 @@ fn every_icon_has_a_name() {
     let catalog = french();
     let keys = catalog.keys();
     // Spec 074, C8 : la planche passe de 24 à 26 icônes.
-    assert_eq!(Icon::all().len(), 26);
+    // Spec #27, C2 : puis à 32, avec les capacités des ennemis et l'invocation.
+    assert_eq!(Icon::all().len(), 32);
     for icon in Icon::all() {
         assert!(
             keys.contains(icon.name_key()),
@@ -64,6 +66,11 @@ fn every_icon_has_a_name() {
         "Tuile de campagne"
     );
     assert_eq!(catalog.text(Icon::TileCore.name_key()), "Tuile royaume");
+    assert_eq!(
+        catalog.text(Icon::Ability(EnemyAbility::Swift).name_key()),
+        "Vif"
+    );
+    assert_eq!(catalog.text(Icon::Summon.name_key()), "Invocation");
 }
 
 // Spec 071, C2 : l'icône d'une attaque suit sa sorte et son élément.
@@ -156,6 +163,7 @@ fn value(icon: Icon, value: &str, tooltip: &str) -> IconValue {
         icon,
         value: value.into(),
         tooltip: tooltip.into(),
+        rule: None,
     }
 }
 
@@ -231,7 +239,18 @@ fn icon(icon: Icon, value: &str, tooltip: &str) -> ValuePiece {
         icon,
         value: value.into(),
         tooltip: tooltip.into(),
+        rule: None,
     })
+}
+
+/// Une valeur à icône qui porte sa règle (spec #27).
+fn ruled(icon: Icon, value: &str, tooltip: &str, rule: &str) -> IconValue {
+    IconValue {
+        icon,
+        value: value.into(),
+        tooltip: tooltip.into(),
+        rule: Some(rule.into()),
+    }
 }
 
 /// Combat engagé contre ce seul ennemi, posé à côté du village.
@@ -270,7 +289,7 @@ fn bar_stays_during_combat() {
 }
 
 // Spec 071, C8 : Armure, épée de feu, Gloire (Mages de feu : armure 5, attaque de feu 6,
-// gloire 5).
+// gloire 5). Spec #27, C11 : l'attaque de feu de l'ennemi porte sa règle.
 #[test]
 fn enemy_card_values_use_icons() {
     let catalog = french();
@@ -279,19 +298,28 @@ fn enemy_card_values_use_icons() {
         screen.enemies[0].values,
         [
             icon(Icon::Armor, "5", "Armure"),
-            icon(
+            ValuePiece::Icon(ruled(
                 attack_icon(AttackKind::Melee, Element::Fire),
                 "6",
-                "Attaque de feu"
-            ),
+                "Attaque de feu",
+                "Seules les Parades de glace et de feu glacé comptent en entier ; les autres, à moitié."
+            )),
             icon(Icon::Fame, "5", "Gloire"),
         ]
     );
+    // Une attaque physique n'a pas de règle.
+    let screen = combat_of(&fighting(Enemy::Prowlers), &catalog);
+    assert!(
+        matches!(&screen.enemies[0].values[1], ValuePiece::Icon(value) if value.rule.is_none()),
+        "{:?}",
+        screen.enemies[0].values
+    );
 }
 
-// Spec 071, C9 : l'attaque d'un Invocateur reste écrite (spec 033).
+// Spec 071, C9 ; spec #27, C6 : l'attaque d'un Invocateur s'affiche avec l'icône Invocation,
+// sans valeur, avec sa règle.
 #[test]
-fn summoner_attack_stays_text() {
+fn summoner_attack_uses_icon() {
     let catalog = french();
     let screen = combat_of(&fighting(Enemy::OrcSummoners), &catalog);
     let definition = Enemy::OrcSummoners.definition();
@@ -299,10 +327,72 @@ fn summoner_attack_stays_text() {
         screen.enemies[0].values,
         [
             icon(Icon::Armor, &definition.armor.to_string(), "Armure"),
-            ValuePiece::Text("invocation".into()),
+            ValuePiece::Icon(ruled(
+                Icon::Summon,
+                "",
+                "Invocation",
+                &catalog.text("icon.rule.summon")
+            )),
             icon(Icon::Fame, &definition.fame.to_string(), "Gloire"),
         ]
     );
+}
+
+// Spec #27, C3 : Glaceurs (Fortifié, Vif, Paralysant) : trois icônes dans l'ordre de
+// `enemies.ron`, sans valeur, nommées et avec leur règle.
+#[test]
+fn abilities_use_icons() {
+    let catalog = french();
+    let screen = combat_of(&fighting(Enemy::Freezers), &catalog);
+    let abilities: Vec<(Icon, &str, &str, bool)> = screen.enemies[0]
+        .abilities
+        .iter()
+        .map(|value| {
+            (
+                value.icon,
+                value.value.as_str(),
+                value.tooltip.as_str(),
+                value.rule.is_some(),
+            )
+        })
+        .collect();
+    assert_eq!(
+        abilities,
+        [
+            (Icon::Ability(EnemyAbility::Fortified), "", "Fortifié", true),
+            (Icon::Ability(EnemyAbility::Swift), "", "Vif", true),
+            (
+                Icon::Ability(EnemyAbility::Paralyze),
+                "",
+                "Paralysant",
+                true
+            ),
+        ]
+    );
+}
+
+// Spec #27, C4 : la règle de Vif (Chevaucheurs de loups : armure 4, attaque 3, Vif).
+#[test]
+fn ability_tooltip_gives_rule() {
+    let catalog = french();
+    let screen = combat_of(&fighting(Enemy::WolfRiders), &catalog);
+    assert_eq!(
+        screen.enemies[0].abilities,
+        [ruled(
+            Icon::Ability(EnemyAbility::Swift),
+            "",
+            "Vif",
+            "Pour le parer, il faut une Parade du double de son attaque."
+        )]
+    );
+}
+
+// Spec #27, C5 : Rôdeurs, sans capacité, sans icône de capacité.
+#[test]
+fn no_ability_no_icon() {
+    let catalog = french();
+    let screen = combat_of(&fighting(Enemy::Prowlers), &catalog);
+    assert!(screen.enemies[0].abilities.is_empty());
 }
 
 // Spec 071, C10 : une icône par résistance, sans valeur, à la place des badges (spec 032).
@@ -311,25 +401,27 @@ fn resistances_use_icons() {
     let catalog = french();
     // Gardiens d'Altem : résistances au feu, à la glace et physique.
     let screen = combat_of(&fighting(Enemy::AltemGuardsmen), &catalog);
-    // Dans l'ordre de la définition de l'ennemi.
-    let resistances: Vec<(Icon, &str, &str)> = screen.enemies[0]
-        .resistances
-        .iter()
-        .map(|value| (value.icon, value.value.as_str(), value.tooltip.as_str()))
-        .collect();
+    // Dans l'ordre de la définition de l'ennemi. Spec #27, C10 : chacune a sa règle.
     assert_eq!(
-        resistances,
+        screen.enemies[0].resistances,
         [
-            (Icon::Resistance(Resistance::Fire), "", "Résistance au feu"),
-            (
+            ruled(
+                Icon::Resistance(Resistance::Fire),
+                "",
+                "Résistance au feu",
+                &catalog.text("icon.rule.resistance_fire")
+            ),
+            ruled(
                 Icon::Resistance(Resistance::Ice),
                 "",
-                "Résistance à la glace"
+                "Résistance à la glace",
+                &catalog.text("icon.rule.resistance_ice")
             ),
-            (
+            ruled(
                 Icon::Resistance(Resistance::Physical),
                 "",
-                "Résistance physique"
+                "Résistance physique",
+                &catalog.text("icon.rule.resistance_physical")
             ),
         ]
     );
@@ -774,4 +866,135 @@ fn escape_buttons_show_shortcut() {
     .discard_prompt
     .expect("choix de la carte à défausser");
     assert_eq!(discard.cancel.shortcut, escape);
+}
+
+// --- Texte à icônes (spec #27) ---
+
+use arcanum_ui::{ICON_MARKERS, icon_pieces, plain_text};
+
+fn english() -> Catalog {
+    Catalog::load(
+        &repository_assets_dir().join("i18n"),
+        &Language("en".into()),
+    )
+    .expect("en.json du dépôt")
+}
+
+// Spec #27, C15 : un repère devant le mot, un repère seul à la place du mot, un texte sans
+// repère.
+#[test]
+fn icon_pieces_split_markers() {
+    let catalog = french();
+    let brutal = ruled(
+        Icon::Ability(EnemyAbility::Brutal),
+        "",
+        "Brutal",
+        "S'il n'est pas paré, il inflige le double de son attaque.",
+    );
+    assert_eq!(
+        icon_pieces("Capacités : [[brutal]]brutal", &catalog),
+        [
+            ValuePiece::Text("Capacités : ".into()),
+            ValuePiece::Icon(brutal),
+            ValuePiece::Text("brutal".into()),
+        ]
+    );
+    let swift = ruled(
+        Icon::Ability(EnemyAbility::Swift),
+        "",
+        "Vif",
+        "Pour le parer, il faut une Parade du double de son attaque.",
+    );
+    assert_eq!(
+        icon_pieces("À parer : 6 ([[swift]], 2 × 3)", &catalog),
+        [
+            ValuePiece::Text("À parer : 6 (".into()),
+            ValuePiece::Icon(swift),
+            ValuePiece::Text(", 2 × 3)".into()),
+        ]
+    );
+    assert_eq!(
+        icon_pieces("Armure 3", &catalog),
+        [ValuePiece::Text("Armure 3".into())]
+    );
+    assert_eq!(
+        plain_text("Capacités : [[brutal]]brutal", &catalog),
+        "Capacités : brutal"
+    );
+    assert_eq!(
+        plain_text("À parer : 6 ([[swift]], 2 × 3)", &catalog),
+        "À parer : 6 (Vif, 2 × 3)"
+    );
+}
+
+/// Les repères `[[nom]]` d'un texte, dans l'ordre.
+fn markers(text: &str) -> Vec<String> {
+    let mut found = Vec::new();
+    let mut rest = text;
+    while let Some(start) = rest.find("[[") {
+        let after = &rest[start + 2..];
+        let end = after.find("]]").expect("repère fermé");
+        found.push(after[..end].to_string());
+        rest = &after[end + 2..];
+    }
+    found
+}
+
+// Spec #27, C16 : chaque repère nomme une des six icônes, et chaque clé a les mêmes repères dans
+// le même ordre en français et en anglais.
+#[test]
+fn icon_markers_are_known_and_shared() {
+    let (fr, en) = (french(), english());
+    let known: Vec<&str> = ICON_MARKERS.iter().map(|(name, _)| *name).collect();
+    let mut marked = 0;
+    for key in fr.keys() {
+        let found = markers(&fr.text(&key));
+        for name in &found {
+            assert!(known.contains(&name.as_str()), "{key} : [[{name}]] inconnu");
+        }
+        assert_eq!(found, markers(&en.text(&key)), "{key}");
+        marked += usize::from(!found.is_empty());
+    }
+    // Les clés marquées de la spec (section Libellés).
+    assert!(marked >= 30, "{marked} clés marquées");
+}
+
+// Spec #27, C19 et C20 : hors du combat, l'icône devant le mot, qui reste.
+#[test]
+fn marked_texts_keep_the_word() {
+    let catalog = french();
+    for (key, expected) in [
+        (
+            "board.hover.city.bonus_red",
+            "Bonus des défenseurs : [[brutal]]brutal si leur attaque est physique",
+        ),
+        (
+            "board.hover.city.bonus_green",
+            "Bonus des défenseurs : [[poison]]toxique si leur attaque est physique",
+        ),
+        (
+            "unit.altem_guardians.ability_2",
+            "Parade 8 ; compte double contre un ennemi [[swift]]Vif",
+        ),
+        (
+            "unit.illusionists.ability_2",
+            "(mana blanc) Un ennemi [[fortified]]non fortifié n'attaque pas",
+        ),
+        (
+            "card.tremor.strong_text",
+            "Un ennemi Armure -3 (-6 si [[fortified]]fortifié), ou tous -2 (-4 si \
+             [[fortified]]fortifiés) (min. 1)",
+        ),
+        (
+            "modifier.by_fortification",
+            "{plain} ({fortified} si [[fortified]]fortifié)",
+        ),
+    ] {
+        assert_eq!(catalog.text(key), expected, "{key}");
+    }
+    assert!(
+        catalog
+            .text("card.expose.basic_text")
+            .contains("perd [[fortified]]fortifications")
+    );
 }

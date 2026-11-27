@@ -7,7 +7,7 @@ use eframe::egui::{
     load::SizedTexture, pos2, vec2,
 };
 
-use super::icons::icon_size;
+use super::icons::{icon_size, icon_tooltip, marked_label};
 use super::widgets::{mana_color, reclaim_menu, shortcut_button, strong_button};
 use super::{CHOICE_STROKE, IterArcanumApp, RESISTANCE_TEXT, SWATCH_STROKE};
 use crate::{
@@ -381,7 +381,7 @@ impl IterArcanumApp {
         }
         // Spec #11 : seul un artefact écrit son texte ; les boutons portent celui des autres (Q1).
         if card.show_text && !card.effect.is_empty() {
-            ui.add(egui::Label::new(&card.effect).wrap());
+            self.marked_label(ui, &card.effect, egui::RichText::new);
         }
         if let Some(note) = &card.combat_note {
             ui.colored_label(RESISTANCE_TEXT, note);
@@ -403,13 +403,14 @@ impl IterArcanumApp {
                 &card.strong_colors,
             );
             if card.show_text {
-                ui.add(egui::Label::new(egui::RichText::new(&card.strong_text).weak()).wrap());
+                self.marked_label(ui, &card.strong_text, super::icons::weak_text);
             }
             clicked = self.effect_buttons(ui, &card.strong_effects).or(clicked);
         }
         // Rajeunissement : une unité à rendre disponible par bouton (spec 042).
         for button in &card.unit_plays {
-            if ui.add(egui::Button::new(&button.label).wrap()).clicked() {
+            let label = crate::plain_text(&button.label, &self.catalog);
+            if ui.add(egui::Button::new(label).wrap()).clicked() {
                 clicked = Some(button.command);
             }
         }
@@ -439,10 +440,10 @@ impl IterArcanumApp {
             .show(|ui| {
                 ui.set_max_width(INFO_WIDTH);
                 ui.strong(&info.name);
-                ui.add(egui::Label::new(&info.basic).wrap());
+                marked_label(ui, &info.basic, egui::RichText::new, &self.catalog);
                 ui.separator();
                 ui.strong(&info.strong_title);
-                ui.add(egui::Label::new(&info.strong).wrap());
+                marked_label(ui, &info.strong, egui::RichText::new, &self.catalog);
             });
     }
 
@@ -496,7 +497,8 @@ impl IterArcanumApp {
             .on_hover_text(&banner.tooltip);
         }
         for button in &line.banner_uses {
-            if ui.add(egui::Button::new(&button.label).wrap()).clicked() {
+            let label = crate::plain_text(&button.label, &self.catalog);
+            if ui.add(egui::Button::new(label).wrap()).clicked() {
                 clicked = Some(button.command);
             }
         }
@@ -606,7 +608,7 @@ impl IterArcanumApp {
             .unwrap_or_default();
         // Un bouton qui ne tient pas au bout de la ligne passe à la ligne suivante, plutôt que de
         // s'écraser en colonne ou de sortir de la carte, pastille comprise (spec #11, #13).
-        let natural = effect_button_width(ui, button, &mark);
+        let natural = effect_button_width(ui, button, &mark, &self.catalog);
         let row_started = ui.cursor().min.x > ui.max_rect().min.x + 1.0;
         if row_started && natural > ui.available_size_before_wrap().x {
             ui.end_row();
@@ -622,6 +624,16 @@ impl IterArcanumApp {
             let image = |texture| {
                 egui::Image::from_texture(SizedTexture::new(texture, Vec2::splat(EFFECT_ICON)))
             };
+            // Le texte de repli, sans repère d'icône (spec #27, C21) ; sans la condition, dessinée
+            // à côté.
+            let plain = crate::plain_text(
+                &EffectButton {
+                    condition: None,
+                    ..button.clone()
+                }
+                .fallback_text(),
+                &self.catalog,
+            );
             let widget = match &button.face {
                 EffectFace::Icon(value) => {
                     match self.icon_texture(ui, value.icon.image(), EFFECT_ICON) {
@@ -629,24 +641,43 @@ impl IterArcanumApp {
                             image(texture),
                             format!("{}{mark}", value.value),
                         ),
-                        None => egui::Button::new(button.fallback_text()).wrap(),
+                        None => egui::Button::new(plain.as_str()).wrap(),
                     }
                 }
                 EffectFace::Crystal { color, .. } => {
                     match self.icon_texture(ui, crystal_image(*color), EFFECT_ICON) {
                         Some(texture) => egui::Button::image(image(texture)),
-                        None => egui::Button::new(button.fallback_text()).wrap(),
+                        None => egui::Button::new(plain.as_str()).wrap(),
                     }
                 }
-                EffectFace::Text(_) => egui::Button::new(button.fallback_text()).wrap(),
+                EffectFace::Text(_) => egui::Button::new(plain.as_str()).wrap(),
             };
+            // Spec #27, C21 : egui n'écrit que du texte dans un bouton et son infobulle.
+            let tooltip = crate::plain_text(&button.tooltip, &self.catalog);
             let response = ui
                 .add_enabled(button.command.is_some(), widget)
-                .on_hover_text(&button.tooltip)
-                .on_disabled_hover_text(&button.tooltip);
+                .on_hover_text(&tooltip)
+                .on_disabled_hover_text(&tooltip);
+            if let Some(condition) = &button.condition {
+                self.effect_condition(ui, condition);
+            }
             response.clicked().then_some(button.command).flatten()
         })
         .inner
+    }
+
+    /// Spec #27, C13 : « ×2 si » et l'icône Vif, qui a son infobulle, après le bouton ; sans
+    /// fichier d'icône, son nom.
+    fn effect_condition(&mut self, ui: &mut egui::Ui, condition: &crate::EffectCondition) {
+        ui.label(&condition.text);
+        match self.icon_image(ui, condition.icon.icon.image(), EFFECT_ICON) {
+            Some(icon) => {
+                icon_tooltip(icon, &condition.icon);
+            }
+            None => {
+                ui.label(&condition.icon.tooltip);
+            }
+        }
     }
 
     /// Le bandeau du choix en cours posé par-dessus le bas de `area`, le plateau ou l'écran de
@@ -699,7 +730,7 @@ impl IterArcanumApp {
         {
             banner(ui, &mut |ui| {
                 ui.horizontal_wrapped(|ui| {
-                    ui.label(&prompt.text);
+                    marked_label(ui, &prompt.text, egui::RichText::new, &self.catalog);
                     if shortcut_button(
                         ui,
                         &prompt.cancel.label,
@@ -716,7 +747,7 @@ impl IterArcanumApp {
         if let Some(prompt) = screen.mana_prompt.as_ref().or(screen.unit_prompt.as_ref()) {
             banner(ui, &mut |ui| {
                 ui.horizontal_wrapped(|ui| {
-                    ui.label(&prompt.text);
+                    marked_label(ui, &prompt.text, egui::RichText::new, &self.catalog);
                     for button in prompt.payments.iter().chain([&prompt.cancel]) {
                         if shortcut_button(ui, &button.label, button.shortcut.as_deref(), catalog)
                             .clicked()
@@ -730,7 +761,7 @@ impl IterArcanumApp {
         if let Some(prompt) = &screen.set_dice_prompt {
             banner(ui, &mut |ui| {
                 ui.horizontal_wrapped(|ui| {
-                    ui.label(&prompt.text);
+                    marked_label(ui, &prompt.text, egui::RichText::new, &self.catalog);
                     for button in &prompt.colors {
                         clicked = strong_button(ui, button).or(clicked);
                     }
@@ -754,7 +785,7 @@ impl IterArcanumApp {
         {
             banner(ui, &mut |ui| {
                 ui.horizontal_wrapped(|ui| {
-                    ui.label(&prompt.text);
+                    marked_label(ui, &prompt.text, egui::RichText::new, &self.catalog);
                     for button in &prompt.buttons {
                         if shortcut_button(ui, &button.label, button.shortcut.as_deref(), catalog)
                             .clicked()
@@ -769,7 +800,7 @@ impl IterArcanumApp {
         if let Some(prompt) = &screen.end_turn_prompt {
             banner(ui, &mut |ui| {
                 ui.horizontal_wrapped(|ui| {
-                    ui.label(&prompt.text);
+                    marked_label(ui, &prompt.text, egui::RichText::new, &self.catalog);
                     ui.label(&prompt.draw);
                 });
                 // Spec 052, C26 : la retraite forcée vient avant tout le reste de la fin du tour.
@@ -927,7 +958,12 @@ fn text_width(ui: &egui::Ui, text: &str, style: egui::TextStyle) -> f32 {
 
 /// Largeur d'un bouton d'effet posé, pastille et « : » compris (spec #11) : de quoi savoir s'il
 /// tient au bout de la ligne, quel que soit son visage.
-fn effect_button_width(ui: &egui::Ui, button: &EffectButton, mark: &str) -> f32 {
+fn effect_button_width(
+    ui: &egui::Ui,
+    button: &EffectButton,
+    mark: &str,
+    catalog: &arcanum_i18n::Catalog,
+) -> f32 {
     let face = match &button.face {
         EffectFace::Icon(value) => {
             EFFECT_ICON
@@ -939,14 +975,22 @@ fn effect_button_width(ui: &egui::Ui, button: &EffectButton, mark: &str) -> f32 
                 )
         }
         EffectFace::Crystal { .. } => EFFECT_ICON,
-        EffectFace::Text(_) => text_width(ui, &button.fallback_text(), egui::TextStyle::Button),
+        EffectFace::Text(_) => text_width(
+            ui,
+            &crate::plain_text(&button.fallback_text(), catalog),
+            egui::TextStyle::Button,
+        ),
     };
+    // Spec #27, C13 : « ×2 si » et l'icône, après le bouton.
+    let condition = button.condition.as_ref().map_or(0.0, |condition| {
+        2.0 * EFFECT_GAP + text_width(ui, &condition.text, egui::TextStyle::Body) + EFFECT_ICON
+    });
     let swatch = if button.color.is_some() {
         icon_size(ui) * 0.6 + text_width(ui, ":", egui::TextStyle::Body) + 2.0 * EFFECT_GAP
     } else {
         0.0
     };
-    swatch + face + 2.0 * EFFECT_PADDING
+    swatch + face + 2.0 * EFFECT_PADDING + condition
 }
 
 /// Pastille d'une couleur de mana : celle d'une carte, du bloc renforcé, d'un bouton d'effet.

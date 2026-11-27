@@ -541,6 +541,7 @@ pub(super) fn spell_effects(
                     }
                 }
                 EffectButton {
+                    condition: None,
                     face,
                     mark: view.and_then(|view| halved(points, view, catalog)),
                     color,

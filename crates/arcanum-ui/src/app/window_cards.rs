@@ -8,6 +8,7 @@ use arcanum_i18n::Catalog;
 
 use super::Thumbnails;
 use super::bottom_panel::{art_band, card_content_size, card_frame, mana_swatch, strong_separator};
+use super::icons::marked_label;
 use super::widgets::enabled_shortcut_button;
 use crate::{CARD_GAP, Command, LevelCard, OfferCardView, cards_per_row, row_width};
 
@@ -201,21 +202,24 @@ fn window_card(
                 }
                 match card.lines.as_slice() {
                     [basic, strong] if !card.strong_heading.is_empty() => {
-                        ui.add(egui::Label::new(basic).wrap());
+                        marked_label(ui, basic, egui::RichText::new, catalog);
                         // Un sort a pour pastilles sa couleur puis le noir (spec #11, C7).
                         let spell = card.strong_colors.last() == Some(&ManaColor::Black);
                         strong_separator(ui, spell, &card.strong_heading, &card.strong_colors);
-                        ui.add(egui::Label::new(egui::RichText::new(strong).weak()).wrap());
+                        marked_label(ui, strong, super::icons::weak_text, catalog);
                     }
                     lines => {
                         for line in lines {
-                            ui.add(egui::Label::new(line).wrap());
+                            marked_label(ui, line, egui::RichText::new, catalog);
                         }
                     }
                 }
                 // Spec 057 : les capacités d'une unité de l'offre (Appel aux armes).
                 for button in &card.uses {
-                    if ui.add(egui::Button::new(&button.label).wrap()).clicked() {
+                    if ui
+                        .add(egui::Button::new(crate::plain_text(&button.label, catalog)).wrap())
+                        .clicked()
+                    {
                         clicked = Some(button.command);
                     }
                 }

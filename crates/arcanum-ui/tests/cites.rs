@@ -171,7 +171,7 @@ fn city_tooltip_lines() {
     assert!(
         has(
             &lines,
-            "Défenseur doublement fortifié : aucun tir à distance"
+            "Défenseur doublement [[fortified]]fortifié : aucun tir à distance"
         ),
         "{lines:?}"
     );
@@ -375,7 +375,7 @@ fn combat_shows_city_bonus() {
     );
     let freezers = enemy_card(&blue, token(Enemy::Freezers, 1), &catalog);
     assert!(
-        stakes(&freezers).contains(&"À parer : 10 (vif, 2 × 5)".to_string()),
+        stakes(&freezers).contains(&"À parer : 10 ([[swift]], 2 × 5)".to_string()),
         "{:?}",
         freezers.stakes
     );
@@ -383,20 +383,31 @@ fn combat_shows_city_bonus() {
     // Cité rouge : Gardiens (attaque physique 3) brutaux.
     let red = to_block_phase(&city_combat(TileId::Core(8), vec![guardsmen()]));
     let guards = enemy_card(&red, guardsmen(), &catalog);
-    let abilities = guards.abilities.clone().unwrap_or_default();
-    assert!(abilities.contains("brutal (cité)"), "{abilities}");
+    // Spec #27, C8 : Fortifié puis Brutal, titré « Brutal (cité) », avec la règle de Brutal.
+    let titles: Vec<&str> = guards
+        .abilities
+        .iter()
+        .map(|value| value.tooltip.as_str())
+        .collect();
+    assert_eq!(titles, ["Fortifié", "Brutal (cité)"]);
+    assert_eq!(
+        guards.abilities[1].rule.as_deref(),
+        Some("S'il n'est pas paré, il inflige le double de son attaque.")
+    );
     assert!(
         stakes(&guards)
             .iter()
-            .any(|line| line.starts_with("Si non paré : 6 (brutal, 2 × 3)")),
+            .any(|line| line.starts_with("Si non paré : 6 ([[brutal]], 2 × 3)")),
         "{:?}",
         guards.stakes
     );
     // Hors de la cité rouge, rien de gagné.
-    let abilities = enemy_card(&white, guardsmen(), &catalog)
+    let titles: Vec<String> = enemy_card(&white, guardsmen(), &catalog)
         .abilities
-        .unwrap_or_default();
-    assert!(!abilities.contains("(cité)"), "{abilities}");
+        .into_iter()
+        .map(|value| value.tooltip)
+        .collect();
+    assert_eq!(titles, ["Fortifié"]);
 }
 
 // --- Interaction ---

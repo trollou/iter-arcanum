@@ -76,7 +76,9 @@ impl IterArcanumApp {
                     }
                     // Spec 033, Q1 : l'invocation est un point de non-retour.
                     if let Some(warning) = &combat.summon_warning {
-                        ui.colored_label(CHOICE_STROKE, warning);
+                        self.marked_label(ui, warning, |text| {
+                            egui::RichText::new(text).color(CHOICE_STROKE)
+                        });
                     }
                     // Spec 034 : assommé, jusqu'à la fin du combat.
                     if let Some(note) = &combat.knocked_out {
@@ -136,12 +138,9 @@ impl IterArcanumApp {
                                     .into_iter()
                                     .flatten()
                                 {
-                                    ui.add(
-                                        egui::Label::new(
-                                            egui::RichText::new(line).color(RESISTANCE_TEXT),
-                                        )
-                                        .wrap(),
-                                    );
+                                    self.marked_label(ui, line, |text| {
+                                        egui::RichText::new(text).color(RESISTANCE_TEXT)
+                                    });
                                 }
                                 if let Some(calculation) = &panel.calculation {
                                     ui.weak(calculation);
@@ -239,28 +238,27 @@ impl IterArcanumApp {
                         let name = egui::RichText::new(&enemy.name).strong();
                         ui.label(if enemy.defeated { name.weak() } else { name });
                         self.value_pieces(ui, &enemy.values, &enemy.resistances);
-                        if let Some(abilities) = &enemy.abilities {
-                            ui.label(abilities);
-                        }
+                        // Spec #27 : ses capacités, une icône chacune.
+                        self.icon_row(ui, &enemy.abilities);
 
                         if let Some(status) = &enemy.status {
-                            ui.weak(status);
+                            self.marked_label(ui, status, super::icons::weak_text);
                         }
                         // Spec 033 : la créature invoquée, puis l'enjeu de la parade.
                         if let Some(summoned) = &enemy.summoned {
                             Frame::group(ui.style())
                                 .stroke(Stroke::new(1.5, SUMMONED_STROKE))
                                 .show(ui, |ui| {
-                                    ui.label(egui::RichText::new(&summoned.title).strong());
+                                    self.marked_label(ui, &summoned.title, |text| {
+                                        egui::RichText::new(text).strong()
+                                    });
                                     self.value_pieces(ui, &summoned.values, &[]);
-                                    if let Some(abilities) = &summoned.abilities {
-                                        ui.label(abilities);
-                                    }
+                                    self.icon_row(ui, &summoned.abilities);
                                     ui.weak(&summoned.note);
                                 });
                         }
                         for line in &enemy.stakes {
-                            ui.add(egui::Label::new(line).wrap());
+                            self.marked_label(ui, line, egui::RichText::new);
                         }
                         if let Some(toggle) = &enemy.target {
                             let mut checked = toggle.checked;
@@ -289,7 +287,7 @@ impl IterArcanumApp {
                         .default_open(false)
                         .show(ui, |ui| {
                             for line in &enemy.history {
-                                ui.add(egui::Label::new(line).wrap());
+                                self.marked_label(ui, line, egui::RichText::new);
                             }
                         });
                 }

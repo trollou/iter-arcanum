@@ -185,6 +185,7 @@ fn option_buttons(
     let skill = owned.skill;
     let in_center = owned.state == SkillState::InCenter;
     let text_button = |face: String, tooltip: String, command| EffectButton {
+        condition: None,
         face: EffectFace::Text(face),
         mark: None,
         color: None,
@@ -226,6 +227,7 @@ fn option_buttons(
                 return command.map(|command| text_button(text.clone(), text, Some(command)));
             }
             Some(EffectButton {
+                condition: None,
                 face: effect_face(effect, catalog),
                 mark: None,
                 color: None,

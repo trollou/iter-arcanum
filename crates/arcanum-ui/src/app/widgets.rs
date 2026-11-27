@@ -235,7 +235,11 @@ pub(super) fn enabled_shortcut_button(
     shortcut: Option<&str>,
     catalog: &Catalog,
 ) -> egui::Response {
-    let response = ui.add_enabled(enabled, egui::Button::new(label));
+    // Spec #27, C21 : un bouton n'écrit que du texte, sans repère d'icône.
+    let response = ui.add_enabled(
+        enabled,
+        egui::Button::new(crate::plain_text(label, catalog)),
+    );
     match hover_text(None, shortcut, catalog) {
         Some(text) => response
             .on_hover_text(text.clone())

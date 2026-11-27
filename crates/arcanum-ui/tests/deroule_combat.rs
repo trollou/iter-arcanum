@@ -314,7 +314,7 @@ fn combat_screen_lists_enemies_totals_and_history() {
     // 3) ; depuis la spec 032 (Q1), ils sont tout de même une cible.
     assert_eq!(
         fouisseurs.status.as_deref(),
-        Some("fortifié : siège seulement")
+        Some("[[fortified]] : siège seulement")
     );
     assert!(fouisseurs.target.is_some());
 
@@ -906,7 +906,7 @@ fn fortified_group_marks_ranged_cards() {
         .expect("attaque en cours");
     assert_eq!(
         panel.shared.as_deref(),
-        Some("Le groupe partage : fortifié (Creuseurs) : attaques de siège seulement")
+        Some("Le groupe partage : [[fortified]] (Creuseurs) : attaques de siège seulement")
     );
     let screen = screen_of(&state, &ScreenMode::Normal, &catalog);
     let swiftness = held(&screen, card(Swiftness, 1));
@@ -1037,7 +1037,7 @@ fn ranged_phase_warns_about_summon() {
     assert_eq!(
         shown(&state, &catalog).summon_warning.as_deref(),
         Some(
-            "Au début de la phase de parade, Invocateurs orques invoquent une créature \
+            "Au début de la phase de parade, Invocateurs orques [[summon]]invoquent une créature \
              (donjon) : pas de retour en arrière après."
         )
     );
@@ -1059,13 +1059,16 @@ fn block_phase_shows_summoned_monster_and_stakes() {
     let summoners = &screen.enemies[0];
     let summoned = summoners.summoned.as_ref().expect("créature invoquée");
     assert_eq!(summoned.token, minotaur());
-    assert_eq!(summoned.title, "Invoque : Minotaure");
+    assert_eq!(summoned.title, "[[summon]] : Minotaure invoqué");
     assert_eq!(summoned.note, "retirée après les dégâts, sans gloire");
-    assert_eq!(summoned.abilities.as_deref(), Some("Capacités : brutal"));
-    assert_eq!(
-        screen.enemies[1].abilities.as_deref(),
-        Some("Capacités : brutal")
-    );
+    // Spec #27, C7 : l'icône Brutal, dans la carte de la créature et dans celle d'un ennemi
+    // ordinaire (les Cogneurs, brutaux eux aussi).
+    let brutal = |abilities: &[arcanum_ui::IconValue]| -> Vec<arcanum_ui::Icon> {
+        abilities.iter().map(|value| value.icon).collect()
+    };
+    let brutal_icon = arcanum_ui::Icon::Ability(arcanum_core::EnemyAbility::Brutal);
+    assert_eq!(brutal(&summoned.abilities), [brutal_icon]);
+    assert_eq!(brutal(&screen.enemies[1].abilities), [brutal_icon]);
     assert_eq!(
         summoners.block.as_ref().map(|button| button.label.as_str()),
         Some("Parer")
@@ -1075,14 +1078,14 @@ fn block_phase_shows_summoned_monster_and_stakes() {
         summoners.stakes,
         [
             "À parer : 5",
-            "Si non paré : 10 (brutal, 2 × 5) dégâts, 5 blessure(s)"
+            "Si non paré : 10 ([[brutal]], 2 × 5) dégâts, 5 blessure(s)"
         ]
     );
     assert_eq!(
         screen.enemies[1].stakes,
         [
             "À parer : 4",
-            "Si non paré : 8 (brutal, 2 × 4) dégâts, 4 blessure(s)"
+            "Si non paré : 8 ([[brutal]], 2 × 4) dégâts, 4 blessure(s)"
         ]
     );
 }
@@ -1097,7 +1100,7 @@ fn swift_block_shows_doubled_target() {
     assert_eq!(
         shown(&state, &catalog).enemies[0].stakes,
         [
-            "À parer : 6 (vif, 2 × 3)",
+            "À parer : 6 ([[swift]], 2 × 3)",
             "Si non paré : 3 dégâts, 2 blessure(s)"
         ]
     );
@@ -1112,7 +1115,7 @@ fn swift_block_shows_doubled_target() {
     let panel = screen.in_progress.as_ref().expect("parade en cours");
     assert_eq!(
         panel.swift.as_deref(),
-        Some("Vif : il faut parer le double de son attaque, 2 × 3 = 6")
+        Some("[[swift]] : il faut parer le double de son attaque, 2 × 3 = 6")
     );
     assert_eq!(panel.total.value, "1 / 6");
 }
@@ -1129,16 +1132,16 @@ fn history_shows_ability_effects() {
     };
     assert_eq!(
         damage_line(Enemy::Ironclads, &[]),
-        ["Dégâts : Cogneurs, brutal 2 × 4 = 8 : 4 blessure(s)"]
+        ["Dégâts : Cogneurs, [[brutal]] 2 × 4 = 8 : 4 blessure(s)"]
     );
     assert_eq!(
         damage_line(Enemy::CursedHags, &[]),
-        ["Dégâts : Sorcières maudites, 3 : 2 blessure(s), toxique : 2 de plus dans la défausse"]
+        ["Dégâts : Sorcières maudites, 3 : 2 blessure(s), [[poison]] : 2 de plus dans la défausse"]
     );
     assert_eq!(
         damage_line(Enemy::IceDragon, &[card(March, 1), card(Rage, 1)]),
         [
-            "Dégâts : Dragons de glace, 6 : 3 blessure(s), paralysant : 2 carte(s) défaussée(s) \
+            "Dégâts : Dragons de glace, 6 : 3 blessure(s), [[paralyze]] : 2 carte(s) défaussée(s) \
              de la main"
         ]
     );
@@ -1219,4 +1222,21 @@ fn values_text(pieces: &[ValuePiece]) -> String {
         })
         .collect::<Vec<_>>()
         .join(" · ")
+}
+
+// Spec #27, C21 : egui n'écrit que du texte dans un bouton : aucun libellé de bouton de l'écran de
+// combat ne porte de repère d'icône, même quand ses lignes en portent.
+#[test]
+fn no_marker_in_button_labels() {
+    let catalog = french();
+    let placed = [(orc_summoners(), ORCS_2), (ironclads(), PLAIN_SW)];
+    let state = fighting_abilities(&[], &placed, &[minotaur()], &[]);
+    let state = done(&state, Action::NextCombatPhase);
+    let screen = shown(&state, &catalog);
+    let shown = format!("{screen:?}");
+    assert!(shown.contains("[["), "des lignes portent des repères");
+    for label in shown.split("label: \"").skip(1) {
+        let label = label.split('"').next().unwrap_or_default();
+        assert!(!label.contains("[["), "{label}");
+    }
 }

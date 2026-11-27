@@ -101,6 +101,7 @@ pub(super) fn artifact_effects(
             "artifact.play"
         });
         EffectButton {
+            condition: None,
             face: EffectFace::Text(face),
             mark: None,
             color: None,

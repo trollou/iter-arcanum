@@ -729,3 +729,85 @@ fn panel_greys_unaffordable_recruits() {
         [Some(Command::ChooseDisband(herbalists())), None]
     );
 }
+
+// Spec #27, C20 : dans l'offre d'unités, la ligne de capacité des Gardes d'Utem porte l'icône Vif
+// devant le mot.
+#[test]
+fn gardes_utem_offer_line_shows_swift_icon() {
+    let catalog = french();
+    let state = Units {
+        offer: vec![guardsmen()],
+        ..Units::default()
+    }
+    .state();
+    let window = arcanum_ui::offers_window(&arcanum_core::view(&state, SOLO), &[], &catalog);
+    let line = window
+        .columns
+        .iter()
+        .flat_map(|column| &column.cards)
+        .flat_map(|card| &card.lines)
+        .find(|line| line.contains("compte double"))
+        .expect("ligne de la Parade vive");
+    assert_eq!(
+        line,
+        "Parade 4 ; compte double contre un ennemi [[swift]]Vif"
+    );
+    let swift = arcanum_ui::Icon::Ability(arcanum_core::EnemyAbility::Swift);
+    assert!(
+        arcanum_ui::icon_pieces(line, &catalog).iter().any(
+            |piece| matches!(piece, arcanum_ui::ValuePiece::Icon(value) if value.icon == swift)
+        ),
+        "{line}"
+    );
+}
+
+/// Le bouton d'effet de la Parade vive d'une unité possédée (deuxième capacité).
+fn swift_block_button(unit: Unit, catalog: &Catalog) -> arcanum_ui::EffectButton {
+    let state = Units {
+        level: 3,
+        owned: vec![UnitCard::new(unit, 1)],
+        ..Units::default()
+    }
+    .state();
+    screen_of(&state, catalog).units.units[0]
+        .effects
+        .iter()
+        .find(|button| button.tooltip.contains("double contre"))
+        .cloned()
+        .expect("bouton de la Parade vive")
+}
+
+// Spec #27, C13 et C14 : le bouton de la Parade vive montre la rondache, sa valeur, puis « ×2 si »
+// et l'icône Vif, avec son infobulle ; l'infobulle du bouton reste un texte, sans repère.
+#[test]
+fn swift_block_button_shows_condition() {
+    let catalog = french();
+    let swift = arcanum_ui::IconValue {
+        icon: arcanum_ui::Icon::Ability(arcanum_core::EnemyAbility::Swift),
+        value: String::new(),
+        tooltip: "Vif".into(),
+        rule: Some("Pour le parer, il faut une Parade du double de son attaque.".into()),
+    };
+    for (unit, amount) in [(Unit::UtemGuardsmen, "4"), (Unit::AltemGuardians, "8")] {
+        let button = swift_block_button(unit, &catalog);
+        assert!(
+            matches!(&button.face, arcanum_ui::EffectFace::Icon(value)
+                if value.icon == arcanum_ui::block_icon(arcanum_core::Element::Physical)
+                    && value.value == amount),
+            "{:?}",
+            button.face
+        );
+        assert_eq!(
+            button.condition,
+            Some(arcanum_ui::EffectCondition {
+                text: "×2 si".into(),
+                icon: swift.clone(),
+            })
+        );
+        assert_eq!(button.fallback_text(), format!("Parade {amount} ×2 si Vif"));
+        assert_eq!(
+            arcanum_ui::plain_text(&button.tooltip, &catalog),
+            format!("Parade {amount}, double contre Vif")
+        );
+    }
+}

@@ -64,8 +64,8 @@
       "enemy_space": "Space occupied by a rampaging enemy",
       "provokes": "Provokes: {enemies}",
       "assault": "⚔ Assault: Reputation −1, mandatory combat",
-      "defender_fortified": "Fortified defender: siege only at range",
-      "defender_fortified_twice": "Defender fortified twice: no ranged attack",
+      "defender_fortified": "[[fortified]]Fortified defender: siege only at range",
+      "defender_fortified_twice": "Defender [[fortified]]fortified twice: no ranged attack",
       "adventure": {
         "enemies_waiting": "Waiting here: {enemies}",
         "fight": "Enter: combat, reward: {reward}"
@@ -83,8 +83,8 @@
         "face_down": "Face-down defenders: {groups}",
         "bonus_white": "Defenders' bonus: Armor +1",
         "bonus_blue": "Defenders' bonus: Ice or Fire Attack +2, Cold Fire Attack +1",
-        "bonus_red": "Defenders' bonus: Brutal if their attack is physical",
-        "bonus_green": "Defenders' bonus: Poison if their attack is physical",
+        "bonus_red": "Defenders' bonus: [[brutal]]Brutal if their attack is physical",
+        "bonus_green": "Defenders' bonus: [[poison]]Poison if their attack is physical",
         "shields": "Your Shields: {count}",
         "leader": "Conquered: you are its Leader",
         "offer_white": "Recruit any Unit here; add an Elite Unit to the offer for 2 Influence",
@@ -304,11 +304,11 @@
     "abilities": "Abilities: {list}",
     "resistances": "Resistances: {list}",
     "ability": {
-      "fortified": "fortified",
-      "swift": "swift",
-      "brutal": "brutal",
-      "poison": "poison",
-      "paralyze": "paralyze"
+      "fortified": "[[fortified]]fortified",
+      "swift": "[[swift]]swift",
+      "brutal": "[[brutal]]brutal",
+      "poison": "[[poison]]poison",
+      "paralyze": "[[paralyze]]paralyze"
     },
     "element": {
       "physical": "physical",
@@ -603,14 +603,14 @@
     "expose": {
       "name": "Expose",
       "strong_name": "Mass Expose",
-      "basic_text": "One enemy loses fortifications and resistances; Ranged Attack 2",
-      "strong_text": "All enemies lose fortifications, or all lose resistances; Ranged Attack 3"
+      "basic_text": "One enemy loses [[fortified]]fortifications and resistances; Ranged Attack 2",
+      "strong_text": "All enemies lose [[fortified]]fortifications, or all lose resistances; Ranged Attack 3"
     },
     "tremor": {
       "name": "Tremor",
       "strong_name": "Earthquake",
       "basic_text": "One enemy Armor -3, or all Armor -2 (min. 1)",
-      "strong_text": "One enemy Armor -3 (-6 if fortified), or all -2 (-4 if fortified) (min. 1)"
+      "strong_text": "One enemy Armor -3 (-6 if [[fortified]]fortified), or all -2 (-4 if [[fortified]]fortified) (min. 1)"
     },
     "flame_wall": {
       "name": "Flame Wall",
@@ -820,7 +820,8 @@
     "cold_fire_block": "Cold Fire Block {amount}",
     "cold_toughness_strong": "Ice Block {base} + {bonus} (blocked enemy's abilities)",
     "ice_block_per_ability": "Ice Block {amount}, +1 per ability of the blocked enemy",
-    "swift_block": "Block {amount}, counts twice against Swiftness",
+    "swift_block": "Block {amount}, counts twice against [[swift]]Swiftness",
+    "double_if": "×2 vs",
     "ready_unit": "Ready a Unit of level {level} or less",
     "token_and_crystal": "{color} mana token and crystal",
     "gain_tokens": "{first} and {second} mana tokens",
@@ -1105,18 +1106,18 @@
     "enemy": {
       "blocked": "blocked",
       "defeated": "defeated",
-      "siege_only": "fortified: siege only",
-      "summons": "Summons: {monster}",
+      "siege_only": "[[fortified]]: siege only",
+      "summons": "[[summon]]: {monster} summoned",
       "summoned_note": "removed after damage, no Fame",
       "stakes_block": "To block: {block}",
       "stakes_damage": "If unblocked: {damage} damage, {wounds} wound(s)",
-      "swift_block": "{block} (swift, 2 × {attack})",
-      "brutal_damage": "{damage} (brutal, 2 × {attack})",
-      "site_fortified": "fortified (site)",
-      "fortified_twice": "fortified twice: no ranged target",
+      "swift_block": "{block} ([[swift]], 2 × {attack})",
+      "brutal_damage": "{damage} ([[brutal]], 2 × {attack})",
+      "site_fortified": "[[fortified]] (site)",
+      "fortified_twice": "[[fortified]][[fortified]]: no ranged target",
       "armor_reduced": "Armor {armor} (instead of {printed})",
       "does_not_attack": "does not attack",
-      "no_fortification": "no longer fortified",
+      "no_fortification": "[[fortified]] lost",
       "no_resistances": "no resistances",
       "no_fire_resistance": "no Fire resistance",
       "destroyed": "destroyed",
@@ -1140,9 +1141,9 @@
       "success": "succeeded",
       "failure": "failed",
       "damage_enemy": "Damage: {enemy}, {damage}: {count} wound(s)",
-      "brutal": "brutal 2 × {attack} = {damage}",
-      "poison": "poison: {count} more in the discard pile",
-      "paralyze": "paralyze: {count} card(s) discarded from hand",
+      "brutal": "[[brutal]] 2 × {attack} = {damage}",
+      "poison": "[[poison]]: {count} more in the discard pile",
+      "paralyze": "[[paralyze]]: {count} card(s) discarded from hand",
       "knocked_out": "Knocked out: {count} card(s) discarded from hand",
       "reputation": "Reputation {amount}",
       "unit_damage": "{name}: {wounds} Wound(s)",
@@ -1154,7 +1155,7 @@
       "physical": "physical resistance ({enemies})",
       "fire": "fire resistance ({enemies})",
       "ice": "ice resistance ({enemies})",
-      "fortified": "fortified ({enemies}): siege attacks only"
+      "fortified": "[[fortified]] ({enemies}): siege attacks only"
     },
     "block_efficient": {
       "fire": "Against a Fire attack, blocks other than Ice and Cold Fire are halved",
@@ -1166,8 +1167,8 @@
       "siege_only": "siege only"
     },
     "calculation": "Halved: {halved} ÷ 2 = {halved_sum} · Others: {full}",
-    "summon_warning": "At the start of the Block phase, {enemies} summon a creature (dungeon): no undo past that point.",
-    "swift_line": "Swift: you must block twice its attack, 2 × {attack} = {block}",
+    "summon_warning": "At the start of the Block phase, {enemies} [[summon]]summon a creature (dungeon): no undo past that point.",
+    "swift_line": "[[swift]]: you must block twice its attack, 2 × {attack} = {block}",
     "night_rules": "Night rules: gold mana pays nothing",
     "move_as_attack": "Move as Attack ({move} left)",
     "move_as_ranged": "2 Move as Ranged Attack ({move} left)",
@@ -1273,7 +1274,7 @@
     "utem_guardsmen": {
       "name": "Utem Guardsmen",
       "ability_1": "Attack 2",
-      "ability_2": "Block 4; counts twice against a Swift enemy"
+      "ability_2": "Block 4; counts twice against a [[swift]]Swift enemy"
     },
     "utem_swordsmen": {
       "name": "Utem Swordsmen",
@@ -1289,7 +1290,7 @@
     "illusionists": {
       "name": "Illusionists",
       "ability_1": "Influence 4",
-      "ability_2": "(white mana) One unfortified enemy does not attack",
+      "ability_2": "(white mana) One [[fortified]]unfortified enemy does not attack",
       "ability_3": "White crystal"
     },
     "red_cape_monks": {
@@ -1354,7 +1355,7 @@
     "altem_guardians": {
       "name": "Altem Guardians",
       "ability_1": "Attack 5",
-      "ability_2": "Block 8; counts twice against a Swift enemy",
+      "ability_2": "Block 8; counts twice against a [[swift]]Swift enemy",
       "ability_3": "(green mana) Your Units gain all resistances this turn"
     },
     "cost": "Cost: Influence {influence}",
@@ -1526,6 +1527,7 @@
       "cold_fire": "Cold Fire Block"
     },
     "ranged_or_siege": "Ranged or Siege Attack",
+    "summon": "Summon",
     "resistance": {
       "physical": "Physical Resistance",
       "fire": "Fire Resistance",
@@ -1534,6 +1536,27 @@
     "tile": {
       "countryside": "Countryside tile",
       "core": "Core tile"
+    },
+    "ability": {
+      "fortified": "Fortified",
+      "swift": "Swift",
+      "brutal": "Brutal",
+      "poison": "Poison",
+      "paralyze": "Paralyze"
+    },
+    "rule": {
+      "fortified": "During ranged attacks, only siege attacks can reach it; none at all if it also defends a fortified site.",
+      "swift": "Blocking it takes Block equal to twice its attack.",
+      "brutal": "If not blocked, it deals twice its attack in damage.",
+      "poison": "A unit it wounds receives two Wounds. For each Wound it puts into the hero's hand, another one goes to the discard pile.",
+      "paralyze": "A unit it wounds is destroyed. If the hero takes a Wound into their hand, they discard every card in hand that is not a Wound.",
+      "summon": "At the start of the block phase, a creature drawn from the dungeon pile takes its place for blocking and damage, then is discarded.",
+      "resistance_physical": "Physical attacks, sideways cards included, only count half against it.",
+      "resistance_fire": "Fire attacks only count half against it, and cold fire too if it also resists ice. It ignores other effects of red cards and of unit abilities paid with red mana.",
+      "resistance_ice": "Ice attacks only count half against it, and cold fire too if it also resists fire. It ignores other effects of blue cards and of unit abilities paid with blue mana.",
+      "attack_fire": "Only ice and cold fire blocks count in full; others count half.",
+      "attack_ice": "Only fire and cold fire blocks count in full; others count half.",
+      "attack_cold_fire": "Only cold fire blocks count in full; others count half."
     }
   },
   "shortcut": {
@@ -1632,7 +1655,7 @@
     "ignore_site_fortifications": "site fortifications ignored",
     "deferred_attack": "{attack} in the Attack phase",
     "cast_from_offer": "a {color} Spell from the offer",
-    "by_fortification": "{plain} ({fortified} if fortified)",
+    "by_fortification": "{plain} ({fortified} if [[fortified]]fortified)",
     "space_bending": "spaces 2 away count as adjacent, no provoking",
     "time_bending": "an extra turn at the end of the turn",
     "unit_from_offer": "a Unit from the offer this turn",

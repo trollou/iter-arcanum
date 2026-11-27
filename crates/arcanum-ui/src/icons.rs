@@ -3,7 +3,7 @@
 
 use std::collections::BTreeSet;
 
-use arcanum_core::{AttackKind, BasicColor, Element, Hero, ManaColor, Resistance};
+use arcanum_core::{AttackKind, BasicColor, Element, EnemyAbility, Hero, ManaColor, Resistance};
 
 use arcanum_i18n::Catalog;
 
@@ -24,6 +24,10 @@ pub enum Icon {
     /// Rondache, à la couleur de l'élément.
     Block(Element),
     Resistance(Resistance),
+    /// Capacité d'un ennemi (spec #27) : tour, oiseau, tête de démon, goutte, silhouette pétrifiée.
+    Ability(EnemyAbility),
+    /// Griffe sortant d'un portail : l'attaque d'un Invocateur (spec #27).
+    Summon,
     /// Carte couchée, devant les boutons de côté.
     Sideways,
     /// Dos d'une tuile de campagne, devant le nombre de sa pioche (spec 074, C8).
@@ -36,7 +40,7 @@ pub enum Icon {
 }
 
 impl Icon {
-    /// Toutes les icônes nommées de la planche (26).
+    /// Toutes les icônes nommées de la planche (32).
     pub fn all() -> Vec<Icon> {
         let fixed = [Icon::Move, Icon::Influence, Icon::Armor, Icon::Fame];
         let attacks = [AttackKind::Melee, AttackKind::Ranged, AttackKind::Siege]
@@ -44,11 +48,14 @@ impl Icon {
             .flat_map(|kind| Element::ALL.map(|element| Icon::Attack { kind, element }));
         let blocks = Element::ALL.map(Icon::Block);
         let resistances = RESISTANCES.map(Icon::Resistance);
+        let abilities = ABILITIES.map(Icon::Ability);
         fixed
             .into_iter()
             .chain(attacks)
             .chain(blocks)
             .chain(resistances)
+            .chain(abilities)
+            .chain([Icon::Summon])
             .chain([Icon::Sideways, Icon::TileCountryside, Icon::TileCore])
             .collect()
     }
@@ -81,6 +88,12 @@ impl Icon {
             Icon::Resistance(Resistance::Physical) => "resistance_physical",
             Icon::Resistance(Resistance::Fire) => "resistance_fire",
             Icon::Resistance(Resistance::Ice) => "resistance_ice",
+            Icon::Ability(EnemyAbility::Fortified) => "ability_fortified",
+            Icon::Ability(EnemyAbility::Swift) => "ability_swift",
+            Icon::Ability(EnemyAbility::Brutal) => "ability_brutal",
+            Icon::Ability(EnemyAbility::Poison) => "ability_poison",
+            Icon::Ability(EnemyAbility::Paralyze) => "ability_paralyze",
+            Icon::Summon => "summon",
             Icon::Sideways => "sideways",
             Icon::TileCountryside => "tile_countryside",
             Icon::TileCore => "tile_core",
@@ -117,6 +130,12 @@ impl Icon {
             Icon::Resistance(Resistance::Physical) => "icon.resistance.physical",
             Icon::Resistance(Resistance::Fire) => "icon.resistance.fire",
             Icon::Resistance(Resistance::Ice) => "icon.resistance.ice",
+            Icon::Ability(EnemyAbility::Fortified) => "icon.ability.fortified",
+            Icon::Ability(EnemyAbility::Swift) => "icon.ability.swift",
+            Icon::Ability(EnemyAbility::Brutal) => "icon.ability.brutal",
+            Icon::Ability(EnemyAbility::Poison) => "icon.ability.poison",
+            Icon::Ability(EnemyAbility::Paralyze) => "icon.ability.paralyze",
+            Icon::Summon => "icon.summon",
             Icon::Sideways => "play.sideways",
             Icon::TileCountryside => "icon.tile.countryside",
             Icon::TileCore => "icon.tile.core",
@@ -132,6 +151,9 @@ pub struct IconValue {
     pub icon: Icon,
     pub value: String,
     pub tooltip: String,
+    /// La règle affichée sous le nom dans l'infobulle (spec #27) : capacités, résistances et
+    /// attaques élémentaires d'un ennemi ; `None` ailleurs.
+    pub rule: Option<String>,
 }
 
 impl IconValue {
@@ -166,13 +188,127 @@ pub enum ValuePiece {
     Text(String),
 }
 
+/// Les noms des repères d'icône `[[nom]]` d'un libellé (spec #27, Q3 et Q4), et leur icône.
+pub const ICON_MARKERS: [(&str, Icon); 6] = [
+    ("fortified", Icon::Ability(EnemyAbility::Fortified)),
+    ("swift", Icon::Ability(EnemyAbility::Swift)),
+    ("brutal", Icon::Ability(EnemyAbility::Brutal)),
+    ("poison", Icon::Ability(EnemyAbility::Poison)),
+    ("paralyze", Icon::Ability(EnemyAbility::Paralyze)),
+    ("summon", Icon::Summon),
+];
+
+/// Un morceau d'un texte à repères : du texte, ou une icône et ce qui la suit (un mot collé, ou
+/// rien).
+enum Marked<'a> {
+    Text(&'a str),
+    Icon { icon: Icon, before_word: bool },
+}
+
+/// Découpe un texte en texte et en repères connus ; un repère inconnu reste du texte.
+fn marked(text: &str) -> Vec<Marked<'_>> {
+    let mut pieces = Vec::new();
+    let mut rest = text;
+    while let Some(start) = rest.find("[[") {
+        let after = &rest[start + 2..];
+        let Some(end) = after.find("]]") else { break };
+        let Some(&(_, icon)) = ICON_MARKERS.iter().find(|(name, _)| *name == &after[..end]) else {
+            pieces.push(Marked::Text(&rest[..start + 2]));
+            rest = after;
+            continue;
+        };
+        if start > 0 {
+            pieces.push(Marked::Text(&rest[..start]));
+        }
+        rest = &after[end + 2..];
+        let before_word = rest.chars().next().is_some_and(char::is_alphanumeric);
+        pieces.push(Marked::Icon { icon, before_word });
+    }
+    if !rest.is_empty() {
+        pieces.push(Marked::Text(rest));
+    }
+    pieces
+}
+
+/// Découpe un texte à repères en morceaux de texte et en icônes, sans valeur, nommées et avec
+/// leur règle (spec #27, C15) ; un texte sans repère donne un seul morceau.
+pub fn icon_pieces(text: &str, catalog: &Catalog) -> Vec<ValuePiece> {
+    marked(text)
+        .into_iter()
+        .map(|piece| match piece {
+            Marked::Text(text) => ValuePiece::Text(text.to_string()),
+            Marked::Icon { icon, .. } => ValuePiece::Icon(enemy_icon_value(icon, "", catalog)),
+        })
+        .collect()
+}
+
+/// Le texte sans repère (spec #27, C15 et C21) : un repère suivi d'un mot disparaît, un repère
+/// seul devient le nom de son icône (« Vif »). Deux repères seuls à la suite (« doublement
+/// fortifié ») donnent deux noms séparés d'une espace.
+pub fn plain_text(text: &str, catalog: &Catalog) -> String {
+    let mut plain = String::new();
+    let mut after_name = false;
+    for piece in marked(text) {
+        match piece {
+            Marked::Text(text) => {
+                plain.push_str(text);
+                after_name = false;
+            }
+            Marked::Icon {
+                before_word: true, ..
+            } => after_name = false,
+            Marked::Icon { icon, .. } => {
+                if after_name {
+                    plain.push(' ');
+                }
+                plain.push_str(&catalog.text(icon.name_key()));
+                after_name = true;
+            }
+        }
+    }
+    plain
+}
+
 /// Une valeur à icône, son nom traduit en infobulle.
 pub fn icon_value(icon: Icon, value: impl Into<String>, catalog: &Catalog) -> IconValue {
     IconValue {
         icon,
         value: value.into(),
         tooltip: catalog.text(icon.name_key()),
+        rule: None,
     }
+}
+
+/// Une valeur à icône d'un ennemi (spec #27, C3 à C11) : son nom, puis sa règle quand l'icône en
+/// a une (capacité, invocation, résistance, attaque élémentaire).
+pub fn enemy_icon_value(icon: Icon, value: impl Into<String>, catalog: &Catalog) -> IconValue {
+    IconValue {
+        rule: enemy_rule_key(icon).map(|key| catalog.text(key)),
+        ..icon_value(icon, value, catalog)
+    }
+}
+
+/// La clé de la règle d'une icône d'ennemi ; `None` pour une icône sans règle (attaque physique,
+/// Armure, Gloire…).
+fn enemy_rule_key(icon: Icon) -> Option<&'static str> {
+    Some(match icon {
+        Icon::Ability(EnemyAbility::Fortified) => "icon.rule.fortified",
+        Icon::Ability(EnemyAbility::Swift) => "icon.rule.swift",
+        Icon::Ability(EnemyAbility::Brutal) => "icon.rule.brutal",
+        Icon::Ability(EnemyAbility::Poison) => "icon.rule.poison",
+        Icon::Ability(EnemyAbility::Paralyze) => "icon.rule.paralyze",
+        Icon::Summon => "icon.rule.summon",
+        Icon::Resistance(Resistance::Physical) => "icon.rule.resistance_physical",
+        Icon::Resistance(Resistance::Fire) => "icon.rule.resistance_fire",
+        Icon::Resistance(Resistance::Ice) => "icon.rule.resistance_ice",
+        Icon::Attack { element, .. } => match element {
+            Element::Fire => "icon.rule.attack_fire",
+            Element::Ice => "icon.rule.attack_ice",
+            Element::ColdFire => "icon.rule.attack_cold_fire",
+            Element::Physical => return None,
+        },
+        _ => return None,
+    })
 }
 
 /// L'icône d'une attaque : sa sorte et son élément (C2).
@@ -212,7 +348,7 @@ pub fn hero_emblem(hero: Hero) -> ImageId {
     ImageId::new("ui", stem)
 }
 
-/// Toutes les images de `ui/`, sans doublon (37).
+/// Toutes les images de `ui/`, sans doublon (44).
 pub fn ui_images() -> Vec<ImageId> {
     let images: BTreeSet<ImageId> = Icon::all()
         .into_iter()
@@ -226,3 +362,12 @@ pub fn ui_images() -> Vec<ImageId> {
 }
 
 const RESISTANCES: [Resistance; 3] = [Resistance::Physical, Resistance::Fire, Resistance::Ice];
+
+/// Les capacités des ennemis du jeu de base (spec #27, Q1), dans l'ordre de la planche.
+const ABILITIES: [EnemyAbility; 5] = [
+    EnemyAbility::Fortified,
+    EnemyAbility::Swift,
+    EnemyAbility::Brutal,
+    EnemyAbility::Poison,
+    EnemyAbility::Paralyze,
+];

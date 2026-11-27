@@ -385,7 +385,7 @@ fn enemy_card_shows_lost_fortification_and_resistances() {
     let state = done(&state, cast_at(expose, 0, false, Some(diggers())));
     let combat = combat_of(&state, &catalog);
     let status = status_of(&combat, diggers());
-    assert!(status.contains("plus fortifié"), "{status:?}");
+    assert!(status.contains("[[fortified]] perdu"), "{status:?}");
     assert!(!status.contains("siège seulement"), "{status:?}");
     // Les Golems : plus de résistances, ni leurs icônes.
     let state = fight(

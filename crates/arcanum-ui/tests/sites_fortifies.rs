@@ -195,7 +195,7 @@ fn hover_describes_fortified_sites() {
     assert!(alert.is_some(), "{lines:?}");
     assert_eq!(hidden.hover_alert, alert);
     assert!(
-        lines.contains(&"Défenseur fortifié : siège seulement à distance".to_string()),
+        lines.contains(&"Défenseur [[fortified]]fortifié : siège seulement à distance".to_string()),
         "{lines:?}"
     );
     assert!(
@@ -219,7 +219,9 @@ fn hover_describes_fortified_sites() {
         "{lines:?}"
     );
     assert!(
-        lines.contains(&"Défenseur doublement fortifié : aucun tir à distance".to_string()),
+        lines.contains(
+            &"Défenseur doublement [[fortified]]fortifié : aucun tir à distance".to_string()
+        ),
         "{lines:?}"
     );
     assert!(lines.contains(&assault), "{lines:?}");
@@ -235,7 +237,7 @@ fn hover_describes_fortified_sites() {
     let lines = board(&far, Some(KEEP), &catalog).hover_lines;
     assert!(lines.contains(&assault), "{lines:?}");
     assert!(
-        lines.contains(&"Défenseur fortifié : siège seulement à distance".to_string()),
+        lines.contains(&"Défenseur [[fortified]]fortifié : siège seulement à distance".to_string()),
         "{lines:?}"
     );
     assert!(
@@ -415,21 +417,21 @@ fn combat_marks_site_fortification() {
     let catalog = french();
     let state = assaulting(swordsmen());
     let keep = status_of(&state, KEEP, &catalog);
-    assert!(keep.contains("fortifié (site)"), "{keep}");
-    assert!(keep.contains("fortifié : siège seulement"), "{keep}");
+    assert!(keep.contains("[[fortified]] (site)"), "{keep}");
+    assert!(keep.contains("[[fortified]] : siège seulement"), "{keep}");
     let rampaging = status_of(&state, Hex::new(6, -4), &catalog);
-    assert!(!rampaging.contains("fortifié"), "{rampaging}");
+    assert!(!rampaging.contains("fortified"), "{rampaging}");
 
     let state = assaulting(guardsmen());
     let keep = status_of(&state, KEEP, &catalog);
     assert!(
-        keep.contains("doublement fortifié : pas de cible à distance"),
+        keep.contains("[[fortified]][[fortified]] : pas de cible à distance"),
         "{keep}"
     );
     assert!(!keep.contains("siège seulement"), "{keep}");
     // En phase d'attaque, il redevient une cible : seul son site est rappelé.
     let keep = status_of(&skip_to_attack_phase(&state), KEEP, &catalog);
-    assert!(keep.contains("fortifié (site)"), "{keep}");
+    assert!(keep.contains("[[fortified]] (site)"), "{keep}");
     assert!(!keep.contains("doublement"), "{keep}");
 }
 
