@@ -1,6 +1,6 @@
 # #27 — Icônes des capacités des ennemis
 
-- Statut : à valider
+- Statut : validée (Mathieu, 2026-11-27)
 - Issue : #27 (milestone v0.2.0, Effort Medium : spec codée en un fil)
 - Dépend de : spec 033 (capacités des ennemis), spec 032 (éléments et résistances), spec 071 (icônes), spec 073 (boutons
   d'effet), spec 062 (capacités données par une cité) ; toutes implémentées
@@ -283,14 +283,14 @@ Aucun : l'écran n'ajoute aucune action.
 - Icônes devant les mots des résistances et des éléments dans les textes (« résistance physique (Cogneurs) ») : la demande ne porte
   que sur les capacités.
 
-## Questions ouvertes
+## Décisions prises à la relecture
 
-Chaque question a une recommandation ; la spec est écrite avec elle.
+Aucune question ouverte. Rappel des questions posées et de leur réponse :
 
 Mathieu (2026-11-27) : recommandations acceptées pour Q1, Q2 et Q6, et pour les dessins de Q5, Invocation redessinée (variante A).
 Q3 et Q4 tranchées autrement : l'icône devant le mot, dans l'infobulle du plateau et partout où un texte nomme une capacité
 (section « Icône devant le mot », C15 à C21) ; dans l'écran de combat, l'icône remplace le mot, et « doublement fortifié » montre
-deux icônes (revue de la PR #85). Validation en attente de sa relecture complète.
+deux icônes (revue de la PR #85). Spec validée le 2026-11-27 (« on essaie ainsi ») : le fil d'implémentation challenge la densité des icônes dans l'écran de combat à la vérification à l'œil, captures à l'appui.
 
 - **Q1 — Quelles capacités ?** Recommandé : les cinq des ennemis du jeu (Fortifié, Vif, Brutal, Toxique, Paralysant) et
   l'Invocation. L'issue cite « assassin » : l'Assassinat n'existe que sur des ennemis des extensions, absents du jeu ; dessiner
