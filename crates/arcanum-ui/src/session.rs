@@ -426,10 +426,10 @@ impl GameSession {
     pub fn offers_window(&self, catalog: &Catalog) -> Option<OffersWindow> {
         let view = self.view();
         let legal = self.legal_actions();
+        // Spec #20 : les récompenses et les effets « gagner » ont leur fenêtre de choix.
         (self.offers_open
-            || self.is_choosing_advanced_action()
-            || self.is_choosing_unit_reward()
-            || crate::screen::choosing_offer_card(&self.mode, &legal))
+            || (self.is_choosing_advanced_action()
+                && !crate::screen::choosing_reward_advanced_action(&view)))
         .then(|| offers_window_in(&view, &legal, &self.mode, catalog))
     }
 

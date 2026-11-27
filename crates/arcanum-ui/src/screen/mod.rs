@@ -17,6 +17,7 @@ mod adventure;
 mod artifacts;
 mod board_actions;
 mod boost;
+mod choices;
 mod combat;
 mod dummy;
 mod effects;
@@ -50,13 +51,14 @@ pub(crate) use artifacts::artifact_enemy_toggles;
 use artifacts::*;
 use board_actions::board_action_buttons;
 use boost::*;
+pub(crate) use choices::choosing_reward_advanced_action;
+use choices::*;
 pub use combat::*;
 pub use dummy::dummy_discard_window;
 use dummy::*;
 use effects::*;
 use end_turn::*;
 use enemies::provoked_banner;
-pub(crate) use gain::choosing_offer_card;
 use gain::*;
 use hand::*;
 use interaction::*;
@@ -705,9 +707,9 @@ pub fn game_screen(
         spell_reward_pending: spell_reward_pending(view, catalog)
             .filter(|_| !replaced_by_ruin_rewards(view)),
         spell_choice: spell_choice(view, legal_actions, catalog),
-        advanced_action_reward: None,
-        unit_reward: None,
-        gain_choice: None,
+        advanced_action_reward: advanced_action_reward(view, legal_actions, catalog),
+        unit_reward: unit_reward(view, legal_actions, catalog),
+        gain_choice: gain_choice(view, legal_actions, mode, catalog),
         withdrawal: withdrawal(view, catalog),
         keep_hand_limit: keep_hand_limit(view, catalog),
         level_stats: level_stats(view, catalog),

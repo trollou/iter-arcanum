@@ -194,7 +194,11 @@ fn learn_button(
 
 /// « Prendre » une unité de récompense (spec 045, C39) : aussitôt avec un jeton de commandement
 /// libre, sinon le choix de l'unité à renvoyer.
-fn unit_reward_take(unit: UnitCard, legal_actions: &[Action], catalog: &Catalog) -> Option<Button> {
+pub(super) fn unit_reward_take(
+    unit: UnitCard,
+    legal_actions: &[Action],
+    catalog: &Catalog,
+) -> Option<Button> {
     let free = Action::TakeUnitReward {
         unit,
         disband: None,
@@ -313,7 +317,11 @@ pub(super) fn choosing_level(view: &PlayerView) -> Option<u8> {
     even.get(taken).copied()
 }
 
-fn offer_card(card: CommonCard, legal_actions: &[Action], catalog: &Catalog) -> OfferCardView {
+pub(super) fn offer_card(
+    card: CommonCard,
+    legal_actions: &[Action],
+    catalog: &Catalog,
+) -> OfferCardView {
     match card {
         CommonCard::Deed(deed) => {
             let take = legal_actions

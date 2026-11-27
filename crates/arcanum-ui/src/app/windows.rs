@@ -582,7 +582,16 @@ pub(super) fn artifact_window(
                 .max_height(max_height)
                 .show(ui, |ui| {
                     let id = egui::Id::unique(("choice_rows", id));
-                    card_rows(ui, id, None, &window.cards, max_width, thumbnails, catalog)
+                    let mut clicked =
+                        card_rows(ui, id, None, &window.cards, max_width, thumbnails, catalog);
+                    // Spec #20 : « Renoncer » ou « Annuler » sous les cartes.
+                    if let Some(close) = &window.close
+                        && shortcut_button(ui, &close.label, close.shortcut.as_deref(), catalog)
+                            .clicked()
+                    {
+                        clicked = Some(close.command);
+                    }
+                    clicked
                 })
                 .inner
         })

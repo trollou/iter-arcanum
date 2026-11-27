@@ -293,6 +293,24 @@ impl IterArcanumApp {
                 clicked = Some(command);
             }
         }
+        // Spec #20 : les fenêtres de choix des récompenses et des effets « gagner », une à la fois.
+        for (window, id) in [
+            (
+                &screen.advanced_action_reward,
+                "advanced_action_reward_window",
+            ),
+            (&screen.unit_reward, "unit_reward_window"),
+            (&screen.gain_choice, "gain_choice_window"),
+        ] {
+            if let Some(window) = window {
+                let thumbnails = self.choice_thumbnails(ui.ctx(), window);
+                if let Some(command) =
+                    artifact_window(ui.ctx(), window, id, &thumbnails, &self.catalog)
+                {
+                    clicked = Some(command);
+                }
+            }
+        }
         // Spec 051 : la fenêtre du choix de compétence d'un niveau pair.
         if let Some(window) = &screen.skill_choice
             && let Some(command) = skill_choice_window(ui.ctx(), window, &self.catalog)
