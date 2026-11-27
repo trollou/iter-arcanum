@@ -84,7 +84,7 @@ impl IterArcanumApp {
         if let Some(tactic) = &screen.tactic {
             ui.horizontal_wrapped(|ui| {
                 ui.strong(format!("{} · {}", tactic.number, tactic.name))
-                    .on_hover_text(&tactic.text);
+                    .on_hover_text(rich_text(ui.style(), &tactic.text, &self.catalog));
                 if let Some(flipped) = &tactic.flipped {
                     ui.weak(flipped);
                 }

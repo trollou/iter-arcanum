@@ -40,10 +40,11 @@ pub(super) fn spell_option_label(
     };
     let points = against_combat(points, combat);
     let kinds = effect.option_modifiers(option);
-    if options.len() == 1 && (!kinds.is_empty() || !has_points(points)) {
-        if let Some(label) = super::text::written_label(card, strong, catalog) {
-            return label;
-        }
+    if options.len() == 1
+        && (!kinds.is_empty() || !has_points(points))
+        && let Some(label) = super::text::written_label(card, strong, catalog)
+    {
+        return label;
     }
     let mut parts = Vec::new();
     if points != Effect::Nothing {

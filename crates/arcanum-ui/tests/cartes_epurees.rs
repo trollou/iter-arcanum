@@ -226,7 +226,7 @@ fn paid_option_face_omits_payment() {
         .expect("option renforcée rouge");
     assert_eq!(
         red.face,
-        EffectFace::Text("un sort rouge de l'offre".into())
+        EffectFace::Text("un sort <red>rouge</red> de l'offre".into())
     );
     // Puis, à la ligne, la raison du grisé (pas de mana bleu).
     assert_eq!(

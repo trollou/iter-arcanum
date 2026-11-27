@@ -574,7 +574,14 @@ impl IterArcanumApp {
                             self.effect_buttons(ui, &line.options)
                         });
                         clicked = response.inner.or(clicked);
-                        response.response.on_hover_text(&line.tooltip);
+                        // Spec #68 : le texte de la compétence, repères et couleurs dessinés.
+                        let catalog = &self.catalog;
+                        response.response.on_hover_ui(|ui| {
+                            ui.set_max_width(320.0);
+                            for text in line.tooltip.lines() {
+                                marked_label(ui, text, egui::RichText::new, catalog);
+                            }
+                        });
                         ui.add_space(2.0);
                     }
                 });
