@@ -892,6 +892,9 @@ pub struct PurchaseButton {
     pub label: String,
     pub command: Option<Command>,
     pub tooltip: Option<String>,
+    /// Spec #20, C21 à C23 : la carte hors zone d'un achat de carte, montrée en infobulle à la
+    /// place de `tooltip` ; rien pour un achat sans carte ou d'une carte cachée.
+    pub card: Option<super::OfferCardView>,
     /// « E » pour l'offrande à l'autel (spec 071, C21) ; `None` sans touche.
     pub shortcut: Option<String>,
 }

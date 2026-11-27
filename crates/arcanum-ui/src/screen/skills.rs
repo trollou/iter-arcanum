@@ -679,6 +679,7 @@ pub(super) fn level_choice_window(
             LevelCard {
                 card: super::hand::window_card(card, catalog),
                 take: PurchaseButton {
+                    card: None,
                     label: catalog.text("offers.take"),
                     shortcut: command.and_then(|_| crate::take_label(place + 1, catalog)),
                     command,

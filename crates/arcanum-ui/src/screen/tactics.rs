@@ -58,6 +58,7 @@ pub(super) fn tactic_window(
         title: catalog.format("tactic.choose_title", &[("time", &time)]),
         slots,
         take: PurchaseButton {
+            card: None,
             label: catalog.text("tactic.take"),
             command: selected.map(|(_, index)| Command::Play(index)),
             tooltip: None,
@@ -336,6 +337,7 @@ pub(super) fn preparation_window(
 
 fn purchase(label: String, command: Option<usize>) -> PurchaseButton {
     PurchaseButton {
+        card: None,
         label,
         command: command.map(Command::Play),
         tooltip: None,

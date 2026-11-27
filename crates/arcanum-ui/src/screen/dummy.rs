@@ -30,6 +30,7 @@ pub(super) fn dummy_section(view: &PlayerView, catalog: &Catalog) -> Option<Dumm
         }),
         deck: count("dummy.deck", dummy.deck_size),
         discard: PurchaseButton {
+            card: None,
             label: count("dummy.discard", dummy.discard.len()),
             command: (!dummy.discard.is_empty()).then_some(Command::OpenDummyDiscard),
             tooltip: None,

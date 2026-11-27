@@ -287,6 +287,47 @@ fn interacting(state: GameState, influence: i8) -> GameState {
 }
 
 // C41 — spec 042, *Interface*.
+// Spec #20, C23 : l'achat « Recruter : … » porte la carte hors zone de l'unité, celle de la
+// fenêtre Offres, même grisé.
+#[test]
+fn recruit_purchase_shows_unit_card() {
+    let catalog = french();
+    let state = Units {
+        offer: vec![peasants(), guardsmen()],
+        ..Units::default()
+    }
+    .state();
+    let state = interacting(state, 4);
+    let window = arcanum_ui::offers_window(&view(&state, SOLO), &[], &catalog);
+    let wanted: Vec<Option<arcanum_ui::OfferCardView>> = window.columns[2]
+        .cards
+        .iter()
+        .map(|card| {
+            Some(arcanum_ui::OfferCardView {
+                take: None,
+                mark: None,
+                uses: Vec::new(),
+                ..card.clone()
+            })
+        })
+        .collect();
+    let recruit = screen_of(&state, &catalog).recruit;
+    assert_eq!(
+        recruit
+            .iter()
+            .map(|button| button.label.as_str())
+            .collect::<Vec<_>>(),
+        ["Recruter : Paysans (4)", "Recruter : Gardes d'Utem (5)"]
+    );
+    assert_eq!(
+        recruit
+            .into_iter()
+            .map(|button| button.card)
+            .collect::<Vec<_>>(),
+        wanted
+    );
+}
+
 #[test]
 fn panel_offers_recruiting() {
     let catalog = french();

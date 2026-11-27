@@ -444,6 +444,7 @@ pub(super) fn recruit_buttons(
         // Spec 058, C30 : « Recruter sous Loyauté : Arbalétriers d'Utem (1) », sans renvoi.
         if bonded.is_some() || (bonds_free && here) {
             buttons.push(PurchaseButton {
+                card: None,
                 label: catalog.format(
                     "skill.bonds_recruit",
                     &[
@@ -457,6 +458,7 @@ pub(super) fn recruit_buttons(
             });
         }
         buttons.push(PurchaseButton {
+            card: None,
             label: catalog.format(
                 "units.recruit",
                 &[("name", &name), ("cost", &influence.to_string())],

@@ -96,6 +96,7 @@ pub(super) fn purchase_buttons(
         buttons.extend(deeds.map(|card| {
             let (basic, strong) = card_effect_texts(card, catalog);
             PurchaseButton {
+                card: None,
                 label: catalog.format(
                     "purchase.advanced_action",
                     &[
@@ -110,6 +111,7 @@ pub(super) fn purchase_buttons(
         }));
     }
     buttons.push(PurchaseButton {
+        card: None,
         label: catalog.format("purchase.healing", &[("cost", &healing_cost.to_string())]),
         command: command(Action::BuyHealing),
         tooltip: None,
@@ -129,6 +131,7 @@ fn city_purchases(
     catalog: &Catalog,
 ) -> Vec<PurchaseButton> {
     let button = |label: String, wanted: Action, tooltip: Option<String>| PurchaseButton {
+        card: None,
         label,
         command: legal_actions
             .iter()
@@ -347,6 +350,7 @@ fn spell_purchases(
                 .iter()
                 .any(|action| matches!(action, Action::BuySpell { card: c, .. } if *c == card));
             PurchaseButton {
+                card: None,
                 label: spell_label(card, catalog),
                 command: buyable.then_some(Command::ChooseSpellMana(card)),
                 tooltip: Some(format!("{basic}\n{strong}")),
