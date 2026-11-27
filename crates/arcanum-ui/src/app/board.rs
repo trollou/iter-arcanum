@@ -467,7 +467,15 @@ fn site_panel(
                                 purchase.command.is_some(),
                                 egui::Button::new(&purchase.label).wrap(),
                             );
-                            let response = match &purchase.tooltip {
+                            // Spec #20 : la carte de l'achat ; dessin provisoire en texte, la
+                            // carte hors zone vient au fil écran.
+                            let card_text = purchase.card.as_ref().map(|card| {
+                                std::iter::once(card.name.clone())
+                                    .chain(card.lines.iter().cloned())
+                                    .collect::<Vec<_>>()
+                                    .join("\n")
+                            });
+                            let response = match card_text.as_ref().or(purchase.tooltip.as_ref()) {
                                 Some(tooltip) => response
                                     .on_hover_text(tooltip)
                                     .on_disabled_hover_text(tooltip),

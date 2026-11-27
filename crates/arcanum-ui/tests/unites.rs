@@ -700,10 +700,15 @@ fn panel_greys_unaffordable_recruits() {
             ("Recruter : Herboristes (3)", None),
         ]
     );
-    let tooltip = screen.recruit[1].tooltip.clone().unwrap_or_default();
+    // Spec #20, C23 (test modifié) : la carte de l'unité en infobulle, au lieu du texte.
+    let lines = screen.recruit[1]
+        .card
+        .as_ref()
+        .map(|card| card.lines.clone())
+        .unwrap_or_default();
     assert!(
-        tooltip.contains(&catalog.text(&Unit::Herbalists.ability_key(0))),
-        "{tooltip}"
+        lines.contains(&catalog.text(&Unit::Herbalists.ability_key(0))),
+        "{lines:?}"
     );
 
     // Jetons tous pris mais Influence suffisante : actif, il mène au renvoi (spec 042, C41).

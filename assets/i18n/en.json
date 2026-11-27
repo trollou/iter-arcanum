@@ -1400,7 +1400,6 @@
     "spells": "Spells",
     "units": "Units",
     "take": "Take",
-    "choose_advanced_action": "Level {level}: choose an Advanced Action",
     "button": "Offers…",
     "unsupported": "{text} (not coded yet: play it sideways)",
     "close": "Close",
@@ -1892,7 +1891,6 @@
     "motivation_blocked": "Another Motivation was used: not before the end of your next turn",
     "pile": "Pile: {count}",
     "choice": {
-      "title": "Level {level}: choose a Skill",
       "revealed": "Revealed Skills",
       "common": "Common Skill offer",
       "common_note": "Taking a Skill from the common offer means taking the lowest Advanced Action.",

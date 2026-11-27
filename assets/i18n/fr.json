@@ -1400,7 +1400,6 @@
     "spells": "Sorts",
     "units": "Unités",
     "take": "Prendre",
-    "choose_advanced_action": "Niveau {level} : choisissez une action avancée",
     "button": "Offres…",
     "unsupported": "{text} (pas encore codé : se joue de côté)",
     "close": "Fermer",
@@ -1892,7 +1891,6 @@
     "motivation_blocked": "Une autre Motivation a servi : pas avant la fin du prochain tour",
     "pile": "Pile : {count}",
     "choice": {
-      "title": "Niveau {level} : choisir une compétence",
       "revealed": "Compétences révélées",
       "common": "Offre de compétences communes",
       "common_note": "Prendre une compétence de l'offre commune impose l'action avancée en dernière place.",
