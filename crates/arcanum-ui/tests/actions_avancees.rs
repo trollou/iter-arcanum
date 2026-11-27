@@ -122,7 +122,7 @@ fn shown_armor(combat: &CombatScreen, token: EnemyToken) -> String {
         .expect("ennemi du combat");
     match &enemy.values[0] {
         ValuePiece::Icon(icon) => icon.value.clone(),
-        ValuePiece::Text(text) => text.clone(),
+        ValuePiece::Text(text) | ValuePiece::Colored { text, .. } => text.clone(),
     }
 }
 
@@ -482,13 +482,13 @@ fn option_buttons_name_the_new_effects() {
     );
     assert_eq!(
         screen.hand[1].basic_effects[0].face,
-        EffectFace::Text(catalog.text("card.into_the_heat.basic_text"))
+        EffectFace::Text(catalog.text("card.into_the_heat.basic_label"))
     );
     assert_eq!(
         screen.hand[1].effect,
         catalog.text("card.into_the_heat.basic_text")
     );
-    let written = format!("Jouer : {}", catalog.text("card.into_the_heat.basic_text"));
+    let written = format!("Jouer : {}", catalog.text("card.into_the_heat.basic_label"));
     assert!(
         screen.hand[1]
             .plays
@@ -499,7 +499,7 @@ fn option_buttons_name_the_new_effects() {
     );
     let strong = format!(
         "Renforcer : {}",
-        catalog.text("card.into_the_heat.strong_text")
+        catalog.text("card.into_the_heat.strong_label")
     );
     assert!(
         screen.hand[1]
@@ -528,7 +528,7 @@ fn into_the_heat_modifiers_and_damage_to_hero_only() {
     // La zone de jeu nomme la carte jouée par son texte écrit (vérification à l'œil).
     let played = &screen_of(&state, &catalog).play_area[0].text;
     assert!(
-        played.ends_with(&catalog.text("card.into_the_heat.basic_text")),
+        played.ends_with(&catalog.text("card.into_the_heat.basic_label")),
         "{played:?}"
     );
     let lines = screen_of(&state, &catalog)
@@ -605,4 +605,33 @@ fn hand_of_coded_cards_asks_for_no_missing_label() {
         }
         assert_eq!(catalog.gaps(), vec![], "langue {language}");
     }
+}
+
+// Spec #68 C3 : une option sans effet propre a pour bouton son libellé court, et pour « i » le
+// texte complet (Au cœur du combat, jouée au début d'un combat).
+#[test]
+fn option_button_reads_label_and_info_reads_full_text() {
+    let catalog = french();
+    let into_the_heat = advanced(IntoTheHeat);
+    let state = Decor {
+        hand: vec![into_the_heat, card(Rage, 1)],
+        placed: vec![prowlers()],
+        owned: vec![peasants()],
+        ..Decor::default()
+    }
+    .fighting();
+    let screen = screen_of(&state, &catalog);
+    let held = &screen.hand[0];
+    assert_eq!(
+        held.basic_effects[0].face,
+        EffectFace::Text(catalog.text("card.into_the_heat.basic_label"))
+    );
+    assert!(
+        !catalog
+            .text("card.into_the_heat.basic_label")
+            .starts_with('⟦')
+    );
+    let info = held.info.as_ref().expect("texte complet");
+    assert_eq!(info.basic, catalog.text("card.into_the_heat.basic_text"));
+    assert_eq!(info.strong, catalog.text("card.into_the_heat.strong_text"));
 }

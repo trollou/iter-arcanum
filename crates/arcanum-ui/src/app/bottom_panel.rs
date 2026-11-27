@@ -8,7 +8,7 @@ use eframe::egui::{
 };
 
 use super::icons::{icon_size, icon_tooltip, marked_label};
-use super::widgets::{mana_color, reclaim_menu, shortcut_button, strong_button};
+use super::widgets::{mana_color, reclaim_menu, rich_text, shortcut_button, strong_button};
 use super::{CHOICE_STROKE, IterArcanumApp, RESISTANCE_TEXT, SWATCH_STROKE};
 use crate::{
     CARD_GAP, CARD_HEIGHT, CARD_WIDTH, Command, DiscardWindow, EffectButton, EffectFace,
@@ -409,7 +409,7 @@ impl IterArcanumApp {
         }
         // Rajeunissement : une unité à rendre disponible par bouton (spec 042).
         for button in &card.unit_plays {
-            let label = crate::plain_text(&button.label, &self.catalog);
+            let label = rich_text(ui.style(), &button.label, &self.catalog);
             if ui.add(egui::Button::new(label).wrap()).clicked() {
                 clicked = Some(button.command);
             }
@@ -497,7 +497,7 @@ impl IterArcanumApp {
             .on_hover_text(&banner.tooltip);
         }
         for button in &line.banner_uses {
-            let label = crate::plain_text(&button.label, &self.catalog);
+            let label = rich_text(ui.style(), &button.label, &self.catalog);
             if ui.add(egui::Button::new(label).wrap()).clicked() {
                 clicked = Some(button.command);
             }
@@ -574,7 +574,14 @@ impl IterArcanumApp {
                             self.effect_buttons(ui, &line.options)
                         });
                         clicked = response.inner.or(clicked);
-                        response.response.on_hover_text(&line.tooltip);
+                        // Spec #68 : le texte de la compétence, repères et couleurs dessinés.
+                        let catalog = &self.catalog;
+                        response.response.on_hover_ui(|ui| {
+                            ui.set_max_width(320.0);
+                            for text in line.tooltip.lines() {
+                                marked_label(ui, text, egui::RichText::new, catalog);
+                            }
+                        });
                         ui.add_space(2.0);
                     }
                 });
@@ -650,14 +657,17 @@ impl IterArcanumApp {
                         None => egui::Button::new(plain.as_str()).wrap(),
                     }
                 }
-                EffectFace::Text(_) => egui::Button::new(plain.as_str()).wrap(),
+                EffectFace::Text(text) => {
+                    egui::Button::new(rich_text(ui.style(), text, &self.catalog)).wrap()
+                }
             };
-            // Spec #27, C21 : egui n'écrit que du texte dans un bouton et son infobulle.
-            let tooltip = crate::plain_text(&button.tooltip, &self.catalog);
+            // Spec #27, C21 : egui n'écrit que du texte dans un bouton et son infobulle ; spec
+            // #68 : ses mots de couleur colorés.
+            let tooltip = rich_text(ui.style(), &button.tooltip, &self.catalog);
             let response = ui
                 .add_enabled(button.command.is_some(), widget)
-                .on_hover_text(&tooltip)
-                .on_disabled_hover_text(&tooltip);
+                .on_hover_text(tooltip.clone())
+                .on_disabled_hover_text(tooltip);
             if let Some(condition) = &button.condition {
                 self.effect_condition(ui, condition);
             }

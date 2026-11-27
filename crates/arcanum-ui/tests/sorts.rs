@@ -742,6 +742,7 @@ fn demolish_shows_ignored_site_fortifications() {
     // Le texte de la carte corrigé (Compendium, *Demolish* S1).
     assert_eq!(
         catalog.text("card.demolish.basic_text"),
-        "Ignorer les fortifications des sites ce tour ; ennemis Armure -1 (min. 1)"
+        "Ce tour-ci, ignorez les fortifications des sites. Les ennemis perdent 1 d'[[armor]]Armure, \
+         sans descendre sous 1."
     );
 }

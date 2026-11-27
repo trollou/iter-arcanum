@@ -343,12 +343,8 @@ pub(super) fn artifact_prompt(
 ) -> Option<ManaPrompt> {
     let (choice, plays) = active_artifact(mode, legal_actions)?;
     let name = card_name(choice.card, catalog);
-    let written = choice
-        .card
-        .card()
-        .unsupported_text_keys()
-        .map(|(basic, strong)| catalog.text(if choice.strong { strong } else { basic }))
-        .unwrap_or_default();
+    let written =
+        super::text::written_label(choice.card, choice.strong, catalog).unwrap_or_default();
     let mut payments: Vec<Button> = Vec::new();
     let mut push = |label: String, command: Command| {
         if !payments.iter().any(|button| button.label == label) {

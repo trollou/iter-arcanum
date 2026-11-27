@@ -124,8 +124,8 @@ fn offer_advanced_action_reads_like_hand_card() {
     assert_eq!(
         card.lines,
         [
-            "Payer un mana : vert Mouvement 4, blanc Influence 4, bleu Parade 4, rouge Attaque 4",
-            "Payer un mana : vert Mouvement 7, blanc Influence 7, bleu Parade 7, rouge Attaque 7",
+            catalog.text("card.pure_magic.basic_text"),
+            catalog.text("card.pure_magic.strong_text"),
         ]
     );
     assert_eq!(card.strong_heading, "Renforcé");
@@ -140,8 +140,8 @@ fn offer_spell_names_its_strong_effect_apart() {
     assert_eq!(
         card.lines,
         [
-            "Attaque à distance de feu 5",
-            "Blessure ; Attaque de siège de feu 8"
+            catalog.text("card.fireball.basic_text"),
+            catalog.text("card.fireball.strong_text"),
         ]
     );
     assert_eq!(card.strong_heading, "Tempête de feu");
@@ -251,8 +251,8 @@ fn artifact_choice_card_reads_like_hand_artifact() {
     assert_eq!(
         ring.lines,
         [
-            "Jeton et cristal rouges ; Gloire +1",
-            "Mana rouge et noir illimité ce tour ; Gloire +1 par sort rouge lancé",
+            catalog.text("card.ruby_ring.basic_text"),
+            catalog.text("card.ruby_ring.strong_text"),
         ]
     );
     assert_eq!(ring.strong_heading, "si détruit");
@@ -302,4 +302,35 @@ fn cards_per_row_fills_the_width() {
         .map(cards_per_row)
         .collect();
     assert_eq!(counts, [4, 4, 3, 3, 1, 1]);
+}
+
+// Spec #68 C4 : les fenêtres de cartes montrent les textes complets, comme le « i » (Agilité dans
+// l'offre d'actions avancées).
+#[test]
+fn offer_window_shows_full_texts() {
+    let catalog = french();
+    let agility = advanced(AdvancedAction::Agility);
+    let mut events = Sandbox {
+        figure: Some(arcanum_core::Hex::new(0, 0)),
+        hand: vec![card(March, 1)],
+        ..Sandbox::default()
+    }
+    .events();
+    events.push(Event::CommonDeckShuffled {
+        deck: CommonDeck::AdvancedActions,
+        order: vec![CommonCard::Deed(agility)],
+    });
+    events.push(Event::OfferCardDealt {
+        offer: Offer::AdvancedActions,
+        card: CommonCard::Deed(agility),
+    });
+    let state = events.iter().fold(GameState::default(), apply);
+    let shown = offer_card(&state, 0, "Agilité", &catalog);
+    assert_eq!(
+        shown.lines,
+        [
+            catalog.text("card.agility.basic_text"),
+            catalog.text("card.agility.strong_text"),
+        ]
+    );
 }

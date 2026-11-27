@@ -1,6 +1,7 @@
 //! Panneau latéral : bandeaux, héros, zone de jeu et boutons.
 
 use super::bottom_panel::bottom_hint;
+use super::widgets::rich_text;
 use super::widgets::shortcut_button;
 use eframe::egui::{self, Color32, Sense, Vec2};
 
@@ -83,7 +84,7 @@ impl IterArcanumApp {
         if let Some(tactic) = &screen.tactic {
             ui.horizontal_wrapped(|ui| {
                 ui.strong(format!("{} · {}", tactic.number, tactic.name))
-                    .on_hover_text(&tactic.text);
+                    .on_hover_text(rich_text(ui.style(), &tactic.text, &self.catalog));
                 if let Some(flipped) = &tactic.flipped {
                     ui.weak(flipped);
                 }
@@ -137,8 +138,9 @@ impl IterArcanumApp {
             // Ligne repliée : une ligne longue ne doit pas élargir le panneau.
             ui.horizontal_top(|ui| {
                 color_swatch(ui, line.color);
-                ui.add(egui::Label::new(&line.text).wrap())
-                    .on_hover_text(crate::plain_text(&line.tooltip, &self.catalog));
+                let text = rich_text(ui.style(), &line.text, &self.catalog);
+                let tooltip = rich_text(ui.style(), &line.tooltip, &self.catalog);
+                ui.add(egui::Label::new(text).wrap()).on_hover_text(tooltip);
             });
         }
         if let Some(empty) = &screen.play_area_empty {
@@ -198,7 +200,7 @@ impl IterArcanumApp {
                         ),
                         &self.catalog,
                     );
-                    let label = crate::plain_text(&button.label, &self.catalog);
+                    let label = rich_text(ui.style(), &button.label, &self.catalog);
                     let response = ui
                         .add_enabled(button.command.is_some(), egui::Button::new(label))
                         .on_hover_text(&hint)

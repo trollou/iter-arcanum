@@ -431,7 +431,7 @@ fn artifact_choice_window() {
             .lines
             .iter()
             // Spec 055 : l'artefact est codé, son texte écrit seul (test modifié, C1).
-            .any(|line| line == "Jeton et cristal rouges ; Gloire +1"),
+            .any(|line| *line == catalog.text("card.ruby_ring.basic_text")),
         "{:?}",
         window.cards[0].lines
     );

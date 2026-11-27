@@ -186,72 +186,186 @@ pub struct IconButton {
 pub enum ValuePiece {
     Icon(IconValue),
     Text(String),
+    /// Un mot de couleur de mana, dans sa couleur (spec #68, balise `<red>…</red>`).
+    Colored {
+        text: String,
+        color: ManaColor,
+    },
 }
 
-/// Les noms des repères d'icône `[[nom]]` d'un libellé (spec #27, Q3 et Q4), et leur icône.
-pub const ICON_MARKERS: [(&str, Icon); 6] = [
+/// Les noms des repères d'icône `[[nom]]` d'un libellé, et leur icône : capacités des ennemis
+/// (spec #27, Q3 et Q4), puis points des textes de cartes, nommés comme leurs clés `effect.*`
+/// (spec #68, Q2).
+pub const ICON_MARKERS: [(&str, Icon); 26] = [
     ("fortified", Icon::Ability(EnemyAbility::Fortified)),
     ("swift", Icon::Ability(EnemyAbility::Swift)),
     ("brutal", Icon::Ability(EnemyAbility::Brutal)),
     ("poison", Icon::Ability(EnemyAbility::Poison)),
     ("paralyze", Icon::Ability(EnemyAbility::Paralyze)),
     ("summon", Icon::Summon),
+    ("move", Icon::Move),
+    ("influence", Icon::Influence),
+    ("armor", Icon::Armor),
+    ("fame", Icon::Fame),
+    (
+        "attack",
+        attack_marker(AttackKind::Melee, Element::Physical),
+    ),
+    (
+        "fire_attack",
+        attack_marker(AttackKind::Melee, Element::Fire),
+    ),
+    ("ice_attack", attack_marker(AttackKind::Melee, Element::Ice)),
+    (
+        "cold_fire_attack",
+        attack_marker(AttackKind::Melee, Element::ColdFire),
+    ),
+    (
+        "ranged_attack",
+        attack_marker(AttackKind::Ranged, Element::Physical),
+    ),
+    (
+        "ranged_fire_attack",
+        attack_marker(AttackKind::Ranged, Element::Fire),
+    ),
+    (
+        "ranged_ice_attack",
+        attack_marker(AttackKind::Ranged, Element::Ice),
+    ),
+    (
+        "ranged_cold_fire_attack",
+        attack_marker(AttackKind::Ranged, Element::ColdFire),
+    ),
+    (
+        "siege_attack",
+        attack_marker(AttackKind::Siege, Element::Physical),
+    ),
+    (
+        "siege_fire_attack",
+        attack_marker(AttackKind::Siege, Element::Fire),
+    ),
+    (
+        "siege_ice_attack",
+        attack_marker(AttackKind::Siege, Element::Ice),
+    ),
+    (
+        "siege_cold_fire_attack",
+        attack_marker(AttackKind::Siege, Element::ColdFire),
+    ),
+    ("block", Icon::Block(Element::Physical)),
+    ("fire_block", Icon::Block(Element::Fire)),
+    ("ice_block", Icon::Block(Element::Ice)),
+    ("cold_fire_block", Icon::Block(Element::ColdFire)),
 ];
 
-/// Un morceau d'un texte à repères : du texte, ou une icône et ce qui la suit (un mot collé, ou
-/// rien).
+const fn attack_marker(kind: AttackKind, element: Element) -> Icon {
+    Icon::Attack { kind, element }
+}
+
+/// Les balises de couleur `<nom>…</nom>` d'un libellé (spec #68, règle 8), et leur couleur.
+pub const COLOR_TAGS: [(&str, ManaColor); 6] = [
+    ("red", ManaColor::Basic(BasicColor::Red)),
+    ("blue", ManaColor::Basic(BasicColor::Blue)),
+    ("white", ManaColor::Basic(BasicColor::White)),
+    ("green", ManaColor::Basic(BasicColor::Green)),
+    ("gold", ManaColor::Gold),
+    ("black", ManaColor::Black),
+];
+
+/// Un morceau d'un texte à repères : du texte, une icône et ce qui la suit (un mot collé, ou
+/// rien), ou un mot de couleur.
 enum Marked<'a> {
     Text(&'a str),
     Icon { icon: Icon, before_word: bool },
+    Colored { text: &'a str, color: ManaColor },
 }
 
-/// Découpe un texte en texte et en repères connus ; un repère inconnu reste du texte.
+/// Un repère connu au début de `text` : `[[nom]]` ou `<nom>mot</nom>`, et ce qui reste après.
+fn leading_mark(text: &str) -> Option<(Marked<'_>, &str)> {
+    if let Some(after) = text.strip_prefix("[[") {
+        let end = after.find("]]")?;
+        let &(_, icon) = ICON_MARKERS
+            .iter()
+            .find(|(name, _)| *name == &after[..end])?;
+        let rest = &after[end + 2..];
+        let before_word = rest.chars().next().is_some_and(char::is_alphanumeric);
+        return Some((Marked::Icon { icon, before_word }, rest));
+    }
+    let after = text.strip_prefix('<')?;
+    let end = after.find('>')?;
+    let (name, inner) = (&after[..end], &after[end + 1..]);
+    let &(_, color) = COLOR_TAGS.iter().find(|(tag, _)| *tag == name)?;
+    let close = format!("</{name}>");
+    let stop = inner.find(&close)?;
+    Some((
+        Marked::Colored {
+            text: &inner[..stop],
+            color,
+        },
+        &inner[stop + close.len()..],
+    ))
+}
+
+/// Découpe un texte en texte, repères et mots de couleur connus ; un repère ou une balise
+/// inconnus, ou une balise non fermée, restent du texte.
 fn marked(text: &str) -> Vec<Marked<'_>> {
     let mut pieces = Vec::new();
-    let mut rest = text;
-    while let Some(start) = rest.find("[[") {
-        let after = &rest[start + 2..];
-        let Some(end) = after.find("]]") else { break };
-        let Some(&(_, icon)) = ICON_MARKERS.iter().find(|(name, _)| *name == &after[..end]) else {
-            pieces.push(Marked::Text(&rest[..start + 2]));
-            rest = after;
-            continue;
-        };
-        if start > 0 {
-            pieces.push(Marked::Text(&rest[..start]));
+    let mut plain_start = 0;
+    let mut cursor = 0;
+    while let Some(offset) = text[cursor..].find(['[', '<']) {
+        let at = cursor + offset;
+        match leading_mark(&text[at..]) {
+            Some((mark, rest)) => {
+                if at > plain_start {
+                    pieces.push(Marked::Text(&text[plain_start..at]));
+                }
+                pieces.push(mark);
+                cursor = text.len() - rest.len();
+                plain_start = cursor;
+            }
+            None => cursor = at + 1,
         }
-        rest = &after[end + 2..];
-        let before_word = rest.chars().next().is_some_and(char::is_alphanumeric);
-        pieces.push(Marked::Icon { icon, before_word });
     }
-    if !rest.is_empty() {
-        pieces.push(Marked::Text(rest));
+    if plain_start < text.len() {
+        pieces.push(Marked::Text(&text[plain_start..]));
     }
     pieces
 }
 
-/// Découpe un texte à repères en morceaux de texte et en icônes, sans valeur, nommées et avec
-/// leur règle (spec #27, C15) ; un texte sans repère donne un seul morceau.
+/// Découpe un texte à repères en morceaux de texte, en icônes, sans valeur, nommées et avec leur
+/// règle (spec #27, C15), et en mots de couleur (spec #68, C9) ; un texte sans repère donne un
+/// seul morceau.
 pub fn icon_pieces(text: &str, catalog: &Catalog) -> Vec<ValuePiece> {
     marked(text)
         .into_iter()
         .map(|piece| match piece {
             Marked::Text(text) => ValuePiece::Text(text.to_string()),
             Marked::Icon { icon, .. } => ValuePiece::Icon(enemy_icon_value(icon, "", catalog)),
+            Marked::Colored { text, color } => ValuePiece::Colored {
+                text: text.to_string(),
+                color,
+            },
         })
         .collect()
 }
 
-/// Le texte sans repère (spec #27, C15 et C21) : un repère suivi d'un mot disparaît, un repère
-/// seul devient le nom de son icône (« Vif »). Deux repères seuls à la suite (« doublement
-/// fortifié ») donnent deux noms séparés d'une espace.
-pub fn plain_text(text: &str, catalog: &Catalog) -> String {
-    let mut plain = String::new();
+/// Le texte sans repère, en morceaux de couleur (spec #68, Q5) : ceux de `plain_text`, avec la
+/// couleur d'un mot balisé ; pour un bouton ou une infobulle mis en forme.
+pub fn colored_text(text: &str, catalog: &Catalog) -> Vec<(String, Option<ManaColor>)> {
+    let mut pieces: Vec<(String, Option<ManaColor>)> = Vec::new();
+    let mut push = |text: &str, color: Option<ManaColor>| match pieces.last_mut() {
+        Some((last, last_color)) if *last_color == color => last.push_str(text),
+        _ => pieces.push((text.to_string(), color)),
+    };
     let mut after_name = false;
     for piece in marked(text) {
         match piece {
             Marked::Text(text) => {
-                plain.push_str(text);
+                push(text, None);
+                after_name = false;
+            }
+            Marked::Colored { text, color } => {
+                push(text, Some(color));
                 after_name = false;
             }
             Marked::Icon {
@@ -259,14 +373,25 @@ pub fn plain_text(text: &str, catalog: &Catalog) -> String {
             } => after_name = false,
             Marked::Icon { icon, .. } => {
                 if after_name {
-                    plain.push(' ');
+                    push(" ", None);
                 }
-                plain.push_str(&catalog.text(icon.name_key()));
+                push(&catalog.text(icon.name_key()), None);
                 after_name = true;
             }
         }
     }
-    plain
+    pieces
+}
+
+/// Le texte sans repère ni balise (spec #27, C15 et C21 ; spec #68, C10) : un repère suivi d'un
+/// mot disparaît, un repère seul devient le nom de son icône (« Vif »), un mot balisé reste sans
+/// sa balise. Deux repères seuls à la suite (« doublement fortifié ») donnent deux noms séparés
+/// d'une espace.
+pub fn plain_text(text: &str, catalog: &Catalog) -> String {
+    colored_text(text, catalog)
+        .into_iter()
+        .map(|(text, _)| text)
+        .collect()
 }
 
 /// Une valeur à icône, son nom traduit en infobulle.

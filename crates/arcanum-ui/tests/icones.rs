@@ -974,16 +974,17 @@ fn marked_texts_keep_the_word() {
         ),
         (
             "unit.altem_guardians.ability_2",
-            "Parade 8 ; compte double contre un ennemi [[swift]]Vif",
+            "Parade 8, double contre un ennemi [[swift]]Vif",
         ),
         (
             "unit.illusionists.ability_2",
-            "(mana blanc) Un ennemi [[fortified]]non fortifié n'attaque pas",
+            "(mana <white>blanc</white>) Un ennemi [[fortified]]non fortifié n'attaque pas",
         ),
         (
             "card.tremor.strong_text",
-            "Un ennemi Armure -3 (-6 si [[fortified]]fortifié), ou tous -2 (-4 si \
-             [[fortified]]fortifiés) (min. 1)",
+            "Un ennemi perd 3 d'[[armor]]Armure (6 s'il est [[fortified]]fortifié), ou tous les \
+             ennemis perdent 2 d'[[armor]]Armure (4 pour ceux qui sont [[fortified]]fortifiés). \
+             L'Armure ne descend pas sous 1.",
         ),
         (
             "modifier.by_fortification",
@@ -995,6 +996,6 @@ fn marked_texts_keep_the_word() {
     assert!(
         catalog
             .text("card.expose.basic_text")
-            .contains("perd [[fortified]]fortifications")
+            .contains("perd toutes ses [[fortified]]fortifications")
     );
 }

@@ -306,8 +306,8 @@ pub(super) fn window_card(card: CardId, catalog: &Catalog) -> OfferCardView {
     }
 }
 
-/// Le texte complet derrière « i » (spec #11, C1 à C5) : le texte écrit de la carte quand elle en
-/// a un (actions avancées, sorts), sinon les textes calculés ; rien pour une Blessure ni un
+/// Le texte complet derrière « i » (spec #11, C1 à C5 ; spec #68, C2) : le texte écrit de la
+/// carte quand elle en a un (toute carte qui se joue), sinon les textes calculés ; rien pour une Blessure ni un
 /// artefact, qui écrit le sien sur lui (Q1).
 fn card_info(card: CardId, effect: &str, strong_text: &str, catalog: &Catalog) -> Option<CardInfo> {
     if card.card().is_wound() || card.card().is_artifact() {
@@ -319,9 +319,13 @@ fn card_info(card: CardId, effect: &str, strong_text: &str, catalog: &Catalog) -
         Some(key) if catalog.parameters(key).is_some() => catalog.text(key),
         _ => computed.to_owned(),
     };
-    let keys = card.card().unsupported_text_keys();
-    let basic = written(keys.map(|(basic, _)| basic), effect);
-    let strong = written(keys.map(|(_, strong)| strong), strong_text);
+    // Spec #68 : les actions de base ont aussi un texte complet.
+    let keys = super::text::full_text_keys(card);
+    let basic = written(keys.as_ref().map(|(basic, _)| basic.as_str()), effect);
+    let strong = written(
+        keys.as_ref().map(|(_, strong)| strong.as_str()),
+        strong_text,
+    );
     Some(CardInfo {
         name: card_name(card, catalog),
         basic,

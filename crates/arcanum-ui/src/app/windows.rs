@@ -609,7 +609,7 @@ pub(super) fn tactic_window(
             for row in window.slots.chunks(3) {
                 ui.horizontal_top(|ui| {
                     for slot in row {
-                        clicked = tactic_card(ui, slot.as_ref()).or(clicked);
+                        clicked = tactic_card(ui, slot.as_ref(), catalog).or(clicked);
                     }
                 });
             }
@@ -632,7 +632,7 @@ pub(super) fn tactic_window(
 }
 
 /// Une place de la grille : la tactique (grand numéro, nom, texte), ou un trou.
-fn tactic_card(ui: &mut egui::Ui, card: Option<&TacticCard>) -> Option<Command> {
+fn tactic_card(ui: &mut egui::Ui, card: Option<&TacticCard>, catalog: &Catalog) -> Option<Command> {
     let Some(card) = card else {
         // Retirée de la partie : la place reste vide, les autres ne bougent pas.
         ui.allocate_exact_size(TACTIC_CARD + Vec2::splat(12.0), Sense::hover());
@@ -672,7 +672,8 @@ fn tactic_card(ui: &mut egui::Ui, card: Option<&TacticCard>) -> Option<Command> 
                     );
                     ui.add(egui::Label::new(egui::RichText::new(&card.name).heading()).wrap());
                 });
-                ui.add(egui::Label::new(&card.text).wrap());
+                // Spec #68 : le texte réécrit, ses mots de couleur colorés.
+                super::icons::marked_label(ui, &card.text, egui::RichText::new, catalog);
             });
         })
         .response;
@@ -861,7 +862,7 @@ fn skill_tile(ui: &mut egui::Ui, offer: &SkillOffer, catalog: &Catalog) -> Optio
                         ui.strong(&offer.name);
                         ui.weak(&offer.usage);
                     });
-                    ui.add(egui::Label::new(&offer.text).wrap());
+                    super::icons::marked_label(ui, &offer.text, egui::RichText::new, catalog);
                 });
                 if let Some(take) = &offer.take
                     && shortcut_button(ui, &take.label, take.shortcut.as_deref(), catalog).clicked()

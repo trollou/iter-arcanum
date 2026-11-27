@@ -1,0 +1,242 @@
+# #68 — Texte des cartes et des compétences
+
+- Statut : validée (Mathieu, 2026-11-27)
+- Issue : #68 (Bug, milestone v0.2.0, Effort Medium : spec codée en un fil)
+- Dépend de : spec #11 (bouton « i » et texte complet), spec #32 (cartes des fenêtres), spec #27 (repères `[[…]]` à
+  icône dans un texte), spec 071 (icônes), spec 050 (textes écrits des cartes), spec 055 (artefacts) ; toutes implémentées
+- Livret : aucune règle nouvelle. Source du sens de chaque texte : transcriptions des cartes
+  (`../mage-knight/docs/regles/cartes/`, version *Lost Legion* quand il y a un errata)
+- Crates touchées : `assets/i18n/` (fr.json et en.json, l'essentiel du travail), arcanum-ui (choix du texte affiché,
+  repères à icône). Rien dans arcanum-core.
+
+## Objectif
+
+Le texte d'une carte, d'une compétence ou d'une tactique que le joueur lit pour comprendre ce qu'elle fait (bouton « i »,
+fenêtres de cartes, infobulles) devient une suite de phrases complètes, dans l'ordre et avec toutes les conditions de la
+carte du jeu de base, au lieu des formules compactées d'aujourd'hui. Les mots-clés de points (Mouvement, Influence,
+Attaque, Parade, Armure, Gloire) y portent leur icône, pour que le texte se lise d'un coup d'œil (retour de joueur de la
+v0.1.0, commentaire de l'issue).
+
+Les boutons, eux, restent courts : ils disent ce qu'on obtient en cliquant, pas la carte entière.
+
+## Constat (relevé à la rédaction)
+
+Trois défauts, avec des exemples tirés de `assets/i18n/fr.json` de `main` :
+
+| Défaut | Exemple aujourd'hui | Carte |
+|---|---|---|
+| Formule au lieu d'une phrase | « Mouvement 4 ; en combat, 1 mouvement = Attaque 1, 2 mouvements = Attaque à distance 1 » (`card.agility.strong_text`) | Agilité (Mouvement 2 ; pendant le combat de ce tour, les points de Mouvement restants servent d'Attaque, un pour un) |
+| Texte calculé illisible (actions de base, qui n'ont pas de texte écrit : le « i » montre les effets mis bout à bout) | « Mettre 1 dé(s) sur une couleur, gagner des jetons » (`effect.set_dice`) ; « Renforcer une autre carte gratuitement, +2 » (`effect.boost`) | Source de mana renforcée (prendre un dé de la Source, le mettre sur une couleur sauf or, gagner deux jetons de cette couleur, le dé n'est pas relancé) ; Concentration renforcée (jouer une autre carte action avec elle, obtenir son effet renforcé gratuitement, +2 aux points qu'il donne) |
+| Abréviations et raccourcis | « (min. 1) », « Idem », « etc. », « −2 » collé à un terrain, chaînes de « ; » | Secousse, Transe, Ailes de la nuit, Chemins de traverse |
+
+Le même texte écrit (`basic_text`, `strong_text`) sert aujourd'hui à trois places : le « i » et les fenêtres de cartes, le
+recto d'un artefact (spec #11, Q1), et le libellé du bouton d'une option sans effet propre (Au cœur du combat, Tourbillon :
+`card_option_text`, spec 053). C'est pourquoi il a été compacté : il devait tenir sur un bouton.
+
+## Règles
+
+- **Sens d'un texte** : celui de la carte transcrite dans `../mage-knight/docs/regles/cartes/` (version *Lost Legion* si
+  errata), sans rien omettre ni ajouter. Aucun renvoi au livret : la spec ne change aucune règle.
+- **Écart entre la carte et le code** : si, en relisant une carte, le fil voit que le code ne fait pas ce qu'elle dit, il
+  n'écrit pas un texte qui décrit le code : il écrit le texte de la carte et ouvre une issue `Bug` (renvoi dans la PR).
+- **Droits** (CLAUDE.md, Assets et droits : aucun texte officiel dans le jeu) : nos mots, jamais un copier-coller ni une
+  traduction mot à mot des transcriptions, en français comme en anglais. Voir Q1.
+- **Termes** : ceux du glossaire (`docs/glossaire.md`) et de la FAQ française (Vif, Toxique, Paralysant…).
+
+## Charte de rédaction
+
+S'applique aux **textes complets** (voir Modèle) des deux langues.
+
+1. **Des phrases complètes**, chacune terminée par un point. Pas de « ; » pour enchaîner des morceaux, pas de « = », pas
+   d'abréviation (« min. », « etc. », « Idem » : écrire « au moins 1 », énumérer, redire l'effet).
+2. **L'ordre de la carte** : d'abord ce qu'on gagne, puis les conditions et les limites dans l'ordre où la carte les donne.
+3. **Le joueur est « vous »**, à l'indicatif ou à l'impératif (« Gagnez un jeton de mana bleu, blanc ou rouge. »). Fini
+   l'infinitif des compétences (« Défausser une carte pour… ») et le mélange actuel entre familles.
+4. **Les quantités en chiffres** après le mot-clé (« Mouvement 4 », « Attaque de feu 5 »), comme sur les boutons.
+5. **Le moment** est dit en clair : « pendant le combat de ce tour », « à la fin de votre tour », « une fois par manche ».
+6. **Repère à icône** devant chaque mot-clé de points (voir Modèle et Q2) : `[[move]]Mouvement 4`.
+7. **Longueur** : celle qu'il faut pour être compris. Un texte complet n'est jamais un libellé de bouton.
+8. **Couleurs de mana en couleur** (idée de Mathieu, 2026-11-27) : chaque mot qui nomme une couleur de mana (rouge, bleu,
+   blanc, vert, or, noir, avec leurs accords) porte la balise de sa couleur : « cristal <red>rouge</red> », « Vert : »
+   dans Magie pure. Seul le mot de la couleur est coloré, pas « cristal » ni « jeton ». Voir Modèle, « Balises de couleur ».
+
+Les **libellés de bouton** (voir Modèle) suivent les règles 3, 4 et 8, sans phrase ni point final : « Mouvement 4, reste en
+Attaque » plutôt que la carte entière. Pas de repère : le bouton porte déjà son icône (spec 073).
+
+**Exemples** (fr ; le fil écrit l'anglais sur le même modèle) :
+
+| Carte | Aujourd'hui (« i ») | Proposé (texte complet) |
+|---|---|---|
+| Concentration, renforcé | Renforcer une autre carte gratuitement, +2 | Jouez une autre carte action avec celle-ci : vous obtenez son effet renforcé sans payer de mana. S'il vous donne du [[move]]Mouvement, de l'[[influence]]Influence, une [[attack]]Attaque ou une [[block]]Parade, ajoutez 2. |
+| Improvisation, base | Défausser une autre carte : Mouvement 3 ou Influence 3 ou Attaque 3 ou Parade 3 | Défaussez une autre carte de votre main pour obtenir [[move]]Mouvement 3, [[influence]]Influence 3, [[attack]]Attaque 3 ou [[block]]Parade 3. |
+| Agilité, renforcé | Mouvement 4 ; en combat, 1 mouvement = Attaque 1, 2 mouvements = Attaque à distance 1 | [[move]]Mouvement 4. Pendant le combat de ce tour, chaque point de Mouvement qui vous reste peut servir d'[[attack]]Attaque 1, ou deux d'entre eux d'[[ranged_attack]]Attaque à distance 1. |
+| Secousse, base (sort) | Un ennemi Armure -3, ou tous Armure -2 (min. 1) | Un ennemi perd 3 d'[[armor]]Armure, ou tous les ennemis perdent 2 d'[[armor]]Armure. L'Armure d'un ennemi ne descend pas sous 1. |
+| Invocation (compétence d'Arythea) | Défausser une carte pour un jeton de mana à dépenser aussitôt : rouge ou noir pour une Blessure, blanc ou vert sinon. | Défaussez une carte de votre main pour gagner un jeton de mana, à dépenser aussitôt : rouge ou noir si c'est une Blessure, blanc ou vert sinon. |
+
+## Modèle
+
+Aucune donnée nouvelle dans l'état ni dans la vue : tout se joue dans les libellés et dans le choix du libellé affiché.
+
+**Deux sortes de textes écrits** par carte :
+
+- **Texte complet** (`basic_text`, `strong_text`, clés existantes dont le sens change) : lu par le « i » (spec #11), les
+  fenêtres de cartes (spec #32) et le recto d'un artefact (spec 055). **Les actions de base en reçoivent un** (20 cartes,
+  clés nouvelles `card.<carte>.basic_text` et `strong_text`) : leur « i » ne montre plus d'effets calculés mis bout à bout.
+- **Libellé de bouton** (`basic_label`, `strong_label`, clés nouvelles) : seulement pour les cartes dont un bouton lit
+  aujourd'hui le texte écrit (option sans effet propre, `card_option_text`). Le fil d'implémentation en dresse la liste en
+  cherchant les options `Effect::Nothing` des contenus RON et la donne dans la PR.
+
+**Textes à un seul usage**, réécrits sur place selon la charte : compétences (`skill.<compétence>.text`, 40), tactiques
+(`tactic.<tactique>.text`, 12). Les capacités d'unité (`unit.<unité>.ability_N`, 20 unités) sont des libellés de bouton
+(spec 073) : elles suivent les règles des boutons, voir Q3.
+
+**Libellés calculés de bouton** (`effect.*`) : seuls ceux qui ne se comprennent pas sont repris, liste fermée : `set_dice`,
+`boost`, `repeat`, `extra_die_black`, `does_not_attack_per_move`, `gem_pouch_dice`, `horn_of_wrath`. Les autres
+(« Attaque 3 », « Jeton bleu ») sont déjà clairs.
+
+**Repères à icône nouveaux** (`ICON_MARKERS`, spec #27), un par icône de points de la planche (spec 071) : `move`,
+`influence`, `armor`, `fame`, `attack`, `ranged_attack`, `siege_attack`, `block`, et leurs variantes d'élément
+(`fire_attack`, `ice_block`…), nommés comme les clés `effect.*` qui leur correspondent. Le repère se dessine comme
+`[[swift]]Vif` aujourd'hui : l'icône à la hauteur du texte, collée au mot qui suit, avec son infobulle.
+
+**Balises de couleur** (règle 8) : `<red>…</red>`, `<blue>…</blue>`, `<white>…</white>`, `<green>…</green>`,
+`<gold>…</gold>`, `<black>…</black>` entourent le mot à colorer dans fr.json et en.json. Des chevrons, parce que les
+accolades sont prises par les paramètres (`{color}`) et que `[[…]]` pose une icône devant un mot ; une balise inconnue ou
+non fermée reste du texte. Le découpage des textes à repères (`icon_pieces`) rend un morceau de texte coloré ;
+`plain_text` retire les balises (texte d'un bouton sans mise en forme, journal). Le nom de couleur calculé (`color_name`,
+`mana_name`, qui remplit `{color}` dans « Jeton {color} », « Cristal {color} »…) rend le mot balisé : les textes calculés
+sont colorés comme les textes écrits. La couleur du texte est une variante claire de celle de la pastille de mana
+(`mana_color`), lisible sur le fond sombre du jeu : le noir de la pastille (`#222226`) serait invisible, il devient un gris
+violacé clair, et le blanc un blanc franc qui se distingue du texte courant (vérification à l'œil).
+
+Termes : rien de nouveau au glossaire (« texte complet » est déjà le terme de la spec #11).
+
+## Comportements attendus
+
+Le contenu des textes ne se teste pas (relu par Mathieu, voir Interface) ; les tests gardent ce qui se vérifie.
+
+- **C1** — Chaque carte qui se joue (20 actions de base, 28 actions avancées, 20 sorts, 16 artefacts) a un texte complet de
+  base et un renforcé, non vides, en fr et en en (`every_deed_card_has_full_texts_in_both_languages`). Rouge attendu : les
+  actions de base n'en ont pas.
+- **C2** — Le « i » d'une action de base montre ses textes complets : Concentration (basic_actions.ron, `Concentration`),
+  bloc de base `card.concentration.basic_text`, bloc renforcé `card.concentration.strong_text`
+  (`basic_action_info_shows_its_full_text`). Rouge attendu : il montre aujourd'hui les effets calculés.
+- **C3** — Une option sans effet propre a pour bouton son libellé de bouton, et son « i » le texte complet : Au cœur du
+  combat (advanced_actions.ron, `IntoTheHeat`, jouable au début d'un combat), bouton `card.into_the_heat.basic_label`, « i »
+  `card.into_the_heat.basic_text` (`option_button_reads_label_and_info_reads_full_text`). Rouge attendu : la clé
+  `basic_label` n'existe pas.
+- **C4** — Les fenêtres de cartes (Offres, spec #32) montrent les textes complets, comme le « i » : une action de base n'y
+  passe pas, donc le cas prend Agilité dans l'offre d'actions avancées (`offer_window_shows_full_texts`). Comme aujourd'hui
+  pour les actions avancées (spec #32, `window_card` lit `card_info`) ; le test garde le lien.
+- **C5** — Chaque texte complet, chaque texte de compétence et chaque texte de tactique, en fr et en en, finit par un point
+  et ne contient ni « ; », ni « = », ni « min. », ni « Idem », ni « etc. » (`full_texts_follow_the_writing_rules`). Rouge
+  attendu : presque tous les textes actuels.
+- **C6** — Le repère `[[move]]` se découpe en icône Mouvement suivie du mot (`move_marker_draws_the_move_icon`) ; de même,
+  un test par famille : `[[fire_attack]]` donne l'icône Attaque de feu, `[[ice_block]]` la Parade de glace, `[[armor]]`,
+  `[[fame]]`, `[[influence]]` (`point_markers_draw_their_icons`). Rouge attendu : repères inconnus, laissés en texte.
+- **C7** — Chaque repère `[[…]]` de fr.json et en.json est connu, et une clé a les mêmes repères dans les deux langues
+  (`markers_are_known_and_match_across_languages`). Vert aujourd'hui pour les 6 repères existants ; le test garde la
+  parité une fois les textes réécrits.
+- **C8** — Le recto d'un artefact montre son texte complet, repères dessinés : Anneau de rubis (artifacts.ron, `RubyRing`)
+  (`artifact_face_shows_full_text`). Comme aujourd'hui (spec 055) sur la clé ; le test garde le lien.
+
+- **C9** — `<red>rouge</red>` se découpe en un morceau de texte « rouge » de couleur rouge, entre les morceaux qui
+  l'entourent ; une balise inconnue (`<pink>`) ou non fermée reste du texte tel quel (`color_tags_split_into_colored_text`).
+  Rouge attendu : les balises restent du texte.
+- **C10** — `plain_text` retire les balises de couleur et garde le mot : « Cristal <red>rouge</red> » donne « Cristal
+  rouge » (`plain_text_drops_color_tags`). Rouge attendu : les balises restent.
+- **C11** — Le texte calculé d'un gain de mana porte la balise de sa couleur : le bouton Jeton bleu de Concentration
+  (`GainToken(Blue)`) a pour texte « Jeton <blue>bleu</blue> » (`computed_mana_text_is_color_tagged`). Rouge attendu : pas de
+  balise.
+- **C12** — Dans les textes complets, de compétence, de tactique et les libellés de bouton, en fr et en en, aucun mot de
+  couleur de mana ne reste sans balise après « cristal », « jeton », « mana », « dé » ou « sort » (fr ; « crystal », « token »,
+  « mana », « die », « spell » avant le mot en en), et les balises d'une clé sont les mêmes dans les deux langues
+  (`mana_colors_are_tagged_in_texts`). Rouge attendu : aucune balise aujourd'hui.
+
+**Tests existants qui lisent un texte réécrit** (cherchés dans `crates/*/tests` et `crates/*/src`), à mettre à jour sur la
+nouvelle valeur ou, mieux, sur la clé du catalogue, en le signalant dans la PR :
+
+- `crates/arcanum-ui/tests/moteur_d_effets.rs:260` (`hand_shows_written_text_of_modifier_cards`, Chemins de traverse) ;
+- `crates/arcanum-ui/tests/unites.rs:208` et `:753` (Bûcherons, Gardes d'Utem) et `crates/arcanum-ui/tests/icones.rs:977`
+  (Gardiens d'Altem), si Q3 retient les capacités d'unité ;
+- `crates/arcanum-ui/tests/interaction.rs:178` (`effect.influence_in_interaction`, si le libellé change) ;
+- `cartes_epurees.rs` (`spell_info_holds_written_text_for_other_players`, `advanced_action_info_holds_written_text`),
+  `actions_avancees_mana.rs:688` (`blood_ritual_basic_effect_uses_written_text`), `competences.rs:62`
+  (`every_skill_has_a_name_and_a_text`) : ils lisent les clés, inchangées ; à relancer seulement.
+
+## Cas limites et refus
+
+- **L1** — Un sort a deux noms (Éclair de feu / Tempête de feu) : le texte complet renforcé ne répète pas le nom, le titre
+  du bloc le porte déjà (spec #11).
+- **L2** — Effet maximum, Concentration : leur texte dit ce que fait la carte, pas la liste des cartes qu'elle peut
+  renforcer (le choix se fait à l'écran, spec 055 et suivantes).
+- **L3** — Sort à effets « pour les autres joueurs » (Fuite de mana, Lecture d'esprit) : le texte complet dit tout l'effet
+  de la carte, comme aujourd'hui (spec #11, `spell_info_holds_written_text_for_other_players`), même ce qui ne sert pas en
+  solo.
+- **L4** — Un texte qui ne tient plus dans la largeur du « i » (`INFO_WIDTH`) passe à la ligne, sans troncature
+  (vérification à l'œil).
+
+## Information cachée
+
+Rien de nouveau : les textes sont du contenu public, lus dans le catalogue de libellés.
+
+## Libellés (i18n)
+
+Clés nouvelles (fr et en) :
+
+| Clé | Pour |
+|---|---|
+| `card.<action de base>.basic_text`, `.strong_text` | texte complet des 20 actions de base (`BasicAction::ALL`, dont les cartes propres aux héros) |
+| `card.<carte>.basic_label`, `.strong_label` | libellé de bouton des cartes à option sans effet propre (liste dans la PR) |
+
+Balises de couleur ajoutées aux textes existants qui nomment une couleur de mana (C12), y compris hors des familles
+réécrites (invites `mana_choice.*`, `choice.*`…), et aux noms de couleur `mana.*` lus par `color_name` (C11) : à vérifier au
+codage que ces noms ne servent pas aussi là où une balise s'afficherait en clair.
+
+Clés réécrites : `card.*.basic_text` et `strong_text` (actions avancées, sorts, artefacts), `skill.*.text`,
+`tactic.*.text`, les sept `effect.*` listés au Modèle, et `unit.*.ability_N` selon Q3. Aucune clé fille sous un libellé :
+`basic_label` est à côté de `basic_text` dans le groupe de la carte. Pas de caractère nouveau : les repères sont des
+icônes, pas des glyphes.
+
+## Interface
+
+- **« i » d'une carte** (spec #11) : textes complets, repères dessinés (C2, C6). Mise en page inchangée (vérification à
+  l'œil).
+- **Fenêtres de cartes** (Offres, choix de l'artefact ou du sort) : textes complets (C4).
+- **Recto d'un artefact** : texte complet (C8).
+- **Infobulles des compétences et des tactiques** : textes réécrits, repères dessinés (C5, C6 ; vérification à l'œil).
+- **Boutons** : libellés courts (C3), inchangés pour les options à effet calculé. Mots de couleur colorés, selon Q5.
+- **Mots de couleur de mana colorés** partout où un texte à repères s'affiche (« i », fenêtres, recto d'un artefact,
+  infobulles, invites : C9, C11, C12). Teinte de chaque couleur : vérification à l'œil.
+
+**Relecture par Mathieu** : la PR joint un tableau avant / après de tous les textes réécrits, en fr et en en, déposé dans
+les fichiers du projet (pas dans le dépôt). Mathieu le relit avant la fusion ; le fil corrige d'après ses remarques.
+
+**Parties préparées** : aucune nouvelle. La vérification à l'œil prend le bac à sable (« i » d'une action de base, d'une
+action avancée de l'offre ; une compétence, une tactique) et `niveau-pair-choix` (fenêtre du niveau 2 : textes des
+compétences et des actions avancées proposées).
+
+### Raccourcis clavier
+
+Aucun.
+
+## Hors périmètre
+
+- Textes des ennemis, des sites et des cités (infobulles du plateau), lignes des effets en cours (`modifier.*`), et le
+  pluriel des libellés à « (s) » (« carte(s) »), qui demande une règle de pluriel dans arcanum-i18n.
+- Remplacer davantage de texte par des icônes dans la zone de jeu, ou agrandir les icônes : Epic #96 (ergonomie).
+
+## Décisions (Mathieu, 2026-11-27)
+
+- **Q1 — Proximité avec le texte du jeu** : même sens, même ordre, même découpage en phrases que la carte, dans nos mots,
+  sans copier ni traduire mot à mot la transcription, en français comme en anglais.
+- **Q2 — Icônes dans les textes** : repère à icône devant le mot-clé (`[[move]]Mouvement 4`).
+- **Q3 — Capacités d'unité** : reprises selon les règles des boutons, sans texte complet ni « i ».
+- **Q4 — Un seul fil** d'implémentation. Les textes français sont déjà relus et validés par Mathieu dans le tableau
+  avant / après `/mnt/project-files/specs/068/textes-fr-avant-apres.md` (fichiers du projet, hors dépôt) : le fil de code
+  les reprend tels quels, balises de couleur et repères ajoutés, puis écrit l'anglais sur le même modèle.
+- **Q5 — Couleur sur les boutons** : oui, les boutons colorent aussi les mots de couleur de mana (texte mis en forme egui).
+  Un cas de test le vérifie sur le bouton Jeton bleu de Concentration (C11 étendu : le libellé du bouton garde la balise
+  jusqu'à l'affichage, au lieu de passer par `plain_text`).
+- **Menace renforcée et Nobles manières** : leur changement de Réputation et de Gloire est immédiat (version *Lost Legion*,
+  spec 040, Compendium *Threaten* S1, *Noble Manners* S3) : les textes disent « aussitôt », pas de bug.

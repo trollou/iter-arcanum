@@ -393,64 +393,104 @@
     "info": "Texte de la carte",
     "if_destroyed": "si détruit",
     "rage": {
-      "name": "Rage"
+      "name": "Rage",
+      "basic_text": "[[attack]]Attaque 2 ou [[block]]Parade 2.",
+      "strong_text": "[[attack]]Attaque 4."
     },
     "determination": {
-      "name": "Détermination"
+      "name": "Détermination",
+      "basic_text": "[[attack]]Attaque 2 ou [[block]]Parade 2.",
+      "strong_text": "[[block]]Parade 5."
     },
     "swiftness": {
-      "name": "Célérité"
+      "name": "Célérité",
+      "basic_text": "[[move]]Mouvement 2.",
+      "strong_text": "[[ranged_attack]]Attaque à distance 3."
     },
     "march": {
-      "name": "Marche"
+      "name": "Marche",
+      "basic_text": "[[move]]Mouvement 2.",
+      "strong_text": "[[move]]Mouvement 4."
     },
     "stamina": {
-      "name": "Endurance"
+      "name": "Endurance",
+      "basic_text": "[[move]]Mouvement 2.",
+      "strong_text": "[[move]]Mouvement 4."
     },
     "tranquility": {
-      "name": "Tranquillité"
+      "name": "Tranquillité",
+      "basic_text": "Soin 1, ou piochez une carte.",
+      "strong_text": "Soin 2, ou piochez deux cartes."
     },
     "promise": {
-      "name": "Promesse"
+      "name": "Promesse",
+      "basic_text": "[[influence]]Influence 2.",
+      "strong_text": "[[influence]]Influence 4."
     },
     "threaten": {
-      "name": "Menace"
+      "name": "Menace",
+      "basic_text": "[[influence]]Influence 2.",
+      "strong_text": "[[influence]]Influence 5. Vous perdez aussitôt 1 point de Réputation."
     },
     "crystallize": {
-      "name": "Cristallisation"
+      "name": "Cristallisation",
+      "basic_text": "Payez un mana d'une couleur de base : vous gagnez un cristal de cette couleur dans votre Inventaire.",
+      "strong_text": "Gagnez un cristal de la couleur de base de votre choix dans votre Inventaire."
     },
     "mana_draw": {
-      "name": "Source de mana"
+      "name": "Source de mana",
+      "basic_text": "Ce tour-ci, vous pouvez utiliser un dé de plus de la Source.",
+      "strong_text": "Prenez un dé de la Source et tournez-le sur la couleur de votre choix, sauf l'<gold>or</gold>. Gagnez deux jetons de mana de cette couleur. Ce dé ne sera pas relancé quand il retournera à la Source."
     },
     "concentration": {
-      "name": "Concentration"
+      "name": "Concentration",
+      "basic_text": "Gagnez un jeton de mana <blue>bleu</blue>, <white>blanc</white> ou <red>rouge</red>.",
+      "strong_text": "Jouez une autre carte action avec celle-ci : vous obtenez son effet renforcé sans payer de mana. S'il vous donne du [[move]]Mouvement, de l'[[influence]]Influence, une [[attack]]Attaque ou une [[block]]Parade, ajoutez 2."
     },
     "improvisation": {
-      "name": "Improvisation"
+      "name": "Improvisation",
+      "basic_text": "Défaussez une autre carte de votre main pour obtenir [[move]]Mouvement 3, [[influence]]Influence 3, [[attack]]Attaque 3 ou [[block]]Parade 3.",
+      "strong_text": "Défaussez une autre carte de votre main pour obtenir [[move]]Mouvement 5, [[influence]]Influence 5, [[attack]]Attaque 5 ou [[block]]Parade 5."
     },
     "battle_versatility": {
-      "name": "Polyvalence"
+      "name": "Polyvalence",
+      "basic_text": "[[attack]]Attaque 2, [[block]]Parade 2 ou [[ranged_attack]]Attaque à distance 1.",
+      "strong_text": "[[attack]]Attaque 4, [[block]]Parade 4, [[fire_attack]]Attaque de feu 3, [[fire_block]]Parade de feu 3, [[ranged_attack]]Attaque à distance 3 ou [[siege_attack]]Attaque de siège 2."
     },
     "mana_pull": {
-      "name": "Attraction de mana"
+      "name": "Attraction de mana",
+      "basic_text": "Ce tour-ci, vous pouvez utiliser un dé de plus de la Source. S'il est <black>noir</black>, il donne un mana de la couleur de votre choix.",
+      "strong_text": "Prenez deux dés de la Source et tournez chacun sur la couleur de votre choix, sauf l'<gold>or</gold>. Gagnez un jeton de mana de chacune de ces couleurs. Ces dés ne seront pas relancés quand ils retourneront à la Source."
     },
     "will_focus": {
-      "name": "Pouvoir de concentration"
+      "name": "Pouvoir de concentration",
+      "basic_text": "Gagnez un jeton de mana <blue>bleu</blue>, <white>blanc</white> ou <red>rouge</red>, ou un cristal <green>vert</green> dans votre Inventaire.",
+      "strong_text": "Jouez une autre carte action avec celle-ci : vous obtenez son effet renforcé sans payer de mana. S'il vous donne du [[move]]Mouvement, de l'[[influence]]Influence, une [[attack]]Attaque ou une [[block]]Parade, ajoutez 3."
     },
     "crystal_joy": {
-      "name": "Euphorie cristalline"
+      "name": "Euphorie cristalline",
+      "basic_text": "Payez un mana d'une couleur de base : vous gagnez un cristal de cette couleur dans votre Inventaire. À la fin de votre tour, vous pouvez défausser une autre carte, sauf une Blessure, pour reprendre celle-ci en main.",
+      "strong_text": "Gagnez un cristal de la couleur de base de votre choix dans votre Inventaire. À la fin de votre tour, vous pouvez défausser une autre carte, Blessure comprise, pour reprendre celle-ci en main."
     },
     "noble_manners": {
-      "name": "Nobles manières"
+      "name": "Nobles manières",
+      "basic_text": "[[influence]]Influence 2. Si vous la jouez pendant une interaction, vous gagnez aussitôt 1 point de [[fame]]Gloire.",
+      "strong_text": "[[influence]]Influence 4. Si vous la jouez pendant une interaction, vous gagnez aussitôt 1 point de [[fame]]Gloire et 1 point de Réputation."
     },
     "rejuvenate": {
-      "name": "Rajeunissement"
+      "name": "Rajeunissement",
+      "basic_text": "Soin 1, piochez une carte, gagnez un jeton de mana <green>vert</green>, ou rendez disponible une unité de niveau I ou II.",
+      "strong_text": "Soin 2, piochez deux cartes, gagnez un cristal <green>vert</green> dans votre Inventaire, ou rendez disponible une unité de niveau I, II ou III."
     },
     "cold_toughness": {
-      "name": "Endurance givrée"
+      "name": "Endurance givrée",
+      "basic_text": "[[attack]]Attaque 2 ou [[ice_block]]Parade de glace 3.",
+      "strong_text": "[[ice_block]]Parade de glace 5, plus 1 pour chaque capacité et chaque couleur d'attaque dessinées sur le jeton de l'ennemi que vous parez (sauf s'il a l'Immunité arcanique)."
     },
     "instinct": {
-      "name": "Instinct"
+      "name": "Instinct",
+      "basic_text": "[[move]]Mouvement 2, [[influence]]Influence 2, [[attack]]Attaque 2 ou [[block]]Parade 2.",
+      "strong_text": "[[move]]Mouvement 4, [[influence]]Influence 4, [[attack]]Attaque 4 ou [[block]]Parade 4."
     },
     "wound": {
       "name": "Blessure"
@@ -458,335 +498,392 @@
     "strong": "Renforcé : {effect}",
     "strong_unsupported": "Renforcé : pas encore disponible",
     "fire_bolt": {
-      "name": "Boule de feu"
+      "name": "Boule de feu",
+      "basic_text": "Gagnez un cristal <red>rouge</red> dans votre Inventaire.",
+      "strong_text": "[[ranged_fire_attack]]Attaque à distance de feu 3."
     },
     "ice_bolt": {
-      "name": "Boule de glace"
+      "name": "Boule de glace",
+      "basic_text": "Gagnez un cristal <blue>bleu</blue> dans votre Inventaire.",
+      "strong_text": "[[ranged_ice_attack]]Attaque à distance de glace 3."
     },
     "swift_bolt": {
-      "name": "Boule vivifiante"
+      "name": "Boule vivifiante",
+      "basic_text": "Gagnez un cristal <white>blanc</white> dans votre Inventaire.",
+      "strong_text": "[[ranged_attack]]Attaque à distance 4."
     },
     "crushing_bolt": {
-      "name": "Boule écrasante"
+      "name": "Boule écrasante",
+      "basic_text": "Gagnez un cristal <green>vert</green> dans votre Inventaire.",
+      "strong_text": "[[siege_attack]]Attaque de siège 3."
     },
     "blood_rage": {
       "name": "Coup de sang",
-      "basic_text": "Attaque 2 ; une Blessure pour passer à 5",
-      "strong_text": "Attaque 4 ; une Blessure pour passer à 9"
+      "basic_text": "[[attack]]Attaque 2. Vous pouvez prendre une Blessure pour la porter à [[attack]]Attaque 5.",
+      "strong_text": "[[attack]]Attaque 4. Vous pouvez prendre une Blessure pour la porter à [[attack]]Attaque 9."
     },
     "ice_shield": {
       "name": "Bouclier de glace",
-      "strong_text": "Parade de glace 3 ; l'ennemi paré perd 3 d'Armure (min. 1)"
+      "basic_text": "[[ice_block]]Parade de glace 3.",
+      "strong_text": "[[ice_block]]Parade de glace 3. L'ennemi paré ainsi perd 3 d'[[armor]]Armure, sans descendre sous 1.",
+      "strong_label": "Parade de glace 3, l'ennemi paré perd 3 d'Armure"
     },
     "agility": {
       "name": "Agilité",
-      "basic_text": "Mouvement 2 ; en combat, chaque point de mouvement restant donne Attaque 1",
-      "strong_text": "Mouvement 4 ; en combat, 1 mouvement = Attaque 1, 2 mouvements = Attaque à distance 1"
+      "basic_text": "[[move]]Mouvement 2. Pendant le combat de ce tour, chaque point de Mouvement dépensé vous donne [[attack]]Attaque 1.",
+      "strong_text": "[[move]]Mouvement 4. Pendant le combat de ce tour, dépensez autant de points de Mouvement que vous voulez : chaque point donne [[attack]]Attaque 1, ou chaque paire de points [[ranged_attack]]Attaque à distance 1.",
+      "basic_label": "Mouvement 2, chaque point dépensé en combat donne Attaque 1",
+      "strong_label": "Mouvement 4, en combat 1 point donne Attaque 1 ou 2 points Attaque à distance 1"
     },
     "refreshing_walk": {
       "name": "Marche revigorante",
-      "basic_text": "Mouvement 2 et Soin 1 ; en combat, Mouvement 2 seulement",
-      "strong_text": "Mouvement 4 et Soin 2 ; en combat, Mouvement 4 seulement"
+      "basic_text": "[[move]]Mouvement 2 et Soin 1. Jouée pendant un combat, elle ne donne que [[move]]Mouvement 2.",
+      "strong_text": "[[move]]Mouvement 4 et Soin 2. Jouée pendant un combat, elle ne donne que [[move]]Mouvement 4."
     },
     "intimidate": {
       "name": "Intimidation",
-      "basic_text": "Influence 4 ou Attaque 3 ; Réputation −1 en fin de tour",
-      "strong_text": "Influence 8 ou Attaque 7 ; Réputation −2 en fin de tour"
+      "basic_text": "[[influence]]Influence 4 ou [[attack]]Attaque 3. À la fin de votre tour, vous perdez 1 point de Réputation.",
+      "strong_text": "[[influence]]Influence 8 ou [[attack]]Attaque 7. À la fin de votre tour, vous perdez 2 points de Réputation."
     },
     "frost_bridge": {
       "name": "Pont de glace",
-      "basic_text": "Mouvement 2 ; les marais coûtent 1 ce tour",
-      "strong_text": "Mouvement 4 ; lacs franchissables, lacs et marais coûtent 1 ce tour"
+      "basic_text": "[[move]]Mouvement 2. Ce tour-ci, entrer dans un marais coûte 1 point de Mouvement.",
+      "strong_text": "[[move]]Mouvement 4. Ce tour-ci, vous pouvez traverser les lacs, et entrer dans un lac ou un marais coûte 1 point de Mouvement.",
+      "basic_label": "Mouvement 2, marais à 1 ce tour",
+      "strong_label": "Mouvement 4, lacs franchissables, lacs et marais à 1 ce tour"
     },
     "song_of_wind": {
       "name": "Mélodie du vent",
-      "basic_text": "Mouvement 2 ; plaines, déserts et terres désolées coûtent 1 de moins (min. 0)",
-      "strong_text": "Mouvement 2 ; ces terrains coûtent 2 de moins ; mana bleu : lacs franchissables pour 0"
+      "basic_text": "[[move]]Mouvement 2. Ce tour-ci, les plaines, les déserts et les terres désolées coûtent 1 point de Mouvement de moins, jusqu'à 0.",
+      "strong_text": "[[move]]Mouvement 2. Ce tour-ci, les plaines, les déserts et les terres désolées coûtent 2 points de Mouvement de moins, jusqu'à 0. Vous pouvez payer un mana <blue>bleu</blue> pour traverser les lacs ce tour-ci, pour 0 point de Mouvement.",
+      "basic_label": "Mouvement 2, plaines, déserts et terres désolées à 1 de moins"
     },
     "path_finding": {
       "name": "Chemins de traverse",
-      "basic_text": "Mouvement 2 ; tous les terrains coûtent 1 de moins (min. 2)",
-      "strong_text": "Mouvement 4 ; tous les terrains coûtent 2"
+      "basic_text": "[[move]]Mouvement 2. Ce tour-ci, chaque terrain coûte 1 point de Mouvement de moins, sans descendre sous 2.",
+      "strong_text": "[[move]]Mouvement 4. Ce tour-ci, chaque terrain coûte 2 points de Mouvement.",
+      "basic_label": "Mouvement 2, chaque terrain à 1 de moins, au moins 2",
+      "strong_label": "Mouvement 4, chaque terrain à 2"
     },
     "blood_ritual": {
       "name": "Rituel de sang",
-      "basic_text": "Blessure ; cristal rouge et jeton de mana de n'importe quelle couleur",
-      "strong_text": "Blessure ; trois jetons de mana de n'importe quelles couleurs ; mana de base payé : cristal de cette couleur"
+      "basic_text": "Prenez une Blessure. Gagnez un cristal <red>rouge</red> dans votre Inventaire et un jeton de mana de la couleur de votre choix, <gold>or</gold> et <black>noir</black> compris.",
+      "strong_text": "Prenez une Blessure. Gagnez trois jetons de mana des couleurs de votre choix, <gold>or</gold> et <black>noir</black> compris. Vous pouvez payer un mana d'une couleur de base pour gagner un cristal de cette couleur."
     },
     "pure_magic": {
       "name": "Magie pure",
-      "basic_text": "Payer un mana : vert Mouvement 4, blanc Influence 4, bleu Parade 4, rouge Attaque 4",
-      "strong_text": "Payer un mana : vert Mouvement 7, blanc Influence 7, bleu Parade 7, rouge Attaque 7"
+      "basic_text": "Payez un mana en jouant cette carte. <green>Vert</green> : [[move]]Mouvement 4. <white>Blanc</white> : [[influence]]Influence 4. <blue>Bleu</blue> : [[block]]Parade 4. <red>Rouge</red> : [[attack]]Attaque 4.",
+      "strong_text": "Payez un mana en jouant cette carte. <green>Vert</green> : [[move]]Mouvement 7. <white>Blanc</white> : [[influence]]Influence 7. <blue>Bleu</blue> : [[block]]Parade 7. <red>Rouge</red> : [[attack]]Attaque 7."
     },
     "heroic_tale": {
       "name": "Récit héroïque",
-      "basic_text": "Influence 3 ; Réputation +1 par unité recrutée ce tour",
-      "strong_text": "Influence 6 ; Gloire +1 et Réputation +1 par unité recrutée ce tour"
+      "basic_text": "[[influence]]Influence 3. À la fin de votre tour, vous gagnez 1 point de Réputation par unité recrutée ce tour-ci.",
+      "strong_text": "[[influence]]Influence 6. À la fin de votre tour, vous gagnez 1 point de [[fame]]Gloire et 1 point de Réputation par unité recrutée ce tour-ci.",
+      "basic_label": "Influence 3, Réputation +1 par unité recrutée",
+      "strong_label": "Influence 6, Gloire +1 et Réputation +1 par unité recrutée"
     },
     "regeneration": {
       "name": "Régénération",
-      "basic_text": "Soin 1 ; rendre disponible une unité de niveau I ou II",
-      "strong_text": "Soin 2 ; rendre disponible une unité de niveau I, II ou III"
+      "basic_text": "Soin 1. Rendez disponible une de vos unités de niveau I ou II.",
+      "strong_text": "Soin 2. Rendez disponible une de vos unités de niveau I, II ou III."
     },
     "into_the_heat": {
       "name": "Au cœur du combat",
-      "basic_text": "Au début du combat : unités +2 en attaque et Parade ; pas de dégâts sur les unités",
-      "strong_text": "Au début du combat : unités +3 en attaque et Parade ; pas de dégâts sur les unités"
+      "basic_text": "À jouer au début d'un combat. Pendant ce combat, l'[[attack]]Attaque et la [[block]]Parade de toutes vos unités augmentent de 2. Ce tour-ci, vous ne pouvez pas attribuer de dégâts à vos unités.",
+      "strong_text": "À jouer au début d'un combat. Pendant ce combat, l'[[attack]]Attaque et la [[block]]Parade de toutes vos unités augmentent de 3. Ce tour-ci, vous ne pouvez pas attribuer de dégâts à vos unités.",
+      "basic_label": "Unités +2 en Attaque et Parade, aucun dégât sur elles",
+      "strong_label": "Unités +3 en Attaque et Parade, aucun dégât sur elles"
     },
     "steady_tempo": {
       "name": "Temporisation",
-      "basic_text": "Mouvement 2 ; en fin de tour, peut aller sous le deck s'il n'est pas vide",
-      "strong_text": "Mouvement 4 ; en fin de tour, peut aller sur le deck"
+      "basic_text": "[[move]]Mouvement 2. À la fin de votre tour, vous pouvez la placer sous votre deck au lieu de la défausser, si le deck n'est pas vide.",
+      "strong_text": "[[move]]Mouvement 4. À la fin de votre tour, vous pouvez la placer sur votre deck au lieu de la défausser.",
+      "basic_label": "Mouvement 2, peut aller sous le deck",
+      "strong_label": "Mouvement 4, peut aller sur le deck"
     },
     "diplomacy": {
       "name": "Diplomatie",
-      "basic_text": "Influence 2 ; l'Influence compte comme Parade ce tour",
-      "strong_text": "Influence 4 ; au choix glace ou feu : l'Influence compte comme Parade de cet élément"
+      "basic_text": "[[influence]]Influence 2. Ce tour-ci, vous pouvez utiliser de l'Influence comme de la [[block]]Parade.",
+      "strong_text": "[[influence]]Influence 4. Choisissez la glace ou le feu : ce tour-ci, vous pouvez utiliser de l'Influence comme de la [[block]]Parade de cet élément.",
+      "basic_label": "Influence 2, l'Influence sert de Parade ce tour"
     },
     "in_need": {
       "name": "Besoin d'aide",
-      "basic_text": "Influence 3, +1 par Blessure en main ou sur une unité",
-      "strong_text": "Influence 5, +2 par Blessure en main ou sur une unité"
+      "basic_text": "[[influence]]Influence 3, plus 1 pour chaque Blessure dans votre main ou sur une de vos unités.",
+      "strong_text": "[[influence]]Influence 5, plus 2 pour chaque Blessure dans votre main ou sur une de vos unités."
     },
     "decompose": {
       "name": "Décomposition",
-      "basic_text": "Détruire une carte action de la main : deux cristaux de sa couleur",
-      "strong_text": "Détruire une carte action de la main : un cristal de chaque couleur de base autre que la sienne"
+      "basic_text": "En jouant cette carte, détruisez une carte action de votre main. Gagnez deux cristaux de la couleur de la carte détruite.",
+      "strong_text": "En jouant cette carte, détruisez une carte action de votre main. Gagnez un cristal de chaque couleur de base autre que celle de la carte détruite."
     },
     "crystal_mastery": {
       "name": "Maîtrise du cristal",
-      "basic_text": "Cristal d'une couleur que vous possédez déjà",
-      "strong_text": "Les cristaux dépensés ce tour reviennent en fin de tour"
+      "basic_text": "Gagnez un cristal d'une couleur dont vous avez déjà un cristal.",
+      "strong_text": "Les cristaux que vous dépensez ce tour-ci reviennent dans votre Inventaire à la fin du tour.",
+      "strong_label": "Cristaux dépensés rendus à la fin du tour"
     },
     "mana_storm": {
       "name": "Tempête de mana",
-      "basic_text": "Un dé de la Source en couleur de base : cristal de cette couleur, puis relancer le dé",
-      "strong_text": "Relancer tous les dés ; 3 dés de plus ; noir et or valent n'importe quelle couleur de base"
+      "basic_text": "Choisissez un dé de la Source qui montre une couleur de base. Gagnez un cristal de cette couleur, puis relancez ce dé aussitôt et remettez-le dans la Source.",
+      "strong_text": "Relancez tous les dés de la Source. Ce tour-ci, vous pouvez utiliser trois dés de plus de la Source, et un dé <black>noir</black> ou <gold>or</gold> donne un mana de la couleur de base de votre choix, de jour comme de nuit."
     },
     "ambush": {
       "name": "Embuscade",
-      "basic_text": "Mouvement 2 ; première attaque +1 ou première Parade +2",
-      "strong_text": "Mouvement 4 ; première attaque +2 ou première Parade +4"
+      "basic_text": "[[move]]Mouvement 2. Ce tour-ci, la première carte d'[[attack]]Attaque que vous jouez gagne 1, ou la première carte de [[block]]Parade gagne 2, selon celle qui vient en premier.",
+      "strong_text": "[[move]]Mouvement 4. Ce tour-ci, la première carte d'[[attack]]Attaque que vous jouez gagne 2, ou la première carte de [[block]]Parade gagne 4, selon celle qui vient en premier.",
+      "basic_label": "Mouvement 2, première Attaque +1 ou première Parade +2",
+      "strong_label": "Mouvement 4, première Attaque +2 ou première Parade +4"
     },
     "maximal_effect": {
       "name": "Effet maximum",
-      "basic_text": "Avec une autre carte action : son effet de base trois fois, puis la détruire",
-      "strong_text": "Avec une autre carte action : son effet renforcé deux fois gratuitement, puis la détruire"
+      "basic_text": "Jouez une autre carte action avec celle-ci : vous utilisez trois fois son effet de base, puis vous la détruisez.",
+      "strong_text": "Jouez une autre carte action avec celle-ci : vous utilisez deux fois son effet renforcé, sans payer de mana, puis vous la détruisez."
     },
     "magic_talent": {
       "name": "Don pour la magie",
-      "basic_text": "Défausser une carte : jouer un sort de la même couleur de l'offre comme s'il était en main",
-      "strong_text": "Payer un mana : prendre un sort de cette couleur de l'offre dans la défausse"
+      "basic_text": "Défaussez une carte de votre main. Ce tour-ci, vous pouvez jouer un sort de la même couleur dans l'offre de sorts comme s'il était dans votre main. Le sort reste dans l'offre.",
+      "strong_text": "Payez un mana en jouant cette carte. Prenez dans l'offre un sort de cette couleur et placez-le dans votre défausse.",
+      "basic_label": "Un sort de la même couleur de l'offre, joué comme en main"
     },
     "learning": {
       "name": "Apprentissage",
-      "basic_text": "Influence 2 ; une fois, payer Influence 6 : action avancée de l'offre dans la défausse",
-      "strong_text": "Influence 4 ; une fois, payer Influence 9 : action avancée de l'offre en main"
+      "basic_text": "[[influence]]Influence 2. Une fois ce tour-ci, vous pouvez payer 6 d'Influence pour prendre une action avancée de l'offre et la placer dans votre défausse.",
+      "strong_text": "[[influence]]Influence 4. Une fois ce tour-ci, vous pouvez payer 9 d'Influence pour prendre une action avancée de l'offre et la mettre dans votre main.",
+      "basic_label": "Influence 2, action avancée de l'offre pour 6 d'Influence",
+      "strong_label": "Influence 4, action avancée de l'offre en main pour 9 d'Influence"
     },
     "training": {
       "name": "Entraînement",
-      "basic_text": "Détruire une carte action : prendre une action avancée de même couleur dans la défausse",
-      "strong_text": "Détruire une carte action : prendre une action avancée de même couleur en main"
+      "basic_text": "Détruisez une carte action de votre main, puis prenez dans l'offre une action avancée de la même couleur et placez-la dans votre défausse.",
+      "strong_text": "Détruisez une carte action de votre main, puis prenez dans l'offre une action avancée de la même couleur et mettez-la dans votre main."
     },
     "fireball": {
       "name": "Éclair de feu",
       "strong_name": "Tempête de feu",
-      "basic_text": "Attaque à distance de feu 5",
-      "strong_text": "Blessure ; Attaque de siège de feu 8"
+      "basic_text": "[[ranged_fire_attack]]Attaque à distance de feu 5.",
+      "strong_text": "Prenez une Blessure. [[siege_fire_attack]]Attaque de siège de feu 8."
     },
     "snowstorm": {
       "name": "Tempête de neige",
       "strong_name": "Blizzard",
-      "basic_text": "Attaque à distance de glace 5",
-      "strong_text": "Blessure ; Attaque de siège de glace 8"
+      "basic_text": "[[ranged_ice_attack]]Attaque à distance de glace 5.",
+      "strong_text": "Prenez une Blessure. [[siege_ice_attack]]Attaque de siège de glace 8."
     },
     "expose": {
       "name": "Exposition",
       "strong_name": "Exposition de masse",
-      "basic_text": "Un ennemi perd [[fortified]]fortifications et résistances ; Attaque à distance 2",
-      "strong_text": "Tous les ennemis perdent leurs [[fortified]]fortifications ou leurs résistances ; Attaque à distance 3"
+      "basic_text": "Pendant ce combat, un ennemi perd toutes ses [[fortified]]fortifications et toutes ses résistances. [[ranged_attack]]Attaque à distance 2.",
+      "strong_text": "Pendant ce combat, tous les ennemis perdent leurs [[fortified]]fortifications, ou tous perdent leurs résistances. [[ranged_attack]]Attaque à distance 3.",
+      "basic_label": "Un ennemi perd fortifications et résistances, Attaque à distance 2"
     },
     "tremor": {
       "name": "Secousse",
       "strong_name": "Tremblement de terre",
-      "basic_text": "Un ennemi Armure -3, ou tous Armure -2 (min. 1)",
-      "strong_text": "Un ennemi Armure -3 (-6 si [[fortified]]fortifié), ou tous -2 (-4 si [[fortified]]fortifiés) (min. 1)"
+      "basic_text": "Un ennemi perd 3 d'[[armor]]Armure, ou tous les ennemis perdent 2 d'[[armor]]Armure. L'Armure ne descend pas sous 1.",
+      "strong_text": "Un ennemi perd 3 d'[[armor]]Armure (6 s'il est [[fortified]]fortifié), ou tous les ennemis perdent 2 d'[[armor]]Armure (4 pour ceux qui sont [[fortified]]fortifiés). L'Armure ne descend pas sous 1.",
+      "basic_label": "Un ennemi perd 3 d'Armure, ou tous les ennemis 2",
+      "strong_label": "Un ennemi perd 3 d'Armure, 6 s'il est fortifié, ou tous 2, 4 s'ils sont fortifiés"
     },
     "flame_wall": {
       "name": "Mur de flammes",
       "strong_name": "Déluge de flammes",
-      "basic_text": "Attaque de feu 5 ou Parade de feu 7",
-      "strong_text": "Attaque de feu 5 ou Parade de feu 7, +2 par jeton ennemi affronté"
+      "basic_text": "[[fire_attack]]Attaque de feu 5 ou [[fire_block]]Parade de feu 7.",
+      "strong_text": "[[fire_attack]]Attaque de feu 5 ou [[fire_block]]Parade de feu 7, plus 2 pour chaque ennemi que vous affrontez."
     },
     "mana_bolt": {
       "name": "Éclair de mana",
       "strong_name": "Tonnerre de mana",
-      "basic_text": "Payer un mana : bleu Attaque de glace 8, rouge feu glacé 7, blanc à distance de glace 6, vert siège de glace 5",
-      "strong_text": "Payer un mana : bleu Attaque de glace 11, rouge feu glacé 10, blanc à distance de glace 9, vert siège de glace 8"
+      "basic_text": "Payez un mana en jouant cette carte. <blue>Bleu</blue> : [[ice_attack]]Attaque de glace 8. <red>Rouge</red> : [[cold_fire_attack]]Attaque de feu glacé 7. <white>Blanc</white> : [[ranged_ice_attack]]Attaque à distance de glace 6. <green>Vert</green> : [[siege_ice_attack]]Attaque de siège de glace 5.",
+      "strong_text": "Payez un mana en jouant cette carte. <blue>Bleu</blue> : [[ice_attack]]Attaque de glace 11. <red>Rouge</red> : [[cold_fire_attack]]Attaque de feu glacé 10. <white>Blanc</white> : [[ranged_ice_attack]]Attaque à distance de glace 9. <green>Vert</green> : [[siege_ice_attack]]Attaque de siège de glace 8."
     },
     "whirlwind": {
       "name": "Tourbillon",
       "strong_name": "Tornade",
-      "basic_text": "Un ennemi n'attaque pas ce combat",
-      "strong_text": "Phase d'attaque : détruire un ennemi"
+      "basic_text": "Un ennemi n'attaque pas pendant ce combat.",
+      "strong_text": "À jouer seulement pendant la phase d'attaque d'un combat. Détruisez un ennemi.",
+      "basic_label": "Un ennemi n'attaque pas",
+      "strong_label": "Détruire un ennemi en phase d'attaque"
     },
     "underground_travel": {
       "name": "Voyage souterrain",
       "strong_name": "Attaque souterraine",
-      "basic_text": "Se déplacer d'au plus 3 cases révélées, hors marais et lacs, jusqu'à une case sûre ; ne provoque pas",
-      "strong_text": "Idem, mais finir sur un site fortifié : assaut en ignorant ses fortifications"
+      "basic_text": "Déplacez-vous d'au plus 3 cases révélées, sans entrer dans un marais ni un lac ni les traverser. Vous devez finir sur une case sûre. Ce déplacement ne provoque pas les ennemis errants.",
+      "strong_text": "Déplacez-vous d'au plus 3 cases révélées, sans entrer dans un marais ni un lac ni les traverser, et finissez sur un site [[fortified]]fortifié : votre déplacement s'arrête et c'est un assaut, où vous ignorez les fortifications du site. Ce déplacement ne provoque pas les ennemis errants. Si vous battez en retraite après le combat, revenez à votre case de départ.",
+      "strong_label": "Jusqu'à 3 cases, assaut d'un site fortifié sans ses fortifications"
     },
     "burning_shield": {
       "name": "Bouclier ardent",
       "strong_name": "Bouclier explosif",
-      "basic_text": "Parade de feu 4 ; si elle réussit, Attaque de feu 4 en phase d'attaque",
-      "strong_text": "Parade de feu 4 ; si elle réussit, l'ennemi paré est détruit"
+      "basic_text": "[[fire_block]]Parade de feu 4. Si cette carte sert à une parade réussie, vous pouvez l'utiliser pendant la phase d'attaque comme [[fire_attack]]Attaque de feu 4.",
+      "strong_text": "[[fire_block]]Parade de feu 4. Si cette carte sert à une parade réussie, l'ennemi paré est détruit.",
+      "basic_label": "Parade de feu 4, puis Attaque de feu 4 si la parade réussit",
+      "strong_label": "Parade de feu 4, l'ennemi paré est détruit si la parade réussit"
     },
     "chill": {
       "name": "Frisson",
       "strong_name": "Frisson fatal",
-      "basic_text": "Un ennemi n'attaque pas ; il perd sa résistance au feu ce tour",
-      "strong_text": "Un ennemi n'attaque pas et a Armure -4 (min. 1) ce tour"
+      "basic_text": "Un ennemi n'attaque pas pendant ce combat. S'il a la résistance au feu, il la perd jusqu'à la fin du tour.",
+      "strong_text": "Un ennemi n'attaque pas pendant ce combat, et il perd 4 d'[[armor]]Armure jusqu'à la fin du tour, sans descendre sous 1.",
+      "basic_label": "Un ennemi n'attaque pas et perd sa résistance au feu",
+      "strong_label": "Un ennemi n'attaque pas et perd 4 d'Armure"
     },
     "wings_of_wind": {
       "name": "Ailes du vent",
       "strong_name": "Ailes de la nuit",
-      "basic_text": "Dépenser 1 à 5 mouvements : autant de cases révélées, jusqu'à une case sûre ; ne provoque pas",
-      "strong_text": "Un ennemi n'attaque pas ; mouvement : 1 pour le 2e ennemi, 2 pour le 3e, etc."
+      "basic_text": "En jouant cette carte, dépensez de 1 à 5 points de Mouvement et avancez d'autant de cases révélées. Vous devez finir sur une case sûre. Ce déplacement ne provoque pas les ennemis errants.",
+      "strong_text": "Un ennemi n'attaque pas pendant ce combat. Vous pouvez en viser d'autres en payant des points de Mouvement : 1 pour le deuxième ennemi, 2 pour le troisième, 3 pour le quatrième, et ainsi de suite."
     },
     "restoration": {
       "name": "Restauration",
       "strong_name": "Renaissance",
-      "basic_text": "Soin 3 (5 en forêt)",
-      "strong_text": "Soin 3 (5 en forêt) ; rendre disponibles jusqu'à 3 niveaux d'unités (5 en forêt)"
+      "basic_text": "Soin 3, ou Soin 5 si vous êtes dans une forêt.",
+      "strong_text": "Soin 3, ou Soin 5 si vous êtes dans une forêt. Rendez disponibles des unités dont les niveaux font 3 au total, ou 5 dans une forêt.",
+      "basic_label": "Soin 3, 5 en forêt",
+      "strong_label": "Soin 3, 5 en forêt, et des unités rendues disponibles"
     },
     "demolish": {
       "name": "Démolition",
       "strong_name": "Désintégration",
-      "basic_text": "Ignorer les fortifications des sites ce tour ; ennemis Armure -1 (min. 1)",
-      "strong_text": "Phase d'attaque : détruire un ennemi ; les autres Armure -1 (min. 1)"
+      "basic_text": "Ce tour-ci, ignorez les fortifications des sites. Les ennemis perdent 1 d'[[armor]]Armure, sans descendre sous 1.",
+      "strong_text": "À jouer seulement pendant la phase d'attaque d'un combat. Détruisez un ennemi. Les autres perdent 1 d'[[armor]]Armure, sans descendre sous 1.",
+      "basic_label": "Fortifications ignorées, les ennemis perdent 1 d'Armure",
+      "strong_label": "Détruire un ennemi, les autres perdent 1 d'Armure"
     },
     "space_bending": {
       "name": "Distorsion spatiale",
       "strong_name": "Distorsion temporelle",
-      "basic_text": "Ce tour, les cases à 2 de distance comptent comme adjacentes ; ne provoque pas",
-      "strong_text": "En fin de tour, reprendre en main les autres cartes jouées ; rejouer un tour"
+      "basic_text": "Ce tour-ci, vous pouvez vous déplacer vers une case à 2 cases de vous, ou explorer une tuile à cette distance, comme si elle était adjacente. La case sautée ne compte pas. Vos déplacements de ce tour ne provoquent pas les ennemis errants.",
+      "strong_text": "À la fin de votre tour, reprenez en main les autres cartes jouées ce tour-ci (pas celles défaussées ou détruites). Ne piochez pas de cartes, et jouez aussitôt un autre tour.",
+      "basic_label": "Cases à 2 de distance adjacentes ce tour, sans provoquer",
+      "strong_label": "Un autre tour avec les cartes jouées"
     },
     "call_to_arms": {
       "name": "Appel aux armes",
       "strong_name": "Appel à la gloire",
-      "basic_text": "Utiliser la capacité d'une unité de l'offre ce tour ; elle ne reçoit pas de dégâts",
-      "strong_text": "Recruter gratuitement une unité de l'offre (licencier une unité si besoin)"
+      "basic_text": "Ce tour-ci, vous pouvez utiliser une capacité d'une unité de l'offre comme si vous l'aviez recrutée. Vous ne pouvez pas lui attribuer de dégâts.",
+      "strong_text": "Recrutez gratuitement une unité de l'offre. Si vous avez déjà autant d'unités que de jetons de commandement, renvoyez-en une d'abord.",
+      "basic_label": "Capacité d'une unité de l'offre, sans dégâts sur elle",
+      "strong_label": "Recruter gratuitement une unité de l'offre"
     },
     "meditation": {
       "name": "Méditation",
       "strong_name": "Transe",
-      "basic_text": "Deux cartes au hasard de la défausse sur ou sous le deck ; piocher 2 cartes de plus en fin de tour",
-      "strong_text": "Idem, mais vous choisissez les cartes"
+      "basic_text": "Tirez au hasard deux cartes de votre défausse et placez-les sur ou sous votre deck. À la fin de ce tour, piochez deux cartes de plus que votre limite de main.",
+      "strong_text": "Choisissez deux cartes de votre défausse et placez-les sur ou sous votre deck. À la fin de ce tour, piochez deux cartes de plus que votre limite de main.",
+      "basic_label": "Deux cartes de la défausse au hasard sur ou sous le deck, 2 cartes de plus à la pioche",
+      "strong_label": "Deux cartes choisies de la défausse sur ou sous le deck, 2 cartes de plus à la pioche"
     },
     "mana_meltdown": {
       "name": "Fuite de mana",
       "strong_name": "Brûlure de mana",
-      "basic_text": "Les autres perdent un cristal au hasard (vous pouvez le prendre) ; sans cristal, Blessure",
-      "strong_text": "Couleur de base : chacun reçoit une Blessure par cristal de cette couleur ; vous gagnez 2 cristaux"
+      "basic_text": "Chaque autre joueur perd un cristal de son Inventaire, tiré au hasard. Vous pouvez prendre un des cristaux perdus ainsi. Un joueur qui n'avait aucun cristal prend une Blessure à la place.",
+      "strong_text": "Choisissez une couleur de base. Chaque joueur, vous compris, prend une Blessure par cristal de cette couleur qu'il possède. Gagnez deux cristaux de cette couleur."
     },
     "mana_claim": {
       "name": "Puits de mana",
       "strong_name": "Malédiction de mana",
-      "basic_text": "Garder un dé de base jusqu'à la fin de la manche : 3 jetons ce tour, ou 1 jeton par tour",
-      "strong_text": "Idem ; les autres joueurs qui utilisent cette couleur reçoivent une Blessure"
+      "basic_text": "Prenez un dé de la Source qui montre une couleur de base et gardez-le jusqu'à la fin de la manche. Gagnez trois jetons de mana de cette couleur ce tour-ci, ou un jeton de cette couleur à chacun de vos tours suivants jusqu'à la fin de la manche.",
+      "strong_text": "Comme Puits de mana. De plus, jusqu'à la fin de la manche, un autre joueur qui utilise du mana de cette couleur pendant son tour prend une Blessure, une seule par tour."
     },
     "mind_read": {
       "name": "Lecture d'esprit",
       "strong_name": "Vol d'esprit",
-      "basic_text": "Une couleur : gagner son cristal ; les autres défaussent un sort ou une action de cette couleur",
-      "strong_text": "Idem ; vous pouvez voler une des cartes action ainsi défaussées"
+      "basic_text": "Choisissez une couleur et gagnez un cristal de cette couleur. Chaque autre joueur défausse de sa main un sort ou une carte action de cette couleur, ou montre sa main pour prouver qu'il n'en a pas.",
+      "strong_text": "Comme Lecture d'esprit. De plus, vous pouvez voler une des cartes action (pas un sort) défaussées ainsi et la mettre dans votre main."
     },
     "energy_flow": {
       "name": "Flux d'énergie",
       "strong_name": "Vol d'énergie",
-      "basic_text": "Rendre disponible une unité ; vous pouvez épuiser une unité adverse de niveau II ou moins",
-      "strong_text": "Rendre disponible et soigner une unité ; épuiser une unité adverse de niveau III ou moins"
+      "basic_text": "Rendez disponible une unité. Si vous le faites, vous pouvez épuiser une unité de niveau II au plus chez chaque autre joueur.",
+      "strong_text": "Rendez disponible une unité, et soignez-la. Si vous le faites, vous pouvez épuiser une unité de niveau III au plus chez chaque autre joueur."
     },
     "banner_of_glory": {
       "name": "Bannière de gloire",
-      "basic_text": "Donner à une unité : Armure +1, +1 en attaque et Parade, Gloire +1 quand elle attaque ou pare",
-      "strong_text": "Unités : Armure +1 et +1 en attaque et Parade ce tour ; Gloire +1 par unité qui attaque ou pare"
+      "basic_text": "Donnez-la à une de vos unités. Cette unité gagne 1 d'[[armor]]Armure et 1 à chacune de ses attaques et de ses parades. Chaque fois qu'elle attaque ou pare, vous gagnez 1 point de [[fame]]Gloire.",
+      "strong_text": "Ce tour-ci, vos unités gagnent 1 d'[[armor]]Armure et 1 à chacune de leurs attaques et de leurs parades. Vous gagnez 1 point de [[fame]]Gloire par unité qui attaque ou pare ce tour-ci.",
+      "strong_label": "Unités +1 en Armure, Attaque et Parade, Gloire +1 par unité qui attaque ou pare"
     },
     "banner_of_fear": {
       "name": "Bannière de peur",
-      "basic_text": "Donner à une unité : en Parade, l'épuiser pour annuler une attaque, Gloire +1",
-      "strong_text": "Jusqu'à 3 ennemis n'attaquent pas ce combat"
+      "basic_text": "Donnez-la à une de vos unités. Pendant la phase de parade, vous pouvez épuiser cette unité pour annuler une attaque ennemie. Si vous le faites, vous gagnez 1 point de [[fame]]Gloire.",
+      "strong_text": "Jusqu'à 3 ennemis n'attaquent pas pendant ce combat."
     },
     "banner_of_protection": {
       "name": "Bannière de protection",
-      "basic_text": "Donner à une unité : Armure +1, résistances au feu et à la glace",
-      "strong_text": "En fin de tour, écarter les Blessures reçues ce tour"
+      "basic_text": "Donnez-la à une de vos unités. Cette unité gagne 1 d'[[armor]]Armure, la résistance au feu et la résistance à la glace.",
+      "strong_text": "À la fin de votre tour, vous pouvez détruire toutes les Blessures reçues ce tour-ci.",
+      "strong_label": "Détruire les Blessures reçues ce tour"
     },
     "banner_of_courage": {
       "name": "Bannière de courage",
-      "basic_text": "Donner à une unité : une fois par manche, hors combat, la retourner pour la rendre disponible",
-      "strong_text": "Hors combat : rendre disponibles toutes vos unités"
+      "basic_text": "Donnez-la à une de vos unités. Une fois par manche, hors combat, vous pouvez retourner la bannière face cachée pour rendre cette unité disponible. Elle se remet face visible au début de la manche suivante.",
+      "strong_text": "À jouer à tout moment hors combat. Rendez disponibles toutes vos unités."
     },
     "ruby_ring": {
       "name": "Anneau de rubis",
-      "basic_text": "Jeton et cristal rouges ; Gloire +1",
-      "strong_text": "Mana rouge et noir illimité ce tour ; Gloire +1 par sort rouge lancé"
+      "basic_text": "Gagnez un jeton de mana <red>rouge</red> et un cristal <red>rouge</red>. Vous gagnez 1 point de [[fame]]Gloire.",
+      "strong_text": "Ce tour-ci, vous disposez d'autant de mana <red>rouge</red> et <black>noir</black> que vous voulez. Vous gagnez 1 point de [[fame]]Gloire par sort <red>rouge</red> lancé ce tour-ci.",
+      "strong_label": "Mana <red>rouge</red> et <black>noir</black> illimité, Gloire +1 par sort <red>rouge</red>"
     },
     "sapphire_ring": {
       "name": "Anneau de saphir",
-      "basic_text": "Jeton et cristal bleus ; Gloire +1",
-      "strong_text": "Mana bleu et noir illimité ce tour ; Gloire +1 par sort bleu lancé"
+      "basic_text": "Gagnez un jeton de mana <blue>bleu</blue> et un cristal <blue>bleu</blue>. Vous gagnez 1 point de [[fame]]Gloire.",
+      "strong_text": "Ce tour-ci, vous disposez d'autant de mana <blue>bleu</blue> et <black>noir</black> que vous voulez. Vous gagnez 1 point de [[fame]]Gloire par sort <blue>bleu</blue> lancé ce tour-ci.",
+      "strong_label": "Mana <blue>bleu</blue> et <black>noir</black> illimité, Gloire +1 par sort <blue>bleu</blue>"
     },
     "diamond_ring": {
       "name": "Anneau de diamant",
-      "basic_text": "Jeton et cristal blancs ; Gloire +1",
-      "strong_text": "Mana blanc et noir illimité ce tour ; Gloire +1 par sort blanc lancé"
+      "basic_text": "Gagnez un jeton de mana <white>blanc</white> et un cristal <white>blanc</white>. Vous gagnez 1 point de [[fame]]Gloire.",
+      "strong_text": "Ce tour-ci, vous disposez d'autant de mana <white>blanc</white> et <black>noir</black> que vous voulez. Vous gagnez 1 point de [[fame]]Gloire par sort <white>blanc</white> lancé ce tour-ci.",
+      "strong_label": "Mana <white>blanc</white> et <black>noir</black> illimité, Gloire +1 par sort <white>blanc</white>"
     },
     "emerald_ring": {
       "name": "Anneau d'émeraude",
-      "basic_text": "Jeton et cristal verts ; Gloire +1",
-      "strong_text": "Mana vert et noir illimité ce tour ; Gloire +1 par sort vert lancé"
+      "basic_text": "Gagnez un jeton de mana <green>vert</green> et un cristal <green>vert</green>. Vous gagnez 1 point de [[fame]]Gloire.",
+      "strong_text": "Ce tour-ci, vous disposez d'autant de mana <green>vert</green> et <black>noir</black> que vous voulez. Vous gagnez 1 point de [[fame]]Gloire par sort <green>vert</green> lancé ce tour-ci.",
+      "strong_label": "Mana <green>vert</green> et <black>noir</black> illimité, Gloire +1 par sort <green>vert</green>"
     },
     "sword_of_justice": {
       "name": "Épée de justice",
-      "basic_text": "Défausser des cartes : Attaque 3 par carte ; Gloire +1 par ennemi vaincu",
-      "strong_text": "Attaques physiques doublées ; ennemis sans résistance physique ; Gloire +1 par ennemi vaincu"
+      "basic_text": "En jouant cette carte, défaussez autant de cartes de votre main que vous voulez : [[attack]]Attaque 3 par carte défaussée. Vous gagnez 1 point de [[fame]]Gloire par ennemi vaincu ce tour-ci.",
+      "strong_text": "Ce tour-ci, pendant la phase d'attaque, vos attaques physiques comptent double, et les ennemis perdent leur résistance physique. Vous gagnez 1 point de [[fame]]Gloire par ennemi vaincu ce tour-ci.",
+      "strong_label": "Attaques physiques doublées, ennemis sans résistance physique, Gloire +1 par ennemi vaincu"
     },
     "horn_of_wrath": {
       "name": "Corne de la colère",
-      "basic_text": "Attaque de siège 5 ; lancer un dé de mana : noir ou rouge, une Blessure",
-      "strong_text": "Attaque de siège 5, jusqu'à +5 ; un dé par +1, une Blessure par noir ou rouge"
+      "basic_text": "[[siege_attack]]Attaque de siège 5. Lancez un dé de mana : sur un <black>noir</black> ou un <red>rouge</red>, vous prenez une Blessure.",
+      "strong_text": "[[siege_attack]]Attaque de siège 5, que vous pouvez augmenter de 5 au plus. Lancez un dé de mana par point ajouté : vous prenez une Blessure par <black>noir</black> ou <red>rouge</red> obtenu."
     },
     "endless_bag_of_gold": {
       "name": "Bourse sans fond",
-      "basic_text": "Influence 4, Gloire +2",
-      "strong_text": "Influence 9, Gloire +3"
+      "basic_text": "[[influence]]Influence 4. Vous gagnez 2 points de [[fame]]Gloire.",
+      "strong_text": "[[influence]]Influence 9. Vous gagnez 3 points de [[fame]]Gloire."
     },
     "endless_gem_pouch": {
       "name": "Poche de mana",
-      "basic_text": "Lancer deux dés de mana : un cristal par couleur (or au choix) ; noir : Gloire +1",
-      "strong_text": "Un jeton de chaque couleur de base, plus or (jour) ou noir (nuit)"
+      "basic_text": "Lancez deux fois un dé de mana. Gagnez un cristal de chaque couleur obtenue (sur un <gold>or</gold>, vous choisissez la couleur). Sur un <black>noir</black>, vous gagnez 1 point de [[fame]]Gloire au lieu d'un cristal.",
+      "strong_text": "Gagnez un jeton de mana de chaque couleur de base, plus un jeton <gold>or</gold> de jour ou un jeton <black>noir</black> de nuit."
     },
     "golden_grail": {
       "name": "Graal doré",
-      "basic_text": "Soin 2 ; Gloire +1 par point de Soin de cette carte dépensé",
-      "strong_text": "Soin 6 ; piocher une carte à chaque Blessure soignée de la main ce tour"
+      "basic_text": "Soin 2. Vous gagnez 1 point de [[fame]]Gloire par point de Soin de cette carte dépensé ce tour-ci.",
+      "strong_text": "Soin 6. Ce tour-ci, piochez une carte chaque fois que vous soignez une Blessure de votre main."
     },
     "book_of_wisdom": {
       "name": "Livre de sagesse",
-      "basic_text": "Écarter une carte action : action avancée de même couleur de l'offre en main",
-      "strong_text": "Écarter une carte action : sort de même couleur de l'offre en main et cristal de cette couleur"
+      "basic_text": "Détruisez une carte action de votre main. Prenez dans l'offre une action avancée de la même couleur et mettez-la dans votre main.",
+      "strong_text": "Détruisez une carte action de votre main. Prenez dans l'offre un sort de la même couleur et mettez-le dans votre main, et gagnez un cristal de cette couleur."
     },
     "amulet_of_sun": {
       "name": "Amulette du soleil",
-      "basic_text": "Jeton or ; de nuit : forêts à 3, mana or utilisable, garnisons révélées comme de jour",
-      "strong_text": "Comme l'effet de base, avec trois jetons or"
+      "basic_text": "Gagnez un jeton de mana <gold>or</gold>. Si vous la jouez de nuit, ce tour-ci comme de jour : les forêts coûtent 3 points de Mouvement, vous pouvez utiliser du mana <gold>or</gold>, et les garnisons des sites [[fortified]]fortifiés voisins et les ruines se révèlent.",
+      "strong_text": "Comme l'effet de base, mais vous gagnez trois jetons de mana <gold>or</gold> au lieu d'un."
     },
     "amulet_of_darkness": {
       "name": "Amulette des ténèbres",
-      "basic_text": "Jeton de mana de n'importe quelle couleur ; de jour : déserts à 3, mana noir utilisable",
-      "strong_text": "Comme l'effet de base, avec trois jetons de mana"
+      "basic_text": "Gagnez un jeton de mana de la couleur de votre choix. Si vous la jouez de jour, ce tour-ci comme de nuit : les déserts coûtent 3 points de Mouvement et vous pouvez utiliser du mana <black>noir</black>.",
+      "strong_text": "Comme l'effet de base, mais vous gagnez trois jetons de mana des couleurs de votre choix au lieu d'un."
     }
   },
   "effect": {
@@ -804,9 +901,10 @@
     "gain_crystal": "Cristal {color}",
     "pay_for_crystal": "Payer {color} : cristal {color}",
     "extra_die": "Un dé de plus ce tour",
-    "extra_die_black": "Un dé de plus ce tour ; noir : toute couleur",
-    "set_dice": "Mettre {amount} dé(s) sur une couleur, gagner des jetons",
-    "boost": "Renforcer une autre carte gratuitement, +{amount}",
+    "extra_die_black": "Un dé de plus ce tour, <black>noir</black> au choix",
+    "set_dice": "{amount} dés de la Source tournés sur une couleur : un jeton chacun",
+    "set_die": "Un dé de la Source tourné sur une couleur : 2 jetons",
+    "boost": "Effet renforcé d'une autre carte, gratuit, +{amount}",
     "fire_attack": "Attaque de feu {amount}",
     "cold_fire_attack": "Attaque de feu glacé {amount}",
     "ranged_fire_attack": "Attaque à distance de feu {amount}",
@@ -845,7 +943,7 @@
     "gain_owned_crystal": "Cristal {color} (déjà possédé)",
     "crystal_from_die": "Dé de la Source : cristal de sa couleur, puis relancer le dé",
     "reroll_source": "Relancer la Source ; 3 dés de plus",
-    "repeat": "Une autre carte action, {times} fois",
+    "repeat": "Effet d'une autre carte action {times} fois",
     "gain_spell": "Payer {color} : un sort {color} de l'offre",
     "spell_from_offer": "un sort {color} de l'offre",
     "train": "Détruire une carte action : action avancée de même couleur",
@@ -861,7 +959,7 @@
     "underground": "Jusqu'à 3 cases, sans provoquer",
     "underground_attack": "Jusqu'à 3 cases, assaut d'un site fortifié",
     "fly": "Vol : jusqu'à {max} cases, 1 Mouvement par case",
-    "does_not_attack_per_move": "les ennemis visés n'attaquent pas (Mouvement en plus par ennemi)",
+    "does_not_attack_per_move": "les ennemis visés n'attaquent pas, Mouvement pour chaque ennemi en plus",
     "meditation": "deux cartes de la défausse au hasard sur ou sous le deck ; 2 cartes de plus à la pioche",
     "trance": "deux cartes choisies de la défausse sur ou sous le deck ; 2 cartes de plus à la pioche",
     "claim_die": "Garder un dé de la Source : 3 jetons de sa couleur",
@@ -870,8 +968,8 @@
     "cancel_attacks": "Jusqu'à {amount} ennemis n'attaquent pas",
     "ready_all_units": "Toutes les unités disponibles",
     "sword_discard": "Attaque 3 par carte défaussée",
-    "horn_of_wrath": "Attaque de siège {amount} et dés de mana",
-    "gem_pouch_dice": "Deux dés de mana lancés : cristaux",
+    "horn_of_wrath": "Attaque de siège {amount}, un dé de mana par point ajouté",
+    "gem_pouch_dice": "Deux dés de mana lancés, un cristal par couleur",
     "tokens_each_color": "Un jeton de chaque couleur de base, et or de jour ou noir de nuit",
     "spell_and_crystal": "Un sort de l'offre en main et un cristal",
     "move_per_unit": "Mouvement 1 par unité prête et non blessée ({max} au plus)",
@@ -1257,13 +1355,13 @@
     },
     "herbalists": {
       "name": "Herboristes",
-      "ability_1": "(mana vert) Soin 2",
+      "ability_1": "(mana <green>vert</green>) Soin 2",
       "ability_2": "Rendre disponible une unité de niveau I ou II",
-      "ability_3": "Jeton de mana vert"
+      "ability_3": "Jeton de mana <green>vert</green>"
     },
     "foresters": {
       "name": "Bûcherons",
-      "ability_1": "Mouvement 2 ; forêts, collines et marais coûtent 1 de moins (min. 0)",
+      "ability_1": "Mouvement 2, forêts, collines et marais à 1 de moins",
       "ability_2": "Parade 3"
     },
     "utem_crossbowmen": {
@@ -1274,89 +1372,89 @@
     "utem_guardsmen": {
       "name": "Gardes d'Utem",
       "ability_1": "Attaque 2",
-      "ability_2": "Parade 4 ; compte double contre un ennemi [[swift]]Vif"
+      "ability_2": "Parade 4, double contre un ennemi [[swift]]Vif"
     },
     "utem_swordsmen": {
       "name": "Guerriers d'Utem",
       "ability_1": "Attaque ou Parade 3",
-      "ability_2": "Attaque ou Parade 6 ; l'unité est blessée"
+      "ability_2": "Attaque ou Parade 6, l'unité est blessée"
     },
     "guardian_golems": {
       "name": "Golems gardiens",
       "ability_1": "Attaque ou Parade 2",
-      "ability_2": "(mana rouge) Parade de feu 4",
-      "ability_3": "(mana bleu) Parade de glace 4"
+      "ability_2": "(mana <red>rouge</red>) Parade de feu 4",
+      "ability_3": "(mana <blue>bleu</blue>) Parade de glace 4"
     },
     "illusionists": {
       "name": "Illusionnistes",
       "ability_1": "Influence 4",
-      "ability_2": "(mana blanc) Un ennemi [[fortified]]non fortifié n'attaque pas",
-      "ability_3": "Cristal blanc"
+      "ability_2": "(mana <white>blanc</white>) Un ennemi [[fortified]]non fortifié n'attaque pas",
+      "ability_3": "Cristal <white>blanc</white>"
     },
     "red_cape_monks": {
       "name": "Moines du Cap Rouge",
       "ability_1": "Attaque ou Parade 3",
-      "ability_2": "(mana rouge) Attaque ou Parade de feu 4"
+      "ability_2": "(mana <red>rouge</red>) Attaque ou Parade de feu 4"
     },
     "northern_monks": {
       "name": "Moines du Nord",
       "ability_1": "Attaque ou Parade 3",
-      "ability_2": "(mana bleu) Attaque ou Parade de glace 4"
+      "ability_2": "(mana <blue>bleu</blue>) Attaque ou Parade de glace 4"
     },
     "savage_monks": {
       "name": "Moines sauvages",
       "ability_1": "Attaque ou Parade 3",
-      "ability_2": "(mana vert) Attaque de siège 4"
+      "ability_2": "(mana <green>vert</green>) Attaque de siège 4"
     },
     "fire_golems": {
       "name": "Golem de feu",
       "ability_1": "Attaque ou Parade 3",
-      "ability_2": "(mana rouge) Attaque à distance de feu 4"
+      "ability_2": "(mana <red>rouge</red>) Attaque à distance de feu 4"
     },
     "ice_golems": {
       "name": "Golem de glace",
       "ability_1": "Attaque ou Parade 3",
-      "ability_2": "(mana bleu) Attaque de glace 6"
+      "ability_2": "(mana <blue>bleu</blue>) Attaque de glace 6"
     },
     "fire_mages": {
       "name": "Mages de feu",
       "ability_1": "Attaque à distance de feu 3",
-      "ability_2": "(mana rouge) Attaque ou Parade de feu 6",
-      "ability_3": "Jeton et cristal rouges"
+      "ability_2": "(mana <red>rouge</red>) Attaque ou Parade de feu 6",
+      "ability_3": "Jeton et cristal <red>rouges</red>"
     },
     "ice_mages": {
       "name": "Mages de glace",
       "ability_1": "Attaque ou Parade de glace 4",
-      "ability_2": "(mana bleu) Attaque de siège de glace 4",
-      "ability_3": "Jeton et cristal bleus"
+      "ability_2": "(mana <blue>bleu</blue>) Attaque de siège de glace 4",
+      "ability_3": "Jeton et cristal <blue>bleus</blue>"
     },
     "amotep_gunners": {
       "name": "Canonniers d'Amotep",
       "ability_1": "Attaque ou Parade 5",
-      "ability_2": "(mana rouge) Attaque à distance de feu 6"
+      "ability_2": "(mana <red>rouge</red>) Attaque à distance de feu 6"
     },
     "amotep_freezers": {
       "name": "Glaceurs d'Amotep",
       "ability_1": "Attaque ou Parade 5",
-      "ability_2": "(mana bleu) Un ennemi n'attaque pas et a Armure -3 (min. 1)"
+      "ability_2": "(mana <blue>bleu</blue>) Un ennemi n'attaque pas et perd 3 d'Armure"
     },
     "catapults": {
       "name": "Catapultes",
       "ability_1": "Attaque de siège 3",
-      "ability_2": "(mana rouge) Attaque de siège de feu 5",
-      "ability_3": "(mana bleu) Attaque de siège de glace 5"
+      "ability_2": "(mana <red>rouge</red>) Attaque de siège de feu 5",
+      "ability_3": "(mana <blue>bleu</blue>) Attaque de siège de glace 5"
     },
     "altem_mages": {
       "name": "Mages d'Altem",
       "ability_1": "Deux jetons de mana de n'importe quelles couleurs",
-      "ability_2": "Attaque ou Parade de feu glacé 5 (7 avec mana bleu ou rouge, 9 avec les deux)",
-      "ability_3": "(mana noir) Vos attaques deviennent de feu glacé, ou de siège en plus"
+      "ability_2": "Attaque ou Parade de feu glacé 5, 7 ou 9 selon le mana payé",
+      "ability_3": "(mana <black>noir</black>) Vos attaques deviennent de feu glacé, ou de siège en plus"
     },
     "altem_guardians": {
       "name": "Gardiens d'Altem",
       "ability_1": "Attaque 5",
-      "ability_2": "Parade 8 ; compte double contre un ennemi [[swift]]Vif",
-      "ability_3": "(mana vert) Vos unités gagnent toutes les résistances ce tour"
+      "ability_2": "Parade 8, double contre un ennemi [[swift]]Vif",
+      "ability_3": "(mana <green>vert</green>) Vos unités gagnent toutes les résistances ce tour"
     },
     "cost": "Coût : Influence {influence}",
     "level": "Niveau {level}",
@@ -1747,163 +1845,163 @@
   "skill": {
     "dark_paths": {
       "name": "Chemins ténébreux",
-      "text": "Mouvement 1 le jour, 2 la nuit."
+      "text": "Une fois par tour : [[move]]Mouvement 1 de jour, ou [[move]]Mouvement 2 de nuit."
     },
     "burning_power": {
       "name": "Attaque brûlante",
-      "text": "Attaque de siège 1, ou Attaque de siège de feu 1."
+      "text": "Une fois par tour : [[siege_attack]]Attaque de siège 1, ou [[siege_fire_attack]]Attaque de siège de feu 1."
     },
     "hot_swordsmanship": {
       "name": "Bretteur de feu",
-      "text": "Attaque 2, ou Attaque de feu 2."
+      "text": "Une fois par tour : [[attack]]Attaque 2, ou [[fire_attack]]Attaque de feu 2."
     },
     "dark_negotiation": {
       "name": "Sombre négociation",
-      "text": "Influence 2 le jour, 3 la nuit."
+      "text": "Une fois par tour : [[influence]]Influence 2 de jour, ou [[influence]]Influence 3 de nuit."
     },
     "dark_fire_magic": {
       "name": "Magie noire",
-      "text": "Retournée : un cristal rouge, et un jeton rouge ou noir."
+      "text": "Une fois par manche, en la retournant : gagnez un cristal <red>rouge</red>, et un jeton de mana <red>rouge</red> ou <black>noir</black>."
     },
     "motivation_arythea": {
       "name": "Motivation",
-      "text": "Retournée : piocher 2 cartes et gagner un jeton rouge. Pas d'autre Motivation avant la fin du tour suivant."
+      "text": "Une fois par manche, en la retournant : piochez deux cartes et gagnez un jeton de mana <red>rouge</red>. Vous ne pouvez plus utiliser de compétence Motivation avant la fin de votre prochain tour."
     },
     "power_of_pain": {
       "name": "Souffrance sublimée",
-      "text": "Jouer une Blessure de côté, pour 2 points au lieu de 1."
+      "text": "Une fois par tour : vous pouvez jouer une Blessure de côté comme une autre carte. Elle donne 2 points au lieu de 1. À la fin du tour, elle va dans votre défausse."
     },
     "invocation": {
       "name": "Invocation",
-      "text": "Défausser une carte pour un jeton de mana à dépenser aussitôt : rouge ou noir pour une Blessure, blanc ou vert sinon."
+      "text": "Une fois par tour : défaussez une Blessure pour gagner un jeton de mana <red>rouge</red> ou <black>noir</black>, ou une autre carte pour un jeton <white>blanc</white> ou <green>vert</green>. Ce jeton doit être dépensé aussitôt."
     },
     "polarization": {
       "name": "Polarisation",
-      "text": "Utiliser un mana comme sa couleur opposée ; le jour, le noir comme une couleur de base, la nuit, l'or comme du noir."
+      "text": "Une fois par tour : utilisez un mana comme s'il était de la couleur opposée. De jour, un mana <black>noir</black> peut servir de n'importe quelle couleur sauf le <black>noir</black>, mais pas pour renforcer un sort. De nuit, un mana <gold>or</gold> peut servir de <black>noir</black> pour renforcer un sort, et seulement pour cela."
     },
     "ritual_of_pain": {
       "name": "Rituel de guérison",
-      "text": "Retournée : jeter jusqu'à 2 Blessures de la main, posée au centre ; au tour suivant, une Blessure jouée de côté vaut 3."
+      "text": "Une fois par manche, hors combat : détruisez jusqu'à deux Blessures de votre main, puis posez la compétence au centre. À votre tour suivant, vous pouvez la reprendre, retournée, pour jouer une Blessure de côté comme une autre carte : elle donne 3 points au lieu de 1."
     },
     "freezing_power": {
       "name": "Attaque givrante",
-      "text": "Attaque de siège 1, ou Attaque de siège de glace 1."
+      "text": "Une fois par tour : [[siege_attack]]Attaque de siège 1, ou [[siege_ice_attack]]Attaque de siège de glace 1."
     },
     "potion_making": {
       "name": "Potion de soin",
-      "text": "Retournée, hors combat : Soin 2."
+      "text": "Une fois par manche, hors combat, en la retournant : Soin 2."
     },
     "white_crystal_craft": {
       "name": "Extraction blanche",
-      "text": "Retournée : un cristal bleu et un jeton blanc."
+      "text": "Une fois par manche, en la retournant : gagnez un cristal <blue>bleu</blue> et un jeton de mana <white>blanc</white>."
     },
     "green_crystal_craft": {
       "name": "Extraction verte",
-      "text": "Retournée : un cristal bleu et un jeton vert."
+      "text": "Une fois par manche, en la retournant : gagnez un cristal <blue>bleu</blue> et un jeton de mana <green>vert</green>."
     },
     "red_crystal_craft": {
       "name": "Extraction rouge",
-      "text": "Retournée : un cristal bleu et un jeton rouge."
+      "text": "Une fois par manche, en la retournant : gagnez un cristal <blue>bleu</blue> et un jeton de mana <red>rouge</red>."
     },
     "motivation_goldyx": {
       "name": "Motivation",
-      "text": "Retournée : piocher 2 cartes et gagner un jeton vert. Pas d'autre Motivation avant la fin du tour suivant."
+      "text": "Une fois par manche, en la retournant : piochez deux cartes et gagnez un jeton de mana <green>vert</green>. Vous ne pouvez plus utiliser de compétence Motivation avant la fin de votre prochain tour."
     },
     "glittering_fortune": {
       "name": "Fortune clinquante",
-      "text": "En interaction : Influence 1 par couleur de cristal possédée."
+      "text": "Une fois par tour, pendant une interaction : [[influence]]Influence 1 par couleur de cristal différente dans votre Inventaire. Cette Influence ne sert qu'à cette interaction."
     },
     "flight": {
       "name": "Vol",
-      "text": "Retournée : aller sur une case voisine sans payer, ou deux cases plus loin pour Mouvement 2, sans provoquer."
+      "text": "Une fois par manche, en la retournant : allez sur une case adjacente sans payer, ou à deux cases pour 2 points de Mouvement. Vous devez finir sur une case sûre. Ce déplacement ne provoque pas les ennemis errants."
     },
     "universal_power": {
       "name": "Pouvoir universel",
-      "text": "Un mana sur une carte jouée de côté : 3 points, ou 4 si elle est de sa couleur."
+      "text": "Une fois par tour : ajoutez un mana à une carte jouée de côté. Elle donne alors 3 points au lieu de 1, ou 4 si c'est une carte action ou un sort de la couleur de ce mana."
     },
     "source_opening": {
       "name": "Embrasure de la Source",
-      "text": "Retournée : relancer un dé, posée au centre ; au tour suivant, un dé de plus et un cristal de sa couleur."
+      "text": "Une fois par manche : vous pouvez relancer un dé de la Source, puis posez la compétence au centre. À votre tour suivant, reprenez-la, retournée, pour utiliser un dé de plus de la Source, d'une couleur de base, et gagner un cristal de cette couleur."
     },
     "day_sharpshooting": {
       "name": "Œil de lynx",
-      "text": "Attaque à distance 2 le jour, 1 la nuit."
+      "text": "Une fois par tour : [[ranged_attack]]Attaque à distance 2 de jour, ou [[ranged_attack]]Attaque à distance 1 de nuit."
     },
     "bright_negotiation": {
       "name": "Négociation brillante",
-      "text": "Influence 3 le jour, 2 la nuit."
+      "text": "Une fois par tour : [[influence]]Influence 3 de jour, ou [[influence]]Influence 2 de nuit."
     },
     "inspiration": {
       "name": "Inspiration",
-      "text": "Retournée, hors combat : rendre disponible une unité, ou la soigner."
+      "text": "Une fois par manche, hors combat, en la retournant : rendez disponible une unité, ou soignez-en une."
     },
     "leaves_in_the_wind": {
       "name": "Au cœur du vent",
-      "text": "Retournée : un cristal vert et un jeton blanc."
+      "text": "Une fois par manche, en la retournant : gagnez un cristal <green>vert</green> et un jeton de mana <white>blanc</white>."
     },
     "whisper_in_the_treetops": {
       "name": "Murmure de la canopée",
-      "text": "Retournée : un cristal blanc et un jeton vert."
+      "text": "Une fois par manche, en la retournant : gagnez un cristal <white>blanc</white> et un jeton de mana <green>vert</green>."
     },
     "motivation_norowas": {
       "name": "Motivation",
-      "text": "Retournée : piocher 2 cartes et gagner un jeton blanc. Pas d'autre Motivation avant la fin du tour suivant."
+      "text": "Une fois par manche, en la retournant : piochez deux cartes et gagnez un jeton de mana <white>blanc</white>. Vous ne pouvez plus utiliser de compétence Motivation avant la fin de votre prochain tour."
     },
     "forward_march": {
       "name": "Marche en avant",
-      "text": "Mouvement 1 par unité disponible et non blessée, 3 au plus."
+      "text": "Une fois par tour : [[move]]Mouvement 1 pour chacune de vos unités disponibles et non blessées, [[move]]Mouvement 3 au plus."
     },
     "leadership": {
       "name": "Charisme",
-      "text": "À l'activation d'une unité : +1 à son Attaque à distance, +2 à son Attaque ou +3 à sa Parade."
+      "text": "Une fois par tour, quand vous activez une unité : ajoutez 3 à sa [[block]]Parade, 2 à son [[attack]]Attaque, ou 1 à son [[ranged_attack]]Attaque à distance (pas de siège), quel que soit l'élément."
     },
     "bonds_of_loyalty": {
       "name": "Loyauté sans faille",
-      "text": "Un jeton de commandement de plus ; l'unité recrutée dessous coûte 5 de moins."
+      "text": "Cette compétence devient un jeton de commandement de plus. L'unité recrutée sous ce jeton coûte 5 d'Influence de moins, jusqu'à 0."
     },
     "calming_the_weather": {
       "name": "Temps calme",
-      "text": "Retournée : les terrains coûtent 2 de moins ce tour, posée au centre ; au tour suivant, 1 de moins."
+      "text": "Une fois par manche : ce tour-ci, chaque terrain vous coûte 2 points de Mouvement de moins, sans descendre sous 1. Posez la compétence au centre. À votre tour suivant, reprenez-la, retournée, pour que chaque terrain coûte 1 point de moins, sans descendre sous 1."
     },
     "double_time": {
       "name": "Marche forcée",
-      "text": "Mouvement 2 le jour, 1 la nuit."
+      "text": "Une fois par tour : [[move]]Mouvement 2 de jour, ou [[move]]Mouvement 1 de nuit."
     },
     "night_sharpshooting": {
       "name": "Vision nocturne",
-      "text": "Attaque à distance 1 le jour, 2 la nuit."
+      "text": "Une fois par tour : [[ranged_attack]]Attaque à distance 1 de jour, ou [[ranged_attack]]Attaque à distance 2 de nuit."
     },
     "cold_swordsmanship": {
       "name": "Bretteur de glace",
-      "text": "Attaque 2, ou Attaque de glace 2."
+      "text": "Une fois par tour : [[attack]]Attaque 2, ou [[ice_attack]]Attaque de glace 2."
     },
     "shield_mastery": {
       "name": "Maître bouclier",
-      "text": "Parade 3, ou Parade de glace 2, ou Parade de feu 2."
+      "text": "Une fois par tour : [[block]]Parade 3, [[ice_block]]Parade de glace 2 ou [[fire_block]]Parade de feu 2."
     },
     "motivation_tovak": {
       "name": "Motivation",
-      "text": "Retournée : piocher 2 cartes et gagner un jeton bleu. Pas d'autre Motivation avant la fin du tour suivant."
+      "text": "Une fois par manche, en la retournant : piochez deux cartes et gagnez un jeton de mana <blue>bleu</blue>. Vous ne pouvez plus utiliser de compétence Motivation avant la fin de votre prochain tour."
     },
     "resistance_break": {
       "name": "Botte secrète",
-      "text": "Un ennemi perd 1 d'Armure par résistance, 1 au moins."
+      "text": "Une fois par tour : choisissez un ennemi. Il perd 1 d'[[armor]]Armure par résistance qu'il possède, sans descendre sous 1."
     },
     "i_feel_no_pain": {
       "name": "Même pas mal",
-      "text": "Hors combat : défausser une Blessure de la main pour piocher une carte."
+      "text": "Une fois par tour, hors combat : défaussez une Blessure de votre main. Si vous le faites, piochez une carte."
     },
     "i_dont_give_a_damn": {
       "name": "Flexibilité",
-      "text": "Une carte jouée de côté vaut 2, ou 3 pour une action avancée, un sort ou un artefact."
+      "text": "Une fois par tour : une carte jouée de côté donne 2 points au lieu de 1, ou 3 si c'est une action avancée, un sort ou un artefact."
     },
     "who_needs_magic": {
       "name": "Magie inutile",
-      "text": "Une carte jouée de côté vaut 2, ou 3 sans dé de la Source ce tour."
+      "text": "Une fois par tour : une carte jouée de côté donne 2 points au lieu de 1, ou 3 si vous n'utilisez aucun dé de la Source ce tour-ci."
     },
     "mana_overload": {
       "name": "Surcharge de mana",
-      "text": "Retournée : un jeton de mana non or, posée au centre ; plus tard, +4 sur une carte renforcée de cette couleur."
+      "text": "Une fois par manche : choisissez une couleur autre que l'<gold>or</gold> et gagnez un jeton de mana de cette couleur, puis posez la compétence au centre avec cette couleur. La prochaine fois que vous renforcez avec ce mana une carte qui donne du [[move]]Mouvement, de l'[[influence]]Influence, une [[attack]]Attaque ou une [[block]]Parade, elle donne 4 de plus, et la compétence vous revient retournée."
     },
     "title": "Compétences",
     "once_a_turn": "Une fois par tour",
@@ -1947,23 +2045,23 @@
     },
     "rethink": {
       "name": "Faux départ",
-      "text": "En la prenant : défaussez jusqu'à 3 cartes (Blessures comprises), piochez-en autant, puis remélangez la défausse dans le deck."
+      "text": "En la prenant : défaussez jusqu'à 3 cartes de votre main, Blessures comprises, et piochez-en autant. Remélangez ensuite votre défausse dans votre deck."
     },
     "mana_steal": {
       "name": "Vol de mana",
-      "text": "En la prenant : posez ici un dé de couleur de base de la Source. Ce Jour, il paie un mana en plus du dé du tour ; relancé et rendu à la fin du tour où il sert."
+      "text": "En la prenant : posez sur cette carte un dé de la Source qui montre une couleur de base. Vous pouvez utiliser ce mana à n'importe lequel de vos tours de ce Jour, en plus du dé du tour. À la fin du tour où il sert, il est relancé et remis dans la Source."
     },
     "planning": {
       "name": "Planification",
-      "text": "Fin du tour : avec au moins 2 cartes en main avant de piocher, limite de main + 1."
+      "text": "À la fin de chacun de vos tours, si vous avez au moins deux cartes en main avant de piocher, piochez jusqu'à votre limite de main, plus une carte."
     },
     "great_start": {
       "name": "Départ flamboyant",
-      "text": "En la prenant : piochez 2 cartes."
+      "text": "En la prenant : piochez aussitôt deux cartes."
     },
     "right_moment": {
       "name": "Au bon moment",
-      "text": "Une fois ce Jour, pendant votre tour : annoncez un tour de plus, joué juste après celui-ci."
+      "text": "Une fois ce Jour, pendant votre tour : annoncez que vous jouerez un autre tour juste après celui-ci. La tactique se retourne."
     },
     "from_the_dusk": {
       "name": "Au crépuscule",
@@ -1971,23 +2069,23 @@
     },
     "long_night": {
       "name": "Longue Nuit",
-      "text": "Une fois cette Nuit, deck vide : 3 cartes de la défausse, au hasard, retournent dans le deck."
+      "text": "Une fois cette Nuit, si votre deck est vide : mélangez votre défausse et remettez-en 3 cartes au hasard dans votre deck. La tactique se retourne."
     },
     "mana_search": {
       "name": "Appel du mana",
-      "text": "Une fois par tour, avant de prendre un dé de la Source : relancez jusqu'à 2 dés, les dés or d'abord."
+      "text": "Une fois par tour, avant d'utiliser du mana de la Source : vous pouvez relancer jusqu'à deux dés de la Source. S'il y a des dés <gold>or</gold>, relancez-les en premier."
     },
     "midnight_meditation": {
       "name": "Méditation nocturne",
-      "text": "Une fois cette Nuit, au début d'un tour : remélangez jusqu'à 5 cartes de la main dans le deck et piochez-en autant."
+      "text": "Une fois cette Nuit, avant l'un de vos tours : remélangez jusqu'à 5 cartes de votre main dans votre deck, Blessures comprises, puis piochez-en autant. La tactique se retourne."
     },
     "preparation": {
       "name": "Préparation",
-      "text": "En la prenant : prenez en main une carte de votre choix dans le deck, puis mélangez-le."
+      "text": "En la prenant : cherchez dans votre deck la carte de votre choix et mettez-la dans votre main, puis mélangez le deck."
     },
     "sparing_power": {
       "name": "Provisions",
-      "text": "Avant chaque tour : posez ici la carte du dessus du deck, ou retournez cette tactique et prenez en main les cartes posées."
+      "text": "Avant chacun de vos tours, au choix : posez face cachée sous cette carte la carte du dessus de votre deck, ou retournez la tactique et prenez en main toutes les cartes posées dessous."
     },
     "choose_title": "Choisir une tactique ({time})",
     "take": "Prendre cette tactique",

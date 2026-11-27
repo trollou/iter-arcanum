@@ -207,6 +207,47 @@ pub(super) fn mana_color(color: ManaColor) -> Color32 {
     }
 }
 
+/// La couleur d'un mot de couleur de mana dans un texte (spec #68, règle 8) : une variante
+/// claire de la pastille, lisible sur le fond sombre ; le noir devient un gris violacé clair.
+pub(super) fn mana_text_color(color: ManaColor) -> Color32 {
+    match color {
+        ManaColor::Basic(BasicColor::Red) => Color32::from_rgb(0xF0, 0x6E, 0x5E),
+        ManaColor::Basic(BasicColor::Blue) => Color32::from_rgb(0x6F, 0xA8, 0xEC),
+        ManaColor::Basic(BasicColor::White) => Color32::WHITE,
+        ManaColor::Basic(BasicColor::Green) => Color32::from_rgb(0x6C, 0xC4, 0x70),
+        ManaColor::Gold => Color32::from_rgb(0xEC, 0xC2, 0x4A),
+        ManaColor::Black => Color32::from_rgb(0xB0, 0xA2, 0xCC),
+    }
+}
+
+/// Un texte de bouton, d'infobulle ou de ligne, sans repère d'icône et ses mots de couleur de
+/// mana colorés (spec #68, Q5) ; un texte sans balise reste un texte simple.
+pub(super) fn rich_text(style: &egui::Style, text: &str, catalog: &Catalog) -> egui::WidgetText {
+    let pieces = crate::colored_text(text, catalog);
+    if pieces.iter().all(|(_, color)| color.is_none()) {
+        return pieces
+            .into_iter()
+            .map(|(text, _)| text)
+            .collect::<String>()
+            .into();
+    }
+    let mut job = egui::text::LayoutJob::default();
+    for (text, color) in pieces {
+        let piece = egui::RichText::new(text);
+        let piece = match color {
+            Some(color) => piece.color(mana_text_color(color)),
+            None => piece,
+        };
+        piece.append_to(
+            &mut job,
+            style,
+            egui::FontSelection::Default,
+            egui::Align::Center,
+        );
+    }
+    job.into()
+}
+
 /// Couleurs provisoires des cartes (spec 013).
 pub(super) fn card_color(color: BasicColor) -> Color32 {
     match color {
@@ -235,11 +276,10 @@ pub(super) fn enabled_shortcut_button(
     shortcut: Option<&str>,
     catalog: &Catalog,
 ) -> egui::Response {
-    // Spec #27, C21 : un bouton n'écrit que du texte, sans repère d'icône.
-    let response = ui.add_enabled(
-        enabled,
-        egui::Button::new(crate::plain_text(label, catalog)),
-    );
+    // Spec #27, C21 : un bouton n'écrit que du texte, sans repère d'icône ; spec #68 : en
+    // couleur.
+    let text = rich_text(ui.style(), label, catalog);
+    let response = ui.add_enabled(enabled, egui::Button::new(text));
     match hover_text(None, shortcut, catalog) {
         Some(text) => response
             .on_hover_text(text.clone())

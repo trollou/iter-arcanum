@@ -85,6 +85,20 @@ pub(super) fn mana_name(color: ManaColor, catalog: &Catalog) -> String {
     })
 }
 
+/// Le nom d'une couleur de mana dans sa balise de couleur (spec #68, C11) : « <blue>bleu</blue> »,
+/// pour les textes calculés des effets, que l'écran colore.
+pub(super) fn tagged_mana_name(color: ManaColor, catalog: &Catalog) -> String {
+    let tag = crate::COLOR_TAGS
+        .iter()
+        .find(|(_, tagged)| *tagged == color)
+        .map_or("", |(tag, _)| tag);
+    format!("<{tag}>{}</{tag}>", mana_name(color, catalog))
+}
+
+pub(super) fn tagged_color_name(color: BasicColor, catalog: &Catalog) -> String {
+    tagged_mana_name(ManaColor::Basic(color), catalog)
+}
+
 pub(super) fn color_name(color: BasicColor, catalog: &Catalog) -> String {
     mana_name(ManaColor::Basic(color), catalog)
 }
