@@ -191,14 +191,16 @@ fn skills_section_lists_owned_skills() {
             ("Inspiration", "Une fois par manche", None),
         ]
     );
+    // Issue #105 : le texte dit déjà la fréquence et « hors combat » (spec #68), l'infobulle ne
+    // les répète plus au-dessus de lui.
     assert_eq!(
         section.skills[0].tooltip,
-        "Marche forcée\nUne fois par tour\nUne fois par tour : [[move]]Mouvement 2 de jour, ou \
+        "Marche forcée\nUne fois par tour : [[move]]Mouvement 2 de jour, ou \
          [[move]]Mouvement 1 de nuit."
     );
     assert_eq!(
         section.skills[1].tooltip,
-        "Inspiration\nUne fois par manche\nHors combat\n\
+        "Inspiration\n\
          Une fois par manche, hors combat, en la retournant : rendez disponible une unité, ou \
          soignez-en une."
     );

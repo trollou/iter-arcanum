@@ -8,8 +8,8 @@ use arcanum_core::{
 };
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
-    CastChoice, CastPicks, CombatChoice, CombatScreen, Command, EffectButton, GameScreen,
-    GameSession, ScreenMode, ScreenPhase, combat_screen, game_screen, offers_window_in,
+    CastChoice, CastPicks, CombatChoice, CombatScreen, Command, EffectButton, EffectFace,
+    GameScreen, GameSession, ScreenMode, ScreenPhase, combat_screen, game_screen, offers_window_in,
     repository_assets_dir,
 };
 
@@ -289,17 +289,11 @@ fn tremor_chooses_its_enemy_and_names_its_options() {
         picks: CastPicks::default(),
     };
     assert_eq!(basic[0].command, Some(Command::ChooseCast(target)));
-    assert!(
-        basic[0].tooltip.contains("Armure −3 (min. 1)"),
-        "{:?}",
-        basic[0].tooltip
-    );
-    assert!(
-        basic[1]
-            .tooltip
-            .contains("tous les ennemis : Armure −2 (min. 1)"),
-        "{:?}",
-        basic[1].tooltip
+    // Issue #107 : chaque option dit qui elle vise, un ennemi ou tous.
+    assert_eq!(basic[0].tooltip, "Jouer : Un ennemi : Armure −3 (min. 1)");
+    assert_eq!(
+        basic[1].tooltip,
+        "Jouer : Tous les ennemis : Armure −2 (min. 1)"
     );
     // L'option « tous » ne vise personne : un seul paiement, le sort se lance.
     assert!(matches!(basic[1].command, Some(Command::Play(_))));
@@ -308,6 +302,42 @@ fn tremor_chooses_its_enemy_and_names_its_options() {
     assert!(labels[0].contains(&enemy_name(swordsmen(), &catalog)));
     assert!(labels[1].contains(&enemy_name(prowlers(), &catalog)));
     assert!(labels[0].contains("Cristal vert"), "{labels:?}");
+}
+
+// Issue #107 : un libellé écrit par option, de base et renforcée, en fr et en en.
+#[test]
+fn tremor_options_have_their_own_written_labels() {
+    // Carte ; Compendium, *Tremor* S1 : un ennemi, ou tous.
+    let tremor = spell(Tremor);
+    for language in ["fr", "en"] {
+        let catalog = Catalog::load(
+            &repository_assets_dir().join("i18n"),
+            &Language(language.into()),
+        )
+        .expect("catalogue du dépôt");
+        let state = fight(
+            TimeOfDay::Night,
+            &[tremor],
+            &[swordsmen(), prowlers()],
+            vec![crystal(BasicColor::Green), black_token()],
+        );
+        let (basic, strong) = effects_of(&screen_of(&state, &catalog), tremor);
+        let faces: Vec<EffectFace> = basic
+            .iter()
+            .chain(&strong)
+            .map(|b| b.face.clone())
+            .collect();
+        let expected: Vec<EffectFace> = [
+            "card.tremor.basic_label_1",
+            "card.tremor.basic_label_2",
+            "card.tremor.strong_label_1",
+            "card.tremor.strong_label_2",
+        ]
+        .into_iter()
+        .map(|key| EffectFace::Text(catalog.text(key)))
+        .collect();
+        assert_eq!(faces, expected, "{language}");
+    }
 }
 
 // Spec 054 C14, issue privée 245

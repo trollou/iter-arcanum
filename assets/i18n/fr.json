@@ -682,8 +682,10 @@
       "strong_name": "Tremblement de terre",
       "basic_text": "Un ennemi perd 3 d'[[armor]]Armure, ou tous les ennemis perdent 2 d'[[armor]]Armure. L'Armure ne descend pas sous 1.",
       "strong_text": "Un ennemi perd 3 d'[[armor]]Armure (6 s'il est [[fortified]]fortifié), ou tous les ennemis perdent 2 d'[[armor]]Armure (4 pour ceux qui sont [[fortified]]fortifiés). L'Armure ne descend pas sous 1.",
-      "basic_label": "Un ennemi perd 3 d'Armure, ou tous les ennemis 2",
-      "strong_label": "Un ennemi perd 3 d'Armure, 6 s'il est fortifié, ou tous 2, 4 s'ils sont fortifiés"
+      "basic_label_1": "Un ennemi : Armure −3 (min. 1)",
+      "basic_label_2": "Tous les ennemis : Armure −2 (min. 1)",
+      "strong_label_1": "Un ennemi : Armure −3, −6 s'il est fortifié (min. 1)",
+      "strong_label_2": "Tous les ennemis : Armure −2, −4 pour les fortifiés (min. 1)"
     },
     "flame_wall": {
       "name": "Mur de flammes",
@@ -2006,7 +2008,6 @@
     "title": "Compétences",
     "once_a_turn": "Une fois par tour",
     "once_a_round": "Une fois par manche",
-    "out_of_combat": "Hors combat",
     "used_this_turn": "Utilisée ce tour",
     "flipped": "Retournée jusqu'à la prochaine manche",
     "motivation_blocked": "Une autre Motivation a servi : pas avant la fin du prochain tour",
