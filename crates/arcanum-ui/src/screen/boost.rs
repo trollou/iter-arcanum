@@ -190,6 +190,7 @@ pub(super) fn boost_hand_card(
                     .map(|option| {
                         let boosted = boosted_effect(choice, card, option);
                         EffectButton {
+                            condition: None,
                             face: boosted.map_or_else(
                                 || EffectFace::Text(String::new()),
                                 |effect| effect_face(effect, catalog),

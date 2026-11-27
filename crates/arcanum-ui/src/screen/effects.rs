@@ -95,6 +95,7 @@ pub(super) fn idle_effects(
                 }
             };
             let button = EffectButton {
+                condition: None,
                 face: face(*effect, false),
                 mark: view.and_then(|view| halved_mark(*effect, view, catalog)),
                 color: mana.map(ManaColor::Basic),
@@ -117,6 +118,7 @@ pub(super) fn idle_effects(
         };
         strong.extend((0u8..).zip(options).map(|(option, effect)| {
             EffectButton {
+                condition: None,
                 face: face(*effect, true),
                 mark: view.and_then(|view| halved_mark(*effect, view, catalog)),
                 // Spec #11 C8, C10 : seul le mana en plus de l'option (Magie pure) ; le titre du bloc
@@ -284,6 +286,7 @@ pub(super) fn unit_effects(
         let ability = u8::try_from(index).unwrap_or(u8::MAX);
         if !printed.is_supported() {
             buttons.push(EffectButton {
+                condition: None,
                 face: EffectFace::Text(without_mana(
                     catalog.text(&unit.unit.ability_key(index)),
                     printed,
@@ -352,6 +355,7 @@ fn option_buttons(
         // Spec 053 : une option sans points se nomme par le texte de la capacité.
         let written = unit_option_text(unit, ability, printed, chosen, catalog);
         buttons.push(EffectButton {
+            condition: None,
             face: written.clone().map_or_else(
                 || effect_face(chosen.effect, catalog),
                 |text| EffectFace::Text(without_mana(text, printed)),
@@ -365,6 +369,7 @@ fn option_buttons(
         let phase = view.combat.as_ref().map(|combat| combat.phase);
         if let (false, Some(effect)) = (led.is_empty(), leadership_effect(chosen.effect, phase)) {
             buttons.push(EffectButton {
+                condition: None,
                 face: effect_face(effect, catalog),
                 mark: halved_mark(effect, view, catalog),
                 color: printed.mana,

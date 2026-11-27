@@ -586,6 +586,17 @@ pub struct EffectButton {
     pub command: Option<Command>,
     /// « Jouer : Attaque 2 », puis la raison du grisé s'il y en a une.
     pub tooltip: String,
+    /// « ×2 si » et l'icône Vif, après la valeur d'une Parade vive (spec #27, C13) ; `None`
+    /// ailleurs.
+    pub condition: Option<EffectCondition>,
+}
+
+/// La condition d'un effet à icône (spec #27, C13) : un court texte suivi d'une icône, qui a son
+/// infobulle.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct EffectCondition {
+    pub text: String,
+    pub icon: crate::IconValue,
 }
 
 impl EffectButton {
