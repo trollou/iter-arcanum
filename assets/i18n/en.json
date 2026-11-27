@@ -821,6 +821,7 @@
     "cold_toughness_strong": "Ice Block {base} + {bonus} (blocked enemy's abilities)",
     "ice_block_per_ability": "Ice Block {amount}, +1 per ability of the blocked enemy",
     "swift_block": "Block {amount}, counts twice against Swiftness",
+    "double_if": "×2 vs",
     "ready_unit": "Ready a Unit of level {level} or less",
     "token_and_crystal": "{color} mana token and crystal",
     "gain_tokens": "{first} and {second} mana tokens",
@@ -1527,6 +1528,7 @@
       "cold_fire": "Cold Fire Block"
     },
     "ranged_or_siege": "Ranged or Siege Attack",
+    "summon": "Summon",
     "resistance": {
       "physical": "Physical Resistance",
       "fire": "Fire Resistance",
@@ -1535,6 +1537,27 @@
     "tile": {
       "countryside": "Countryside tile",
       "core": "Core tile"
+    },
+    "ability": {
+      "fortified": "Fortified",
+      "swift": "Swift",
+      "brutal": "Brutal",
+      "poison": "Poison",
+      "paralyze": "Paralyze"
+    },
+    "rule": {
+      "fortified": "During ranged attacks, only siege attacks can reach it; none at all if it also defends a fortified site.",
+      "swift": "Blocking it takes Block equal to twice its attack.",
+      "brutal": "If not blocked, it deals twice its attack in damage.",
+      "poison": "A unit it wounds receives two Wounds. For each Wound it puts into the hero's hand, another one goes to the discard pile.",
+      "paralyze": "A unit it wounds is destroyed. If the hero takes a Wound into their hand, they discard every card in hand that is not a Wound.",
+      "summon": "At the start of the block phase, a creature drawn from the dungeon pile takes its place for blocking and damage, then is discarded.",
+      "resistance_physical": "Physical attacks, sideways cards included, only count half against it.",
+      "resistance_fire": "Fire attacks only count half against it, and cold fire too if it also resists ice. It ignores other effects of red cards and of unit abilities paid with red mana.",
+      "resistance_ice": "Ice attacks only count half against it, and cold fire too if it also resists fire. It ignores other effects of blue cards and of unit abilities paid with blue mana.",
+      "attack_fire": "Only ice and cold fire blocks count in full; others count half.",
+      "attack_ice": "Only fire and cold fire blocks count in full; others count half.",
+      "attack_cold_fire": "Only cold fire blocks count in full; others count half."
     }
   },
   "shortcut": {

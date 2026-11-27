@@ -3,7 +3,7 @@
 
 use std::collections::BTreeSet;
 
-use arcanum_core::{AttackKind, BasicColor, Element, Hero, ManaColor, Resistance};
+use arcanum_core::{AttackKind, BasicColor, Element, EnemyAbility, Hero, ManaColor, Resistance};
 
 use arcanum_i18n::Catalog;
 
@@ -24,6 +24,10 @@ pub enum Icon {
     /// Rondache, à la couleur de l'élément.
     Block(Element),
     Resistance(Resistance),
+    /// Capacité d'un ennemi (spec #27) : tour, oiseau, tête de démon, goutte, silhouette pétrifiée.
+    Ability(EnemyAbility),
+    /// Griffe sortant d'un portail : l'attaque d'un Invocateur (spec #27).
+    Summon,
     /// Carte couchée, devant les boutons de côté.
     Sideways,
     /// Dos d'une tuile de campagne, devant le nombre de sa pioche (spec 074, C8).
@@ -81,6 +85,12 @@ impl Icon {
             Icon::Resistance(Resistance::Physical) => "resistance_physical",
             Icon::Resistance(Resistance::Fire) => "resistance_fire",
             Icon::Resistance(Resistance::Ice) => "resistance_ice",
+            Icon::Ability(EnemyAbility::Fortified) => "ability_fortified",
+            Icon::Ability(EnemyAbility::Swift) => "ability_swift",
+            Icon::Ability(EnemyAbility::Brutal) => "ability_brutal",
+            Icon::Ability(EnemyAbility::Poison) => "ability_poison",
+            Icon::Ability(EnemyAbility::Paralyze) => "ability_paralyze",
+            Icon::Summon => "summon",
             Icon::Sideways => "sideways",
             Icon::TileCountryside => "tile_countryside",
             Icon::TileCore => "tile_core",
@@ -117,6 +127,12 @@ impl Icon {
             Icon::Resistance(Resistance::Physical) => "icon.resistance.physical",
             Icon::Resistance(Resistance::Fire) => "icon.resistance.fire",
             Icon::Resistance(Resistance::Ice) => "icon.resistance.ice",
+            Icon::Ability(EnemyAbility::Fortified) => "icon.ability.fortified",
+            Icon::Ability(EnemyAbility::Swift) => "icon.ability.swift",
+            Icon::Ability(EnemyAbility::Brutal) => "icon.ability.brutal",
+            Icon::Ability(EnemyAbility::Poison) => "icon.ability.poison",
+            Icon::Ability(EnemyAbility::Paralyze) => "icon.ability.paralyze",
+            Icon::Summon => "icon.summon",
             Icon::Sideways => "play.sideways",
             Icon::TileCountryside => "icon.tile.countryside",
             Icon::TileCore => "icon.tile.core",

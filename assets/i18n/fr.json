@@ -821,6 +821,7 @@
     "cold_toughness_strong": "Parade de glace {base} + {bonus} (capacités de l'ennemi paré)",
     "ice_block_per_ability": "Parade de glace {amount}, +1 par capacité de l'ennemi paré",
     "swift_block": "Parade {amount}, double contre Vif",
+    "double_if": "×2 si",
     "ready_unit": "Rendre disponible une unité de niveau {level} au plus",
     "token_and_crystal": "Jeton et cristal {color}",
     "gain_tokens": "Jetons {first} et {second}",
@@ -1527,6 +1528,7 @@
       "cold_fire": "Parade de feu glacé"
     },
     "ranged_or_siege": "Attaque à distance ou de siège",
+    "summon": "Invocation",
     "resistance": {
       "physical": "Résistance physique",
       "fire": "Résistance au feu",
@@ -1535,6 +1537,27 @@
     "tile": {
       "countryside": "Tuile de campagne",
       "core": "Tuile royaume"
+    },
+    "ability": {
+      "fortified": "Fortifié",
+      "swift": "Vif",
+      "brutal": "Brutal",
+      "poison": "Toxique",
+      "paralyze": "Paralysant"
+    },
+    "rule": {
+      "fortified": "Pendant les attaques à distance, seules les attaques de siège l'atteignent ; aucune s'il défend aussi un site fortifié.",
+      "swift": "Pour le parer, il faut une Parade du double de son attaque.",
+      "brutal": "S'il n'est pas paré, il inflige le double de son attaque.",
+      "poison": "Une unité qu'il blesse reçoit deux Blessures. Pour chaque Blessure qu'il met dans la main du héros, une autre va dans la défausse.",
+      "paralyze": "Une unité qu'il blesse est détruite. Si le héros prend une Blessure en main, il défausse toutes ses cartes qui ne sont pas des Blessures.",
+      "summon": "Au début de la phase de parade, une créature tirée de la pile du donjon prend sa place pour la parade et les dégâts, puis est défaussée.",
+      "resistance_physical": "Les attaques physiques, cartes jouées de côté comprises, ne comptent qu'à moitié contre lui.",
+      "resistance_fire": "Les attaques de feu ne comptent qu'à moitié contre lui, et le feu glacé aussi s'il résiste à la glace. Il ignore les autres effets des cartes rouges et des capacités d'unité payées en mana rouge.",
+      "resistance_ice": "Les attaques de glace ne comptent qu'à moitié contre lui, et le feu glacé aussi s'il résiste au feu. Il ignore les autres effets des cartes bleues et des capacités d'unité payées en mana bleu.",
+      "attack_fire": "Seules les Parades de glace et de feu glacé comptent en entier ; les autres, à moitié.",
+      "attack_ice": "Seules les Parades de feu et de feu glacé comptent en entier ; les autres, à moitié.",
+      "attack_cold_fire": "Seules les Parades de feu glacé comptent en entier ; les autres, à moitié."
     }
   },
   "shortcut": {

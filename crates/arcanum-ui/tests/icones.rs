@@ -2,7 +2,7 @@
 
 use std::fs;
 
-use arcanum_core::{AttackKind, Element, Hero, Resistance};
+use arcanum_core::{AttackKind, Element, EnemyAbility, Hero, Resistance};
 use arcanum_i18n::{Catalog, Language};
 use arcanum_ui::{
     Icon, IconValue, attack_icon, block_icon, hero_emblem, repository_assets_dir, ui_images,
@@ -25,7 +25,8 @@ fn every_icon_image_exists() {
     let images = ui_images();
     // 26 icônes nommées (spec 074, C8 : les deux dos de tuile), 6 cristaux pleins et
     // l'emplacement vide, 4 emblèmes de héros ; le « i » des cartes de la main (spec #11).
-    assert_eq!(images.len(), 38);
+    // Spec #27, C1 : les cinq capacités des ennemis et l'invocation.
+    assert_eq!(images.len(), 44);
     assert!(images.contains(&Icon::Info.image()));
     for icon in Icon::all() {
         assert!(
@@ -46,7 +47,8 @@ fn every_icon_has_a_name() {
     let catalog = french();
     let keys = catalog.keys();
     // Spec 074, C8 : la planche passe de 24 à 26 icônes.
-    assert_eq!(Icon::all().len(), 26);
+    // Spec #27, C2 : puis à 32, avec les capacités des ennemis et l'invocation.
+    assert_eq!(Icon::all().len(), 32);
     for icon in Icon::all() {
         assert!(
             keys.contains(icon.name_key()),
@@ -64,6 +66,11 @@ fn every_icon_has_a_name() {
         "Tuile de campagne"
     );
     assert_eq!(catalog.text(Icon::TileCore.name_key()), "Tuile royaume");
+    assert_eq!(
+        catalog.text(Icon::Ability(EnemyAbility::Swift).name_key()),
+        "Vif"
+    );
+    assert_eq!(catalog.text(Icon::Summon.name_key()), "Invocation");
 }
 
 // Spec 071, C2 : l'icône d'une attaque suit sa sorte et son élément.
