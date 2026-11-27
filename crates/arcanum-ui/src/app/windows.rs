@@ -7,18 +7,14 @@ use eframe::egui::{self, Color32, Sense, TextStyle, Vec2, vec2};
 use arcanum_i18n::Catalog;
 
 use super::widgets::color_swatch;
-use super::window_cards::{card_rows, natural_width, window_limits};
+use super::window_cards::{card_rows, level_card_rows, natural_width, window_limits};
 use super::{IterArcanumApp, Thumbnails};
 use crate::{
     AboutWindow, AltarWindow, Button, CARD_GAP, CardChoiceWindow, Command, CrystalChoice,
-    LevelChoiceWindow, MeditationWindow, OfferCardView, OffersWindow, PreferencesWindow,
-    PreparationWindow, ReclaimWindow, ScoreWindow, SkillOffer, TacticCard, TacticDecision,
-    TacticWindow, TokenChoice, volume_value_label,
+    LevelChoiceWindow, MeditationWindow, OffersWindow, PreferencesWindow, PreparationWindow,
+    ReclaimWindow, ScoreWindow, SkillOffer, TacticCard, TacticDecision, TacticWindow, TokenChoice,
+    row_width, volume_value_label,
 };
-
-/// Largeur d'une colonne de la fenêtre Offres (spec 050).
-/// Spec 070, C18 : élargies pour le texte à la taille du jeu, la fenêtre tient en 1600 × 900.
-const OFFER_COLUMN_WIDTH: f32 = 300.0;
 
 /// Largeur à réserver pour que le titre d'une fenêtre ne soit pas tronqué : egui ne le fait pas
 /// revenir à la ligne, il suit la largeur du contenu (issue privée 135).
@@ -553,7 +549,7 @@ pub(super) fn meditation_window(
     clicked
 }
 
-pub(super) fn artifact_window(
+pub(super) fn card_choice_window(
     ctx: &egui::Context,
     window: &CardChoiceWindow,
     id: &'static str,
@@ -740,8 +736,17 @@ pub(super) fn tactic_decision_window(
     clicked
 }
 
-/// Fenêtre du niveau pair (spec #20) : les compétences (un clic encadre), puis l'offre d'actions
-/// avancées. Dessin provisoire du fil moteur ; la disposition de la maquette vient au fil écran.
+/// Largeur d'une tuile de compétence : celle d'une carte, cadre compris (maquette de la spec #20).
+const SKILL_TILE_WIDTH: f32 = crate::CARD_WIDTH - 16.0;
+
+/// Hauteur visée de la zone qui défile de la fenêtre du niveau pair : compétences et une rangée
+/// de cartes en 1600 × 900.
+const LEVEL_WINDOW_HEIGHT: f32 = 560.0;
+
+/// Fenêtre du niveau pair (spec #20, maquette) : en haut du plateau, compétences révélées et
+/// offre commune côte à côte (la note sous l'offre commune), une tuile par compétence qu'un clic
+/// encadre comme une tactique ; dessous, « Actions avancées », l'aide tant que rien n'est encadré,
+/// et l'offre en cartes hors zone, « Prendre » grisé pour les cartes que la compétence ne laisse pas.
 pub(super) fn level_choice_window(
     ctx: &egui::Context,
     window: &LevelChoiceWindow,
@@ -749,38 +754,6 @@ pub(super) fn level_choice_window(
     catalog: &Catalog,
 ) -> Option<Command> {
     let mut clicked = None;
-    let row = |ui: &mut egui::Ui, offers: &[SkillOffer]| -> Option<Command> {
-        let mut chosen = None;
-        ui.horizontal_top(|ui| {
-            for offer in offers {
-                ui.vertical(|ui| {
-                    ui.set_width(OFFER_COLUMN_WIDTH);
-                    ui.horizontal(|ui| {
-                        let name = egui::RichText::new(&offer.name).strong();
-                        let response = ui.add_enabled(
-                            offer.select.is_some(),
-                            egui::Button::selectable(offer.selected, name),
-                        );
-                        if response.clicked() {
-                            chosen = offer.select;
-                        }
-                        ui.weak(&offer.usage);
-                    });
-                    ui.add(egui::Label::new(&offer.text).wrap());
-                    if let Some(take) = &offer.take
-                        && shortcut_button(ui, &take.label, take.shortcut.as_deref(), catalog)
-                            .clicked()
-                    {
-                        chosen = Some(take.command);
-                    }
-                    if let Some(note) = &offer.note {
-                        ui.add(egui::Label::new(egui::RichText::new(note).weak()).wrap());
-                    }
-                });
-            }
-        });
-        chosen
-    };
     let (max_width, max_height) = window_limits(ctx);
     egui::Window::new(&window.title)
         .id(egui::Id::unique("level_choice_window"))
@@ -788,50 +761,128 @@ pub(super) fn level_choice_window(
         .max_width(max_width)
         .collapsible(false)
         .resizable(false)
+        // En haut : la main reste visible dessous, comme pour la tactique (spec 060).
         .anchor(egui::Align2::CENTER_TOP, vec2(0.0, 40.0))
         .show(ctx, |ui| {
+            // Sans hauteur minimale, egui ne donne à la zone qui défile que sa hauteur de
+            // l'image précédente : les cartes seraient coupées (L1).
             egui::ScrollArea::vertical()
                 .max_height(max_height)
+                .min_scrolled_height(max_height.min(LEVEL_WINDOW_HEIGHT))
                 .show(ui, |ui| {
-                    if !window.revealed.is_empty() {
-                        ui.strong(&window.revealed_title);
-                        clicked = row(ui, &window.revealed).or(clicked);
-                    }
-                    if !window.common.is_empty() {
-                        ui.separator();
-                        ui.strong(&window.common_title);
-                        ui.add(egui::Label::new(&window.common_note).wrap());
-                        clicked = row(ui, &window.common).or(clicked);
-                    }
+                    ui.horizontal_top(|ui| {
+                        if !window.revealed.is_empty() {
+                            ui.vertical(|ui| {
+                                ui.strong(&window.revealed_title);
+                                clicked = skill_row(ui, &window.revealed, catalog).or(clicked);
+                            });
+                        }
+                        if !window.common.is_empty() {
+                            ui.add_space(16.0);
+                            ui.vertical(|ui| {
+                                let tiles = window.common.len() as f32;
+                                ui.set_max_width(crate::CARD_WIDTH * tiles);
+                                ui.strong(&window.common_title);
+                                clicked = skill_row(ui, &window.common, catalog).or(clicked);
+                                ui.add(
+                                    egui::Label::new(
+                                        egui::RichText::new(&window.common_note).weak(),
+                                    )
+                                    .wrap(),
+                                );
+                            });
+                        }
+                    });
                     if !window.advanced_actions.is_empty() {
                         ui.separator();
                         ui.horizontal(|ui| {
                             ui.strong(&window.advanced_actions_title);
                             if let Some(hint) = &window.hint {
-                                ui.weak(hint);
+                                let color = ui.visuals().warn_fg_color;
+                                ui.label(egui::RichText::new(hint).color(color));
                             }
                         });
-                        let cards: Vec<OfferCardView> = window
-                            .advanced_actions
-                            .iter()
-                            .map(|shown| OfferCardView {
-                                take: shown.take.command.map(|command| Button {
-                                    label: shown.take.label.clone(),
-                                    command,
-                                    shortcut: shown.take.shortcut.clone(),
-                                }),
-                                ..shown.card.clone()
-                            })
-                            .collect();
                         let id = egui::Id::unique("level_choice_rows");
-                        if let Some(command) =
-                            card_rows(ui, id, None, &cards, max_width, thumbnails, catalog)
-                        {
+                        let width = row_width(window.advanced_actions.len()).min(max_width);
+                        if let Some(command) = level_card_rows(
+                            ui,
+                            id,
+                            &window.advanced_actions,
+                            width,
+                            thumbnails,
+                            catalog,
+                        ) {
                             clicked = Some(command);
                         }
                     }
                 });
         });
+    clicked
+}
+
+/// Une rangée de tuiles de compétence ; rend la commande cliquée (encadrer, ou « Prendre » quand
+/// l'offre d'actions avancées est vide, C7).
+fn skill_row(ui: &mut egui::Ui, offers: &[SkillOffer], catalog: &Catalog) -> Option<Command> {
+    let mut clicked = None;
+    ui.horizontal_top(|ui| {
+        for offer in offers {
+            clicked = skill_tile(ui, offer, catalog).or(clicked);
+        }
+    });
+    clicked
+}
+
+/// Une tuile de compétence : nom, fréquence, texte, encadrée comme une tactique (spec 060) ;
+/// grisée quand elle ne se prend pas (compétence du héros dans l'offre commune).
+fn skill_tile(ui: &mut egui::Ui, offer: &SkillOffer, catalog: &Catalog) -> Option<Command> {
+    let mut clicked = None;
+    let visuals = ui.visuals();
+    let stroke = if offer.selected {
+        egui::Stroke::new(2.5, visuals.selection.stroke.color)
+    } else {
+        egui::Stroke::new(1.0, visuals.widgets.noninteractive.bg_stroke.color)
+    };
+    let fill = if offer.selected {
+        visuals.selection.bg_fill.gamma_multiply(0.4)
+    } else {
+        Color32::TRANSPARENT
+    };
+    let response = egui::Frame::group(ui.style())
+        .stroke(stroke)
+        .fill(fill)
+        .show(ui, |ui| {
+            ui.set_width(SKILL_TILE_WIDTH);
+            ui.vertical(|ui| {
+                ui.set_width(SKILL_TILE_WIDTH);
+                // La tuile entière se clique : pas de curseur de sélection de texte dessus.
+                ui.style_mut().interaction.selectable_labels = false;
+                ui.add_enabled_ui(offer.select.is_some() || offer.take.is_some(), |ui| {
+                    ui.horizontal(|ui| {
+                        ui.strong(&offer.name);
+                        ui.weak(&offer.usage);
+                    });
+                    ui.add(egui::Label::new(&offer.text).wrap());
+                });
+                if let Some(take) = &offer.take
+                    && shortcut_button(ui, &take.label, take.shortcut.as_deref(), catalog).clicked()
+                {
+                    clicked = Some(take.command);
+                }
+                if let Some(note) = &offer.note {
+                    ui.add(egui::Label::new(egui::RichText::new(note).weak().italics()).wrap());
+                }
+            });
+        })
+        .response;
+    if let Some(select) = offer.select {
+        let response = ui.interact(response.rect, response.id.with("skill"), Sense::click());
+        if response
+            .on_hover_cursor(egui::CursorIcon::PointingHand)
+            .clicked()
+        {
+            clicked = clicked.or(Some(select));
+        }
+    }
     clicked
 }
 

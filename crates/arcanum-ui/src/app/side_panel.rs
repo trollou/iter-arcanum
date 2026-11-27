@@ -7,7 +7,7 @@ use eframe::egui::{self, Color32, Sense, Vec2};
 use super::board::standing_image_rect;
 use super::widgets::color_swatch;
 use super::windows::{
-    altar_window, artifact_window, crystal_window, level_choice_window, meditation_window,
+    altar_window, card_choice_window, crystal_window, level_choice_window, meditation_window,
     offers_window, preparation_window, reclaim_window, score_window, tactic_decision_window,
     tactic_window, token_window,
 };
@@ -272,10 +272,10 @@ impl IterArcanumApp {
         // Spec 041 : la fenêtre du choix de l'artefact, à la fin du tour.
         if let Some(window) = &screen.artifact_choice {
             let thumbnails = self.choice_thumbnails(ui.ctx(), window);
-            if let Some(command) = artifact_window(
+            if let Some(command) = card_choice_window(
                 ui.ctx(),
                 window,
-                "artifact_window",
+                "card_choice_window",
                 &thumbnails,
                 &self.catalog,
             ) {
@@ -288,7 +288,7 @@ impl IterArcanumApp {
         {
             let thumbnails = self.choice_thumbnails(ui.ctx(), window);
             if let Some(command) =
-                artifact_window(ui.ctx(), window, "spell_window", &thumbnails, &self.catalog)
+                card_choice_window(ui.ctx(), window, "spell_window", &thumbnails, &self.catalog)
             {
                 clicked = Some(command);
             }
@@ -305,7 +305,7 @@ impl IterArcanumApp {
             if let Some(window) = window {
                 let thumbnails = self.choice_thumbnails(ui.ctx(), window);
                 if let Some(command) =
-                    artifact_window(ui.ctx(), window, id, &thumbnails, &self.catalog)
+                    card_choice_window(ui.ctx(), window, id, &thumbnails, &self.catalog)
                 {
                     clicked = Some(command);
                 }

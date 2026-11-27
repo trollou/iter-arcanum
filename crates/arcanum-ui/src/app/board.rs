@@ -6,6 +6,7 @@ use eframe::egui::{
 };
 
 use super::widgets::{card_color, shortcut_button};
+use super::window_cards::lone_card;
 use super::{CHOICE_STROKE, IterArcanumApp, PROVOKE_STROKE, TILE_STROKE, full_uv};
 use crate::{
     BOARD_BACKGROUND, BOARD_TILT, BoardAction, BoardActionKind, BoardCamera, BoardDeparture,
@@ -195,8 +196,19 @@ impl IterArcanumApp {
         // Un clic simple, jamais un glissement, sur une case mise en évidence (spec 014) ou sur
         // un bouton d'action (spec 075, C27).
         let mut clicked = response.clicked().then_some(screen.click).flatten();
+        // Spec #20 : les illustrations des cartes montrées au survol des achats.
+        let thumbnails = self.thumbnails(
+            ui.ctx(),
+            game_screen
+                .recruit
+                .iter()
+                .chain(&game_screen.purchases)
+                .filter_map(|purchase| purchase.card.as_ref())
+                .map(|card| card.illustration),
+        );
         if let Some(anchor) = screen.site_anchor
-            && let Some(command) = site_panel(ui.ctx(), anchor, game_screen, &self.catalog)
+            && let Some(command) =
+                site_panel(ui.ctx(), anchor, game_screen, &thumbnails, &self.catalog)
         {
             clicked = Some(command);
         }
@@ -448,6 +460,7 @@ fn site_panel(
     ctx: &egui::Context,
     anchor: Pos2,
     screen: &GameScreen,
+    thumbnails: &super::Thumbnails,
     catalog: &arcanum_i18n::Catalog,
 ) -> Option<Command> {
     let mut clicked = None;
@@ -467,19 +480,19 @@ fn site_panel(
                                 purchase.command.is_some(),
                                 egui::Button::new(&purchase.label).wrap(),
                             );
-                            // Spec #20 : la carte de l'achat ; dessin provisoire en texte, la
-                            // carte hors zone vient au fil écran.
-                            let card_text = purchase.card.as_ref().map(|card| {
-                                std::iter::once(card.name.clone())
-                                    .chain(card.lines.iter().cloned())
-                                    .collect::<Vec<_>>()
-                                    .join("\n")
-                            });
-                            let response = match card_text.as_ref().or(purchase.tooltip.as_ref()) {
-                                Some(tooltip) => response
+                            // Spec #20 (C21 à C23, L4) : la carte hors zone de l'achat au survol,
+                            // achat grisé compris ; le texte pour un achat sans carte.
+                            let response = match (&purchase.card, &purchase.tooltip) {
+                                (Some(card), _) => {
+                                    let show = |ui: &mut egui::Ui| {
+                                        lone_card(ui, card, thumbnails, catalog);
+                                    };
+                                    response.on_hover_ui(show).on_disabled_hover_ui(show)
+                                }
+                                (None, Some(tooltip)) => response
                                     .on_hover_text(tooltip)
                                     .on_disabled_hover_text(tooltip),
-                                None => response,
+                                (None, None) => response,
                             };
                             if response.clicked() {
                                 clicked = purchase.command;
