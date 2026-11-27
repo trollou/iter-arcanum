@@ -605,9 +605,10 @@ fn artifact_window_keeps_two() {
 
 // --- C39 : récompense unité ---
 
-// C39 — MKUE p. 11, 5.d ; Q4 : la fenêtre Offres s'ouvre, « Prendre » sur chaque unité ; 1 à 3.
+// C39 — MKUE p. 11, 5.d ; Q4. Spec #20, C12 (test modifié : la fenêtre de choix au lieu de la
+// fenêtre Offres) : les unités de l'offre seulement, « Prendre » sur chacune ; 1 à 3.
 #[test]
-fn unit_reward_window() {
+fn unit_reward_in_choice_window() {
     let catalog = french();
     let offer = units(2);
     let start = Ruins {
@@ -620,12 +621,26 @@ fn unit_reward_window() {
     let events = events_after(start.events(), &[end_turn(&state)]);
     let choosing = state_of(&events);
     let mut session = session_of(events);
-    let window = session.offers_window(&catalog).expect("ouverte d'office");
+    assert!(session.offers_window(&catalog).is_none());
+    let window = session
+        .screen(&catalog)
+        .unit_reward
+        .expect("fenêtre de l'unité");
     assert_eq!(window.title, "Récompense : prenez une unité de l'offre");
-    assert!(!window.closable);
-    assert_eq!(window.decline, None);
-    let unit_column = &window.columns[2];
-    for (place, (card, &unit)) in unit_column.cards.iter().zip(&offer).enumerate() {
+    assert_eq!(window.close, None);
+    assert_eq!(window.cards.len(), offer.len());
+    // Spec #20, C18 : la fenêtre Offres, consultée, reste « Offres », sans « Prendre ».
+    let offers =
+        arcanum_ui::offers_window(&view(&choosing, SOLO), &session.legal_actions(), &catalog);
+    assert_eq!(offers.title, "Offres");
+    assert!(
+        offers.columns[2]
+            .cards
+            .iter()
+            .all(|card| card.take.is_none())
+    );
+    for (place, (card, &unit)) in window.cards.iter().zip(&offer).enumerate() {
+        assert_eq!(card.name, catalog.text(unit.unit.label_key()));
         let wanted = Action::TakeUnitReward {
             unit,
             disband: None,
@@ -637,25 +652,20 @@ fn unit_reward_window() {
         );
         assert_eq!(take.shortcut, Some((place + 1).to_string()));
     }
-    assert!(
-        window.columns[0]
-            .cards
-            .iter()
-            .all(|card| card.take.is_none())
-    );
     // Échap ne ferme pas la fenêtre ; 2 prend la deuxième unité.
     session.shortcut(Shortcut::Cancel);
-    assert!(session.offers_window(&catalog).is_some());
+    assert!(session.screen(&catalog).unit_reward.is_some());
     session.shortcut(Shortcut::Take(2));
     session.run_frame();
     let seen = session.view();
     assert_eq!(seen.units.len(), 1);
     assert_eq!(seen.units[0].card, offer[1]);
+    assert!(session.screen(&catalog).unit_reward.is_none());
     assert!(session.offers_window(&catalog).is_none());
 }
 
-// C39 — MKUE p. 11, 5.d ; Q4 : sans jeton libre, « Prendre » ouvre le choix de l'unité à renvoyer,
-// et « Renoncer » est proposé.
+// C39 — MKUE p. 11, 5.d ; Q4. Spec #20, C12 (test modifié : la fenêtre de choix) : sans jeton
+// libre, « Prendre » ouvre le choix de l'unité à renvoyer, et « Renoncer » est proposé.
 #[test]
 fn unit_reward_window_without_free_token() {
     let catalog = french();
@@ -671,18 +681,18 @@ fn unit_reward_window_without_free_token() {
     let events = events_after(start.events(), &[end_turn(&state)]);
     let choosing = state_of(&events);
     let mut session = session_of(events);
-    let window = session.offers_window(&catalog).expect("ouverte d'office");
-    let take = window.columns[2].cards[0]
-        .take
-        .as_ref()
-        .expect("bouton Prendre");
+    let window = session
+        .screen(&catalog)
+        .unit_reward
+        .expect("fenêtre de l'unité");
+    let take = window.cards[0].take.as_ref().expect("bouton Prendre");
     assert_eq!(
         take.label_and_command(),
         ("Prendre", &Command::ChooseDisband(offer[0]))
     );
     assert_eq!(take.shortcut.as_deref(), Some("1"));
     assert_eq!(
-        window.decline.as_ref().map(Button::label_and_command),
+        window.close.as_ref().map(Button::label_and_command),
         Some((
             "Renoncer",
             &Command::Play(index_of(&choosing, &Action::DeclineUnitReward))
@@ -706,11 +716,39 @@ fn unit_reward_window_without_free_token() {
     // Échap revient au choix de l'unité, sans rien jouer.
     session.shortcut(Shortcut::Cancel);
     assert!(session.screen(&catalog).disband_prompt.is_none());
-    assert!(session.offers_window(&catalog).is_some());
+    assert!(session.screen(&catalog).unit_reward.is_some());
     session.command(Command::ChooseDisband(offer[0]));
     session.command(Command::Play(index_of(&choosing, &wanted)));
     session.run_frame();
     assert_eq!(session.view().units[0].card, offer[0]);
+}
+
+// Spec #20, C13 — spec 045 : une action avancée de monastère de l'offre d'unités n'est pas une
+// unité de récompense.
+#[test]
+fn unit_reward_leaves_out_monastery_card() {
+    let catalog = french();
+    let offer = units(2);
+    let start = Ruins {
+        token: RuinToken::GreyViolet,
+        conquered: true,
+        offer: offer.clone(),
+        advanced: advanced_actions(3),
+        monastery_advanced: vec![advanced(arcanum_core::AdvancedAction::IceShield)],
+        ..Ruins::default()
+    };
+    let state = start.state();
+    let events = events_after(start.events(), &[end_turn(&state)]);
+    let window = session_of(events)
+        .screen(&catalog)
+        .unit_reward
+        .expect("fenêtre de l'unité");
+    let names: Vec<&str> = window.cards.iter().map(|card| card.name.as_str()).collect();
+    let wanted: Vec<String> = offer
+        .iter()
+        .map(|unit| catalog.text(unit.unit.label_key()))
+        .collect();
+    assert_eq!(names, wanted);
 }
 
 // --- C40 : trajet arrêté ---
@@ -749,10 +787,11 @@ fn advanced_actions(count: usize) -> Vec<CardId> {
         .collect()
 }
 
-// C41 — MKUE p. 11, 5.c ; C24 : le choix de la récompense a son propre titre et passe avant
-// celui du niveau pair gagné le même tour.
+// C41 — MKUE p. 11, 5.c ; C24. Spec #20, C11 (test modifié : la fenêtre de choix au lieu de la
+// fenêtre Offres) : l'action avancée de la récompense, seulement les cartes de l'offre d'actions
+// avancées, sans bouton de fermeture ; elle passe avant le niveau pair gagné le même tour.
 #[test]
-fn advanced_action_reward_window() {
+fn advanced_action_reward_in_choice_window() {
     let catalog = french();
     let offer = advanced_actions(3);
     let drawn = artifacts(2);
@@ -761,6 +800,7 @@ fn advanced_action_reward_window() {
         conquered: true,
         artifacts: drawn.clone(),
         advanced: offer.clone(),
+        monastery_advanced: vec![advanced(arcanum_core::AdvancedAction::IceShield)],
         fame: 3,
         ..Ruins::default()
     };
@@ -770,16 +810,44 @@ fn advanced_action_reward_window() {
         start.events(),
         &[end_turn(&state), Action::TakeArtifact { card: drawn[0] }],
     );
+    let choosing = state_of(&events);
     let session = session_of(events.clone());
-    let window = session.offers_window(&catalog).expect("ouverte d'office");
+    assert!(session.offers_window(&catalog).is_none());
+    let window = session
+        .screen(&catalog)
+        .advanced_action_reward
+        .expect("fenêtre de la récompense");
     assert_eq!(window.title, "Récompense : prenez une action avancée");
-    assert!(!window.closable);
+    assert_eq!(window.close, None);
+    let shown: Vec<(String, Option<Command>)> = window
+        .cards
+        .iter()
+        .map(|card| {
+            (
+                card.name.clone(),
+                card.take.as_ref().map(|button| button.command),
+            )
+        })
+        .collect();
+    let wanted: Vec<(String, Option<Command>)> = offer
+        .iter()
+        .map(|&card| {
+            (
+                catalog.text(card.card().label_key()),
+                Some(Command::Play(index_of(&choosing, &gain(card)))),
+            )
+        })
+        .collect();
+    assert_eq!(shown, wanted);
 
-    // La récompense prise, le choix du niveau 2 reprend son titre.
+    // La récompense prise, sa fenêtre se ferme et celle du niveau pair suit ; la fenêtre Offres
+    // reste fermée.
     let events = events_after(events, &[gain(offer[0])]);
     let session = session_of(events);
-    let window = session.offers_window(&catalog).expect("choix du niveau");
-    assert_eq!(window.title, "Niveau 2 : choisissez une action avancée");
+    let screen = session.screen(&catalog);
+    assert!(screen.advanced_action_reward.is_none());
+    assert!(screen.level_choice.is_some());
+    assert!(session.offers_window(&catalog).is_none());
 
     // Sans niveau pair, le seul choix est celui de la récompense.
     let start = Ruins { fame: 0, ..start };
@@ -789,9 +857,65 @@ fn advanced_action_reward_window() {
         &[end_turn(&state), Action::TakeArtifact { card: drawn[0] }],
     );
     let window = session_of(events)
-        .offers_window(&catalog)
-        .expect("ouverte d'office");
+        .screen(&catalog)
+        .advanced_action_reward
+        .expect("fenêtre de la récompense");
     assert_eq!(window.title, "Récompense : prenez une action avancée");
+}
+
+// Spec #20, C17 — spec #32 : les cartes d'une fenêtre de choix sont celles de la fenêtre Offres, à
+// « Prendre » près.
+#[test]
+fn choice_cards_match_offer_cards() {
+    let catalog = french();
+    let offer = advanced_actions(3);
+    let start = Ruins {
+        token: RuinToken::GreenRed,
+        conquered: true,
+        artifacts: artifacts(2),
+        advanced: offer.clone(),
+        ..Ruins::default()
+    };
+    let state = start.state();
+    let events = events_after(
+        start.events(),
+        &[
+            end_turn(&state),
+            Action::TakeArtifact {
+                card: artifacts(2)[0],
+            },
+        ],
+    );
+    let choosing = state_of(&events);
+    let window = session_of(events)
+        .screen(&catalog)
+        .advanced_action_reward
+        .expect("fenêtre de la récompense");
+    let offers = arcanum_ui::offers_window(
+        &view(&choosing, SOLO),
+        &legal_actions(&choosing, SOLO),
+        &catalog,
+    );
+    let in_offers = &offers.columns[0].cards[1];
+    let in_choice = &window.cards[1];
+    assert_eq!(
+        (
+            &in_choice.name,
+            in_choice.color,
+            &in_choice.lines,
+            &in_choice.strong_heading,
+            &in_choice.strong_colors,
+            &in_choice.illustration,
+        ),
+        (
+            &in_offers.name,
+            in_offers.color,
+            &in_offers.lines,
+            &in_offers.strong_heading,
+            &in_offers.strong_colors,
+            &in_offers.illustration,
+        )
+    );
 }
 
 // Spec 071, C21 : « Faire une offrande à l'autel » dit E, comme « Entrer dans ».
@@ -834,8 +958,12 @@ fn unit_reward_take_shows_shortcut() {
     };
     let state = start.state();
     let session = session_of(events_after(start.events(), &[end_turn(&state)]));
-    let window = session.offers_window(&catalog).expect("ouverte d'office");
-    let keys: Vec<Option<String>> = window.columns[2]
+    // Spec #20, C12 (test modifié) : dans la fenêtre de choix.
+    let window = session
+        .screen(&catalog)
+        .unit_reward
+        .expect("fenêtre de l'unité");
+    let keys: Vec<Option<String>> = window
         .cards
         .iter()
         .map(|card| {

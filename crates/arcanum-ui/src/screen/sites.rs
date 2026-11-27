@@ -94,8 +94,9 @@ pub(super) fn purchase_buttons(
                 CommonCard::Unit(_) => None,
             });
         buttons.extend(deeds.map(|card| {
-            let (basic, strong) = card_effect_texts(card, catalog);
             PurchaseButton {
+                // Spec #20, C21 : la carte hors zone de l'action avancée.
+                card: Some(super::hand::window_card(card, catalog)),
                 label: catalog.format(
                     "purchase.advanced_action",
                     &[
@@ -104,12 +105,13 @@ pub(super) fn purchase_buttons(
                     ],
                 ),
                 command: command(Action::BuyAdvancedAction { card }),
-                tooltip: Some(format!("{basic}\n{strong}")),
+                tooltip: None,
                 shortcut: None,
             }
         }));
     }
     buttons.push(PurchaseButton {
+        card: None,
         label: catalog.format("purchase.healing", &[("cost", &healing_cost.to_string())]),
         command: command(Action::BuyHealing),
         tooltip: None,
@@ -128,13 +130,16 @@ fn city_purchases(
     legal_actions: &[Action],
     catalog: &Catalog,
 ) -> Vec<PurchaseButton> {
-    let button = |label: String, wanted: Action, tooltip: Option<String>| PurchaseButton {
+    // Spec #20, C22 : la carte hors zone d'une action avancée de l'offre ; rien pour une carte
+    // cachée (dessus de la pioche, artefact, unité d'élite).
+    let button = |label: String, wanted: Action, card: Option<OfferCardView>| PurchaseButton {
+        card,
         label,
         command: legal_actions
             .iter()
             .position(|action| *action == wanted)
             .map(Command::Play),
-        tooltip,
+        tooltip: None,
         shortcut: None,
     };
     let cost = |key: &str, cost: u8| catalog.format(key, &[("cost", &cost.to_string())]);
@@ -148,7 +153,6 @@ fn city_purchases(
                 .filter_map(|card| card.deed());
             let mut buttons: Vec<PurchaseButton> = offered
                 .map(|card| {
-                    let (basic, strong) = card_effect_texts(card, catalog);
                     button(
                         catalog.format(
                             "purchase.advanced_action",
@@ -158,7 +162,7 @@ fn city_purchases(
                             ],
                         ),
                         Action::BuyAdvancedAction { card },
-                        Some(format!("{basic}\n{strong}")),
+                        Some(super::hand::window_card(card, catalog)),
                     )
                 })
                 .collect();
@@ -276,8 +280,8 @@ pub(super) fn artifact_choice(
     view: &PlayerView,
     legal_actions: &[Action],
     catalog: &Catalog,
-) -> Option<ArtifactChoice> {
-    (!view.drawn_artifacts.is_empty()).then(|| ArtifactChoice {
+) -> Option<CardChoiceWindow> {
+    (!view.drawn_artifacts.is_empty()).then(|| CardChoiceWindow {
         title: catalog.text("reward.choose_artifact"),
         cards: view
             .drawn_artifacts
@@ -292,6 +296,7 @@ pub(super) fn artifact_choice(
                 ..super::hand::window_card(card, catalog)
             })
             .collect(),
+        close: None,
     })
 }
 
@@ -341,14 +346,15 @@ fn spell_purchases(
     offered_spells(view)
         .into_iter()
         .map(|card| {
-            let (basic, strong) = card_effect_texts(card, catalog);
             let buyable = legal_actions
                 .iter()
                 .any(|action| matches!(action, Action::BuySpell { card: c, .. } if *c == card));
             PurchaseButton {
+                // Spec #20, C22 : la carte hors zone du sort.
+                card: Some(super::hand::window_card(card, catalog)),
                 label: spell_label(card, catalog),
                 command: buyable.then_some(Command::ChooseSpellMana(card)),
-                tooltip: Some(format!("{basic}\n{strong}")),
+                tooltip: None,
                 shortcut: None,
             }
         })
@@ -412,8 +418,8 @@ pub(super) fn spell_choice(
     view: &PlayerView,
     legal_actions: &[Action],
     catalog: &Catalog,
-) -> Option<ArtifactChoice> {
-    (view.spell_choices > 0).then(|| ArtifactChoice {
+) -> Option<CardChoiceWindow> {
+    (view.spell_choices > 0).then(|| CardChoiceWindow {
         title: catalog.text("reward.choose_spell"),
         cards: offered_spells(view)
             .into_iter()
@@ -427,6 +433,7 @@ pub(super) fn spell_choice(
                 ..super::hand::window_card(card, catalog)
             })
             .collect(),
+        close: None,
     })
 }
 

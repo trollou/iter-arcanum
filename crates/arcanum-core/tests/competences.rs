@@ -441,6 +441,38 @@ fn own_skill_in_common_offer_is_not_offered() {
     refused(&choosing, choose(own));
 }
 
+// Spec #20, C9 — MKUE p. 11, 6.b ; FAQ p3 : pendant le choix d'un niveau pair, la vue dit pour
+// chaque compétence prenable les actions avancées qu'elle laisse prendre : toutes pour une
+// révélée, la dernière place pour une de l'offre commune ; jamais la compétence de son héros.
+#[test]
+fn view_lists_cards_allowed_by_each_skill() {
+    let pile = started(&tovak(4)).skill_pile(SOLO).to_vec();
+    let own = pile[5];
+    let (events, choosing) = level_two_with_common(&[Skill::HotSwordsmanship, own]);
+    let pair = revealed(&events);
+    let offer: Vec<CardId> = choosing
+        .offer(Offer::AdvancedActions)
+        .iter()
+        .filter_map(|card| card.deed())
+        .collect();
+    assert_eq!(offer.len(), 3);
+    assert_eq!(
+        view(&choosing, SOLO).skill_choice_cards,
+        vec![
+            (pair[0], offer.clone()),
+            (pair[1], offer.clone()),
+            (Skill::HotSwordsmanship, vec![offer[2]]),
+        ]
+    );
+    // Le niveau réglé, la liste est vide.
+    let after = done(&done(&choosing, choose(pair[0])), gain_deed(offer[1]));
+    assert!(view(&after, SOLO).skill_choice_cards.is_empty());
+}
+
+fn gain_deed(card: CardId) -> Action {
+    Action::GainAdvancedAction { card }
+}
+
 // --- Utiliser une compétence ---
 
 /// Les compétences `skills` gagnées, prêtes.

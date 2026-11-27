@@ -29,6 +29,7 @@ pub(super) fn player_fame(view: &PlayerView, catalog: &Catalog) -> crate::IconVa
 /// « Défausse : 2 carte(s) », qui ouvre la fenêtre de la défausse ; grisé sans carte (C24, C36).
 pub(super) fn discard_button(view: &PlayerView, catalog: &Catalog) -> PurchaseButton {
     PurchaseButton {
+        card: None,
         label: catalog.format(
             "discard.count",
             &[("count", &view.discard.len().to_string())],
@@ -180,12 +181,14 @@ pub(super) fn bottom_buttons(
     if let Some(prompt) = state.end_turn_prompt {
         return vec![
             PurchaseButton {
+                card: None,
                 label: prompt.cancel.label.clone(),
                 command: Some(prompt.cancel.command),
                 tooltip: None,
                 shortcut: shortcut_label(Shortcut::Cancel, catalog),
             },
             PurchaseButton {
+                card: None,
                 label: prompt.confirm.label.clone(),
                 command: prompt.confirm_enabled.then_some(prompt.confirm.command),
                 tooltip: None,
@@ -197,12 +200,13 @@ pub(super) fn bottom_buttons(
     let choice = catalog.text("end_turn.disabled.choice");
     let offers_reason = if fighting {
         Some(catalog.text("offers.disabled.combat"))
-    } else if !matches!(state.mode, ScreenMode::Normal) {
+    } else if !matches!(state.mode, ScreenMode::Normal) || choosing_card(view) {
         Some(choice.clone())
     } else {
         None
     };
     let mut buttons = vec![PurchaseButton {
+        card: None,
         label: catalog.text("offers.button"),
         command: offers_reason.is_none().then_some(Command::OpenOffers),
         tooltip: offers_reason,
@@ -213,6 +217,7 @@ pub(super) fn bottom_buttons(
         && let Some(button) = prompt.buttons.first()
     {
         buttons.push(PurchaseButton {
+            card: None,
             label: catalog.text("round.announce.button_short"),
             command: Some(button.command),
             tooltip: Some(prompt.text.clone()),
@@ -221,12 +226,14 @@ pub(super) fn bottom_buttons(
     }
     buttons.push(match state.end_turn {
         Some(button) => PurchaseButton {
+            card: None,
             label: button.label.clone(),
             command: Some(button.command),
             tooltip: None,
             shortcut: button.shortcut.clone(),
         },
         None => PurchaseButton {
+            card: None,
             label: catalog.text("end_turn.button"),
             command: None,
             tooltip: Some(if state.game_over {
@@ -298,4 +305,14 @@ pub(super) fn pile_window(
             shortcut: shortcut_label(Shortcut::Cancel, catalog),
         },
     })
+}
+
+/// Spec #20, C19 : un choix de carte de fin de tour attend (artefact, sort, compétence, action
+/// avancée, unité) ; la fenêtre Offres reste fermée.
+pub(crate) fn choosing_card(view: &PlayerView) -> bool {
+    !view.drawn_artifacts.is_empty()
+        || view.spell_choices > 0
+        || !view.skill_choice.is_empty()
+        || view.advanced_action_choices > 0
+        || view.unit_choices > 0
 }

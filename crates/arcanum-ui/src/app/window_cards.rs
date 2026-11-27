@@ -8,8 +8,8 @@ use arcanum_i18n::Catalog;
 
 use super::Thumbnails;
 use super::bottom_panel::{art_band, card_content_size, card_frame, mana_swatch, strong_separator};
-use super::widgets::shortcut_button;
-use crate::{CARD_GAP, Command, OfferCardView, cards_per_row, row_width};
+use super::widgets::enabled_shortcut_button;
+use crate::{CARD_GAP, Command, LevelCard, OfferCardView, cards_per_row, row_width};
 
 /// Place gardée autour d'une fenêtre : elle ne dépasse jamais l'écran (L1, L2).
 const SCREEN_MARGIN: f32 = 32.0;
@@ -43,6 +43,77 @@ pub(super) fn card_rows(
     thumbnails: &Thumbnails,
     catalog: &Catalog,
 ) -> Option<Command> {
+    rows(ui, id, peer, cards, offer_parts, width, thumbnails, catalog)
+}
+
+/// L'offre d'actions avancées de la fenêtre du niveau pair (spec #20) : comme `card_rows`, mais
+/// « Prendre » peut être grisé, avec son infobulle (C3, C4).
+pub(super) fn level_card_rows(
+    ui: &mut egui::Ui,
+    id: egui::Id,
+    cards: &[LevelCard],
+    width: f32,
+    thumbnails: &Thumbnails,
+    catalog: &Catalog,
+) -> Option<Command> {
+    rows(ui, id, None, cards, level_parts, width, thumbnails, catalog)
+}
+
+fn offer_parts(card: &OfferCardView) -> (&OfferCardView, Option<Take<'_>>) {
+    (card, card.take.as_ref().map(Take::from))
+}
+
+fn level_parts(shown: &LevelCard) -> (&OfferCardView, Option<Take<'_>>) {
+    let take = Take {
+        label: &shown.take.label,
+        shortcut: shown.take.shortcut.as_deref(),
+        command: shown.take.command,
+        tooltip: shown.take.tooltip.as_deref(),
+    };
+    (&shown.card, Some(take))
+}
+
+/// Une carte seule, sans bouton : l'infobulle d'un achat de carte (spec #20, C21 à C23, L4).
+pub(super) fn lone_card(
+    ui: &mut egui::Ui,
+    card: &OfferCardView,
+    thumbnails: &Thumbnails,
+    catalog: &Catalog,
+) {
+    window_card(ui, card, None, 0.0, thumbnails, catalog);
+}
+
+/// Le bouton de choix d'une carte : actif avec sa commande, grisé sans elle.
+struct Take<'a> {
+    label: &'a str,
+    shortcut: Option<&'a str>,
+    command: Option<Command>,
+    /// Dite au survol, bouton grisé compris (C3).
+    tooltip: Option<&'a str>,
+}
+
+impl<'a> From<&'a crate::Button> for Take<'a> {
+    fn from(button: &'a crate::Button) -> Self {
+        Self {
+            label: &button.label,
+            shortcut: button.shortcut.as_deref(),
+            command: Some(button.command),
+            tooltip: None,
+        }
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn rows<'a, T>(
+    ui: &mut egui::Ui,
+    id: egui::Id,
+    peer: Option<egui::Id>,
+    cards: &'a [T],
+    parts: impl Fn(&'a T) -> (&'a OfferCardView, Option<Take<'a>>),
+    width: f32,
+    thumbnails: &Thumbnails,
+    catalog: &Catalog,
+) -> Option<Command> {
     let mut clicked = None;
     let per_row = cards_per_row(width);
     let ctx = ui.ctx().clone();
@@ -57,8 +128,9 @@ pub(super) fn card_rows(
         let mut tallest: f32 = 0.0;
         ui.horizontal_top(|ui| {
             ui.spacing_mut().item_spacing.x = CARD_GAP;
-            for card in row {
-                let (natural, command) = window_card(ui, card, height, thumbnails, catalog);
+            for item in row {
+                let (card, take) = parts(item);
+                let (natural, command) = window_card(ui, card, take, height, thumbnails, catalog);
                 tallest = tallest.max(natural);
                 clicked = command.or(clicked);
             }
@@ -77,6 +149,7 @@ pub(super) fn card_rows(
 fn window_card(
     ui: &mut egui::Ui,
     card: &OfferCardView,
+    take: Option<Take<'_>>,
     height: f32,
     thumbnails: &Thumbnails,
     catalog: &Catalog,
@@ -89,11 +162,24 @@ fn window_card(
                 ui.spacing_mut().item_spacing.y = 3.0;
                 let row = vec2(ui.available_width(), ui.spacing().interact_size.y);
                 ui.allocate_ui_with_layout(row, Layout::right_to_left(Align::Center), |ui| {
-                    if let Some(take) = &card.take
-                        && shortcut_button(ui, &take.label, take.shortcut.as_deref(), catalog)
-                            .clicked()
-                    {
-                        clicked = Some(take.command);
+                    if let Some(take) = &take {
+                        let enabled = take.command.is_some();
+                        let response = enabled_shortcut_button(
+                            ui,
+                            enabled,
+                            take.label,
+                            take.shortcut,
+                            catalog,
+                        );
+                        let response = match take.tooltip {
+                            Some(tooltip) => response
+                                .on_hover_text(tooltip)
+                                .on_disabled_hover_text(tooltip),
+                            None => response,
+                        };
+                        if response.clicked() {
+                            clicked = take.command;
+                        }
                     }
                     // Spec 041 : « monastère », une action avancée de l'offre d'unités.
                     if let Some(mark) = &card.mark {

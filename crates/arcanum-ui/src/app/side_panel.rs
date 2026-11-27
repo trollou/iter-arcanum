@@ -7,12 +7,14 @@ use eframe::egui::{self, Color32, Sense, Vec2};
 use super::board::standing_image_rect;
 use super::widgets::color_swatch;
 use super::windows::{
-    altar_window, artifact_window, crystal_window, meditation_window, offers_window,
-    preparation_window, reclaim_window, score_window, skill_choice_window, tactic_decision_window,
+    altar_window, card_choice_window, crystal_window, level_choice_window, meditation_window,
+    offers_window, preparation_window, reclaim_window, score_window, tactic_decision_window,
     tactic_window, token_window,
 };
 use super::{IterArcanumApp, Thumbnails, full_uv};
-use crate::{ArtifactChoice, Command, DummySection, GameScreen, HeroPortrait, ImageId, ImagePaint};
+use crate::{
+    CardChoiceWindow, Command, DummySection, GameScreen, HeroPortrait, ImageId, ImagePaint,
+};
 
 /// Portrait du héros dans le panneau (spec 065).
 const PORTRAIT_SIZE: f32 = 48.0;
@@ -270,10 +272,10 @@ impl IterArcanumApp {
         // Spec 041 : la fenêtre du choix de l'artefact, à la fin du tour.
         if let Some(window) = &screen.artifact_choice {
             let thumbnails = self.choice_thumbnails(ui.ctx(), window);
-            if let Some(command) = artifact_window(
+            if let Some(command) = card_choice_window(
                 ui.ctx(),
                 window,
-                "artifact_window",
+                "card_choice_window",
                 &thumbnails,
                 &self.catalog,
             ) {
@@ -286,16 +288,42 @@ impl IterArcanumApp {
         {
             let thumbnails = self.choice_thumbnails(ui.ctx(), window);
             if let Some(command) =
-                artifact_window(ui.ctx(), window, "spell_window", &thumbnails, &self.catalog)
+                card_choice_window(ui.ctx(), window, "spell_window", &thumbnails, &self.catalog)
             {
                 clicked = Some(command);
             }
         }
-        // Spec 051 : la fenêtre du choix de compétence d'un niveau pair.
-        if let Some(window) = &screen.skill_choice
-            && let Some(command) = skill_choice_window(ui.ctx(), window, &self.catalog)
-        {
-            clicked = Some(command);
+        // Spec #20 : les fenêtres de choix des récompenses et des effets « gagner », une à la fois.
+        for (window, id) in [
+            (
+                &screen.advanced_action_reward,
+                "advanced_action_reward_window",
+            ),
+            (&screen.unit_reward, "unit_reward_window"),
+            (&screen.gain_choice, "gain_choice_window"),
+        ] {
+            if let Some(window) = window {
+                let thumbnails = self.choice_thumbnails(ui.ctx(), window);
+                if let Some(command) =
+                    card_choice_window(ui.ctx(), window, id, &thumbnails, &self.catalog)
+                {
+                    clicked = Some(command);
+                }
+            }
+        }
+        // Spec #20 : la fenêtre du niveau pair, compétence et action avancée ensemble.
+        if let Some(window) = &screen.level_choice {
+            let thumbnails = self.thumbnails(
+                ui.ctx(),
+                window
+                    .advanced_actions
+                    .iter()
+                    .map(|shown| shown.card.illustration),
+            );
+            if let Some(command) = level_choice_window(ui.ctx(), window, &thumbnails, &self.catalog)
+            {
+                clicked = Some(command);
+            }
         }
         if let Some(window) = &screen.score_window
             && let Some(command) = score_window(ui.ctx(), window, &self.catalog)
@@ -309,7 +337,7 @@ impl IterArcanumApp {
     }
 
     /// Les vignettes d'une fenêtre de choix de l'artefact ou du sort (spec 072, C6).
-    fn choice_thumbnails(&mut self, ctx: &egui::Context, window: &ArtifactChoice) -> Thumbnails {
+    fn choice_thumbnails(&mut self, ctx: &egui::Context, window: &CardChoiceWindow) -> Thumbnails {
         self.thumbnails(ctx, window.cards.iter().map(|card| card.illustration))
     }
 

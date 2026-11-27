@@ -440,10 +440,12 @@ pub(super) fn recruit_buttons(
         }
         let name = catalog.text(unit.unit.label_key());
         let influence = unit.unit.definition().influence;
-        let tooltip = Some(super::offers::unit_card(unit, catalog).lines.join("\n"));
+        // Spec #20, C23 : la carte hors zone de l'unité en infobulle.
+        let card = Some(super::offers::unit_card(unit, catalog));
         // Spec 058, C30 : « Recruter sous Loyauté : Arbalétriers d'Utem (1) », sans renvoi.
         if bonded.is_some() || (bonds_free && here) {
             buttons.push(PurchaseButton {
+                card: card.clone(),
                 label: catalog.format(
                     "skill.bonds_recruit",
                     &[
@@ -452,17 +454,18 @@ pub(super) fn recruit_buttons(
                     ],
                 ),
                 command: bonded,
-                tooltip: tooltip.clone(),
+                tooltip: None,
                 shortcut: None,
             });
         }
         buttons.push(PurchaseButton {
+            card,
             label: catalog.format(
                 "units.recruit",
                 &[("name", &name), ("cost", &influence.to_string())],
             ),
             command: ordinary,
-            tooltip,
+            tooltip: None,
             shortcut: None,
         });
     }

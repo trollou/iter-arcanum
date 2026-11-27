@@ -199,6 +199,11 @@ pub enum Command {
     SaveVolumes,
     /// Encadrer cette tactique dans la fenêtre de choix (spec 060).
     SelectTactic(arcanum_core::Tactic),
+    /// Encadrer cette compétence dans la fenêtre du niveau pair, sans rien jouer (spec #20, Q1).
+    SelectSkill(arcanum_core::Skill),
+    /// Prendre cette action avancée au niveau pair : la compétence encadrée, puis la carte
+    /// (spec #20, C5).
+    TakeLevelReward(CardId),
     /// Cocher ou décocher une carte de la main : Faux départ, Méditation nocturne (spec 060).
     ToggleTacticCard(CardId),
     /// Ouvrir le choix des cartes de Méditation nocturne (spec 060).
@@ -287,6 +292,8 @@ pub enum ScreenMode {
     ChoosingSkillTarget(SkillChoice),
     /// Spec 060 : la tactique encadrée dans la fenêtre de choix, pas encore prise.
     ChoosingTactic(arcanum_core::Tactic),
+    /// Spec #20 : la compétence encadrée dans la fenêtre du niveau pair, pas encore prise.
+    ChoosingLevelSkill(arcanum_core::Skill),
     /// Spec 060 : les cartes de la main cochées pour Faux départ ou Méditation nocturne.
     PickingTacticCards(Vec<CardId>),
     /// Spec 060 : les dés de la Source cochés pour Appel du mana.
@@ -885,16 +892,23 @@ pub struct PurchaseButton {
     pub label: String,
     pub command: Option<Command>,
     pub tooltip: Option<String>,
+    /// Spec #20, C21 à C23 : la carte hors zone d'un achat de carte, montrée en infobulle à la
+    /// place de `tooltip` ; rien pour un achat sans carte ou d'une carte cachée.
+    pub card: Option<super::OfferCardView>,
     /// « E » pour l'offrande à l'autel (spec 071, C21) ; `None` sans touche.
     pub shortcut: Option<String>,
 }
 
-/// Fenêtre « Récompense : prenez un artefact » (spec 041) : les artefacts tirés, chacun avec son
-/// bouton « Prendre ».
+/// Fenêtre de choix (spec #20) : seulement les cartes à prendre maintenant, en cartes hors zone,
+/// chacune avec « Prendre » : artefact (spec 041), sort (spec 043), action avancée ou unité d'une
+/// récompense (spec 045), carte d'un effet « gagner » (spec 056).
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct ArtifactChoice {
+pub struct CardChoiceWindow {
     pub title: String,
     pub cards: Vec<super::OfferCardView>,
+    /// « Renoncer » (unité d'une récompense), « Annuler » (effet « gagner ») ; rien pour un choix
+    /// qu'on ne refuse pas.
+    pub close: Option<Button>,
 }
 
 /// Fenêtre « Offrande : 3 mana bleu, 7 Gloire » (spec 045, C34) : une ligne-bouton par paiement
@@ -1024,26 +1038,46 @@ pub struct SkillLine {
     pub tooltip: String,
 }
 
-/// Fenêtre « Niveau 2 : choisir une compétence » (spec 051, C4 à C8) : les deux compétences
-/// révélées, puis l'offre commune et sa note.
+/// Fenêtre du niveau pair (spec #20, C1 à C8) : les compétences révélées, l'offre commune et sa
+/// note, puis l'offre d'actions avancées, « Prendre » actif selon la compétence encadrée.
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct SkillChoiceWindow {
+pub struct LevelChoiceWindow {
+    /// « Niveau 2 : choisir une compétence et une action avancée ».
     pub title: String,
     pub revealed_title: String,
+    /// Vides une fois la compétence du niveau prise (sauvegarde faite entre les deux choix).
     pub revealed: Vec<SkillOffer>,
     pub common_title: String,
     pub common_note: String,
     /// Vide sans offre commune.
     pub common: Vec<SkillOffer>,
+    /// « Actions avancées ».
+    pub advanced_actions_title: String,
+    /// L'offre d'actions avancées dans son ordre ; vide quand elle l'est (C7).
+    pub advanced_actions: Vec<LevelCard>,
+    /// « Choisissez d'abord une compétence. », tant qu'aucune n'est encadrée.
+    pub hint: Option<String>,
 }
 
-/// Une compétence proposée : nom, fréquence, texte, et « Prendre » si elle est prenable.
+/// Une action avancée de la fenêtre du niveau pair : la carte hors zone (sans `take`), et
+/// « Prendre », grisé (sans commande) tant que la compétence encadrée ne la laisse pas prendre,
+/// avec la note de l'offre commune en infobulle (C3).
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct LevelCard {
+    pub card: super::OfferCardView,
+    pub take: PurchaseButton,
+}
+
+/// Une compétence proposée : nom, fréquence, texte ; encadrée ou non, la commande qui l'encadre
+/// quand elle est prenable, « Prendre » quand l'offre d'actions avancées est vide (C7).
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct SkillOffer {
     pub skill: arcanum_core::Skill,
     pub name: String,
     pub usage: String,
     pub text: String,
+    pub selected: bool,
+    pub select: Option<Command>,
     pub take: Option<Button>,
     /// « Compétence de votre héros : pas prenable ici ».
     pub note: Option<String>,

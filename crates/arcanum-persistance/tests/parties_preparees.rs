@@ -1144,7 +1144,8 @@ fn prepared() -> Vec<Prepared> {
         },
         Prepared {
             // Spec 050 : gloire 1, niveau 1 ; vaincre les Rôdeurs (+2) mène au niveau 2, et la fin
-            // du tour fait choisir une action avancée de l'offre.
+            // du tour ouvre la fenêtre du niveau pair : une compétence, puis une action avancée
+            // de l'offre (spec #20).
             name: "niveau-pair",
             rngs: None,
             events: {
@@ -1172,7 +1173,8 @@ fn prepared() -> Vec<Prepared> {
             },
         },
         Prepared {
-            // Spec 051 : trois compétences gagnées, le niveau 4 attend la fin du tour.
+            // Spec 051 : trois compétences gagnées, le niveau 4 attend la fin du tour (fenêtre du
+            // niveau pair, spec #20).
             name: "competences",
             rngs: None,
             events: turn_start(skills()),
@@ -2441,9 +2443,9 @@ fn prepared() -> Vec<Prepared> {
             },
         },
         Prepared {
-            // Spec 061 : 1 gloire, les Rôdeurs à côté ; les vaincre et finir le tour mènent au
-            // choix de la compétence du niveau 2, puis celle du fantôme apparaît dans l'offre
-            // commune.
+            // Spec 061 : 1 gloire, les Rôdeurs à côté ; les vaincre et finir le tour mènent à la
+            // fenêtre du niveau 2, où la compétence du fantôme apparaît dans l'offre commune ;
+            // encadrée, seule la dernière action avancée se prend (spec #20, C3).
             name: "fantome-competence",
             rngs: None,
             events: dummy_skill(),
