@@ -629,6 +629,16 @@ fn unit_reward_in_choice_window() {
     assert_eq!(window.title, "Récompense : prenez une unité de l'offre");
     assert_eq!(window.close, None);
     assert_eq!(window.cards.len(), offer.len());
+    // Spec #20, C18 : la fenêtre Offres, consultée, reste « Offres », sans « Prendre ».
+    let offers =
+        arcanum_ui::offers_window(&view(&choosing, SOLO), &session.legal_actions(), &catalog);
+    assert_eq!(offers.title, "Offres");
+    assert!(
+        offers.columns[2]
+            .cards
+            .iter()
+            .all(|card| card.take.is_none())
+    );
     for (place, (card, &unit)) in window.cards.iter().zip(&offer).enumerate() {
         assert_eq!(card.name, catalog.text(unit.unit.label_key()));
         let wanted = Action::TakeUnitReward {

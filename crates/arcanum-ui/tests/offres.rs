@@ -235,3 +235,37 @@ fn numbered_choices_show_shortcut() {
         .collect();
     assert_eq!(keys, [Some("1".into()), Some("2".into()), Some("3".into())]);
 }
+
+// Spec #20, C18 : la fenêtre Offres ne s'ouvre qu'à la demande ; ouverte pendant le choix d'un
+// niveau pair (fenêtre calculée), elle garde son titre et n'a pas de « Prendre ».
+#[test]
+fn offers_window_opens_only_on_request() {
+    let catalog = french();
+    let session = opened(true);
+    assert!(session.offers_window(&catalog).is_none());
+    let window = offers_window(&session.view(), &session.legal_actions(), &catalog);
+    assert_eq!(window.title, "Offres");
+    assert!(
+        window
+            .columns
+            .iter()
+            .flat_map(|column| &column.cards)
+            .all(|card| card.take.is_none())
+    );
+    assert_eq!(window.close.command, Command::CloseOffers);
+}
+
+// Spec #20, C19 : pendant un choix de carte, « Offres… » est grisé et ni lui ni O n'ouvrent la
+// fenêtre.
+#[test]
+fn offers_stay_closed_during_a_choice() {
+    let catalog = french();
+    let mut session = opened(true);
+    let button = &session.screen(&catalog).bottom_buttons[0];
+    assert_eq!(button.label, "Offres…");
+    assert_eq!(button.command, None);
+    session.command(Command::OpenOffers);
+    assert!(session.offers_window(&catalog).is_none());
+    session.shortcut(Shortcut::Offers);
+    assert!(session.offers_window(&catalog).is_none());
+}
