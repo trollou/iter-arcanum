@@ -56,10 +56,11 @@ définition du jeton, `CombatEnemy::city_abilities`). Ce que l'écran gagne :
 - **Condition d'un bouton d'effet** : le visage à icône d'un effet (`EffectFace::Icon`) peut porter une condition, un court texte
   suivi d'une icône (« ×2 si » et Vif) ; seule la Parade vive (`Effect::SwiftBlock`) en a une.
 - **Texte à icônes** (Q3, Q4) : un libellé de `assets/i18n/*.json` peut contenir un **repère d'icône** `[[nom]]`, placé juste
-  devant le mot qu'il illustre : « À parer : {block} ([[swift]]vif, 2 × {attack}) ». Les noms sont ceux des six icônes nouvelles :
+  devant le mot qu'il illustre (« Capacités : [[brutal]]brutal » sur le plateau), ou **seul à la place du mot** dans l'écran de
+  combat, où l'icône a son infobulle (« À parer : {block} ([[swift]], 2 × {attack}) » ; Mathieu, revue de la PR #85). Les noms sont ceux des six icônes nouvelles :
   `fortified`, `swift`, `brutal`, `poison`, `paralyze`, `summon`. Les champs de l'écran restent des `String` qui portent leurs
   repères ; une fonction pure d'arcanum-ui, `icon_pieces(text, catalog) -> Vec<ValuePiece>`, les découpe en morceaux de texte et
-  en icônes (sans valeur, avec nom et règle en infobulle), et `plain_text(text)` retire les repères. L'application dessine ces
+  en icônes (sans valeur, avec nom et règle en infobulle), et `plain_text(text)` retire les repères suivis d'un mot et remplace un repère seul par le nom de l'icône (« Vif »). L'application dessine ces
   morceaux partout où le texte s'affiche dans un libellé ou une infobulle ; là où egui n'accepte que du texte (libellé d'un
   bouton, titre de fenêtre, journal), elle affiche `plain_text` : le mot reste, sans icône.
 
@@ -98,7 +99,7 @@ puis celles de la cité, `enemy_abilities` de `screen/combat.rs`) : seule leur f
   titre de Brutal est « Brutal (cité) », sa règle celle de Brutal. Hors de la cité rouge, le titre est « Brutal » sans « (cité) »
   (tests existants modifiés : `cites.rs`, lignes 386 et 396 à 399, qui lisaient le texte « brutal (cité) ») — spec 062.
 - **C9** — Comme aujourd'hui (spec 054), un ennemi qui a perdu sa fortification garde son icône Fortifié ; c'est son statut qui dit
-  « plus fortifié » (`combat.enemy.no_fortification`). Les résistances perdues, elles, disparaissent déjà des icônes de
+  « [[fortified]] perdu » (`combat.enemy.no_fortification`, C18 ; aujourd’hui « plus fortifié »). Les résistances perdues, elles, disparaissent déjà des icônes de
   résistance (`resistance_icons` lit `effective_resistances`).
 
 ### Règle des résistances et des attaques des ennemis (Q2)
@@ -122,23 +123,25 @@ puis celles de la cité, `enemy_abilities` de `screen/combat.rs`) : seule leur f
 
 ### Icône devant le mot (Q3, Q4)
 
-- **C15** — `icon_pieces` découpe « À parer : 6 ([[swift]]vif, 2 × 3) » en « À parer : 6 ( », l'icône Vif (titre « Vif »,
-  sa règle), « vif, 2 × 3) » ; un texte sans repère donne un seul morceau de texte ; `plain_text` donne
-  « À parer : 6 (vif, 2 × 3) » (`icon_pieces_split_markers`).
+- **C15** — `icon_pieces` découpe « Capacités : [[brutal]]brutal » en « Capacités : », l'icône Brutal (titre « Brutal », sa
+  règle), « brutal », et « À parer : 6 ([[swift]], 2 × 3) » en « À parer : 6 ( », l'icône Vif, « , 2 × 3) » ; un texte sans
+  repère donne un seul morceau de texte. `plain_text` donne « Capacités : brutal » et « À parer : 6 (Vif, 2 × 3) »
+  (`icon_pieces_split_markers`).
 - **C16** — Chaque repère de `fr.json` et de `en.json` nomme une des six icônes, et chaque clé a les mêmes repères, dans le même
   ordre, dans les deux langues (`icon_markers_are_known_and_shared`).
 - **C17** — Infobulle d'un ennemi sur le plateau (Cogneurs, Ironclads : armure 3, attaque 4, Brutal, résistance physique,
   gloire 4) : la ligne devient « Capacités : [[brutal]]brutal » (test existant modifié : `ennemis_errants.rs`, ligne 201). Avec
   plusieurs capacités (Dragons des marais, SwampDragon : Vif, Toxique) : « Capacités : [[swift]]vif, [[poison]]toxique ».
-- **C18** — Écran de combat, les textes de la liste des clés marquées (section Libellés) portent leurs repères :
-  - enjeux : « À parer : 6 ([[swift]]vif, 2 × 3) », « Si non paré : 8 ([[brutal]]brutal, 2 × 4) dégâts, 4 blessure(s) » ;
-  - parade en cours : « [[swift]]Vif : il faut parer le double de son attaque, 2 × 3 = 6 » ;
-  - historique : « [[brutal]]brutal 2 × 4 = 8 », « [[poison]]toxique : … », « [[paralyze]]paralysant : … » ;
-  - statuts : « [[fortified]]fortifié : siège seulement », « [[fortified]]fortifié (site) », « [[fortified]]doublement
-    fortifié : pas de cible à distance », « [[fortified]]plus fortifié » ;
-  - ligne partagée : « [[fortified]]fortifié (Creuseurs) : attaques de siège seulement » ;
-  - créature invoquée : « [[summon]]Invoque : Minotaure » ; avertissement : « …, Invocateurs orques [[summon]]invoquent une
-    créature (donjon)… ».
+- **C18** — Écran de combat : l'icône **remplace** le mot (elle a son infobulle, nom et règle ; Mathieu, revue de la PR #85) :
+  - enjeux : « À parer : 6 ([[swift]], 2 × 3) », « Si non paré : 8 ([[brutal]], 2 × 4) dégâts, 4 blessure(s) » ;
+  - parade en cours : « [[swift]] : il faut parer le double de son attaque, 2 × 3 = 6 » ;
+  - historique : « [[brutal]] 2 × 4 = 8 », « [[poison]] : 1 de plus dans la défausse », « [[paralyze]] : 3 carte(s)
+    défaussée(s) de la main » ;
+  - statuts : « [[fortified]] : siège seulement », « [[fortified]] (site) », « [[fortified]] perdu » ; **doublement fortifié :
+    deux icônes**, « [[fortified]][[fortified]] : pas de cible à distance » ;
+  - ligne partagée : « [[fortified]] (Creuseurs) : attaques de siège seulement » ;
+  - créature invoquée : « [[summon]] : Minotaure invoqué » ; l'avertissement garde le mot : « …, Invocateurs orques
+    [[summon]]invoquent une créature (donjon)… ».
 
   Tests existants modifiés, qui comparent ces textes (relevés par `grep` des valeurs de `fr.json` dans `crates/arcanum-ui/tests`) :
   `deroule_combat.rs` (13 assertions, dont `swift_block_shows_doubled_target`, `block_phase_shows_summoned_monster_and_stakes`,
@@ -208,22 +211,22 @@ Vérifications faites sur `main` :
 - **Plus lue par l'écran de combat** : `enemy.abilities` (« Capacités : {list} ») reste lue par l'infobulle du plateau
   (`token_lines`, C17) ; `enemy.summon` (« invocation ») aussi (`attack_text`). Aucune clé ne disparaît.
 
-**Clés marquées** (valeurs relues dans `fr.json` de `main`, le repère ajouté devant le mot ; en.json reçoit les mêmes repères
-devant le mot anglais correspondant) :
+**Clés marquées** (valeurs relues dans `fr.json` de `main` ; repère devant le mot hors du combat, à la place du mot dans l'écran
+de combat ; en.json reçoit les mêmes repères au même endroit, « [[summon]]: {monster} summoned ») :
 
 | Clé | fr après la spec |
 |---|---|
 | `enemy.ability.fortified` … `paralyze` | `[[fortified]]fortifié`, `[[swift]]vif`, `[[brutal]]brutal`, `[[poison]]toxique`, `[[paralyze]]paralysant` |
-| `combat.enemy.swift_block` | {block} ([[swift]]vif, 2 × {attack}) |
-| `combat.enemy.brutal_damage` | {damage} ([[brutal]]brutal, 2 × {attack}) |
-| `combat.history.brutal` / `poison` / `paralyze` | [[brutal]]brutal 2 × {attack} = {damage} ; [[poison]]toxique : {count} de plus dans la défausse ; [[paralyze]]paralysant : {count} carte(s) défaussée(s) de la main |
-| `combat.swift_line` | [[swift]]Vif : il faut parer le double de son attaque, 2 × {attack} = {block} |
-| `combat.enemy.siege_only` | [[fortified]]fortifié : siège seulement |
-| `combat.enemy.site_fortified` | [[fortified]]fortifié (site) |
-| `combat.enemy.fortified_twice` | [[fortified]]doublement fortifié : pas de cible à distance |
-| `combat.enemy.no_fortification` | [[fortified]]plus fortifié |
-| `combat.shared.fortified` | [[fortified]]fortifié ({enemies}) : attaques de siège seulement |
-| `combat.enemy.summons` | [[summon]]Invoque : {monster} |
+| `combat.enemy.swift_block` | {block} ([[swift]], 2 × {attack}) |
+| `combat.enemy.brutal_damage` | {damage} ([[brutal]], 2 × {attack}) |
+| `combat.history.brutal` / `poison` / `paralyze` | [[brutal]] 2 × {attack} = {damage} ; [[poison]] : {count} de plus dans la défausse ; [[paralyze]] : {count} carte(s) défaussée(s) de la main |
+| `combat.swift_line` | [[swift]] : il faut parer le double de son attaque, 2 × {attack} = {block} |
+| `combat.enemy.siege_only` | [[fortified]] : siège seulement |
+| `combat.enemy.site_fortified` | [[fortified]] (site) |
+| `combat.enemy.fortified_twice` | [[fortified]][[fortified]] : pas de cible à distance |
+| `combat.enemy.no_fortification` | [[fortified]] perdu |
+| `combat.shared.fortified` | [[fortified]] ({enemies}) : attaques de siège seulement |
+| `combat.enemy.summons` | [[summon]] : {monster} invoqué |
 | `combat.summon_warning` | Au début de la phase de parade, {enemies} [[summon]]invoquent une créature (donjon) : pas de retour en arrière après. |
 | `board.hover.defender_fortified` | Défenseur [[fortified]]fortifié : siège seulement à distance |
 | `board.hover.defender_fortified_twice` | Défenseur doublement [[fortified]]fortifié : aucun tir à distance |
@@ -286,7 +289,8 @@ Chaque question a une recommandation ; la spec est écrite avec elle.
 
 Mathieu (2026-11-27) : recommandations acceptées pour Q1, Q2 et Q6, et pour les dessins de Q5, Invocation redessinée (variante A).
 Q3 et Q4 tranchées autrement : l'icône devant le mot, dans l'infobulle du plateau et partout où un texte nomme une capacité
-(section « Icône devant le mot », C15 à C21). Validation en attente de sa relecture complète.
+(section « Icône devant le mot », C15 à C21) ; dans l'écran de combat, l'icône remplace le mot, et « doublement fortifié » montre
+deux icônes (revue de la PR #85). Validation en attente de sa relecture complète.
 
 - **Q1 — Quelles capacités ?** Recommandé : les cinq des ennemis du jeu (Fortifié, Vif, Brutal, Toxique, Paralysant) et
   l'Invocation. L'issue cite « assassin » : l'Assassinat n'existe que sur des ennemis des extensions, absents du jeu ; dessiner
