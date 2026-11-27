@@ -1411,7 +1411,7 @@ fn prepared() -> Vec<Prepared> {
         },
         Prepared {
             // Spec #27 : comme `unites`, mais des Gardes d'Utem prêts dans la zone des unités et
-            // la figurine voisine des Chevaucheurs de loups (3, −2) : le bouton de la Parade vive
+            // la figurine voisine des Chevaucheurs de loups (3, −3) : le bouton de la Parade vive
             // montre « ×2 si » et l'icône Vif.
             name: "unites-vif",
             rngs: None,
@@ -1425,7 +1425,7 @@ fn prepared() -> Vec<Prepared> {
                         card(Rage, 1),
                         card(Determination, 1),
                     ],
-                    &[(token(arcanum_core::Enemy::WolfRiders, 1), Hex::new(3, -2))],
+                    &[(token(arcanum_core::Enemy::WolfRiders, 1), ORCS_2)],
                 );
                 events.extend(settled_progress(0, 3));
                 events.extend(unit_events(&[UnitCard::new(Unit::UtemGuardsmen, 1)], &[]));
@@ -1435,9 +1435,7 @@ fn prepared() -> Vec<Prepared> {
                 let state = runner.state();
                 assert_eq!(state.units(SOLO).len(), 1);
                 let legal = legal_actions(state, SOLO);
-                assert!(legal.contains(&Action::Challenge {
-                    enemy: Hex::new(3, -2)
-                }));
+                assert!(legal.contains(&Action::Challenge { enemy: ORCS_2 }));
             },
         },
         Prepared {

@@ -269,7 +269,7 @@ Parties préparées pour la vérification à l'œil (`docs/verification-manuelle
   résistances à la glace et physique) ; règles des résistances et de l'attaque de glace.
 - `cite-bleue` (existante) : assaut, Glaceurs avec Fortifié, Vif, Paralysant (L3).
 - `unites-vif` (nouvelle) : comme `unites`, mais des Gardes d'Utem prêts dans la zone des unités et la figurine voisine des
-  Chevaucheurs de loups (3, −2) ; défier, passer en phase de parade, déclarer la parade : le bouton « Parade 4 ×2 si [Vif] » (C13).
+  Chevaucheurs de loups (3, −3) ; défier, passer en phase de parade, déclarer la parade : le bouton « Parade 4 ×2 si [Vif] » (C13).
 
 ### Raccourcis clavier
 
