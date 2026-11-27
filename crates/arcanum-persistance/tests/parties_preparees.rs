@@ -1410,6 +1410,37 @@ fn prepared() -> Vec<Prepared> {
             },
         },
         Prepared {
+            // Spec #27 : comme `unites`, mais des Gardes d'Utem prêts dans la zone des unités et
+            // la figurine voisine des Chevaucheurs de loups (3, −2) : le bouton de la Parade vive
+            // montre « ×2 si » et l'icône Vif.
+            name: "unites-vif",
+            rngs: None,
+            events: {
+                let mut events = arena(
+                    VILLAGE,
+                    &[
+                        card(Promise, 1),
+                        card(Threaten, 1),
+                        card(Tranquility, 1),
+                        card(Rage, 1),
+                        card(Determination, 1),
+                    ],
+                    &[(token(arcanum_core::Enemy::WolfRiders, 1), Hex::new(3, -2))],
+                );
+                events.extend(settled_progress(0, 3));
+                events.extend(unit_events(&[UnitCard::new(Unit::UtemGuardsmen, 1)], &[]));
+                turn_start(events)
+            },
+            check: |runner| {
+                let state = runner.state();
+                assert_eq!(state.units(SOLO).len(), 1);
+                let legal = legal_actions(state, SOLO);
+                assert!(legal.contains(&Action::Challenge {
+                    enemy: Hex::new(3, -2)
+                }));
+            },
+        },
+        Prepared {
             // Spec 041 : campagnes 3, 4 et 5 explorées, figurine sur le monastère de la
             // campagne 5 ; une action avancée dans l'offre d'unités, Paysans dans la zone.
             name: "monastere",
