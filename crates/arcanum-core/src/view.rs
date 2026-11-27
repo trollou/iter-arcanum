@@ -206,6 +206,9 @@ pub struct PlayerView {
     pub skill_choice: Vec<Skill>,
     pub common_skills: Vec<CommonSkillView>,
     pub lowest_advanced_action_only: bool,
+    /// Spec #20, public : pendant le choix d'un niveau pair, pour chaque compétence prenable, les
+    /// actions avancées de l'offre qu'elle laisse prendre, dans l'ordre de l'offre ; vide sinon.
+    pub skill_choice_cards: Vec<(Skill, Vec<CardId>)>,
     /// Spec 060, public : pendant le choix, une case par tactique du moment (disponible, retirée,
     /// prise par un joueur) ; les tactiques retirées de la partie ; la tactique du joueur et son
     /// état ; les cartes du deck pendant le choix de Préparation, triées (pas leur ordre).
@@ -474,6 +477,7 @@ fn base_view(state: &GameState, player: PlayerId) -> PlayerView {
             })
             .collect(),
         lowest_advanced_action_only: state.lowest_advanced_action_only(player),
+        skill_choice_cards: Vec::new(),
         set_aside: state.set_aside(player).to_vec(),
         extra_turn: state.extra_turn(player),
         meditation: state.player(player).and_then(|p| p.meditation.clone()),
