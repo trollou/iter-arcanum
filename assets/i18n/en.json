@@ -682,8 +682,10 @@
       "strong_name": "Earthquake",
       "basic_text": "One enemy loses 3 [[armor]]Armor, or all enemies lose 2 [[armor]]Armor. Armor does not go below 1.",
       "strong_text": "One enemy loses 3 [[armor]]Armor (6 if it is [[fortified]]fortified), or all enemies lose 2 [[armor]]Armor (4 for those that are [[fortified]]fortified). Armor does not go below 1.",
-      "basic_label": "One enemy loses 3 Armor, or all enemies 2",
-      "strong_label": "One enemy loses 3 Armor, 6 if fortified, or all 2, 4 if fortified"
+      "basic_label_1": "One enemy: Armor −3 (min. 1)",
+      "basic_label_2": "All enemies: Armor −2 (min. 1)",
+      "strong_label_1": "One enemy: Armor −3, −6 if fortified (min. 1)",
+      "strong_label_2": "All enemies: Armor −2, −4 for fortified ones (min. 1)"
     },
     "flame_wall": {
       "name": "Flame Wall",

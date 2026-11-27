@@ -55,14 +55,18 @@ fn written_keys() -> Vec<String> {
         .collect()
 }
 
-/// Les libellés de bouton écrits : `basic_label`, `strong_label`, capacités d'unité.
+/// Les libellés de bouton écrits : `basic_label`, `strong_label` (ou un par option,
+/// `basic_label_<n>`, issue #107), capacités d'unité.
 fn button_label_keys(catalog: &Catalog) -> Vec<String> {
     catalog
         .keys()
         .into_iter()
         .filter(|key| {
             (key.starts_with("card.")
-                && (key.ends_with(".basic_label") || key.ends_with(".strong_label")))
+                && (key.ends_with(".basic_label")
+                    || key.ends_with(".strong_label")
+                    || key.contains(".basic_label_")
+                    || key.contains(".strong_label_")))
                 || (key.starts_with("unit.") && key.contains(".ability_"))
         })
         .collect()
