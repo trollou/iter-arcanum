@@ -6,9 +6,10 @@ use crate::combat::{
     Combat, Moment, PlayMoment, apply_defeat, apply_destroyed, apply_dismiss, apply_knock_out,
     apply_paralysis, apply_poison, apply_summon, apply_unit_damage, apply_unit_destroyed,
     apply_wounds, assign_actions, assign_damage_events, conversion_actions, engaging_actions,
-    influence_conversion, is_playable_now, moment, move_conversion, movement_over,
-    next_phase_events, phase_actions, rampaging_reputation, resolve_attack, resolve_block,
-    sideways_in_combat, spell_enemy_targets, target_actions, unit_enemy_targets,
+    fear_holds_summons, influence_conversion, is_playable_now, moment, move_conversion,
+    movement_over, next_phase_events, phase_actions, rampaging_reputation, release_summons_events,
+    resolve_attack, resolve_block, sideways_in_combat, spell_enemy_targets, target_actions,
+    unit_enemy_targets,
 };
 use crate::exploration::revealable_removed;
 

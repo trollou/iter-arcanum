@@ -1092,6 +1092,7 @@
   "combat": {
     "start": "Start the combat",
     "next_phase": "Next phase",
+    "call_summons": "Let them summon",
     "end": "End the combat",
     "challenge": "Challenge {enemy}",
     "to_fight": "To fight: {enemies}",

@@ -1092,6 +1092,7 @@
   "combat": {
     "start": "Engager le combat",
     "next_phase": "Phase suivante",
+    "call_summons": "Laisser invoquer",
     "end": "Terminer le combat",
     "challenge": "Défier {enemy}",
     "to_fight": "À combattre : {enemies}",

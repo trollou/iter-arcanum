@@ -1613,7 +1613,8 @@ pub(crate) fn unit_enemy_targets(combat: &Combat, kinds: &[ModifierKind]) -> Vec
                     && !enemy.block_failed
                     && !enemy.does_not_attack()
                     && (combat.phase == CombatPhase::RangedAndSiege
-                        || (enemy.summoned.is_none() && attack_value(enemy.token).is_some()))
+                        || (enemy.summoned.is_none()
+                            && (attack_value(enemy.token).is_some() || combat.summons_held)))
             }
             CombatPhase::Attack => reduces_armor,
             _ => false,
@@ -2205,6 +2206,40 @@ fn summon_events(
     events
 }
 
+/// Issue #8 (Compendium, *Banner of Fear* Q5, *Combat* S23) : une attaque d'Invocateur ne
+/// s'annule qu'avant le tirage de sa créature. L'invocation attend donc tant qu'une unité
+/// disponible et non blessée porte la Bannière de terreur et qu'un Invocateur attaque encore.
+pub(crate) fn fear_holds_summons(p: &PlayerState, combat: &Combat) -> bool {
+    let fear_ready = p.units.iter().any(|owned| {
+        owned.ready && !owned.is_wounded() && carries(p, owned.card, crate::Artifact::BannerOfFear)
+    });
+    fear_ready
+        && combat.enemies.iter().any(|enemy| {
+            !enemy.defeated
+                && !enemy.does_not_attack()
+                && enemy.token.enemy().definition().attack == EnemyAttack::Summon
+        })
+}
+
+/// Issue #8 : l'invocation reprend son cours, les Invocateurs qui attaquent encore tirent leur
+/// créature.
+pub(crate) fn release_summons_events(
+    state: &GameState,
+    player: PlayerId,
+    rngs: &mut GameRngs,
+) -> Result<Vec<Event>, ActionError> {
+    let combat = state
+        .player(player)
+        .and_then(|p| p.combat.as_ref())
+        .ok_or(ActionError::NotLegal)?;
+    let mut events = vec![Event::SummonsHeld {
+        player,
+        held: false,
+    }];
+    events.extend(summon_events(state, player, combat, rngs));
+    Ok(events)
+}
+
 /// Passer à la phase suivante. Depuis la phase de parade, la phase d'assignation des dégâts se
 /// résout aussitôt (Q3) : un `WoundsTaken` par ennemi qui blesse, ou rien et la phase est sautée
 /// (MKUE p. 9, *Assign Damage Phase* 1.a).
@@ -2220,7 +2255,12 @@ pub(crate) fn next_phase_events(
     match combat.phase {
         CombatPhase::RangedAndSiege => {
             let mut events = vec![started(phase)];
-            events.extend(summon_events(state, player, combat, rngs));
+            // Issue #8 : l'invocation attend si la Bannière de terreur peut l'annuler.
+            if fear_holds_summons(p, combat) {
+                events.push(Event::SummonsHeld { player, held: true });
+            } else {
+                events.extend(summon_events(state, player, combat, rngs));
+            }
             return Ok(events);
         }
         CombatPhase::Block => {}

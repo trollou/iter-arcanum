@@ -336,6 +336,7 @@ fn setup_events_come_in_order() {
                 Event::HandParalyzed { .. } => "HandParalyzed",
                 Event::EnemySummoned { .. } => "EnemySummoned",
                 Event::SummonedEnemyDiscarded { .. } => "SummonedEnemyDiscarded",
+                Event::SummonsHeld { .. } => "SummonsHeld",
                 Event::WoundsHealed { .. } => "WoundsHealed",
                 Event::KnockedOut { .. } => "KnockedOut",
                 Event::LevelGained { .. } => "LevelGained",

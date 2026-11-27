@@ -510,6 +510,9 @@ Event:
   - SummonedEnemyDiscarded:
       player: PlayerId
       summoner: EnemyToken
+  - SummonsHeld:
+      player: PlayerId
+      held: bool
   - WoundsHealed:
       player: PlayerId
       wounds: Vec<CardId>

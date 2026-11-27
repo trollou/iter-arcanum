@@ -176,7 +176,11 @@ pub(super) fn combat_event(state: &mut GameState, event: &Event) {
             summoner,
             token,
         } => apply_summon(state, *player, *summoner, *token),
-        Event::SummonsHeld { .. } => {}
+        Event::SummonsHeld { player, held } => {
+            if let Some(combat) = state.player_mut(*player).and_then(|p| p.combat.as_mut()) {
+                combat.summons_held = *held;
+            }
+        }
         Event::SummonedEnemyDiscarded { player, summoner } => {
             apply_dismiss(state, *player, *summoner)
         }

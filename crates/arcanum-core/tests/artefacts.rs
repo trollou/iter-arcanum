@@ -3,8 +3,8 @@
 
 use arcanum_core::{
     Action, AdvancedAction, Artifact, ArtifactChoices, CardId, CardPlay, DeedCard, DestroyedFrom,
-    Effect, EnemyColor, EnemyToken, Event, GameState, Hex, ManaColor, TimeOfDay, Unit, UnitCard, apply,
-    legal_actions,
+    Effect, EnemyColor, EnemyToken, Event, GameState, Hex, ManaColor, TimeOfDay, Unit, UnitCard,
+    apply, legal_actions,
 };
 
 mod arene;
