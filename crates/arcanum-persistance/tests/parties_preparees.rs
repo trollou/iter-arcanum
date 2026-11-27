@@ -766,6 +766,31 @@ fn dummy_skill() -> Vec<Event> {
     )
 }
 
+/// Issue #92 : `dummy_skill` jouée jusqu'à la fenêtre du niveau 2 (spec #20) : une compétence de
+/// Goldyx déjà dans l'offre commune, les Rôdeurs vaincus (+2 gloire), Célérité jouée de côté et
+/// fin du tour lancée.
+fn even_level_choice() -> Vec<Event> {
+    let mut events = dummy_skill();
+    events.push(Event::SkillToCommonOffer {
+        skill: arcanum_core::Skill::ALL
+            .into_iter()
+            .find(|skill| skill.hero() == arcanum_core::Hero::Goldyx)
+            .expect("une compétence de Goldyx"),
+    });
+    events.push(Event::EnemiesDefeated {
+        player: SOLO,
+        enemies: vec![prowlers()],
+        fame: 2,
+    });
+    let events = then_played(events, &[sideways(card(Swiftness, 1))]);
+    let state = events.iter().fold(GameState::default(), apply);
+    let end_turn = legal_actions(&state, SOLO)
+        .into_iter()
+        .find(|action| matches!(action, Action::EndTurn { .. }))
+        .expect("finir le tour est légal");
+    then_played(events, &[end_turn])
+}
+
 // --- Conquête en solitaire (spec 064) ---
 
 /// La main des parties de Conquête en solitaire : Marche, Détermination, Rage, Célérité, Endurance.
@@ -2459,6 +2484,19 @@ fn prepared() -> Vec<Prepared> {
             },
         },
         Prepared {
+            // Issue #92 : `fantome-competence` jouée jusqu'à la fenêtre du niveau 2 (spec #20) :
+            // la compétence révélée, l'offre commune (C3) et « Prendre », sans combat à la main.
+            name: "niveau-pair-choix",
+            rngs: None,
+            events: even_level_choice(),
+            check: |runner| {
+                let state = runner.state();
+                assert_eq!(state.level(SOLO), 2);
+                assert!(!state.skill_choice(SOLO).is_empty());
+                assert!(!state.common_skills().is_empty());
+            },
+        },
+        Prepared {
             // Spec 064, C32 : la côte refusée à la tuile royaume, l'intérieur permis.
             name: "conquete-cote",
             rngs: None,
@@ -2592,8 +2630,9 @@ fn every_prepared_game_is_listed_in_the_manual_check_page() {
 
 /// Issue privée 296 : une partie préparée commence au début d'un tour, sans fait « Ce tour » ni bandeau
 /// de niveau venus de sa construction (cristaux, unités, gloire et niveau posés d'avance). Seule la
-/// conquête posée « ce tour » (récompenses de fin de tour) ouvre les faits du tour, suivie de ce
-/// que le tour joué a produit.
+/// conquête ou la victoire posée « ce tour » (récompenses ou niveau de fin de tour) ouvre les faits
+/// du tour, suivie de ce que le tour joué a produit ; seule la fenêtre du niveau pair, ouverte par
+/// la fin du tour jouée, vient avec son bandeau (issue #92).
 #[test]
 fn prepared_games_start_without_turn_facts_nor_level_banners() {
     let mut wrong = Vec::new();
@@ -2601,8 +2640,12 @@ fn prepared_games_start_without_turn_facts_nor_level_banners() {
         let runner = runner_of(&party.events, party.rngs);
         let state = runner.state();
         let facts = state.turn_facts(SOLO);
-        let posed = !matches!(facts.first(), None | Some(TurnFact::SiteConquered { .. }));
-        if posed || !state.levels_gained(SOLO).is_empty() {
+        let posed = !matches!(
+            facts.first(),
+            None | Some(TurnFact::SiteConquered { .. } | TurnFact::EnemiesDefeated { .. })
+        );
+        let banners = !state.levels_gained(SOLO).is_empty() && state.skill_choice(SOLO).is_empty();
+        if posed || banners {
             wrong.push(format!(
                 "{} (faits du tour {facts:?}, bandeaux de niveau {:?})",
                 party.name,
