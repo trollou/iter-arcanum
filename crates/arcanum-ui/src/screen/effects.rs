@@ -148,7 +148,7 @@ fn paid_face(effect: Effect, catalog: &Catalog) -> EffectFace {
         Effect::PayForCrystal(color) => effect_face(Effect::GainCrystal(color), catalog),
         Effect::GainSpell(color) => EffectFace::Text(catalog.format(
             "effect.spell_from_offer",
-            &[("color", &super::source::tagged_color_name(color, catalog))],
+            &[("color", &super::source::color_name(color, catalog))],
         )),
         _ => effect_face(effect, catalog),
     }

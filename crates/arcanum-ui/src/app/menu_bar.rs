@@ -66,7 +66,7 @@ impl IterArcanumApp {
                 })
             });
             if let Some(scenario) = &bar.scenario {
-                let source = source.map_or(0.0, |source| source_width(ui, source));
+                let source = source.map_or(0.0, |source| source_width(ui, source, &self.catalog));
                 let right = notice_width + 260.0 + source;
                 let width = (ui.available_width() - right).max(40.0);
                 ui.scope(|ui| {
@@ -84,7 +84,7 @@ impl IterArcanumApp {
             // Spec #10, C6 : la Source après les pioches de tuiles (Q1, retour de Mathieu).
             if let Some(source) = source {
                 ui.separator();
-                clicked = source_line(ui, source).or(clicked);
+                clicked = source_line(ui, source, &self.catalog).or(clicked);
             }
             if let Some(notice) = &bar.notice {
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {

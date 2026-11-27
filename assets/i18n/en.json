@@ -991,7 +991,7 @@
     "sideways_effect": "Play sideways: {effect}",
     "strong": "Power: {effect}",
     "strong_discarding": "Power: {effect}…",
-    "strong_no_mana": "You need {color} mana: a {color} or gold die from the Source, a {color} crystal or a {color} token.",
+    "strong_no_mana": "You need {color} mana: a {color} or <gold>gold</gold> die from the Source, a {color} crystal or a {color} token.",
     "strong_die_taken": "Die already taken this turn: you need a {color} crystal or token.",
     "throw_away": "Throw away: {effect}",
     "assign_banner": "Assign to a unit"
@@ -1112,7 +1112,7 @@
   "mana_choice": {
     "prompt": "{card} powered: {effect}. Choose the mana to pay.",
     "die": "{color} die",
-    "gold_die": "Gold die (as {color})",
+    "gold_die": "<gold>Gold</gold> die (as {color})",
     "crystal": "{color} crystal ({count} of {limit})",
     "cancel": "Cancel",
     "prompt_basic": "{card}: {effect}. Choose the mana to pay.",
@@ -1764,7 +1764,7 @@
     "mana_claim_per_turn": "a {color} token each turn",
     "unit_armor_bonus": "units Armor +{amount}",
     "fame_per_unit_attack_or_block": "Fame +1 per unit that attacks or blocks",
-    "endless_mana": "endless {color} and black mana; Fame +1 per {color} spell",
+    "endless_mana": "endless {color} and <black>black</black> mana; Fame +1 per {color} spell",
     "fame_per_enemy_defeated": "Fame +1 per enemy defeated",
     "double_physical_attacks": "Physical attacks doubled in the Attack phase",
     "throw_away_received_wounds": "end of turn: throw away the Wounds received",

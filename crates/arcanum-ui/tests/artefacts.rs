@@ -341,7 +341,7 @@ fn artifact_modifiers_in_play_area() {
     assert!(
         lines
             .iter()
-            .any(|line| line.contains("mana rouge et noir illimité ; Gloire +1 par sort rouge")),
+            .any(|line| line.contains("mana <red>rouge</red> et <black>noir</black> illimité ; Gloire +1 par sort <red>rouge</red>")),
         "{lines:?}"
     );
 }
@@ -378,7 +378,7 @@ fn rolled_dice_shown_this_turn() {
     let state = rolled(state, ManaColor::Black);
     let facts = screen_of(&state, &catalog).turn_facts;
     assert!(
-        facts.contains(&"Dés lancés : bleu, noir".to_string()),
+        facts.contains(&"Dés lancés : <blue>bleu</blue>, <black>noir</black>".to_string()),
         "{facts:?}"
     );
 }
@@ -603,7 +603,7 @@ fn amulet_of_darkness_colors() {
     assert_eq!(buttons.len(), 6);
     let red = buttons
         .iter()
-        .find(|(label, _)| label == "Jeton rouge")
+        .find(|(label, _)| label == "Jeton <red>rouge</red>")
         .expect("jeton rouge");
     let reds = |count: usize| ArtifactChoices {
         colors: arcanum_core::Picks::of(&vec![
@@ -619,7 +619,7 @@ fn amulet_of_darkness_colors() {
     let screen = screen_in(&state, &artifact_mode(darkness, true, none), &catalog);
     let red = prompt_buttons(&screen)
         .into_iter()
-        .find(|(label, _)| label == "Jeton rouge")
+        .find(|(label, _)| label == "Jeton <red>rouge</red>")
         .expect("jeton rouge");
     assert_eq!(
         red.1,
@@ -633,7 +633,7 @@ fn amulet_of_darkness_colors() {
     let screen = screen_in(&state, &artifact_mode(darkness, true, reds(2)), &catalog);
     let red = prompt_buttons(&screen)
         .into_iter()
-        .find(|(label, _)| label == "Jeton rouge")
+        .find(|(label, _)| label == "Jeton <red>rouge</red>")
         .expect("jeton rouge");
     assert_eq!(
         action_of(&state, Some(red.1)),
@@ -752,7 +752,7 @@ fn endless_mana_in_mana_choice() {
     let buttons = prompt_buttons(&screen_in(&state, &mode, &catalog));
     let endless = buttons
         .iter()
-        .find(|(label, _)| label == "illimité (rouge)")
+        .find(|(label, _)| label == "illimité (<red>rouge</red>)")
         .unwrap_or_else(|| panic!("{buttons:?}"));
     assert!(matches!(
         action_of(&state, Some(endless.1)),

@@ -231,7 +231,11 @@ impl IterArcanumApp {
                     }
                     None => paint_diamond(ui, cell, card_color(color), true),
                 }
-                response.on_hover_text(&crystals.tooltip);
+                response.on_hover_text(super::widgets::rich_text(
+                    ui.style(),
+                    &crystals.tooltip,
+                    &self.catalog,
+                ));
             }
         });
     }
@@ -285,7 +289,11 @@ impl IterArcanumApp {
                         );
                     }
                 }
-                response.on_hover_text(&token.tooltip);
+                response.on_hover_text(super::widgets::rich_text(
+                    ui.style(),
+                    &token.tooltip,
+                    &self.catalog,
+                ));
             }
             // Spec 073, C26 : les jetons dépensés ce tour, grisés.
             for token in &tokens.spent {
@@ -305,7 +313,11 @@ impl IterArcanumApp {
                         );
                     }
                 }
-                response.on_hover_text(&token.tooltip);
+                response.on_hover_text(super::widgets::rich_text(
+                    ui.style(),
+                    &token.tooltip,
+                    &self.catalog,
+                ));
             }
         });
     }

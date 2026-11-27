@@ -21,17 +21,21 @@ pub(super) fn color_swatch(ui: &mut egui::Ui, color: BasicColor) {
 /// Ligne « Source » : les dés utilisables, puis les épuisés grisés (spec 020) ; renvoie le dé
 /// cliqué en mode « mettre un dé sur une couleur » (spec 025). Dessinée à la suite dans la barre
 /// de menu, sans passer à la ligne (spec #10, L1).
-pub(super) fn source_line(ui: &mut egui::Ui, source: &SourceLine) -> Option<Command> {
+pub(super) fn source_line(
+    ui: &mut egui::Ui,
+    source: &SourceLine,
+    catalog: &Catalog,
+) -> Option<Command> {
     let mut clicked = None;
     ui.label(&source.title);
     for die in &source.dice {
         // Spec 058, C6 : plus de dé ce tour, les dés grisés comme épuisés.
-        clicked = source_die(ui, die, die.forbidden).or(clicked);
+        clicked = source_die(ui, die, die.forbidden, catalog).or(clicked);
     }
     if let Some(title) = &source.taken_title {
         ui.weak(title);
         for die in &source.taken {
-            taken_die(ui, die);
+            taken_die(ui, die, catalog);
         }
     }
     // Spec 058, C39 : le dé d'Embrasure de la Source, gardé tel quel à la fin du tour.
@@ -43,7 +47,7 @@ pub(super) fn source_line(ui: &mut egui::Ui, source: &SourceLine) -> Option<Comm
     if let Some(title) = &source.depleted_title {
         ui.weak(title);
         for die in &source.depleted {
-            clicked = source_die(ui, die, true).or(clicked);
+            clicked = source_die(ui, die, true, catalog).or(clicked);
         }
     }
     clicked
@@ -51,14 +55,14 @@ pub(super) fn source_line(ui: &mut egui::Ui, source: &SourceLine) -> Option<Comm
 
 /// Largeur de la ligne de la Source, que la barre réserve avant de tronquer le nom du scénario
 /// (spec #10, L1).
-pub(super) fn source_width(ui: &egui::Ui, source: &SourceLine) -> f32 {
+pub(super) fn source_width(ui: &egui::Ui, source: &SourceLine, catalog: &Catalog) -> f32 {
     let spacing = ui.spacing().item_spacing.x;
     let dice = source
         .dice
         .iter()
         .chain(&source.taken)
         .chain(&source.depleted)
-        .map(|die| die_width(ui, die) + spacing);
+        .map(|die| die_width(ui, die, catalog) + spacing);
     let titles = [&source.taken_title, &source.depleted_title]
         .into_iter()
         .flatten()
@@ -91,20 +95,30 @@ fn text_width(ui: &egui::Ui, text: &str, style: egui::TextStyle) -> f32 {
 }
 
 /// Largeur d'un dé de la Source : pastille et nom, dans un bouton s'il est cliquable.
-fn die_width(ui: &egui::Ui, die: &SourceDie) -> f32 {
+fn die_width(ui: &egui::Ui, die: &SourceDie, catalog: &Catalog) -> f32 {
+    let name = crate::plain_text(&die.name, catalog);
     match die.pick {
         Some(_) => {
             DIE_SWATCH
-                + text_width(ui, &die.name, egui::TextStyle::Button)
+                + text_width(ui, &name, egui::TextStyle::Button)
                 + 2.0 * ui.spacing().button_padding.x
         }
-        None => DIE_SWATCH + text_width(ui, &die.name, egui::TextStyle::Body),
+        None => DIE_SWATCH + text_width(ui, &name, egui::TextStyle::Body),
     }
 }
 
 /// Un dé : carré arrondi de sa couleur et son nom, avec son info-bulle ; un bouton quand on peut le
 /// choisir (spec 025).
-fn source_die(ui: &mut egui::Ui, die: &SourceDie, depleted: bool) -> Option<Command> {
+///
+/// Le nom reste sans couleur, la pastille la porte ; l'infobulle colore ses mots de couleur
+/// (issue #106).
+fn source_die(
+    ui: &mut egui::Ui,
+    die: &SourceDie,
+    depleted: bool,
+    catalog: &Catalog,
+) -> Option<Command> {
+    let name = crate::plain_text(&die.name, catalog);
     let color = mana_color(die.color);
     let fill = if depleted {
         color.gamma_multiply(0.35)
@@ -126,27 +140,27 @@ fn source_die(ui: &mut egui::Ui, die: &SourceDie, depleted: bool) -> Option<Comm
             Some(command) => {
                 // Spec 060 : un dé coché pour Appel du mana.
                 if ui
-                    .add(egui::Button::new(&die.name).selected(die.checked))
+                    .add(egui::Button::new(&name).selected(die.checked))
                     .clicked()
                 {
                     clicked = Some(command);
                 }
             }
             None if depleted => {
-                ui.weak(&die.name);
+                ui.weak(&name);
             }
             None => {
-                ui.label(&die.name);
+                ui.label(&name);
             }
         }
     })
     .response
-    .on_hover_text(&die.tooltip);
+    .on_hover_text(rich_text(ui.style(), &die.tooltip, catalog));
     clicked
 }
 
 /// Un dé pris ce tour : rond cerclé de sa couleur, pour le distinguer des dés libres (spec 022).
-fn taken_die(ui: &mut egui::Ui, die: &SourceDie) {
+fn taken_die(ui: &mut egui::Ui, die: &SourceDie, catalog: &Catalog) {
     ui.horizontal(|ui| {
         ui.spacing_mut().item_spacing.x = 3.0;
         let (rect, _) = ui.allocate_exact_size(Vec2::splat(14.0), Sense::hover());
@@ -156,22 +170,28 @@ fn taken_die(ui: &mut egui::Ui, die: &SourceDie) {
             mana_color(die.color),
             Stroke::new(2.0, CHOICE_STROKE),
         );
-        ui.label(&die.name);
+        ui.label(crate::plain_text(&die.name, catalog));
     })
     .response
-    .on_hover_text(&die.tooltip);
+    .on_hover_text(rich_text(ui.style(), &die.tooltip, catalog));
 }
 
 /// Bouton « Renforcer » : pastille de la couleur à payer, grisé avec sa raison (spec 022).
-pub(super) fn strong_button(ui: &mut egui::Ui, button: &StrongButton) -> Option<Command> {
+/// Le libellé et la raison en infobulle colorent leurs mots de couleur (spec #68 ; issue #106).
+pub(super) fn strong_button(
+    ui: &mut egui::Ui,
+    button: &StrongButton,
+    catalog: &Catalog,
+) -> Option<Command> {
     let mut chosen = None;
     ui.horizontal(|ui| {
         ui.spacing_mut().item_spacing.x = 3.0;
         color_swatch(ui, button.color);
         // Repliable : « Renforcer : Mettre 2 dé(s) sur une couleur… » élargirait le panneau.
-        let mut response = ui.add_enabled(button.enabled, egui::Button::new(&button.label).wrap());
+        let label = rich_text(ui.style(), &button.label, catalog);
+        let mut response = ui.add_enabled(button.enabled, egui::Button::new(label).wrap());
         if let Some(tooltip) = &button.tooltip {
-            response = response.on_disabled_hover_text(tooltip);
+            response = response.on_disabled_hover_text(rich_text(ui.style(), tooltip, catalog));
         }
         if response.clicked() {
             chosen = Some(button.command);

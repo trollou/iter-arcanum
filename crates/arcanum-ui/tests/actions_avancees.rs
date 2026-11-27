@@ -421,13 +421,14 @@ fn strong_pure_magic_chooses_both_mana() {
     assert!(
         labels
             .iter()
-            .any(|label| label.starts_with("Dé bleu · Cristal bleu")),
+            .any(|label| label.starts_with("Dé <blue>bleu</blue> · Cristal <blue>bleu</blue>")),
         "{labels:?}"
     );
     assert!(
         labels
             .iter()
-            .any(|label| label.starts_with("Cristal bleu") && label.ends_with("Dé bleu")),
+            .any(|label| label.starts_with("Cristal <blue>bleu</blue>")
+                && label.ends_with("Dé <blue>bleu</blue>")),
         "{labels:?}"
     );
 }

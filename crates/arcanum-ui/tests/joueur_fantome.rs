@@ -170,11 +170,14 @@ fn dummy_panel_lines() {
         section.crystals.crystals,
         [BasicColor::Blue, BasicColor::Green, BasicColor::Green]
     );
-    assert_eq!(section.crystals.tooltip, "bleu : 1, vert : 2");
+    assert_eq!(
+        section.crystals.tooltip,
+        "<blue>bleu</blue> : 1, <green>vert</green> : 2"
+    );
     assert_eq!(section.skills, "Compétences cachées : 2");
     assert_eq!(
         section.last_turn,
-        "Dernier tour : Rage, Célérité, Marche, Endurance, Promesse ; vert : 2 de plus"
+        "Dernier tour : Rage, Célérité, Marche, Endurance, Promesse ; <green>vert</green> : 2 de plus"
     );
     assert_eq!(section.announced, None);
 }

@@ -155,7 +155,10 @@ fn hovering_a_mine_tells_what_it_gives() {
         .iter()
         .position(|line| line == "Mine verte")
         .expect("le nom du site");
-    assert_eq!(lines[site + 1], "Finir le tour ici : +1 cristal vert");
+    assert_eq!(
+        lines[site + 1],
+        "Finir le tour ici : +1 cristal <green>vert</green>"
+    );
 
     let full = state_with(TileId::Countryside(2), &[(Green, 3)]);
     let lines = hover(&full, mine_of(&full), &catalog);

@@ -274,7 +274,9 @@ fn hover_describes_ruins() {
 
     let altar = lines(Ruins::default());
     assert!(altar.contains(&"Ruines".to_string()), "{altar:?}");
-    assert!(altar.contains(&"Autel : offrande de 3 mana bleu pour 7 Gloire".to_string()));
+    assert!(
+        altar.contains(&"Autel : offrande de 3 mana <blue>bleu</blue> pour 7 Gloire".to_string())
+    );
     no_shield_word(&altar);
 
     let unit = lines(Ruins {
@@ -359,7 +361,10 @@ fn panel_offers_altar_tribute() {
     let screen = screen_of(&poor, &catalog);
     let button = screen.altar.expect("bouton grisé");
     assert_eq!(button.command, None);
-    assert_eq!(screen.altar_warning.as_deref(), Some("Il faut 3 mana bleu"));
+    assert_eq!(
+        screen.altar_warning.as_deref(),
+        Some("Il faut 3 mana <blue>bleu</blue>")
+    );
 
     let elsewhere = Ruins {
         figure: NEAR_RUINS,
@@ -400,7 +405,10 @@ fn altar_payment_window() {
     let window = screen_in(&state, &ScreenMode::PayingTribute, &catalog)
         .altar_window
         .expect("fenêtre de l'offrande");
-    assert_eq!(window.title, "Offrande : 3 mana bleu, 7 Gloire");
+    assert_eq!(
+        window.title,
+        "Offrande : 3 mana <blue>bleu</blue>, 7 Gloire"
+    );
     let tributes = tributes(&state);
     assert_eq!(window.payments.len(), tributes.len());
     for (button, action) in window.payments.iter().zip(&tributes) {
@@ -412,7 +420,8 @@ fn altar_payment_window() {
         .map(|button| button.label.as_str())
         .collect();
     assert!(
-        labels.contains(&"dé bleu, cristal bleu, jeton bleu"),
+        labels
+            .contains(&"dé <blue>bleu</blue>, cristal <blue>bleu</blue>, jeton <blue>bleu</blue>"),
         "{labels:?}"
     );
     assert_eq!(window.note, "La gloire est gagnée aussitôt.");

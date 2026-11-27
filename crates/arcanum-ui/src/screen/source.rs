@@ -74,7 +74,8 @@ pub(super) fn source_line(
     }
 }
 
-pub(super) fn mana_name(color: ManaColor, catalog: &Catalog) -> String {
+/// Le nom d'une couleur de mana, sans balise : le mot du catalogue (« bleu »).
+fn plain_mana_name(color: ManaColor, catalog: &Catalog) -> String {
     catalog.text(match color {
         ManaColor::Basic(BasicColor::Red) => "mana.red",
         ManaColor::Basic(BasicColor::Blue) => "mana.blue",
@@ -85,18 +86,15 @@ pub(super) fn mana_name(color: ManaColor, catalog: &Catalog) -> String {
     })
 }
 
-/// Le nom d'une couleur de mana dans sa balise de couleur (spec #68, C11) : « <blue>bleu</blue> »,
-/// pour les textes calculés des effets, que l'écran colore.
-pub(super) fn tagged_mana_name(color: ManaColor, catalog: &Catalog) -> String {
+/// Le nom d'une couleur de mana dans sa balise de couleur (spec #68, C11 ; issue #106) :
+/// « <blue>bleu</blue> », pour tous les textes calculés qui nomment une couleur (effets, invites
+/// de paiement, infobulles), que l'écran colore.
+pub(super) fn mana_name(color: ManaColor, catalog: &Catalog) -> String {
     let tag = crate::COLOR_TAGS
         .iter()
         .find(|(_, tagged)| *tagged == color)
         .map_or("", |(tag, _)| tag);
-    format!("<{tag}>{}</{tag}>", mana_name(color, catalog))
-}
-
-pub(super) fn tagged_color_name(color: BasicColor, catalog: &Catalog) -> String {
-    tagged_mana_name(ManaColor::Basic(color), catalog)
+    format!("<{tag}>{}</{tag}>", plain_mana_name(color, catalog))
 }
 
 pub(super) fn color_name(color: BasicColor, catalog: &Catalog) -> String {

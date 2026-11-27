@@ -427,7 +427,7 @@ fn stolen_die_shows_on_the_tactic() {
         (line.number.as_str(), line.name.as_str()),
         ("N° 3", "Vol de mana")
     );
-    assert_eq!(line.notes, ["Dé volé : bleu"]);
+    assert_eq!(line.notes, ["Dé volé : <blue>bleu</blue>"]);
 }
 
 // Spec 060 C12 — Interface : le dé volé, une ligne de plus dans le choix du mana.
@@ -447,7 +447,10 @@ fn stolen_die_pays_in_the_mana_choice() {
         .mana_prompt
         .expect("le choix du mana");
     let payments: Vec<&str> = prompt.payments.iter().map(|b| b.label.as_str()).collect();
-    assert!(payments.contains(&"Dé volé : bleu"), "{payments:?}");
+    assert!(
+        payments.contains(&"Dé volé : <blue>bleu</blue>"),
+        "{payments:?}"
+    );
 }
 
 // Spec 060 C30 — Interface : Préparation, la fenêtre des cartes du deck.

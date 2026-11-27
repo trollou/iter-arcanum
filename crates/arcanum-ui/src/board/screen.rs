@@ -1241,7 +1241,7 @@ fn ruin_lines(input: &BoardInput<'_>, hex: Hex, catalog: &Catalog) -> Vec<String
         Some(token) => match token.definition().altar() {
             Some(color) => catalog.format(
                 "board.hover.ruins.altar",
-                &[("color", &catalog.text(mana_key(color)))],
+                &[("color", &tagged_color(color, catalog))],
             ),
             None => catalog.format(
                 "board.hover.ruins.enemies",
@@ -1537,7 +1537,7 @@ fn hover_lines(
         } else {
             catalog.format(
                 "board.hover.mine.gain",
-                &[("color", &catalog.text(mana_key(color)))],
+                &[("color", &tagged_color(color, catalog))],
             )
         });
     }
@@ -1793,6 +1793,16 @@ pub(crate) fn feature_key(feature: Feature) -> &'static str {
         Feature::Rampaging(Rampaging::OrcMarauders) => "enemy.orc_marauders.name",
         Feature::Rampaging(Rampaging::Draconum) => "enemy.draconum.name",
     }
+}
+
+/// Le nom de la couleur dans sa balise (« <green>vert</green> »), que l'infobulle colore
+/// (issue #106).
+fn tagged_color(color: BasicColor, catalog: &Catalog) -> String {
+    let tag = crate::COLOR_TAGS
+        .iter()
+        .find(|(_, tagged)| *tagged == arcanum_core::ManaColor::Basic(color))
+        .map_or("", |(tag, _)| tag);
+    format!("<{tag}>{}</{tag}>", catalog.text(mana_key(color)))
 }
 
 /// Nom de la couleur au masculin singulier, partagé avec la Source (spec 020).

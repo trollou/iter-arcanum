@@ -895,9 +895,11 @@ pub(super) fn altar_window(
     catalog: &Catalog,
 ) -> Option<Command> {
     let mut clicked = None;
-    egui::Window::new(&window.title)
+    // Issue #106 : une barre de titre n'écrit que du texte simple, sans la balise de couleur.
+    let title = crate::plain_text(&window.title, catalog);
+    egui::Window::new(&title)
         .id(egui::Id::unique("altar_window"))
-        .min_width(title_min_width(ctx, &window.title))
+        .min_width(title_min_width(ctx, &title))
         .collapsible(false)
         .resizable(false)
         .anchor(egui::Align2::CENTER_CENTER, vec2(0.0, 0.0))

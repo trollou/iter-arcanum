@@ -150,7 +150,7 @@ fn cast_prompt_names_the_die() {
         },
         &catalog,
     );
-    let red = catalog.format("mana_claim.die", &[("color", &catalog.text("mana.red"))]);
+    let red = catalog.format("mana_claim.die", &[("color", "<red>rouge</red>")]);
     assert!(
         labels.iter().any(|label| label.contains(&red)),
         "{labels:?}"

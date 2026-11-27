@@ -321,13 +321,14 @@ fn invocation_and_polarization_lines_in_mana_window() {
     assert!(
         lines
             .iter()
-            .any(|line| line == "Invocation : défausser Rage (vert)"),
+            .any(|line| line == "Invocation : défausser Rage (<green>vert</green>)"),
         "{lines:?}"
     );
     assert!(
         lines
             .iter()
-            .any(|line| line == "Polarisation : Cristal blanc comme vert"),
+            .any(|line| line
+                == "Polarisation : Cristal <white>blanc</white> comme <green>vert</green>"),
         "{lines:?}"
     );
     let mode = ScreenMode::ChoosingMana(ManaChoice {
@@ -363,7 +364,9 @@ fn invocation_and_polarization_lines_in_mana_window() {
     let polarize = prompt
         .payments
         .iter()
-        .find(|button| button.label == "Polarisation : Cristal blanc comme vert")
+        .find(|button| {
+            button.label == "Polarisation : Cristal <white>blanc</white> comme <green>vert</green>"
+        })
         .expect("la ligne de Polarisation");
     let wanted = Action::PlayCard {
         card: march(),
@@ -518,12 +521,18 @@ fn universal_power_chooses_mana_after_card() {
         .iter()
         .map(|button| button.label.as_str())
         .collect();
-    assert!(labels.contains(&"Jeton vert · Mouvement 4"), "{labels:?}");
-    assert!(labels.contains(&"Jeton rouge · Mouvement 3"), "{labels:?}");
+    assert!(
+        labels.contains(&"Jeton <green>vert</green> · Mouvement 4"),
+        "{labels:?}"
+    );
+    assert!(
+        labels.contains(&"Jeton <red>rouge</red> · Mouvement 3"),
+        "{labels:?}"
+    );
     let green_token = prompt
         .payments
         .iter()
-        .find(|button| button.label == "Jeton vert · Mouvement 4")
+        .find(|button| button.label == "Jeton <green>vert</green> · Mouvement 4")
         .expect("le jeton vert");
     let wanted = skill_sideways(
         march(),
@@ -686,7 +695,15 @@ fn mana_overload_chooses_color() {
         .iter()
         .map(|button| button.label.as_str())
         .collect();
-    assert_eq!(labels[..4], ["rouge", "bleu", "blanc", "vert"]);
+    assert_eq!(
+        labels[..4],
+        [
+            "<red>rouge</red>",
+            "<blue>bleu</blue>",
+            "<white>blanc</white>",
+            "<green>vert</green>"
+        ]
+    );
     let red = ManaColor::Basic(BasicColor::Red);
     assert_eq!(
         prompt.payments[0].command,

@@ -73,13 +73,23 @@ fn panel_shows_source_dice() {
     let state = with_source(&[ManaColor::Black, GREEN, BLUE]);
     let source = screen_at(&state, TimeOfDay::Day, &catalog).source;
     assert_eq!(source.title, "Source");
-    assert_eq!(names(&source.dice), ["vert", "bleu"]);
+    assert_eq!(
+        names(&source.dice),
+        ["<green>vert</green>", "<blue>bleu</blue>"]
+    );
     assert_eq!(source.dice[0].color, GREEN);
     assert_eq!(source.depleted_title.as_deref(), Some("épuisé :"));
-    assert_eq!(names(&source.depleted), ["noir"]);
+    assert_eq!(names(&source.depleted), ["<black>noir</black>"]);
 
     let night = screen_at(&state, TimeOfDay::Night, &catalog).source;
-    assert_eq!(names(&night.dice), ["noir", "vert", "bleu"]);
+    assert_eq!(
+        names(&night.dice),
+        [
+            "<black>noir</black>",
+            "<green>vert</green>",
+            "<blue>bleu</blue>"
+        ]
+    );
     assert_eq!(night.depleted_title, None);
     assert!(night.depleted.is_empty());
 
@@ -96,14 +106,14 @@ fn source_die_tooltips() {
     let catalog = french();
     let state = with_source(&[BLUE, ManaColor::Gold, ManaColor::Black]);
     let day = screen_at(&state, TimeOfDay::Day, &catalog).source;
-    assert_eq!(day.dice[0].tooltip, "Dé de mana bleu");
+    assert_eq!(day.dice[0].tooltip, "Dé de mana <blue>bleu</blue>");
     assert_eq!(
         day.dice[1].tooltip,
         "Dé de mana or : peut servir de mana de n'importe quelle couleur de base, de jour."
     );
     assert_eq!(
         day.depleted[0].tooltip,
-        "Dé de mana noir : épuisé, inutilisable de jour."
+        "Dé de mana <black>noir</black> : épuisé, inutilisable de jour."
     );
 
     let night = screen_at(&state, TimeOfDay::Night, &catalog).source;
@@ -113,7 +123,7 @@ fn source_die_tooltips() {
     );
     assert_eq!(
         night.depleted[0].tooltip,
-        "Dé de mana or : épuisé, inutilisable de nuit."
+        "Dé de mana <gold>or</gold> : épuisé, inutilisable de nuit."
     );
 }
 
