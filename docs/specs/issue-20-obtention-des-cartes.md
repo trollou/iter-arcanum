@@ -325,6 +325,6 @@ Tranchées par Mathieu (2026-11-27, « ok pour tout ! ») : les trois propositio
   un choix à faire maintenant, qu'une fenêtre ouverte d'office imposerait. **Retenu** : les laisser dans la
   fenêtre Offres, que le joueur ouvre lui-même (C20) ; l'offre complète ne s'ouvre bien qu'au clic sur « Offres… ». Écartée :
   une fenêtre dédiée par effet, ouverte par un bouton de plus dans le panneau, à spécifier.
-- **Q3. Effet « gagner » : seulement les cartes prenables ?** L'issue dit « uniquement les cartes concernées ». Proposition
-  (**recommandée**) : seulement les cartes prenables (C14 : Chemins de traverse seule). Écartée : toute l'offre concernée, les
+- **Q3. Effet « gagner » : seulement les cartes prenables ?** L'issue dit « uniquement les cartes concernées ». **Retenu** :
+  seulement les cartes prenables (C14 : Chemins de traverse seule). Écartée : toute l'offre concernée, les
   cartes d'une autre couleur grisées.
