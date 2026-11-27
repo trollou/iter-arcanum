@@ -10,6 +10,17 @@
 - Livret : MKUE p. 11, 6.b (niveau pair) ; p. 11, 5.c et 5.d (récompenses) ; aucune règle changée
 - Crates touchées : arcanum-ui, arcanum-core (un champ de la vue, C9), assets/i18n
 - Base : issue #20 (reprise de l'issue privée 371), idée de Mathieu.
+- Maquette de la fenêtre du niveau pair (demandée par Mathieu, 2026-11-27) :
+  [`images/issue-20-obtention-des-cartes/`](images/issue-20-obtention-des-cartes/), captures du jeu en 1 600 × 900 avec un
+  essai de code jetable, non versionné (patch dans les fichiers du projet, `ihm/issue-20-maquette-jetable.patch`) : Tovak au
+  niveau 2, Marche forcée et Vision nocturne révélées, Attaque givrante (compétence de Goldyx, le fantôme) dans l'offre
+  commune, offre Magie pure, Chemins de traverse, Agilité.
+  [Aucune compétence encadrée](images/issue-20-obtention-des-cartes/maquette-sans-choix.png) (« Prendre » grisé partout, ligne
+  d'aide) ; [compétence révélée encadrée](images/issue-20-obtention-des-cartes/maquette-competence-revelee.png) (« Prendre »
+  actif sur les trois) ; [compétence de l'offre commune encadrée](images/issue-20-obtention-des-cartes/maquette-offre-commune.png)
+  (seul « Prendre » d'Agilité, en dernière place, est actif). Disposition retenue par la maquette : compétences révélées et
+  offre commune côte à côte sur une rangée, la note de l'offre commune sous ses tuiles, la ligne d'aide à côté du titre
+  « Actions avancées », la fenêtre posée en haut du plateau pour que les cartes tiennent sans défiler en 1 600 × 900.
 
 ## Objectif
 
@@ -259,11 +270,11 @@ Clés retirées, sans plus de lecteur : `offers.choose_advanced_action` (« Nive
 ## Interface
 
 - **Fenêtre du niveau pair** (C1 à C8, `LevelChoiceWindow`, `PlayerView::skill_choice`, `common_skills`,
-  `skill_choice_cards`, `offers`) : centrée, sans croix ; en haut les compétences révélées, puis l'offre commune et sa note
-  quand elle n'est pas vide, chaque compétence en tuile (nom, fréquence, texte) qu'un clic encadre, comme une tactique
-  (spec 060) ; dessous, « Actions avancées » et l'offre en rangée de cartes hors zone (spec #32), « Prendre » en haut à
-  droite de chaque carte (L4 de la spec #32) ; la ligne d'aide sous les compétences tant qu'aucune n'est encadrée
-  (disposition : vérification à l'œil).
+  `skill_choice_cards`, `offers`) : en haut du plateau, sans croix ; compétences révélées et offre commune côte à côte sur une
+  rangée (la note de l'offre commune sous ses tuiles), chaque compétence en tuile (nom, fréquence, texte) qu'un clic encadre,
+  comme une tactique (spec 060) ; dessous, « Actions avancées » suivi de la ligne d'aide tant qu'aucune compétence n'est
+  encadrée, et l'offre en rangée de cartes hors zone (spec #32), « Prendre » en haut à droite de chaque carte (L4 de la spec
+  #32) (disposition : vérification à l'œil, [maquette](images/issue-20-obtention-des-cartes/maquette-sans-choix.png)).
 - **Fenêtres de choix** (C11 à C17, `CardChoiceWindow`, `PlayerView::offers`, mode de l'écran pour l'effet « gagner ») :
   celle de l'artefact et du sort de la spec #32, une rangée de cartes hors zone, « Renoncer » ou « Annuler » en bas quand il
   y en a un (vérification à l'œil).
