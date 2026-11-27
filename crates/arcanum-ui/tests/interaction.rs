@@ -98,7 +98,13 @@ fn panel_offers_interaction_and_warns() {
     let state = done(&state, basic(card(Promise, 1)));
     assert_eq!(
         screen_of(&state, &catalog).interaction_warning.as_deref(),
-        Some("Interagir fait perdre : 2 mouvement, 2 influence")
+        Some("Interagir fait perdre : 2 mouvement")
+    );
+    // Variante maison (issue #95) : l'influence jouée avant l'interaction reste, sans avertissement.
+    let only_influence = done(&arena(VILLAGE, &hand(), &[]), basic(card(Promise, 1)));
+    assert_eq!(
+        screen_of(&only_influence, &catalog).interaction_warning,
+        None
     );
     let plain = arena(PLAIN_W, &hand(), &[]);
     assert_eq!(screen_of(&plain, &catalog).interact, None);
