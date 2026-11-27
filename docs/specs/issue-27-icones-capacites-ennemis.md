@@ -17,7 +17,8 @@ Sur la carte d'un ennemi de l'écran de combat, chaque capacité (Fortifié, Vif
 s'affiche en icône, comme les résistances depuis la spec 071, au lieu de la ligne « Capacités : vif, toxique ». Au survol, l'icône
 donne son nom en titre, puis la règle de la capacité en une ou deux phrases : le joueur n'a plus besoin du livret pour savoir ce
 que fait un Paralysant. La Parade des Gardes d'Utem (« Parade 4 ; compte double contre un ennemi Vif ») montre sur son bouton
-« ×2 si » suivi de l'icône Vif.
+« ×2 si » suivi de l'icône Vif. Partout ailleurs où un texte nomme une capacité d'un ennemi (infobulle du plateau, lignes
+d'enjeu et d'historique du combat, statuts, textes des unités et des cartes), l'icône s'affiche devant le mot, qui reste.
 
 ## Règles
 
@@ -53,7 +54,14 @@ définition du jeton, `CombatEnemy::city_abilities`). Ce que l'écran gagne :
 - **Carte d'ennemi** (`EnemyCard`) : `abilities` devient une liste de valeurs à icône (`Vec<IconValue>`, sans valeur, avec
   règle), au lieu de `Option<String>` ; de même pour `SummonedCard::abilities`.
 - **Condition d'un bouton d'effet** : le visage à icône d'un effet (`EffectFace::Icon`) peut porter une condition, un court texte
-  suivi d'une icône (« ×2 si » et Vif) ; seule la Parade vive (`Effect::SwiftBlock`) en a une (Q4).
+  suivi d'une icône (« ×2 si » et Vif) ; seule la Parade vive (`Effect::SwiftBlock`) en a une.
+- **Texte à icônes** (Q3, Q4) : un libellé de `assets/i18n/*.json` peut contenir un **repère d'icône** `[[nom]]`, placé juste
+  devant le mot qu'il illustre : « À parer : {block} ([[swift]]vif, 2 × {attack}) ». Les noms sont ceux des six icônes nouvelles :
+  `fortified`, `swift`, `brutal`, `poison`, `paralyze`, `summon`. Les champs de l'écran restent des `String` qui portent leurs
+  repères ; une fonction pure d'arcanum-ui, `icon_pieces(text, catalog) -> Vec<ValuePiece>`, les découpe en morceaux de texte et
+  en icônes (sans valeur, avec nom et règle en infobulle), et `plain_text(text)` retire les repères. L'application dessine ces
+  morceaux partout où le texte s'affiche dans un libellé ou une infobulle ; là où egui n'accepte que du texte (libellé d'un
+  bouton, titre de fenêtre, journal), elle affiche `plain_text` : le mot reste, sans icône.
 
 ## Actions et événements
 
@@ -109,17 +117,45 @@ puis celles de la cité, `enemy_abilities` de `screen/combat.rs`) : seule leur f
 - **C13** — En phase de parade, le bouton de la Parade des Gardes d'Utem (UtemGuardsmen, deuxième capacité : `SwiftBlock(4)`)
   montre la rondache, « 4 », puis « ×2 si » et l'icône Vif, qui a son infobulle (titre et règle) ; son texte de repli est
   « Parade 4 ×2 si Vif » (`swift_block_button_shows_condition`). Idem pour les Gardiens d'Altem (`SwiftBlock(8)`).
-- **C14** — Comme aujourd'hui, l'infobulle du bouton reste « Parade 4, double contre Vif » (`effect.swift_block`) et la Parade
+- **C14** — Comme aujourd'hui, l'infobulle du bouton reste « Parade 4, double contre Vif » (`effect.swift_block`, sans icône : C21) et la Parade
   compte double contre un ennemi vif (spec 033 ; test `swift_block_counts_doubled_value`, `combat_et_offres.rs`, inchangé).
 
-### Ce qui ne change pas
+### Icône devant le mot (Q3, Q4)
 
-- **C15** — L'infobulle d'un ennemi sur le plateau garde ses lignes de texte « Capacités : brutal » et « Résistances :
-  physique » (test `ennemis_errants.rs`, ligne 201, inchangé) (Q3).
-- **C16** — Les lignes d'enjeu « À parer : 6 (vif, 2 × 3) » et « Si non paré : 8 (brutal, 2 × 4) dégâts… », et la ligne « Vif :
-  il faut parer le double… » de la parade en cours restent en texte (tests `swift_block_shows_doubled_target`,
-  `deroule_combat.rs` ; `cites.rs`, ligne 380, inchangés) (Q4).
+- **C15** — `icon_pieces` découpe « À parer : 6 ([[swift]]vif, 2 × 3) » en « À parer : 6 ( », l'icône Vif (titre « Vif »,
+  sa règle), « vif, 2 × 3) » ; un texte sans repère donne un seul morceau de texte ; `plain_text` donne
+  « À parer : 6 (vif, 2 × 3) » (`icon_pieces_split_markers`).
+- **C16** — Chaque repère de `fr.json` et de `en.json` nomme une des six icônes, et chaque clé a les mêmes repères, dans le même
+  ordre, dans les deux langues (`icon_markers_are_known_and_shared`).
+- **C17** — Infobulle d'un ennemi sur le plateau (Cogneurs, Ironclads : armure 3, attaque 4, Brutal, résistance physique,
+  gloire 4) : la ligne devient « Capacités : [[brutal]]brutal » (test existant modifié : `ennemis_errants.rs`, ligne 201). Avec
+  plusieurs capacités (Dragons des marais, SwampDragon : Vif, Toxique) : « Capacités : [[swift]]vif, [[poison]]toxique ».
+- **C18** — Écran de combat, les textes de la liste des clés marquées (section Libellés) portent leurs repères :
+  - enjeux : « À parer : 6 ([[swift]]vif, 2 × 3) », « Si non paré : 8 ([[brutal]]brutal, 2 × 4) dégâts, 4 blessure(s) » ;
+  - parade en cours : « [[swift]]Vif : il faut parer le double de son attaque, 2 × 3 = 6 » ;
+  - historique : « [[brutal]]brutal 2 × 4 = 8 », « [[poison]]toxique : … », « [[paralyze]]paralysant : … » ;
+  - statuts : « [[fortified]]fortifié : siège seulement », « [[fortified]]fortifié (site) », « [[fortified]]doublement
+    fortifié : pas de cible à distance », « [[fortified]]plus fortifié » ;
+  - ligne partagée : « [[fortified]]fortifié (Creuseurs) : attaques de siège seulement » ;
+  - créature invoquée : « [[summon]]Invoque : Minotaure » ; avertissement : « …, Invocateurs orques [[summon]]invoquent une
+    créature (donjon)… ».
 
+  Tests existants modifiés, qui comparent ces textes (relevés par `grep` des valeurs de `fr.json` dans `crates/arcanum-ui/tests`) :
+  `deroule_combat.rs` (13 assertions, dont `swift_block_shows_doubled_target`, `block_phase_shows_summoned_monster_and_stakes`,
+  `history_shows_ability_effects` et l'avertissement d'invocation, ligne 1041), `cites.rs` (3), `sites_fortifies.rs` (8),
+  `combat_et_offres.rs` (2), `panneaux.rs` (1), `sorts.rs` (1). Un repère ajouté dans une assertion n'est pas un test changé
+  pour le faire passer : la spec change le texte.
+- **C19** — Infobulle du plateau, défenseurs et cités : « Défenseur [[fortified]]fortifié : siège seulement à distance »,
+  « Défenseur doublement [[fortified]]fortifié : aucun tir à distance », « Bonus des défenseurs : [[brutal]]brutal si leur
+  attaque est physique » et « … [[poison]]toxique … » (tests existants modifiés : `sites_fortifies.rs`, `cites.rs`).
+- **C20** — Textes des unités et des cartes qui nomment une capacité d'ennemi : Gardes d'Utem et Gardiens d'Altem « … compte
+  double contre un ennemi [[swift]]Vif », Illusionnistes « Un ennemi [[fortified]]non fortifié n'attaque pas », Exposition
+  (`card.expose`) « Un ennemi perd [[fortified]]fortifications et résistances », Secousse (`card.tremor`) « (-6 si
+  [[fortified]]fortifié) », modificateur `modifier.by_fortification` « ({fortified} si [[fortified]]fortifié) ». L'offre
+  d'unités montre l'icône dans la ligne de capacité des Gardes d'Utem (`gardes_utem_offer_line_shows_swift_icon`).
+- **C21** — Là où le texte s'affiche sans icône possible, il s'affiche sans repère : `plain_text` de l'infobulle du bouton de la
+  Parade vive, « Jouer : Parade 4, double contre Vif » (C14), et de tout libellé de bouton (`no_marker_in_button_labels` : aucun
+  libellé de bouton de l'écran de combat ne contient `[[`).
 ## Cas limites et refus
 
 - **L1** — Sans fichier d'icône, l'écran écrit le nom de la capacité, comme pour les autres icônes (spec 071, L1 ;
@@ -170,7 +206,39 @@ Vérifications faites sur `main` :
   (`icon.ability.brutal`) : « Brutal (cité) », « Brutal (city) » ; avec « Toxique » : « Toxique (cité) », « Poison (city) ».
   Elle servait au texte en minuscules (« brutal (cité) ») : la valeur convient aussi en titre.
 - **Plus lue par l'écran de combat** : `enemy.abilities` (« Capacités : {list} ») reste lue par l'infobulle du plateau
-  (`token_lines`, C15) ; `enemy.summon` (« invocation ») aussi (`attack_text`). Aucune clé ne disparaît.
+  (`token_lines`, C17) ; `enemy.summon` (« invocation ») aussi (`attack_text`). Aucune clé ne disparaît.
+
+**Clés marquées** (valeurs relues dans `fr.json` de `main`, le repère ajouté devant le mot ; en.json reçoit les mêmes repères
+devant le mot anglais correspondant) :
+
+| Clé | fr après la spec |
+|---|---|
+| `enemy.ability.fortified` … `paralyze` | `[[fortified]]fortifié`, `[[swift]]vif`, `[[brutal]]brutal`, `[[poison]]toxique`, `[[paralyze]]paralysant` |
+| `combat.enemy.swift_block` | {block} ([[swift]]vif, 2 × {attack}) |
+| `combat.enemy.brutal_damage` | {damage} ([[brutal]]brutal, 2 × {attack}) |
+| `combat.history.brutal` / `poison` / `paralyze` | [[brutal]]brutal 2 × {attack} = {damage} ; [[poison]]toxique : {count} de plus dans la défausse ; [[paralyze]]paralysant : {count} carte(s) défaussée(s) de la main |
+| `combat.swift_line` | [[swift]]Vif : il faut parer le double de son attaque, 2 × {attack} = {block} |
+| `combat.enemy.siege_only` | [[fortified]]fortifié : siège seulement |
+| `combat.enemy.site_fortified` | [[fortified]]fortifié (site) |
+| `combat.enemy.fortified_twice` | [[fortified]]doublement fortifié : pas de cible à distance |
+| `combat.enemy.no_fortification` | [[fortified]]plus fortifié |
+| `combat.shared.fortified` | [[fortified]]fortifié ({enemies}) : attaques de siège seulement |
+| `combat.enemy.summons` | [[summon]]Invoque : {monster} |
+| `combat.summon_warning` | Au début de la phase de parade, {enemies} [[summon]]invoquent une créature (donjon) : pas de retour en arrière après. |
+| `board.hover.defender_fortified` | Défenseur [[fortified]]fortifié : siège seulement à distance |
+| `board.hover.defender_fortified_twice` | Défenseur doublement [[fortified]]fortifié : aucun tir à distance |
+| `board.hover.city.bonus_red` / `bonus_green` | Bonus des défenseurs : [[brutal]]brutal (ou [[poison]]toxique) si leur attaque est physique |
+| `unit.utem_guardsmen.ability_2`, `unit.altem_guardians.ability_2` | Parade 4 (8) ; compte double contre un ennemi [[swift]]Vif |
+| `unit.illusionists.ability_2` | (mana blanc) Un ennemi [[fortified]]non fortifié n'attaque pas |
+| `card.expose.basic_text` / `strong_text` | … perd(ent) [[fortified]]fortifications … |
+| `card.tremor.strong_text` | Un ennemi Armure -3 (-6 si [[fortified]]fortifié), ou tous -2 (-4 si [[fortified]]fortifiés) (min. 1) |
+| `modifier.by_fortification` | {plain} ({fortified} si [[fortified]]fortifié) |
+| `effect.swift_block` | Parade {amount}, double contre [[swift]]Vif |
+
+Non marquées, parce que le mot n'y nomme pas une capacité d'ennemi : les sites fortifiés et leurs fortifications
+(`card.underground_travel`, `card.demolish`, `effect.underground_attack`, `modifier.ignore_site_fortifications`,
+`hero.arythea.style`), les noms (Invocateurs orques, compétence et choix de mana « Invocation »), `enemy.summon` (l'icône
+Invocation le remplace sur la carte d'ennemi, C6).
 
 ## Interface
 
@@ -183,6 +251,9 @@ Vérifications faites sur `main` :
   passe à la ligne (C4, C10, C11 ; `IconValue::rule`). Mise en forme : vérification à l'œil.
 - **« ×2 si » et l'icône Vif** après la valeur du bouton de la Parade vive, l'icône avec sa propre infobulle (C13). Taille et
   alignement dans le bouton : vérification à l'œil.
+- **Icône devant le mot** dans tous les textes marqués (C17 à C20) : l'application dessine `icon_pieces` dans les libellés et les
+  infobulles (infobulle du plateau, carte d'ennemi, parade en cours, offre et zone des unités, texte des cartes), `plain_text`
+  dans les boutons et les titres (C21). Taille de l'icône : celle du texte, alignée sur sa ligne (vérification à l'œil).
 - **Dessins** des six icônes : ceux de la [planche](images/issue-27-icones/planche.png), copiés de
   `docs/specs/images/issue-27-icones/` dans `assets/images/ui/` (C1 ; lisibilité à 16 et 20 px sur fond clair et sombre :
   vérification à l'œil).
@@ -205,16 +276,17 @@ Aucun : l'écran n'ajoute aucune action.
 
 - Icônes des capacités des extensions (Assassinat, Encombrant, Vampire, Insaisissable, Non fortifié, Immunité arcanique,
   Défense) et des attaques multiples : avec les premiers ennemis des extensions (Q1).
-- Icônes dans l'infobulle du plateau et dans les lignes d'enjeu de la parade (Q3, Q4).
 - Règles en infobulle des résistances des unités (p. 24, *Unit Resistances*), qui ne sont pas celles des ennemis.
-- Textes des cartes et des unités qui nomment une capacité (« Un ennemi non fortifié n'attaque pas », « perd ses
-  fortifications ») : ils restent en mots (Q4).
+- Icônes devant les mots des résistances et des éléments dans les textes (« résistance physique (Cogneurs) ») : la demande ne porte
+  que sur les capacités.
 
 ## Questions ouvertes
 
 Chaque question a une recommandation ; la spec est écrite avec elle.
 
-Mathieu (2026-11-27) : recommandations acceptées pour Q1 à Q4 et Q6, et pour les dessins de Q5, Invocation redessinée (variante A). Validation en attente de sa relecture complète.
+Mathieu (2026-11-27) : recommandations acceptées pour Q1, Q2 et Q6, et pour les dessins de Q5, Invocation redessinée (variante A).
+Q3 et Q4 tranchées autrement : l'icône devant le mot, dans l'infobulle du plateau et partout où un texte nomme une capacité
+(section « Icône devant le mot », C15 à C21). Validation en attente de sa relecture complète.
 
 - **Q1 — Quelles capacités ?** Recommandé : les cinq des ennemis du jeu (Fortifié, Vif, Brutal, Toxique, Paralysant) et
   l'Invocation. L'issue cite « assassin » : l'Assassinat n'existe que sur des ennemis des extensions, absents du jeu ; dessiner
@@ -222,12 +294,10 @@ Mathieu (2026-11-27) : recommandations acceptées pour Q1 à Q4 et Q6, et pour l
 - **Q2 — La règle en infobulle aussi pour les résistances et les attaques élémentaires des ennemis ?** La p. 24 les range avec
   les capacités. Recommandé : oui, sur la carte d'ennemi seulement (C10, C11) ; ailleurs, la même icône garde son nom seul
   (C12), car la règle d'une résistance d'unité n'est pas la même. Autre choix : capacités seulement.
-- **Q3 — Infobulle du plateau ?** Recommandé : la garder en texte (C15). Une infobulle ne peut pas en ouvrir une autre : une icône
-  y serait muette, alors que le mot se lit. Autre choix : l'icône suivie du nom (« [Vif] vif »), qui demande de passer les lignes
-  de survol du plateau de texte à morceaux.
-- **Q4 — Jusqu'où généraliser « ×2 si [Vif] » ?** Recommandé : la seule Parade vive (Gardes d'Utem, Gardiens d'Altem), seul effet
-  dont la valeur dépend d'une capacité. Les autres textes qui nomment une capacité (Illusionnistes, sorts, lignes d'enjeu)
-  restent en mots (C16). Autre choix : remplacer aussi « vif » et « brutal » des lignes d'enjeu par leur icône.
+- **Q3 — Infobulle du plateau ?** Tranchée (Mathieu, 2026-11-27) : l'icône devant le mot, « Capacités : [Brutal] brutal » (C17).
+  L'icône n'y a pas d'infobulle propre (une infobulle n'en ouvre pas une autre) : le mot qui la suit la nomme.
+- **Q4 — Jusqu'où généraliser « ×2 si [Vif] » ?** Tranchée (Mathieu, 2026-11-27) : le bouton de la Parade vive montre « ×2 si »
+  et l'icône (C13), et tous les textes qui nomment une capacité d'ennemi gagnent l'icône devant le mot (C18 à C20).
 - **Q5 — Les dessins de la planche conviennent-ils ?** Tour crénelée (Fortifié), oiseau aux ailes déployées (Vif), tête de démon
   cornue (Brutal), goutte verte (Toxique), silhouette de pierre fissurée (Paralysant), griffe sortant d'un portail (Invocation).
   Recommandé : les garder ; dites lesquels retoucher sinon.
