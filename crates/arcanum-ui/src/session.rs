@@ -644,6 +644,7 @@ impl GameSession {
             | Command::SaveVolumes => {}
             // Spec 060 : la tactique encadrée, les cartes et les dés cochés.
             Command::SelectTactic(tactic) => self.mode = ScreenMode::ChoosingTactic(tactic),
+            Command::SelectSkill(_) | Command::TakeLevelReward(_) => {}
             Command::ToggleTacticCard(card) => {
                 let mut picks = match &self.mode {
                     ScreenMode::PickingTacticCards(picks) => picks.clone(),

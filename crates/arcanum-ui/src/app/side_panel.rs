@@ -7,8 +7,8 @@ use eframe::egui::{self, Color32, Sense, Vec2};
 use super::board::standing_image_rect;
 use super::widgets::color_swatch;
 use super::windows::{
-    altar_window, artifact_window, crystal_window, meditation_window, offers_window,
-    preparation_window, reclaim_window, score_window, skill_choice_window, tactic_decision_window,
+    altar_window, artifact_window, crystal_window, level_choice_window, meditation_window,
+    offers_window, preparation_window, reclaim_window, score_window, tactic_decision_window,
     tactic_window, token_window,
 };
 use super::{IterArcanumApp, Thumbnails, full_uv};
@@ -311,11 +311,19 @@ impl IterArcanumApp {
                 }
             }
         }
-        // Spec 051 : la fenêtre du choix de compétence d'un niveau pair.
-        if let Some(window) = &screen.skill_choice
-            && let Some(command) = skill_choice_window(ui.ctx(), window, &self.catalog)
-        {
-            clicked = Some(command);
+        // Spec #20 : la fenêtre du niveau pair, compétence et action avancée ensemble.
+        if let Some(window) = &screen.level_choice {
+            let thumbnails = self.thumbnails(
+                ui.ctx(),
+                window
+                    .advanced_actions
+                    .iter()
+                    .map(|shown| shown.card.illustration),
+            );
+            if let Some(command) = level_choice_window(ui.ctx(), window, &thumbnails, &self.catalog)
+            {
+                clicked = Some(command);
+            }
         }
         if let Some(window) = &screen.score_window
             && let Some(command) = score_window(ui.ctx(), window, &self.catalog)

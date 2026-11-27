@@ -830,10 +830,14 @@ fn advanced_action_reward_in_choice_window() {
         .collect();
     assert_eq!(shown, wanted);
 
-    // La récompense prise, sa fenêtre se ferme.
+    // La récompense prise, sa fenêtre se ferme et celle du niveau pair suit ; la fenêtre Offres
+    // reste fermée.
     let events = events_after(events, &[gain(offer[0])]);
     let session = session_of(events);
-    assert!(session.screen(&catalog).advanced_action_reward.is_none());
+    let screen = session.screen(&catalog);
+    assert!(screen.advanced_action_reward.is_none());
+    assert!(screen.level_choice.is_some());
+    assert!(session.offers_window(&catalog).is_none());
 
     // Sans niveau pair, le seul choix est celui de la récompense.
     let start = Ruins { fame: 0, ..start };

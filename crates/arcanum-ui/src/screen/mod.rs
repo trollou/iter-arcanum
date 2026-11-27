@@ -235,8 +235,8 @@ pub struct GameScreen {
     pub units: UnitsSection,
     /// Spec 051 : la section Compétences, avec au moins une compétence gagnée.
     pub skills: Option<SkillsSection>,
-    /// Spec 051 : la fenêtre du choix de compétence d'un niveau pair.
-    pub skill_choice: Option<SkillChoiceWindow>,
+    /// Spec #20 : la fenêtre du niveau pair, compétence et action avancée ensemble.
+    pub level_choice: Option<LevelChoiceWindow>,
     /// Bandeau du choix d'une capacité d'unité : option, mana ou unité visée (spec 042).
     pub unit_prompt: Option<ManaPrompt>,
     /// « Jeter une Blessure (1) », « Soigner Gardes d'Utem (2) », hors combat (spec 042).
@@ -361,6 +361,7 @@ pub fn game_screen(
         | ScreenMode::Casting(_)
         | ScreenMode::ChoosingDestination(_)
         | ScreenMode::ChoosingTactic(_)
+        | ScreenMode::ChoosingLevelSkill(_)
         | ScreenMode::PickingTacticCards(_)
         | ScreenMode::PickingTacticDice(_) => (None, None, None),
     };
@@ -754,7 +755,7 @@ pub fn game_screen(
             .or_else(|| skill_unit_prompt(mode, legal_actions, catalog)),
         units: units_section(view, legal_actions, mode, catalog),
         skills: skills_section(view, legal_actions, catalog),
-        skill_choice: skill_choice_window(view, legal_actions, catalog),
+        level_choice: level_choice_window(view, legal_actions, mode, catalog),
         unit_prompt: unit_prompt(view, legal_actions, mode, catalog),
         healing: healing_buttons(legal_actions, catalog),
         player_level: player_level(view, catalog),

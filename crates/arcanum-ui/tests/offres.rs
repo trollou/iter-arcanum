@@ -121,28 +121,36 @@ fn offers_window_lists_the_three_offers() {
     assert!(unit.lines.iter().any(|line| line.contains("Influence")));
 }
 
-// Choix de l'action avancée : titre du niveau, un bouton « Prendre » par carte, pas de fermeture.
+// Choix de l'action avancée, la compétence du niveau déjà prise (partie sauvegardée entre les
+// deux) : spec #20 (test modifié), dans la fenêtre du niveau pair, un « Prendre » par carte ; la
+// fenêtre Offres ne s'ouvre pas.
 #[test]
 fn choice_window_offers_take_buttons() {
     let catalog = french();
     let session = opened(true);
-    let window = session.offers_window(&catalog).expect("ouverte d'office");
-    assert_eq!(window.title, "Niveau 2 : choisissez une action avancée");
-    assert!(!window.closable);
-    let takes: Vec<Command> = window.columns[0]
-        .cards
+    assert!(session.offers_window(&catalog).is_none());
+    let window = session
+        .screen(&catalog)
+        .level_choice
+        .expect("fenêtre du niveau pair");
+    assert_eq!(
+        window.title,
+        "Niveau 2 : choisir une compétence et une action avancée"
+    );
+    assert!(window.revealed.is_empty());
+    assert_eq!(window.hint, None);
+    let takes: Vec<Option<Command>> = window
+        .advanced_actions
         .iter()
-        .filter_map(|card| card.take.as_ref().map(|button| button.command))
+        .map(|shown| shown.take.command)
         .collect();
     assert_eq!(
         takes,
-        [Command::Play(0), Command::Play(1), Command::Play(2)]
-    );
-    assert!(
-        window.columns[1]
-            .cards
-            .iter()
-            .all(|card| card.take.is_none())
+        [
+            Some(Command::Play(0)),
+            Some(Command::Play(1)),
+            Some(Command::Play(2))
+        ]
     );
 }
 
@@ -161,17 +169,19 @@ fn offers_shortcuts() {
     session.shortcut(Shortcut::Cancel);
     assert!(session.offers_window(&catalog).is_none());
 
+    // Spec #20 (test modifié) : pendant le choix, la fenêtre du niveau pair, O ne l'ouvre pas.
     let mut session = opened(true);
     let second = session.view().offers[&Offer::AdvancedActions][1]
         .deed()
         .expect("action avancée");
     session.shortcut(Shortcut::Offers);
     session.shortcut(Shortcut::Cancel);
-    assert!(session.offers_window(&catalog).is_some());
+    assert!(session.offers_window(&catalog).is_none());
+    assert!(session.screen(&catalog).level_choice.is_some());
     session.shortcut(Shortcut::Take(2));
     session.run_frame();
     assert!(session.view().hand.contains(&second));
-    assert!(session.offers_window(&catalog).is_none());
+    assert!(session.screen(&catalog).level_choice.is_none());
 }
 
 // Main : une action avancée a la couleur de sa carte ; un effet non codé dit son texte.
@@ -208,17 +218,20 @@ fn hand_shows_advanced_action_color_and_artifact_text() {
     assert_eq!(screen.bottom_buttons[0].label, "Offres…");
 }
 
-// Spec 071, C22 : « Prendre » de la 2e action avancée dit « Raccourci : 2 ».
+// Spec 071, C22 : « Prendre » de la 2e action avancée dit « Raccourci : 2 » ; spec #20 (test
+// modifié) : dans la fenêtre du niveau pair.
 #[test]
 fn numbered_choices_show_shortcut() {
     let catalog = french();
     let session = opened(true);
-    let window = session.offers_window(&catalog).expect("ouverte d'office");
-    let keys: Vec<Option<String>> = window.columns[0]
-        .cards
+    let window = session
+        .screen(&catalog)
+        .level_choice
+        .expect("fenêtre du niveau pair");
+    let keys: Vec<Option<String>> = window
+        .advanced_actions
         .iter()
-        .filter_map(|card| card.take.as_ref().map(|button| button.shortcut.clone()))
+        .map(|shown| shown.take.shortcut.clone())
         .collect();
     assert_eq!(keys, [Some("1".into()), Some("2".into()), Some("3".into())]);
-    assert_eq!(window.close.shortcut, None);
 }

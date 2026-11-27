@@ -600,63 +600,13 @@ pub(super) fn skill_unit_prompt(
     })
 }
 
-/// Une compétence proposée : « Prendre » si `ChooseSkill` est légale, sinon la note.
-fn skill_offer(
-    skill: Skill,
-    legal_actions: &[Action],
-    note: Option<String>,
-    catalog: &Catalog,
-) -> SkillOffer {
-    let take = legal_actions
-        .iter()
-        .position(|action| *action == Action::ChooseSkill { skill })
-        .map(|index| Button {
-            label: catalog.text("offers.take"),
-            command: Command::Play(index),
-            shortcut: None,
-        });
-    SkillOffer {
-        skill,
-        name: catalog.text(&skill.label_key()),
-        usage: usage_text(skill, catalog),
-        text: catalog.text(&skill.text_key()),
-        note: take.is_none().then_some(note).flatten(),
-        take,
-    }
-}
-
-/// La fenêtre du choix de compétence, quand deux compétences révélées attendent (C4 à C8) :
-/// après les choix de l'artefact et du sort, avant celui de l'action avancée (spec 050).
-pub(super) fn skill_choice_window(
-    view: &PlayerView,
-    legal_actions: &[Action],
-    catalog: &Catalog,
-) -> Option<SkillChoiceWindow> {
-    if view.skill_choice.is_empty() || !view.drawn_artifacts.is_empty() || view.spell_choices > 0 {
-        return None;
-    }
-    let level = super::offers::choosing_level(view).unwrap_or(view.level);
-    Some(SkillChoiceWindow {
-        title: catalog.format("skill.choice.title", &[("level", &level.to_string())]),
-        revealed_title: catalog.text("skill.choice.revealed"),
-        revealed: view
-            .skill_choice
-            .iter()
-            .map(|&skill| skill_offer(skill, legal_actions, None, catalog))
-            .collect(),
-        common_title: catalog.text("skill.choice.common"),
-        common_note: catalog.text("skill.choice.common_note"),
-        common: view
-            .common_skills
-            .iter()
-            .map(|common| {
-                skill_offer(
-                    common.skill,
-                    legal_actions,
-                    Some(catalog.text("skill.choice.own")),
-                    catalog,
-                )
-            })
-            .collect(),
-    })
+/// La fenêtre du niveau pair (spec #20, C1 à C8) : après les choix de l'artefact et du sort, tant
+/// que la compétence ou l'action avancée d'un niveau pair attend.
+pub(super) fn level_choice_window(
+    _view: &PlayerView,
+    _legal_actions: &[Action],
+    _mode: &ScreenMode,
+    _catalog: &Catalog,
+) -> Option<LevelChoiceWindow> {
+    None
 }
