@@ -56,8 +56,11 @@ S'applique aux **textes complets** (voir Modèle) des deux langues.
 5. **Le moment** est dit en clair : « pendant le combat de ce tour », « à la fin de votre tour », « une fois par manche ».
 6. **Repère à icône** devant chaque mot-clé de points (voir Modèle et Q2) : `[[move]]Mouvement 4`.
 7. **Longueur** : celle qu'il faut pour être compris. Un texte complet n'est jamais un libellé de bouton.
+8. **Couleurs de mana en couleur** (idée de Mathieu, 2026-11-27) : chaque mot qui nomme une couleur de mana (rouge, bleu,
+   blanc, vert, or, noir, avec leurs accords) porte la balise de sa couleur : « cristal <red>rouge</red> », « Vert : »
+   dans Magie pure. Seul le mot de la couleur est coloré, pas « cristal » ni « jeton ». Voir Modèle, « Balises de couleur ».
 
-Les **libellés de bouton** (voir Modèle) suivent les règles 3 et 4, sans phrase ni point final : « Mouvement 4, reste en
+Les **libellés de bouton** (voir Modèle) suivent les règles 3, 4 et 8, sans phrase ni point final : « Mouvement 4, reste en
 Attaque » plutôt que la carte entière. Pas de repère : le bouton porte déjà son icône (spec 073).
 
 **Exemples** (fr ; le fil écrit l'anglais sur le même modèle) :
@@ -96,6 +99,16 @@ Aucune donnée nouvelle dans l'état ni dans la vue : tout se joue dans les libe
 (`fire_attack`, `ice_block`…), nommés comme les clés `effect.*` qui leur correspondent. Le repère se dessine comme
 `[[swift]]Vif` aujourd'hui : l'icône à la hauteur du texte, collée au mot qui suit, avec son infobulle.
 
+**Balises de couleur** (règle 8) : `<red>…</red>`, `<blue>…</blue>`, `<white>…</white>`, `<green>…</green>`,
+`<gold>…</gold>`, `<black>…</black>` entourent le mot à colorer dans fr.json et en.json. Des chevrons, parce que les
+accolades sont prises par les paramètres (`{color}`) et que `[[…]]` pose une icône devant un mot ; une balise inconnue ou
+non fermée reste du texte. Le découpage des textes à repères (`icon_pieces`) rend un morceau de texte coloré ;
+`plain_text` retire les balises (texte d'un bouton sans mise en forme, journal). Le nom de couleur calculé (`color_name`,
+`mana_name`, qui remplit `{color}` dans « Jeton {color} », « Cristal {color} »…) rend le mot balisé : les textes calculés
+sont colorés comme les textes écrits. La couleur du texte est une variante claire de celle de la pastille de mana
+(`mana_color`), lisible sur le fond sombre du jeu : le noir de la pastille (`#222226`) serait invisible, il devient un gris
+violacé clair, et le blanc un blanc franc qui se distingue du texte courant (vérification à l'œil).
+
 Termes : rien de nouveau au glossaire (« texte complet » est déjà le terme de la spec #11).
 
 ## Comportements attendus
@@ -126,6 +139,19 @@ Le contenu des textes ne se teste pas (relu par Mathieu, voir Interface) ; les t
   parité une fois les textes réécrits.
 - **C8** — Le recto d'un artefact montre son texte complet, repères dessinés : Anneau de rubis (artifacts.ron, `RubyRing`)
   (`artifact_face_shows_full_text`). Comme aujourd'hui (spec 055) sur la clé ; le test garde le lien.
+
+- **C9** — `<red>rouge</red>` se découpe en un morceau de texte « rouge » de couleur rouge, entre les morceaux qui
+  l'entourent ; une balise inconnue (`<pink>`) ou non fermée reste du texte tel quel (`color_tags_split_into_colored_text`).
+  Rouge attendu : les balises restent du texte.
+- **C10** — `plain_text` retire les balises de couleur et garde le mot : « Cristal <red>rouge</red> » donne « Cristal
+  rouge » (`plain_text_drops_color_tags`). Rouge attendu : les balises restent.
+- **C11** — Le texte calculé d'un gain de mana porte la balise de sa couleur : le bouton Jeton bleu de Concentration
+  (`GainToken(Blue)`) a pour texte « Jeton <blue>bleu</blue> » (`computed_mana_text_is_color_tagged`). Rouge attendu : pas de
+  balise.
+- **C12** — Dans les textes complets, de compétence, de tactique et les libellés de bouton, en fr et en en, aucun mot de
+  couleur de mana ne reste sans balise après « cristal », « jeton », « mana », « dé » ou « sort » (fr ; « crystal », « token »,
+  « mana », « die », « spell » avant le mot en en), et les balises d'une clé sont les mêmes dans les deux langues
+  (`mana_colors_are_tagged_in_texts`). Rouge attendu : aucune balise aujourd'hui.
 
 **Tests existants qui lisent un texte réécrit** (cherchés dans `crates/*/tests` et `crates/*/src`), à mettre à jour sur la
 nouvelle valeur ou, mieux, sur la clé du catalogue, en le signalant dans la PR :
@@ -163,6 +189,10 @@ Clés nouvelles (fr et en) :
 | `card.<action de base>.basic_text`, `.strong_text` | texte complet des 20 actions de base (`BasicAction::ALL`, dont les cartes propres aux héros) |
 | `card.<carte>.basic_label`, `.strong_label` | libellé de bouton des cartes à option sans effet propre (liste dans la PR) |
 
+Balises de couleur ajoutées aux textes existants qui nomment une couleur de mana (C12), y compris hors des familles
+réécrites (invites `mana_choice.*`, `choice.*`…), et aux noms de couleur `mana.*` lus par `color_name` (C11) : à vérifier au
+codage que ces noms ne servent pas aussi là où une balise s'afficherait en clair.
+
 Clés réécrites : `card.*.basic_text` et `strong_text` (actions avancées, sorts, artefacts), `skill.*.text`,
 `tactic.*.text`, les sept `effect.*` listés au Modèle, et `unit.*.ability_N` selon Q3. Aucune clé fille sous un libellé :
 `basic_label` est à côté de `basic_text` dans le groupe de la carte. Pas de caractère nouveau : les repères sont des
@@ -175,7 +205,9 @@ icônes, pas des glyphes.
 - **Fenêtres de cartes** (Offres, choix de l'artefact ou du sort) : textes complets (C4).
 - **Recto d'un artefact** : texte complet (C8).
 - **Infobulles des compétences et des tactiques** : textes réécrits, repères dessinés (C5, C6 ; vérification à l'œil).
-- **Boutons** : libellés courts (C3), inchangés pour les options à effet calculé.
+- **Boutons** : libellés courts (C3), inchangés pour les options à effet calculé. Mots de couleur colorés, selon Q5.
+- **Mots de couleur de mana colorés** partout où un texte à repères s'affiche (« i », fenêtres, recto d'un artefact,
+  infobulles, invites : C9, C11, C12). Teinte de chaque couleur : vérification à l'œil.
 
 **Relecture par Mathieu** : la PR joint un tableau avant / après de tous les textes réécrits, en fr et en en, déposé dans
 les fichiers du projet (pas dans le dépôt). Mathieu le relit avant la fusion ; le fil corrige d'après ses remarques.
@@ -196,6 +228,9 @@ Aucun.
 
 ## Questions ouvertes
 
+Q1 à Q4 : Mathieu suit les propositions (2026-11-27) ; il relit le tableau des textes français avant le codage
+(`/mnt/project-files/specs/068/textes-fr-avant-apres.md`). Elles seront reportées en décisions à la validation.
+
 - **Q1 — Proximité avec le texte du jeu.** L'issue demande des textes « plus proches de ceux du jeu de base », et le
   CLAUDE.md interdit tout texte officiel dans le jeu public. Proposé : même sens, même ordre, même découpage en phrases que
   la carte, mais nos mots, sans copier ni traduire mot à mot la transcription ; l'anglais aussi (c'est là que le risque de
@@ -209,3 +244,6 @@ Aucun.
 - **Q4 — Un fil ou deux.** Environ 150 textes à écrire dans chaque langue. Proposé : un seul fil (Effort Medium), qui écrit
   le français, le fait relire par Mathieu sur le tableau avant / après, puis écrit l'anglais. Ou deux fils : français, puis
   anglais.
+- **Q5 — Couleur sur les boutons.** Les boutons d'effet (« Jeton bleu », « Cristal rouge ») passent par un texte simple.
+  Proposé : les colorer aussi (egui accepte un texte mis en forme sur un bouton), pour que la règle soit la même partout. Ou
+  seulement dans les textes à repères (« i », fenêtres, infobulles), les boutons gardant leur pastille de mana.
