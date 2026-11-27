@@ -931,8 +931,8 @@ impl GameSession {
         }
     }
 
-    /// Raccourci clavier : Fin seulement hors des modes ; Entrée en mode fin du tour, ou hors des
-    /// modes pour valider l'attaque ou la parade en cours.
+    /// Raccourci clavier, aiguillé vers la fenêtre ouverte : chargement, fin de partie, fenêtre de
+    /// choix, défausse ou Offres, sinon le plateau.
     pub fn shortcut(&mut self, shortcut: Shortcut) {
         // La fenêtre de chargement passe avant tout : Échap la ferme, les autres touches attendent.
         if self.load_entries.is_some() {
@@ -946,115 +946,98 @@ impl GameSession {
             self.command(Command::CloseScore);
             return;
         }
-        // Spec 044 : pendant le choix de la couleur du cristal, 1 à 4 choisissent rouge, bleu,
-        // blanc, vert ; les autres touches de jeu n'agissent pas.
-        if self.view().crystal_choices > 0
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
-            if let Shortcut::Take(place) = shortcut
-                && let Some(&color) = BasicColor::ALL.get(usize::from(place).wrapping_sub(1))
-                && let Some(index) = self
-                    .legal_actions()
-                    .iter()
-                    .position(|action| *action == Action::ChooseCrystalColor { color })
-            {
-                self.command(Command::Play(index));
-            }
+        // Pendant une fenêtre de choix, Annuler, Enregistrer, Charger et Nouvelle partie gardent
+        // leur effet ; les autres touches vont à la fenêtre.
+        let global = matches!(
+            shortcut,
+            Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
+        );
+        if !global && self.choice_window_shortcut(shortcut) {
             return;
         }
-        // Spec 041 : pendant le choix de l'artefact, 1 et 2 prennent un artefact tiré, dans l'ordre
-        // du tirage ; les autres touches de jeu n'agissent pas.
-        if self.is_choosing_artifact()
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
+        if shortcut == Shortcut::Cancel && self.close_window() {
+            return;
+        }
+        self.board_shortcut(shortcut);
+    }
+
+    /// Donne la touche à la fenêtre de choix ouverte, la plus prioritaire d'abord ; `false` s'il
+    /// n'y en a pas.
+    fn choice_window_shortcut(&mut self, shortcut: Shortcut) -> bool {
+        if self.view().crystal_choices > 0 {
+            self.crystal_shortcut(shortcut);
+        } else if self.is_choosing_artifact() {
+            // Spec 041 : 1 et 2 prennent un artefact tiré, dans l'ordre du tirage.
             if let Shortcut::Take(place) = shortcut {
                 self.take_nth(place, |action| {
                     matches!(action, Action::TakeArtifact { .. })
                 });
             }
-            return;
-        }
-        // Spec 043 : pendant le choix du sort, 1, 2 et 3 prennent un sort de l'offre.
-        if self.is_choosing_spell()
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
+        } else if self.is_choosing_spell() {
+            // Spec 043 : 1, 2 et 3 prennent un sort de l'offre.
             if let Shortcut::Take(place) = shortcut {
                 self.take_nth(place, |action| matches!(action, Action::TakeSpell { .. }));
             }
-            return;
-        }
-        // Spec #20 : pendant le choix de la compétence d'un niveau pair, la fenêtre du niveau.
-        if !self.view().skill_choice.is_empty()
-            && !self.is_choosing_artifact()
-            && !self.is_choosing_spell()
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
+        } else if !self.view().skill_choice.is_empty() {
+            // Spec #20 : la fenêtre du niveau pair.
             self.level_shortcut(shortcut);
-            return;
-        }
-        // Spec 050 : pendant le choix d'une action avancée, 1, 2 et 3 prennent une carte ; O, Échap,
-        // Fin et Entrée n'agissent pas.
-        if self.is_choosing_advanced_action()
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
+        } else if self.is_choosing_advanced_action() {
+            // Spec 050 : 1, 2 et 3 prennent une carte ; O, Échap, Fin et Entrée n'agissent pas.
             if let Shortcut::Take(place) = shortcut {
                 self.take_nth(place, |action| {
                     matches!(action, Action::GainAdvancedAction { .. })
                 });
             }
-            return;
-        }
-        // Spec 045 : pendant le choix de l'unité de récompense, 1, 2 et 3 prennent une unité de
-        // l'offre (ou ouvrent le choix de l'unité à renvoyer) ; Échap quitte ce choix-là.
-        if self.is_choosing_unit_reward()
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
-            match shortcut {
-                Shortcut::Take(place) => self.take_unit_reward(place),
-                Shortcut::Cancel => self.command(Command::CancelChoice),
-                _ => {}
-            }
-            return;
-        }
-        // Spec 060 : pendant le choix de la tactique, 1 à 6 encadrent la tactique de ce numéro,
-        // Entrée la prend ; les autres touches de jeu n'agissent pas.
-        if !self.view().tactic_choice.is_empty()
-            && !matches!(
-                shortcut,
-                Shortcut::Undo | Shortcut::Save | Shortcut::OpenLoad | Shortcut::NewGame
-            )
-        {
+        } else if self.is_choosing_unit_reward() {
+            self.unit_reward_shortcut(shortcut);
+        } else if !self.view().tactic_choice.is_empty() {
             self.tactic_shortcut(shortcut);
-            return;
+        } else {
+            return false;
         }
-        // Spec 073 : Échap ferme la fenêtre de la défausse, avant tout mode.
-        if shortcut == Shortcut::Cancel && (self.discard_open || self.dummy_discard_open) {
+        true
+    }
+
+    /// Spec 044 : pendant le choix de la couleur du cristal, 1 à 4 choisissent rouge, bleu, blanc,
+    /// vert ; les autres touches de jeu n'agissent pas.
+    fn crystal_shortcut(&mut self, shortcut: Shortcut) {
+        if let Shortcut::Take(place) = shortcut
+            && let Some(&color) = BasicColor::ALL.get(usize::from(place).wrapping_sub(1))
+            && let Some(index) = self
+                .legal_actions()
+                .iter()
+                .position(|action| *action == Action::ChooseCrystalColor { color })
+        {
+            self.command(Command::Play(index));
+        }
+    }
+
+    /// Spec 045 : pendant le choix de l'unité de récompense, 1, 2 et 3 prennent une unité de
+    /// l'offre (ou ouvrent le choix de l'unité à renvoyer) ; Échap quitte ce choix-là.
+    fn unit_reward_shortcut(&mut self, shortcut: Shortcut) {
+        match shortcut {
+            Shortcut::Take(place) => self.take_unit_reward(place),
+            Shortcut::Cancel => self.command(Command::CancelChoice),
+            _ => {}
+        }
+    }
+
+    /// Échap ferme la fenêtre de la défausse (spec 073), puis celle des Offres (spec 050), avant
+    /// tout mode ; `false` si aucune n'est ouverte.
+    fn close_window(&mut self) -> bool {
+        if self.discard_open || self.dummy_discard_open {
             self.command(Command::CloseDiscard);
-            return;
-        }
-        // Spec 050 : Échap ferme la fenêtre Offres avant tout mode.
-        if shortcut == Shortcut::Cancel && self.offers_open {
+        } else if self.offers_open {
             self.offers_open = false;
-            return;
+        } else {
+            return false;
         }
+        true
+    }
+
+    /// Une touche sur le plateau, sans fenêtre : Fin seulement hors des modes ; Entrée en mode fin
+    /// du tour, ou hors des modes pour valider l'attaque ou la parade en cours.
+    fn board_shortcut(&mut self, shortcut: Shortcut) {
         match (shortcut, &self.mode) {
             (Shortcut::Offers, ScreenMode::Normal) => self.offers_open = !self.offers_open,
             // Spec 073 : D ouvre et ferme la fenêtre de la défausse, hors des modes.
