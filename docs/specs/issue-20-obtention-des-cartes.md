@@ -1,6 +1,6 @@
 # #20 — Obtention des cartes
 
-- Statut : à valider
+- Statut : validée par Mathieu le 2026-11-27 (Q1 à Q3 tranchées comme recommandé, maquette du niveau pair retenue)
 - Issue : #20 (milestone v0.2.0)
 - Dépend de : spec #32 (cartes des fenêtres : la carte dessinée hors de la zone du joueur, « Prendre » en haut à droite),
   issues #19 et #69 (boutons de choix en haut à droite, PR #89), spec 050 (offres et cartes gagnées), spec 051
@@ -312,15 +312,17 @@ compétence encadrée (C10) et dans les fenêtres de choix comme aujourd'hui ; �
 
 ## Questions ouvertes
 
+Tranchées par Mathieu (2026-11-27, « ok pour tout ! ») : les trois propositions recommandées, et la disposition de la maquette.
+
 - **Q1. Niveau pair : quand le choix de la compétence est-il joué ?** Aujourd'hui, « Prendre » une compétence la joue
   aussitôt, et la fin du tour interdit tout retour en arrière : on découvre seulement après que Bretteur de feu ne laisse que
-  Régénération. Proposition (**recommandée**) : un clic encadre la compétence sans rien jouer, les cartes s'activent selon
+  Régénération. **Retenu** : un clic encadre la compétence sans rien jouer, les cartes s'activent selon
   elle (C2, C3), et « Prendre » sur une carte joue les deux (C5) ; le joueur voit la conséquence avant de s'engager, ce que
   demande l'issue. Écartée : garder le clic qui joue la compétence aussitôt, la fenêtre se mettant à jour ensuite (pas de
   champ de vue nouveau, mais pas de retour possible).
 - **Q2. Apprentissage, Don pour la magie, Appel aux armes et Appel à la gloire : fenêtre Offres ou fenêtres dédiées ?**
   Ces effets valent pour tout le tour (on apprend une fois les 6 Influence réunies, on recrute quand on veut) : ce n'est pas
-  un choix à faire maintenant, qu'une fenêtre ouverte d'office imposerait. Proposition (**recommandée**) : les laisser dans la
+  un choix à faire maintenant, qu'une fenêtre ouverte d'office imposerait. **Retenu** : les laisser dans la
   fenêtre Offres, que le joueur ouvre lui-même (C20) ; l'offre complète ne s'ouvre bien qu'au clic sur « Offres… ». Écartée :
   une fenêtre dédiée par effet, ouverte par un bouton de plus dans le panneau, à spécifier.
 - **Q3. Effet « gagner » : seulement les cartes prenables ?** L'issue dit « uniquement les cartes concernées ». Proposition
