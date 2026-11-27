@@ -433,6 +433,14 @@ Pas de terme correspondant dans le livret. Introduits par la spec 000.
 | Plein écran | `Command::ToggleFullscreen` (UI) | La fenêtre du jeu occupe tout l'écran, sans bordure ; F11 ou le Menu l'active et le désactive. |
 | Demande à la fenêtre | `WindowRequest` (UI) | Recentrer, plein écran, fermer, changer de langue (spec 080) : notée par `ClientSession`, transmise à la fenêtre par l'application. |
 
+### Obtention des cartes (spec #20)
+
+| Français | Code | Sens |
+|---|---|---|
+| Carte hors zone | `OfferCardView` (UI) | Une carte montrée hors de la zone du joueur (spec #32) : cadre de la main, nom, bande, texte de base, séparation et texte renforcé, sans bouton d'effet ; seul un bouton de choix (« Prendre ») peut s'y ajouter. |
+| Fenêtre de choix | `CardChoiceWindow` (UI) | Fenêtre qui ne montre que les cartes à prendre maintenant, en cartes hors zone : artefact, sort, action avancée ou unité d'une récompense, carte d'un effet « gagner ». |
+| Fenêtre du niveau pair | `LevelChoiceWindow` (UI) | Fenêtre d'un niveau pair : compétences proposées, puis actions avancées de l'offre ; la compétence encadrée dit quelles cartes se prennent. |
+
 ### Préférences (spec 080)
 
 | Français | Code | Sens |

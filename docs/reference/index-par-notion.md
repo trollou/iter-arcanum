@@ -46,7 +46,7 @@ chercher (`grep -rn "Forced Withdrawal" ../mage-knight/docs/regles/livret/`).
 | Notion | Où | Spec |
 |---|---|---|
 | Cartes : actions de base et avancées, sorts, artefacts, blessures | p. 4 *Deed Cards*, 1 à 3 | 013 |
-| Effet de base, effet renforcé (payer la couleur) | p. 4 *Deed Cards*, 3.a à 3.c | 013, 022, [073](../specs/073-panneaux.md) (blocs séparés sur la carte), [#11](../specs/issue-11-cartes-en-main-epurees.md) (texte derrière « i », séparation « Renforcé » et son mana), [#32](../specs/issue-32-cartes-des-fenetres.md) (mêmes cartes dans les fenêtres Offres et de choix) |
+| Effet de base, effet renforcé (payer la couleur) | p. 4 *Deed Cards*, 3.a à 3.c | 013, 022, [073](../specs/073-panneaux.md) (blocs séparés sur la carte), [#11](../specs/issue-11-cartes-en-main-epurees.md) (texte derrière « i », séparation « Renforcé » et son mana), [#32](../specs/issue-32-cartes-des-fenetres.md) (mêmes cartes dans les fenêtres Offres et de choix), [#20](../specs/issue-20-obtention-des-cartes.md) (fenêtres de choix, infobulle des achats) |
 | Jouer une carte de côté (Mouvement, Influence, Attaque, Parade 1) | p. 4 *Deed Cards*, 3.e ; p. 7, 2.c ; p. 8, 2.d ; p. 9 *Block Phase*, 4.b ; p. 10 *Attack Phase*, 1.b || 013, [071](../specs/071-icones-et-raccourcis.md) (boutons-icônes) |
 | Cumul des effets semblables | p. 4 *Deed Cards*, 4 | 013 |
 | Coût d'une carte : payer une mana, défausser ou écarter une autre carte | p. 4 *Deed Cards*, 6 | 013 |
@@ -134,7 +134,7 @@ chercher (`grep -rn "Forced Withdrawal" ../mage-knight/docs/regles/livret/`).
 | Ruines : jetons de ruines, autel, ennemis, récompenses | p. 3 *Enemy and Ruin token piles* ; p. 10 *Combat Outcomes* 2.b, 3.c ; carte *Ancient Ruins* : `cartes/sites-et-cites.md` ; jetons : `cartes/ennemis.md` ; Compendium, *Miscellaneous* S6, S11, S16, *Movement* S8, *End of Round* S6 | [045](../specs/045-ruines.md) |
 | Gloire, piste de gloire, changement de niveau | p. 9 *Ranged and Siege Attack Phase*, 5.b ; p. 11 *End of the Turn*, 6 ; scan `misc/fame_board.jpg` ; Compendium, *End of Turn* S6, S7, *Miscellaneous* S8 | [035](../specs/035-gloire-et-niveaux.md) (compétences des niveaux pairs : [051](../specs/051-competences.md)) |
 | Niveau : armure, limite de main, jeton de commandement | p. 3 *Player Area* ; p. 11 *End of the Turn*, 6.a ; scans `misc/level_token_*.png` | [035](../specs/035-gloire-et-niveaux.md) |
-| Compétences : types, gain aux niveaux pairs, offre commune | p. 3 *Pile of Skill tokens* ; p. 4, 2.g ; p. 5 *Using Skills* ; p. 11 *End of the Turn*, 6.b ; texte : `cartes/heros-et-competences.md` ; FAQ p2, p3 ; Compendium, *Skill Tokens* | [051](../specs/051-competences.md) (mécanisme, premier lot), [058](../specs/058-competences-second-lot.md) (second lot) |
+| Compétences : types, gain aux niveaux pairs, offre commune | p. 3 *Pile of Skill tokens* ; p. 4, 2.g ; p. 5 *Using Skills* ; p. 11 *End of the Turn*, 6.b ; texte : `cartes/heros-et-competences.md` ; FAQ p2, p3 ; Compendium, *Skill Tokens* | [051](../specs/051-competences.md) (mécanisme, premier lot), [058](../specs/058-competences-second-lot.md) (second lot), [#20](../specs/issue-20-obtention-des-cartes.md) (fenêtre du niveau pair) |
 | Compétences en solo (coopérative gardée, celles du joueur fantôme) | p. 15 *Skills in a Solo Game* ; Compendium, *Skill Tokens* S5 | [051](../specs/051-competences.md), [061](../specs/061-joueur-fantome.md) |
 
 ## Unités, interaction, sites
