@@ -66,7 +66,12 @@ pub(super) fn basic_effect_text(basic: BasicEffect, catalog: &Catalog) -> String
 
 /// « Mouvement 2 », « Attaque de glace 2 », « Jeton bleu »…
 pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
-    let colored = |key, color| catalog.format(key, &[("color", &color_name(color, catalog))]);
+    let colored = |key, color| {
+        catalog.format(
+            key,
+            &[("color", &super::source::tagged_color_name(color, catalog))],
+        )
+    };
     let (key, amount) = match effect {
         // Spec 025 : le mana gagné.
         Effect::GainToken(color) => return colored("effect.gain_token", color),
@@ -79,6 +84,8 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
         Effect::DrawCards(count) => {
             return catalog.format("effect.draw_cards", &[("count", &count.to_string())]);
         }
+        // Spec #68 : un seul dé (Source de mana renforcée) a son propre libellé.
+        Effect::SetDice { dice: 1, .. } => return catalog.text("effect.set_die"),
         Effect::SetDice { dice, .. } => ("effect.set_dice", dice),
         Effect::Boost(bonus) => ("effect.boost", bonus),
         Effect::Move(amount) => ("effect.move", amount),
@@ -185,8 +192,11 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return catalog.format(
                 "effect.crystal_and_token",
                 &[
-                    ("crystal", &color_name(crystal, catalog)),
-                    ("token", &super::source::mana_name(token, catalog)),
+                    (
+                        "crystal",
+                        &super::source::tagged_color_name(crystal, catalog),
+                    ),
+                    ("token", &super::source::tagged_mana_name(token, catalog)),
                 ],
             );
         }
@@ -195,7 +205,7 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
                 "effect.draw_and_token",
                 &[
                     ("cards", &cards.to_string()),
-                    ("token", &color_name(token, catalog)),
+                    ("token", &super::source::tagged_color_name(token, catalog)),
                 ],
             );
         }
@@ -204,8 +214,8 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return catalog.format(
                 "effect.gain_tokens",
                 &[
-                    ("first", &super::source::mana_name(first, catalog)),
-                    ("second", &super::source::mana_name(second, catalog)),
+                    ("first", &super::source::tagged_mana_name(first, catalog)),
+                    ("second", &super::source::tagged_mana_name(second, catalog)),
                 ],
             );
         }
@@ -223,7 +233,7 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return effect_text(effect.resolved(), catalog);
         }
         Effect::DestroyEnemy => return catalog.text("effect.destroy_enemy"),
-        Effect::CastFromOffer => return catalog.text("card.magic_talent.basic_text"),
+        Effect::CastFromOffer => return catalog.text("card.magic_talent.basic_label"),
         Effect::MoveAndHeal { movement, heal } => {
             return catalog.format(
                 "effect.move_and_heal",
@@ -250,8 +260,11 @@ pub fn effect_text(effect: Effect, catalog: &Catalog) -> String {
             return catalog.format(
                 "effect.wound_crystal_and_token",
                 &[
-                    ("crystal", &color_name(crystal, catalog)),
-                    ("token", &super::source::mana_name(token, catalog)),
+                    (
+                        "crystal",
+                        &super::source::tagged_color_name(crystal, catalog),
+                    ),
+                    ("token", &super::source::tagged_mana_name(token, catalog)),
                 ],
             );
         }
@@ -496,8 +509,40 @@ pub(super) fn card_option_text(
     strong: bool,
     catalog: &Catalog,
 ) -> Option<String> {
+    (effect == Effect::Nothing).then(|| written_label(card, strong, catalog))?
+}
+
+/// Les clés des textes complets d'une carte qui se joue (spec #68, Modèle), actions de base
+/// comprises : `card.<id>.basic_text` et `strong_text` ; `None` pour une Blessure.
+pub(super) fn full_text_keys(card: CardId) -> Option<(String, String)> {
+    if card.card().is_wound() {
+        return None;
+    }
+    let group = card.card().label_key().trim_end_matches(".name");
+    Some((
+        format!("{group}.basic_text"),
+        format!("{group}.strong_text"),
+    ))
+}
+
+/// Le libellé de bouton du texte écrit d'une carte (spec #68, Modèle) : `basic_label` ou
+/// `strong_label` quand la carte en a un, sinon son texte complet ; `None` pour une carte sans
+/// texte écrit propre (action de base, Blessure).
+pub(super) fn written_label(card: CardId, strong: bool, catalog: &Catalog) -> Option<String> {
     let (basic, strong_key) = card.card().unsupported_text_keys()?;
-    (effect == Effect::Nothing).then(|| catalog.text(if strong { strong_key } else { basic }))
+    let (full, label) = if strong {
+        (
+            strong_key,
+            strong_key.replace(".strong_text", ".strong_label"),
+        )
+    } else {
+        (basic, basic.replace(".basic_text", ".basic_label"))
+    };
+    Some(catalog.text(if catalog.parameters(&label).is_some() {
+        &label
+    } else {
+        full
+    }))
 }
 
 /// Vrai si l'effet (de base ou renforcé) de `card` détruit la carte choisie au lieu de la

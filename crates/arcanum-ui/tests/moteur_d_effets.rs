@@ -255,10 +255,7 @@ fn hand_shows_written_text_of_modifier_cards() {
         .iter()
         .find(|held| held.card == path_finding)
         .expect("carte en main");
-    assert_eq!(
-        held.effect,
-        "Mouvement 2 ; tous les terrains coûtent 1 de moins (min. 2)"
-    );
+    assert_eq!(held.effect, catalog.text("card.path_finding.basic_text"));
 }
 
 // --- Coûts et trajets (C17, C43) ---

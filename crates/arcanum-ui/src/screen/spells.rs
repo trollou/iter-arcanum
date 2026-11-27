@@ -41,12 +41,8 @@ pub(super) fn spell_option_label(
     let points = against_combat(points, combat);
     let kinds = effect.option_modifiers(option);
     if options.len() == 1 && (!kinds.is_empty() || !has_points(points)) {
-        let written = card
-            .card()
-            .unsupported_text_keys()
-            .map(|(basic, strong_key)| if strong { strong_key } else { basic });
-        if let Some(key) = written {
-            return catalog.text(key);
+        if let Some(label) = super::text::written_label(card, strong, catalog) {
+            return label;
         }
     }
     let mut parts = Vec::new();

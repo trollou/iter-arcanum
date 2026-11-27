@@ -205,7 +205,7 @@ fn unit_ability_buttons() {
     assert_eq!(
         screen.units.units[1].abilities[0],
         AbilityButton {
-            label: "Mouvement 2 ; forêts, collines et marais coûtent 1 de moins (min. 0)".into(),
+            label: "Mouvement 2, forêts, collines et marais à 1 de moins".into(),
             command: Some(Command::Play(index_of(
                 &state,
                 &activate(foresters(), 0, 0, &[])
@@ -228,7 +228,7 @@ fn unit_ability_buttons() {
         },
     );
     let heal = &screen_of(&state, &catalog).units.units[0].abilities[0];
-    assert_eq!(heal.label, "(mana vert) Soin 2");
+    assert_eq!(heal.label, "(mana <green>vert</green>) Soin 2");
     let choosing = ScreenMode::ChoosingUnitAbility {
         unit: herbalists(),
         ability: 0,
@@ -245,7 +245,10 @@ fn unit_ability_buttons() {
     let prompt = screen_in(&state, &choosing, &catalog)
         .unit_prompt
         .expect("choix du mana");
-    assert_eq!(prompt.text, "Herboristes : (mana vert) Soin 2");
+    assert_eq!(
+        prompt.text,
+        "Herboristes : (mana <green>vert</green>) Soin 2"
+    );
     let payments: Vec<(&str, Command)> = prompt
         .payments
         .iter()
@@ -746,12 +749,9 @@ fn gardes_utem_offer_line_shows_swift_icon() {
         .iter()
         .flat_map(|column| &column.cards)
         .flat_map(|card| &card.lines)
-        .find(|line| line.contains("compte double"))
+        .find(|line| line.contains("double contre"))
         .expect("ligne de la Parade vive");
-    assert_eq!(
-        line,
-        "Parade 4 ; compte double contre un ennemi [[swift]]Vif"
-    );
+    assert_eq!(line, "Parade 4, double contre un ennemi [[swift]]Vif");
     let swift = arcanum_ui::Icon::Ability(arcanum_core::EnemyAbility::Swift);
     assert!(
         arcanum_ui::icon_pieces(line, &catalog).iter().any(

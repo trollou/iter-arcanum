@@ -322,7 +322,10 @@ fn play_area_shows_mana_tokens() {
         tokens.tokens[0].tooltip,
         "Jeton de mana bleu : à utiliser ce tour, rendu à la réserve à la fin du tour."
     );
-    assert_eq!(screen.play_area[0].text, "Concentration : Jeton bleu");
+    assert_eq!(
+        screen.play_area[0].text,
+        "Concentration : Jeton <blue>bleu</blue>"
+    );
 }
 
 // Spec 025 C26
@@ -336,14 +339,14 @@ fn hand_shows_mana_options() {
     let concentration_view = hand_card(&screen, "Concentration");
     assert_eq!(
         concentration_view.effect,
-        "Jeton bleu ou Jeton blanc ou Jeton rouge"
+        "Jeton <blue>bleu</blue> ou Jeton <white>blanc</white> ou Jeton <red>rouge</red>"
     );
     assert_eq!(
         labels(concentration_view.plays.iter().map(|b| &b.label)),
         [
-            "Jouer : Jeton bleu",
-            "Jouer : Jeton blanc",
-            "Jouer : Jeton rouge"
+            "Jouer : Jeton <blue>bleu</blue>",
+            "Jouer : Jeton <white>blanc</white>",
+            "Jouer : Jeton <red>rouge</red>"
         ]
     );
 
@@ -352,10 +355,10 @@ fn hand_shows_mana_options() {
     assert_eq!(
         labels(crystallize_view.paid_plays.iter().map(|b| &b.label)),
         [
-            "Payer rouge : cristal rouge",
-            "Payer bleu : cristal bleu",
-            "Payer blanc : cristal blanc",
-            "Payer vert : cristal vert"
+            "Payer <red>rouge</red> : cristal <red>rouge</red>",
+            "Payer <blue>bleu</blue> : cristal <blue>bleu</blue>",
+            "Payer <white>blanc</white> : cristal <white>blanc</white>",
+            "Payer <green>vert</green> : cristal <green>vert</green>"
         ]
     );
     let green = &crystallize_view.paid_plays[3];
@@ -380,10 +383,10 @@ fn hand_shows_mana_options() {
     assert_eq!(
         labels(crystallize_view.strong_plays.iter().map(|b| &b.label)),
         [
-            "Renforcer : Cristal rouge",
-            "Renforcer : Cristal bleu",
-            "Renforcer : Cristal blanc",
-            "Renforcer : Cristal vert"
+            "Renforcer : Cristal <red>rouge</red>",
+            "Renforcer : Cristal <blue>bleu</blue>",
+            "Renforcer : Cristal <white>blanc</white>",
+            "Renforcer : Cristal <green>vert</green>"
         ]
     );
     assert!(crystallize_view.strong_plays.iter().all(|b| !b.enabled));
@@ -458,7 +461,7 @@ fn crystallize_chooses_its_mana() {
     let prompt = screen.mana_prompt.expect("bandeau du choix du mana");
     assert_eq!(
         prompt.text,
-        "Cristallisation : Payer rouge : cristal rouge. Choisissez le mana à payer."
+        "Cristallisation : Payer <red>rouge</red> : cristal <red>rouge</red>. Choisissez le mana à payer."
     );
     assert_eq!(
         labels(prompt.payments.iter().map(|b| &b.label)),
@@ -557,7 +560,7 @@ fn set_die_mode_chooses_die_then_color() {
     let button = &view_card.strong_plays[0];
     assert_eq!(
         button.label,
-        "Renforcer : Mettre 1 dé(s) sur une couleur, gagner des jetons"
+        "Renforcer : Un dé de la Source tourné sur une couleur : 2 jetons"
     );
     assert!(button.enabled);
     assert_eq!(
@@ -811,7 +814,7 @@ fn concentration_mode_lists_targets() {
     let button = &hand_card(&screen, "Concentration").strong_plays[0];
     assert_eq!(
         button.label,
-        "Renforcer : Renforcer une autre carte gratuitement, +2"
+        "Renforcer : Effet renforcé d'une autre carte, gratuit, +2"
     );
     assert!(button.enabled);
     assert_eq!(
@@ -880,7 +883,8 @@ fn concentration_mode_lists_targets() {
     let prompt = screen.mana_prompt.expect("choix du mana");
     assert_eq!(
         prompt.text,
-        "Concentration renforcée : Renforcer une autre carte gratuitement, +2. Choisissez le mana à payer."
+        "Concentration renforcée : Effet renforcé d'une autre carte, gratuit, +2. Choisissez le mana \
+         à payer."
     );
     assert_eq!(
         labels(prompt.payments.iter().map(|b| &b.label)),
@@ -916,7 +920,7 @@ fn concentration_mode_lists_targets() {
             .map(|line| line.text.as_str())
             .collect::<Vec<_>>(),
         [
-            "Concentration (renforcée, dé vert) : Renforcer une autre carte gratuitement, +2",
+            "Concentration (renforcée, dé vert) : Effet renforcé d'une autre carte, gratuit, +2",
             "Marche (renforcée gratuitement) : Mouvement 6"
         ]
     );
@@ -939,7 +943,7 @@ fn concentration_with_mana_draw_sets_a_die() {
     let (tooltip, command) = boost_buttons(hand_card(&screen, "Source de mana"))[0];
     assert_eq!(
         tooltip,
-        "Renforcer avec Concentration : Mettre 1 dé(s) sur une couleur, gagner des jetons"
+        "Renforcer avec Concentration : Un dé de la Source tourné sur une couleur : 2 jetons"
     );
     let mode = boost_mode(command);
     let screen = screen_in(&state, &mode, &catalog);
@@ -1154,9 +1158,10 @@ fn computed_mana_text_is_color_tagged() {
         .map(|button| button.face.clone())
         .collect();
     assert!(
-        faces.contains(&arcanum_ui::EffectFace::Text(
-            "Jeton <blue>bleu</blue>".into()
-        )),
+        faces.contains(&arcanum_ui::EffectFace::Crystal {
+            color: ManaColor::Basic(Blue),
+            label: "Jeton <blue>bleu</blue>".into(),
+        }),
         "{faces:?}"
     );
 }

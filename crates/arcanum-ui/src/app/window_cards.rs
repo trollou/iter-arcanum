@@ -217,7 +217,14 @@ fn window_card(
                 // Spec 057 : les capacités d'une unité de l'offre (Appel aux armes).
                 for button in &card.uses {
                     if ui
-                        .add(egui::Button::new(crate::plain_text(&button.label, catalog)).wrap())
+                        .add(
+                            egui::Button::new(super::widgets::rich_text(
+                                ui.style(),
+                                &button.label,
+                                catalog,
+                            ))
+                            .wrap(),
+                        )
                         .clicked()
                     {
                         clicked = Some(button.command);

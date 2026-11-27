@@ -393,64 +393,104 @@
     "info": "Card text",
     "if_destroyed": "if destroyed",
     "rage": {
-      "name": "Rage"
+      "name": "Rage",
+      "basic_text": "[[attack]]Attack 2 or [[block]]Block 2.",
+      "strong_text": "[[attack]]Attack 4."
     },
     "determination": {
-      "name": "Determination"
+      "name": "Determination",
+      "basic_text": "[[attack]]Attack 2 or [[block]]Block 2.",
+      "strong_text": "[[block]]Block 5."
     },
     "swiftness": {
-      "name": "Swiftness"
+      "name": "Swiftness",
+      "basic_text": "[[move]]Move 2.",
+      "strong_text": "[[ranged_attack]]Ranged Attack 3."
     },
     "march": {
-      "name": "March"
+      "name": "March",
+      "basic_text": "[[move]]Move 2.",
+      "strong_text": "[[move]]Move 4."
     },
     "stamina": {
-      "name": "Stamina"
+      "name": "Stamina",
+      "basic_text": "[[move]]Move 2.",
+      "strong_text": "[[move]]Move 4."
     },
     "tranquility": {
-      "name": "Tranquility"
+      "name": "Tranquility",
+      "basic_text": "Heal 1, or draw one card.",
+      "strong_text": "Heal 2, or draw two cards."
     },
     "promise": {
-      "name": "Promise"
+      "name": "Promise",
+      "basic_text": "[[influence]]Influence 2.",
+      "strong_text": "[[influence]]Influence 4."
     },
     "threaten": {
-      "name": "Threaten"
+      "name": "Threaten",
+      "basic_text": "[[influence]]Influence 2.",
+      "strong_text": "[[influence]]Influence 5. You lose 1 Reputation right away."
     },
     "crystallize": {
-      "name": "Crystallize"
+      "name": "Crystallize",
+      "basic_text": "Pay one mana of a basic color to put a crystal of that color in your Inventory.",
+      "strong_text": "Put a crystal of the basic color of your choice in your Inventory."
     },
     "mana_draw": {
-      "name": "Mana Draw"
+      "name": "Mana Draw",
+      "basic_text": "This turn, you may use one more die from the Source.",
+      "strong_text": "Take a die from the Source and turn it to the color of your choice, except <gold>gold</gold>. Gain two mana tokens of that color. That die is not rerolled when it goes back to the Source."
     },
     "concentration": {
-      "name": "Concentration"
+      "name": "Concentration",
+      "basic_text": "Gain a <blue>blue</blue>, <white>white</white> or <red>red</red> mana token.",
+      "strong_text": "Play another Action card along with this one: you get its powered effect without paying any mana. If it gives you [[move]]Move, [[influence]]Influence, an [[attack]]Attack or a [[block]]Block, add 2."
     },
     "improvisation": {
-      "name": "Improvisation"
+      "name": "Improvisation",
+      "basic_text": "Discard another card from your hand to get [[move]]Move 3, [[influence]]Influence 3, [[attack]]Attack 3 or [[block]]Block 3.",
+      "strong_text": "Discard another card from your hand to get [[move]]Move 5, [[influence]]Influence 5, [[attack]]Attack 5 or [[block]]Block 5."
     },
     "battle_versatility": {
-      "name": "Battle Versatility"
+      "name": "Battle Versatility",
+      "basic_text": "[[attack]]Attack 2, [[block]]Block 2 or [[ranged_attack]]Ranged Attack 1.",
+      "strong_text": "[[attack]]Attack 4, [[block]]Block 4, [[fire_attack]]Fire Attack 3, [[fire_block]]Fire Block 3, [[ranged_attack]]Ranged Attack 3 or [[siege_attack]]Siege Attack 2."
     },
     "mana_pull": {
-      "name": "Mana Pull"
+      "name": "Mana Pull",
+      "basic_text": "This turn, you may use one more die from the Source. If it is <black>black</black>, it gives one mana of the color of your choice.",
+      "strong_text": "Take two dice from the Source and turn each one to the color of your choice, except <gold>gold</gold>. Gain one mana token of each of those colors. Those dice are not rerolled when they go back to the Source."
     },
     "will_focus": {
-      "name": "Will Focus"
+      "name": "Will Focus",
+      "basic_text": "Gain a <blue>blue</blue>, <white>white</white> or <red>red</red> mana token, or put a <green>green</green> crystal in your Inventory.",
+      "strong_text": "Play another Action card along with this one: you get its powered effect without paying any mana. If it gives you [[move]]Move, [[influence]]Influence, an [[attack]]Attack or a [[block]]Block, add 3."
     },
     "crystal_joy": {
-      "name": "Crystal Joy"
+      "name": "Crystal Joy",
+      "basic_text": "Pay one mana of a basic color to put a crystal of that color in your Inventory. At the end of your turn, you may discard another card, but not a Wound, to take this one back into your hand.",
+      "strong_text": "Put a crystal of the basic color of your choice in your Inventory. At the end of your turn, you may discard another card, even a Wound, to take this one back into your hand."
     },
     "noble_manners": {
-      "name": "Noble Manners"
+      "name": "Noble Manners",
+      "basic_text": "[[influence]]Influence 2. If you play it during an interaction, you gain 1 [[fame]]Fame right away.",
+      "strong_text": "[[influence]]Influence 4. If you play it during an interaction, you gain 1 [[fame]]Fame and 1 Reputation right away."
     },
     "rejuvenate": {
-      "name": "Rejuvenate"
+      "name": "Rejuvenate",
+      "basic_text": "Heal 1, draw one card, gain a <green>green</green> mana token, or ready a level I or II unit.",
+      "strong_text": "Heal 2, draw two cards, put a <green>green</green> crystal in your Inventory, or ready a level I, II or III unit."
     },
     "cold_toughness": {
-      "name": "Cold Toughness"
+      "name": "Cold Toughness",
+      "basic_text": "[[attack]]Attack 2 or [[ice_block]]Ice Block 3.",
+      "strong_text": "[[ice_block]]Ice Block 5, plus 1 for each ability and each attack color shown on the token of the enemy you block (unless it has Arcane Immunity)."
     },
     "instinct": {
-      "name": "Instinct"
+      "name": "Instinct",
+      "basic_text": "[[move]]Move 2, [[influence]]Influence 2, [[attack]]Attack 2 or [[block]]Block 2.",
+      "strong_text": "[[move]]Move 4, [[influence]]Influence 4, [[attack]]Attack 4 or [[block]]Block 4."
     },
     "wound": {
       "name": "Wound"
@@ -458,335 +498,392 @@
     "strong": "Powered: {effect}",
     "strong_unsupported": "Powered: not yet available",
     "fire_bolt": {
-      "name": "Fire Bolt"
+      "name": "Fire Bolt",
+      "basic_text": "Put a <red>red</red> crystal in your Inventory.",
+      "strong_text": "[[ranged_fire_attack]]Ranged Fire Attack 3."
     },
     "ice_bolt": {
-      "name": "Ice Bolt"
+      "name": "Ice Bolt",
+      "basic_text": "Put a <blue>blue</blue> crystal in your Inventory.",
+      "strong_text": "[[ranged_ice_attack]]Ranged Ice Attack 3."
     },
     "swift_bolt": {
-      "name": "Swift Bolt"
+      "name": "Swift Bolt",
+      "basic_text": "Put a <white>white</white> crystal in your Inventory.",
+      "strong_text": "[[ranged_attack]]Ranged Attack 4."
     },
     "crushing_bolt": {
-      "name": "Crushing Bolt"
+      "name": "Crushing Bolt",
+      "basic_text": "Put a <green>green</green> crystal in your Inventory.",
+      "strong_text": "[[siege_attack]]Siege Attack 3."
     },
     "blood_rage": {
       "name": "Blood Rage",
-      "basic_text": "Attack 2; take a Wound to make it 5",
-      "strong_text": "Attack 4; take a Wound to make it 9"
+      "basic_text": "[[attack]]Attack 2. You may take a Wound to raise it to [[attack]]Attack 5.",
+      "strong_text": "[[attack]]Attack 4. You may take a Wound to raise it to [[attack]]Attack 9."
     },
     "ice_shield": {
       "name": "Ice Shield",
-      "strong_text": "Ice Block 3; the blocked enemy gets Armor -3 (min. 1)"
+      "basic_text": "[[ice_block]]Ice Block 3.",
+      "strong_text": "[[ice_block]]Ice Block 3. The enemy blocked this way loses 3 [[armor]]Armor, but not below 1.",
+      "strong_label": "Ice Block 3, the blocked enemy loses 3 Armor"
     },
     "agility": {
       "name": "Agility",
-      "basic_text": "Move 2; in combat, each Move point left gives Attack 1",
-      "strong_text": "Move 4; in combat, 1 Move = Attack 1, or 2 Move = Ranged Attack 1"
+      "basic_text": "[[move]]Move 2. During combat this turn, each Move point you spend gives you [[attack]]Attack 1.",
+      "strong_text": "[[move]]Move 4. During combat this turn, spend as many Move points as you like: each point gives [[attack]]Attack 1, or each pair of points [[ranged_attack]]Ranged Attack 1.",
+      "basic_label": "Move 2, each point spent in combat gives Attack 1",
+      "strong_label": "Move 4, in combat 1 point gives Attack 1 or 2 points Ranged Attack 1"
     },
     "refreshing_walk": {
       "name": "Refreshing Walk",
-      "basic_text": "Move 2 and Heal 1; in combat, Move 2 only",
-      "strong_text": "Move 4 and Heal 2; in combat, Move 4 only"
+      "basic_text": "[[move]]Move 2 and Heal 1. Played during a combat, it only gives [[move]]Move 2.",
+      "strong_text": "[[move]]Move 4 and Heal 2. Played during a combat, it only gives [[move]]Move 4."
     },
     "intimidate": {
       "name": "Intimidate",
-      "basic_text": "Influence 4 or Attack 3; Reputation −1 at end of turn",
-      "strong_text": "Influence 8 or Attack 7; Reputation −2 at end of turn"
+      "basic_text": "[[influence]]Influence 4 or [[attack]]Attack 3. At the end of your turn, you lose 1 Reputation.",
+      "strong_text": "[[influence]]Influence 8 or [[attack]]Attack 7. At the end of your turn, you lose 2 Reputation."
     },
     "frost_bridge": {
       "name": "Frost Bridge",
-      "basic_text": "Move 2; swamps cost 1 this turn",
-      "strong_text": "Move 4; lakes can be crossed, lakes and swamps cost 1 this turn"
+      "basic_text": "[[move]]Move 2. This turn, entering a swamp costs 1 Move point.",
+      "strong_text": "[[move]]Move 4. This turn, you may cross lakes, and entering a lake or a swamp costs 1 Move point.",
+      "basic_label": "Move 2, swamps cost 1 this turn",
+      "strong_label": "Move 4, lakes crossable, lakes and swamps cost 1 this turn"
     },
     "song_of_wind": {
       "name": "Song of Wind",
-      "basic_text": "Move 2; plains, deserts and wastelands cost 1 less (min. 0)",
-      "strong_text": "Move 2; those cost 2 less; pay blue mana: cross lakes for 0"
+      "basic_text": "[[move]]Move 2. This turn, plains, deserts and wastelands cost 1 Move point less, down to 0.",
+      "strong_text": "[[move]]Move 2. This turn, plains, deserts and wastelands cost 2 Move points less, down to 0. You may pay one <blue>blue</blue> mana to cross lakes this turn, for 0 Move points.",
+      "basic_label": "Move 2, plains, deserts and wastelands cost 1 less"
     },
     "path_finding": {
       "name": "Path Finding",
-      "basic_text": "Move 2; every terrain costs 1 less (min. 2)",
-      "strong_text": "Move 4; every terrain costs 2"
+      "basic_text": "[[move]]Move 2. This turn, every terrain costs 1 Move point less, but not below 2.",
+      "strong_text": "[[move]]Move 4. This turn, every terrain costs 2 Move points.",
+      "basic_label": "Move 2, every terrain costs 1 less, at least 2",
+      "strong_label": "Move 4, every terrain costs 2"
     },
     "blood_ritual": {
       "name": "Blood Ritual",
-      "basic_text": "Take a Wound; gain a red crystal and a mana token of any color",
-      "strong_text": "Take a Wound; gain three mana tokens of any colors; pay a basic mana to gain a crystal of that color"
+      "basic_text": "Take a Wound. Put a <red>red</red> crystal in your Inventory and gain a mana token of the color of your choice, <gold>gold</gold> and <black>black</black> included.",
+      "strong_text": "Take a Wound. Gain three mana tokens of the colors of your choice, <gold>gold</gold> and <black>black</black> included. You may pay one mana of a basic color to gain a crystal of that color."
     },
     "pure_magic": {
       "name": "Pure Magic",
-      "basic_text": "Pay a mana: green Move 4, white Influence 4, blue Block 4, red Attack 4",
-      "strong_text": "Pay a mana: green Move 7, white Influence 7, blue Block 7, red Attack 7"
+      "basic_text": "Pay one mana as you play this card. <green>Green</green>: [[move]]Move 4. <white>White</white>: [[influence]]Influence 4. <blue>Blue</blue>: [[block]]Block 4. <red>Red</red>: [[attack]]Attack 4.",
+      "strong_text": "Pay one mana as you play this card. <green>Green</green>: [[move]]Move 7. <white>White</white>: [[influence]]Influence 7. <blue>Blue</blue>: [[block]]Block 7. <red>Red</red>: [[attack]]Attack 7."
     },
     "heroic_tale": {
       "name": "Heroic Tale",
-      "basic_text": "Influence 3; Reputation +1 per Unit recruited this turn",
-      "strong_text": "Influence 6; Fame +1 and Reputation +1 per Unit recruited this turn"
+      "basic_text": "[[influence]]Influence 3. At the end of your turn, you gain 1 Reputation for each unit recruited this turn.",
+      "strong_text": "[[influence]]Influence 6. At the end of your turn, you gain 1 [[fame]]Fame and 1 Reputation for each unit recruited this turn.",
+      "basic_label": "Influence 3, Reputation +1 per unit recruited",
+      "strong_label": "Influence 6, Fame +1 and Reputation +1 per unit recruited"
     },
     "regeneration": {
       "name": "Regeneration",
-      "basic_text": "Heal 1; ready a level I or II Unit",
-      "strong_text": "Heal 2; ready a level I, II or III Unit"
+      "basic_text": "Heal 1. Ready one of your level I or II units.",
+      "strong_text": "Heal 2. Ready one of your level I, II or III units."
     },
     "into_the_heat": {
       "name": "Into the Heat",
-      "basic_text": "At combat start: Units get +2 Attack and Block; no damage to Units",
-      "strong_text": "At combat start: Units get +3 Attack and Block; no damage to Units"
+      "basic_text": "Play it at the start of a combat. During that combat, the [[attack]]Attack and [[block]]Block of all your units go up by 2. This turn, you cannot assign damage to your units.",
+      "strong_text": "Play it at the start of a combat. During that combat, the [[attack]]Attack and [[block]]Block of all your units go up by 3. This turn, you cannot assign damage to your units.",
+      "basic_label": "Units +2 Attack and Block, no damage to them",
+      "strong_label": "Units +3 Attack and Block, no damage to them"
     },
     "steady_tempo": {
       "name": "Steady Tempo",
-      "basic_text": "Move 2; at end of turn, may go under the deck if it is not empty",
-      "strong_text": "Move 4; at end of turn, may go on top of the deck"
+      "basic_text": "[[move]]Move 2. At the end of your turn, you may put it at the bottom of your deck instead of discarding it, if the deck is not empty.",
+      "strong_text": "[[move]]Move 4. At the end of your turn, you may put it on top of your deck instead of discarding it.",
+      "basic_label": "Move 2, may go to the bottom of your deck",
+      "strong_label": "Move 4, may go on top of your deck"
     },
     "diplomacy": {
       "name": "Diplomacy",
-      "basic_text": "Influence 2; Influence counts as Block this turn",
-      "strong_text": "Influence 4; choose ice or fire: Influence counts as Block of that element"
+      "basic_text": "[[influence]]Influence 2. This turn, you may use Influence as [[block]]Block.",
+      "strong_text": "[[influence]]Influence 4. Choose ice or fire: this turn, you may use Influence as [[block]]Block of that element.",
+      "basic_label": "Influence 2, Influence counts as Block this turn"
     },
     "in_need": {
       "name": "In Need",
-      "basic_text": "Influence 3, +1 per Wound in hand or on a Unit",
-      "strong_text": "Influence 5, +2 per Wound in hand or on a Unit"
+      "basic_text": "[[influence]]Influence 3, plus 1 for each Wound in your hand or on one of your units.",
+      "strong_text": "[[influence]]Influence 5, plus 2 for each Wound in your hand or on one of your units."
     },
     "decompose": {
       "name": "Decompose",
-      "basic_text": "Throw away an Action card: gain two crystals of its color",
-      "strong_text": "Throw away an Action card: gain a crystal of each basic color other than its color"
+      "basic_text": "As you play this card, destroy an Action card from your hand. Gain two crystals of the destroyed card's color.",
+      "strong_text": "As you play this card, destroy an Action card from your hand. Gain one crystal of each basic color other than the destroyed card's."
     },
     "crystal_mastery": {
       "name": "Crystal Mastery",
-      "basic_text": "Gain a crystal of a color you already own",
-      "strong_text": "Crystals spent this turn return at end of turn"
+      "basic_text": "Gain a crystal of a color you already have a crystal of.",
+      "strong_text": "The crystals you spend this turn come back to your Inventory at the end of the turn.",
+      "strong_label": "Crystals spent come back at the end of the turn"
     },
     "mana_storm": {
       "name": "Mana Storm",
-      "basic_text": "Pick a basic-color Source die: gain that crystal, then reroll it",
-      "strong_text": "Reroll all dice; 3 extra dice; black and gold count as any basic color"
+      "basic_text": "Choose a Source die showing a basic color. Gain a crystal of that color, then reroll that die right away and put it back in the Source.",
+      "strong_text": "Reroll all the Source dice. This turn, you may use three more dice from the Source, and a <black>black</black> or <gold>gold</gold> die gives one mana of the basic color of your choice, by day or by night."
     },
     "ambush": {
       "name": "Ambush",
-      "basic_text": "Move 2; first Attack +1 or first Block +2",
-      "strong_text": "Move 4; first Attack +2 or first Block +4"
+      "basic_text": "[[move]]Move 2. This turn, the first [[attack]]Attack card you play gets 1 more, or the first [[block]]Block card gets 2 more, whichever comes first.",
+      "strong_text": "[[move]]Move 4. This turn, the first [[attack]]Attack card you play gets 2 more, or the first [[block]]Block card gets 4 more, whichever comes first.",
+      "basic_label": "Move 2, first Attack +1 or first Block +2",
+      "strong_label": "Move 4, first Attack +2 or first Block +4"
     },
     "maximal_effect": {
       "name": "Maximal Effect",
-      "basic_text": "With another Action card: its basic effect three times, then throw it away",
-      "strong_text": "With another Action card: its strong effect twice for free, then throw it away"
+      "basic_text": "Play another Action card along with this one: you use its basic effect three times, then you destroy it.",
+      "strong_text": "Play another Action card along with this one: you use its powered effect twice, without paying any mana, then you destroy it."
     },
     "magic_talent": {
       "name": "Magic Talent",
-      "basic_text": "Discard a card: play a Spell of the same color from the offer as if in hand",
-      "strong_text": "Pay a mana: gain a Spell of that color from the offer into your discard pile"
+      "basic_text": "Discard a card from your hand. This turn, you may play a Spell of the same color from the Spell offer as if it were in your hand. The Spell stays in the offer.",
+      "strong_text": "Pay one mana as you play this card. Take a Spell of that color from the offer and put it in your discard pile.",
+      "basic_label": "A Spell of the same color from the offer, played as if in hand"
     },
     "learning": {
       "name": "Learning",
-      "basic_text": "Influence 2; once, pay Influence 6: gain an Advanced Action from the offer into discard",
-      "strong_text": "Influence 4; once, pay Influence 9: gain an Advanced Action from the offer into hand"
+      "basic_text": "[[influence]]Influence 2. Once this turn, you may pay 6 Influence to take an Advanced Action from the offer and put it in your discard pile.",
+      "strong_text": "[[influence]]Influence 4. Once this turn, you may pay 9 Influence to take an Advanced Action from the offer and put it in your hand.",
+      "basic_label": "Influence 2, an Advanced Action from the offer for 6 Influence",
+      "strong_label": "Influence 4, an Advanced Action from the offer into your hand for 9 Influence"
     },
     "training": {
       "name": "Training",
-      "basic_text": "Throw away an Action card: gain an Advanced Action of that color into discard",
-      "strong_text": "Throw away an Action card: gain an Advanced Action of that color into hand"
+      "basic_text": "Destroy an Action card from your hand, then take an Advanced Action of the same color from the offer and put it in your discard pile.",
+      "strong_text": "Destroy an Action card from your hand, then take an Advanced Action of the same color from the offer and put it in your hand."
     },
     "fireball": {
       "name": "Fireball",
       "strong_name": "Firestorm",
-      "basic_text": "Ranged Fire Attack 5",
-      "strong_text": "Take a Wound; Siege Fire Attack 8"
+      "basic_text": "[[ranged_fire_attack]]Ranged Fire Attack 5.",
+      "strong_text": "Take a Wound. [[siege_fire_attack]]Siege Fire Attack 8."
     },
     "snowstorm": {
       "name": "Snowstorm",
       "strong_name": "Blizzard",
-      "basic_text": "Ranged Ice Attack 5",
-      "strong_text": "Take a Wound; Siege Ice Attack 8"
+      "basic_text": "[[ranged_ice_attack]]Ranged Ice Attack 5.",
+      "strong_text": "Take a Wound. [[siege_ice_attack]]Siege Ice Attack 8."
     },
     "expose": {
       "name": "Expose",
       "strong_name": "Mass Expose",
-      "basic_text": "One enemy loses [[fortified]]fortifications and resistances; Ranged Attack 2",
-      "strong_text": "All enemies lose [[fortified]]fortifications, or all lose resistances; Ranged Attack 3"
+      "basic_text": "During this combat, one enemy loses all its [[fortified]]fortifications and all its resistances. [[ranged_attack]]Ranged Attack 2.",
+      "strong_text": "During this combat, all enemies lose their [[fortified]]fortifications, or all lose their resistances. [[ranged_attack]]Ranged Attack 3.",
+      "basic_label": "One enemy loses fortifications and resistances, Ranged Attack 2"
     },
     "tremor": {
       "name": "Tremor",
       "strong_name": "Earthquake",
-      "basic_text": "One enemy Armor -3, or all Armor -2 (min. 1)",
-      "strong_text": "One enemy Armor -3 (-6 if [[fortified]]fortified), or all -2 (-4 if [[fortified]]fortified) (min. 1)"
+      "basic_text": "One enemy loses 3 [[armor]]Armor, or all enemies lose 2 [[armor]]Armor. Armor does not go below 1.",
+      "strong_text": "One enemy loses 3 [[armor]]Armor (6 if it is [[fortified]]fortified), or all enemies lose 2 [[armor]]Armor (4 for those that are [[fortified]]fortified). Armor does not go below 1.",
+      "basic_label": "One enemy loses 3 Armor, or all enemies 2",
+      "strong_label": "One enemy loses 3 Armor, 6 if fortified, or all 2, 4 if fortified"
     },
     "flame_wall": {
       "name": "Flame Wall",
       "strong_name": "Flame Wave",
-      "basic_text": "Fire Attack 5 or Fire Block 7",
-      "strong_text": "Fire Attack 5 or Fire Block 7, +2 per enemy token faced"
+      "basic_text": "[[fire_attack]]Fire Attack 5 or [[fire_block]]Fire Block 7.",
+      "strong_text": "[[fire_attack]]Fire Attack 5 or [[fire_block]]Fire Block 7, plus 2 for each enemy you are facing."
     },
     "mana_bolt": {
       "name": "Mana Bolt",
       "strong_name": "Mana Thunderbolt",
-      "basic_text": "Pay a mana: blue Ice Attack 8, red Cold Fire 7, white Ranged Ice 6, green Siege Ice 5",
-      "strong_text": "Pay a mana: blue Ice Attack 11, red Cold Fire 10, white Ranged Ice 9, green Siege Ice 8"
+      "basic_text": "Pay one mana as you play this card. <blue>Blue</blue>: [[ice_attack]]Ice Attack 8. <red>Red</red>: [[cold_fire_attack]]Cold Fire Attack 7. <white>White</white>: [[ranged_ice_attack]]Ranged Ice Attack 6. <green>Green</green>: [[siege_ice_attack]]Siege Ice Attack 5.",
+      "strong_text": "Pay one mana as you play this card. <blue>Blue</blue>: [[ice_attack]]Ice Attack 11. <red>Red</red>: [[cold_fire_attack]]Cold Fire Attack 10. <white>White</white>: [[ranged_ice_attack]]Ranged Ice Attack 9. <green>Green</green>: [[siege_ice_attack]]Siege Ice Attack 8."
     },
     "whirlwind": {
       "name": "Whirlwind",
       "strong_name": "Tornado",
-      "basic_text": "One enemy does not attack this combat",
-      "strong_text": "Attack phase only: destroy one enemy"
+      "basic_text": "One enemy does not attack during this combat.",
+      "strong_text": "Play it only during the Attack phase of a combat. Destroy one enemy.",
+      "basic_label": "One enemy does not attack",
+      "strong_label": "Destroy an enemy in the Attack phase"
     },
     "underground_travel": {
       "name": "Underground Travel",
       "strong_name": "Underground Attack",
-      "basic_text": "Move up to 3 revealed spaces, not through swamps or lakes, ending on a safe space; provokes nothing",
-      "strong_text": "Same, but end on a fortified site: assault ignoring its fortifications"
+      "basic_text": "Move up to 3 revealed spaces, without entering or crossing a swamp or a lake. You must end on a safe space. This move does not provoke rampaging enemies.",
+      "strong_text": "Move up to 3 revealed spaces, without entering or crossing a swamp or a lake, and end on a [[fortified]]fortified site: your move stops there and it is an assault, in which you ignore the site's fortifications. This move does not provoke rampaging enemies. If you retreat after the combat, go back to the space you started from.",
+      "strong_label": "Up to 3 spaces, assault a fortified site ignoring its fortifications"
     },
     "burning_shield": {
       "name": "Burning Shield",
       "strong_name": "Exploding Shield",
-      "basic_text": "Fire Block 4; if it blocks successfully, Fire Attack 4 in the Attack phase",
-      "strong_text": "Fire Block 4; if it blocks successfully, destroy the blocked enemy"
+      "basic_text": "[[fire_block]]Fire Block 4. If this card is used for a successful block, you may use it in the Attack phase as [[fire_attack]]Fire Attack 4.",
+      "strong_text": "[[fire_block]]Fire Block 4. If this card is used for a successful block, the blocked enemy is destroyed.",
+      "basic_label": "Fire Block 4, then Fire Attack 4 if the block succeeds",
+      "strong_label": "Fire Block 4, the blocked enemy is destroyed if the block succeeds"
     },
     "chill": {
       "name": "Chill",
       "strong_name": "Lethal Chill",
-      "basic_text": "One enemy does not attack; it loses Fire Resistance this turn",
-      "strong_text": "One enemy does not attack and gets Armor -4 (min. 1) this turn"
+      "basic_text": "One enemy does not attack during this combat. If it has fire resistance, it loses it until the end of the turn.",
+      "strong_text": "One enemy does not attack during this combat, and it loses 4 [[armor]]Armor until the end of the turn, but not below 1.",
+      "basic_label": "One enemy does not attack and loses its fire resistance",
+      "strong_label": "One enemy does not attack and loses 4 Armor"
     },
     "wings_of_wind": {
       "name": "Wings of Wind",
       "strong_name": "Wings of Night",
-      "basic_text": "Spend 1-5 Move: that many revealed spaces, ending on a safe space; provokes nothing",
-      "strong_text": "One enemy does not attack; extra enemies cost 1, 2, etc. Move"
+      "basic_text": "As you play this card, spend 1 to 5 Move points and move that many revealed spaces. You must end on a safe space. This move does not provoke rampaging enemies.",
+      "strong_text": "One enemy does not attack during this combat. You may target more enemies by paying Move points: 1 for the second enemy, 2 for the third, 3 for the fourth, and so on."
     },
     "restoration": {
       "name": "Restoration",
       "strong_name": "Rebirth",
-      "basic_text": "Heal 3 (5 in a forest)",
-      "strong_text": "Heal 3 (5 in a forest); ready up to 3 levels of Units (5 in a forest)"
+      "basic_text": "Heal 3, or Heal 5 if you are in a forest.",
+      "strong_text": "Heal 3, or Heal 5 if you are in a forest. Ready units whose levels add up to 3, or to 5 in a forest.",
+      "basic_label": "Heal 3, 5 in a forest",
+      "strong_label": "Heal 3, 5 in a forest, and units readied"
     },
     "demolish": {
       "name": "Demolish",
       "strong_name": "Disintegrate",
-      "basic_text": "Ignore site fortifications this turn; enemies Armor -1 (min. 1)",
-      "strong_text": "Attack phase only: destroy one enemy; others Armor -1 (min. 1)"
+      "basic_text": "This turn, ignore site fortifications. Enemies lose 1 [[armor]]Armor, but not below 1.",
+      "strong_text": "Play it only during the Attack phase of a combat. Destroy one enemy. The others lose 1 [[armor]]Armor, but not below 1.",
+      "basic_label": "Fortifications ignored, enemies lose 1 Armor",
+      "strong_label": "Destroy an enemy, the others lose 1 Armor"
     },
     "space_bending": {
       "name": "Space Bending",
       "strong_name": "Time Bending",
-      "basic_text": "This turn, spaces 2 away count as adjacent; provokes nothing",
-      "strong_text": "At end of turn, take the other played cards back; take another turn"
+      "basic_text": "This turn, you may move to a space 2 spaces away, or explore a tile at that distance, as if it were adjacent. The space you skip does not count. Your moves this turn do not provoke rampaging enemies.",
+      "strong_text": "At the end of your turn, take back into your hand the other cards played this turn (not the ones discarded or destroyed). Do not draw cards, and take another turn right away.",
+      "basic_label": "Spaces 2 away count as adjacent this turn, without provoking",
+      "strong_label": "Another turn with the cards played"
     },
     "call_to_arms": {
       "name": "Call to Arms",
       "strong_name": "Call to Glory",
-      "basic_text": "Use one Unit's ability from the offer this turn; it takes no damage",
-      "strong_text": "Recruit any Unit from the offer for free (disband one if at limit)"
+      "basic_text": "This turn, you may use one ability of a unit in the offer as if you had recruited it. You cannot assign damage to it.",
+      "strong_text": "Recruit a unit from the offer for free. If you already have as many units as command tokens, disband one first.",
+      "basic_label": "Ability of a unit in the offer, no damage to it",
+      "strong_label": "Recruit a unit from the offer for free"
     },
     "meditation": {
       "name": "Meditation",
       "strong_name": "Trance",
-      "basic_text": "Two random discards go on top or bottom of the deck; draw 2 extra cards at end of turn",
-      "strong_text": "Same, but you choose the cards"
+      "basic_text": "Pick two cards at random from your discard pile and put them on top of or under your deck. At the end of this turn, draw two cards more than your Hand limit.",
+      "strong_text": "Choose two cards from your discard pile and put them on top of or under your deck. At the end of this turn, draw two cards more than your Hand limit.",
+      "basic_label": "Two random cards from your discard pile on or under your deck, draw 2 more cards",
+      "strong_label": "Two chosen cards from your discard pile on or under your deck, draw 2 more cards"
     },
     "mana_meltdown": {
       "name": "Mana Meltdown",
       "strong_name": "Mana Radiance",
-      "basic_text": "Others lose a random crystal (you may take one); with none, a Wound",
-      "strong_text": "Basic color: everyone takes a Wound per crystal of it; you gain 2 crystals"
+      "basic_text": "Each other player loses a random crystal from their Inventory. You may take one of the crystals lost this way. A player who had no crystal takes a Wound instead.",
+      "strong_text": "Choose a basic color. Each player, you included, takes a Wound for each crystal of that color they have. Gain two crystals of that color."
     },
     "mana_claim": {
       "name": "Mana Claim",
       "strong_name": "Mana Curse",
-      "basic_text": "Keep a basic die until round end: 3 tokens now, or 1 token per turn",
-      "strong_text": "Same; other players using that color take a Wound"
+      "basic_text": "Take a Source die showing a basic color and keep it until the end of the Round. Gain three mana tokens of that color this turn, or one token of that color on each of your following turns until the end of the Round.",
+      "strong_text": "As Mana Claim. Also, until the end of the Round, another player who uses mana of that color during their turn takes a Wound, only one per turn."
     },
     "mind_read": {
       "name": "Mind Read",
       "strong_name": "Mind Steal",
-      "basic_text": "Pick a color: gain its crystal; others discard a Spell or Action of it",
-      "strong_text": "Same; you may steal one of the Action cards discarded"
+      "basic_text": "Choose a color and gain a crystal of that color. Each other player discards a Spell or an Action card of that color from their hand, or shows their hand to prove they have none.",
+      "strong_text": "As Mind Read. Also, you may steal one of the Action cards (not a Spell) discarded this way and put it in your hand."
     },
     "energy_flow": {
       "name": "Energy Flow",
       "strong_name": "Energy Steal",
-      "basic_text": "Ready a Unit; you may spend an opposing Unit of level II or less",
-      "strong_text": "Ready and heal a Unit; you may spend an opposing Unit of level III or less"
+      "basic_text": "Ready a unit. If you do, you may spend a unit of level II or lower of each other player.",
+      "strong_text": "Ready a unit and heal it. If you do, you may spend a unit of level III or lower of each other player."
     },
     "banner_of_glory": {
       "name": "Banner of Glory",
-      "basic_text": "Assign to a Unit: Armor +1, +1 to attacks and blocks, Fame +1 when it attacks or blocks",
-      "strong_text": "Units get Armor +1 and +1 to attacks and blocks this turn; Fame +1 per Unit that attacks or blocks"
+      "basic_text": "Give it to one of your units. That unit gets 1 more [[armor]]Armor and 1 more on each of its attacks and blocks. Each time it attacks or blocks, you gain 1 [[fame]]Fame.",
+      "strong_text": "This turn, your units get 1 more [[armor]]Armor and 1 more on each of their attacks and blocks. You gain 1 [[fame]]Fame for each unit that attacks or blocks this turn.",
+      "strong_label": "Units +1 Armor, Attack and Block, Fame +1 per unit that attacks or blocks"
     },
     "banner_of_fear": {
       "name": "Banner of Fear",
-      "basic_text": "Assign to a Unit: when blocking, spend it to cancel one attack, Fame +1",
-      "strong_text": "Up to 3 enemies do not attack this combat"
+      "basic_text": "Give it to one of your units. During the Block phase, you may spend that unit to cancel an enemy attack. If you do, you gain 1 [[fame]]Fame.",
+      "strong_text": "Up to 3 enemies do not attack during this combat."
     },
     "banner_of_protection": {
       "name": "Banner of Protection",
-      "basic_text": "Assign to a Unit: Armor +1, Fire and Ice Resistance",
-      "strong_text": "At end of turn, throw away the Wounds received this turn"
+      "basic_text": "Give it to one of your units. That unit gets 1 more [[armor]]Armor, fire resistance and ice resistance.",
+      "strong_text": "At the end of your turn, you may destroy all the Wounds you received this turn.",
+      "strong_label": "Destroy the Wounds received this turn"
     },
     "banner_of_courage": {
       "name": "Banner of Courage",
-      "basic_text": "Assign to a Unit: once a round, outside combat, flip it to ready the Unit",
-      "strong_text": "Outside combat: ready all your Units"
+      "basic_text": "Give it to one of your units. Once per Round, outside combat, you may flip the Banner face down to ready that unit. It turns face up again at the start of the next Round.",
+      "strong_text": "Play it at any time outside combat. Ready all your units."
     },
     "ruby_ring": {
       "name": "Ruby Ring",
-      "basic_text": "Red mana token and red crystal; Fame +1",
-      "strong_text": "Unlimited red and black mana this turn; Fame +1 per red Spell cast"
+      "basic_text": "Gain a <red>red</red> mana token and a <red>red</red> crystal. You gain 1 [[fame]]Fame.",
+      "strong_text": "This turn, you have as much <red>red</red> and <black>black</black> mana as you want. You gain 1 [[fame]]Fame for each <red>red</red> Spell you cast this turn.",
+      "strong_label": "Unlimited <red>red</red> and <black>black</black> mana, Fame +1 per <red>red</red> Spell"
     },
     "sapphire_ring": {
       "name": "Sapphire Ring",
-      "basic_text": "Blue mana token and blue crystal; Fame +1",
-      "strong_text": "Unlimited blue and black mana this turn; Fame +1 per blue Spell cast"
+      "basic_text": "Gain a <blue>blue</blue> mana token and a <blue>blue</blue> crystal. You gain 1 [[fame]]Fame.",
+      "strong_text": "This turn, you have as much <blue>blue</blue> and <black>black</black> mana as you want. You gain 1 [[fame]]Fame for each <blue>blue</blue> Spell you cast this turn.",
+      "strong_label": "Unlimited <blue>blue</blue> and <black>black</black> mana, Fame +1 per <blue>blue</blue> Spell"
     },
     "diamond_ring": {
       "name": "Diamond Ring",
-      "basic_text": "White mana token and white crystal; Fame +1",
-      "strong_text": "Unlimited white and black mana this turn; Fame +1 per white Spell cast"
+      "basic_text": "Gain a <white>white</white> mana token and a <white>white</white> crystal. You gain 1 [[fame]]Fame.",
+      "strong_text": "This turn, you have as much <white>white</white> and <black>black</black> mana as you want. You gain 1 [[fame]]Fame for each <white>white</white> Spell you cast this turn.",
+      "strong_label": "Unlimited <white>white</white> and <black>black</black> mana, Fame +1 per <white>white</white> Spell"
     },
     "emerald_ring": {
       "name": "Emerald Ring",
-      "basic_text": "Green mana token and green crystal; Fame +1",
-      "strong_text": "Unlimited green and black mana this turn; Fame +1 per green Spell cast"
+      "basic_text": "Gain a <green>green</green> mana token and a <green>green</green> crystal. You gain 1 [[fame]]Fame.",
+      "strong_text": "This turn, you have as much <green>green</green> and <black>black</black> mana as you want. You gain 1 [[fame]]Fame for each <green>green</green> Spell you cast this turn.",
+      "strong_label": "Unlimited <green>green</green> and <black>black</black> mana, Fame +1 per <green>green</green> Spell"
     },
     "sword_of_justice": {
       "name": "Sword of Justice",
-      "basic_text": "Discard cards: Attack 3 each; Fame +1 per enemy defeated",
-      "strong_text": "Physical attacks doubled; enemies lose physical resistance; Fame +1 per enemy defeated"
+      "basic_text": "As you play this card, discard as many cards from your hand as you like: [[attack]]Attack 3 for each card discarded. You gain 1 [[fame]]Fame for each enemy defeated this turn.",
+      "strong_text": "This turn, during the Attack phase, your physical attacks count double, and enemies lose their physical resistance. You gain 1 [[fame]]Fame for each enemy defeated this turn.",
+      "strong_label": "Physical attacks doubled, enemies lose physical resistance, Fame +1 per enemy defeated"
     },
     "horn_of_wrath": {
       "name": "Horn of Wrath",
-      "basic_text": "Siege Attack 5; roll a mana die: black or red, take a Wound",
-      "strong_text": "Siege Attack 5, up to +5; roll a die per +1, a Wound per black or red"
+      "basic_text": "[[siege_attack]]Siege Attack 5. Roll a mana die: on <black>black</black> or <red>red</red>, you take a Wound.",
+      "strong_text": "[[siege_attack]]Siege Attack 5, which you may raise by up to 5. Roll a mana die for each point added: you take a Wound for each <black>black</black> or <red>red</red> rolled."
     },
     "endless_bag_of_gold": {
       "name": "Endless Bag of Gold",
-      "basic_text": "Influence 4, Fame +2",
-      "strong_text": "Influence 9, Fame +3"
+      "basic_text": "[[influence]]Influence 4. You gain 2 [[fame]]Fame.",
+      "strong_text": "[[influence]]Influence 9. You gain 3 [[fame]]Fame."
     },
     "endless_gem_pouch": {
       "name": "Endless Gem Pouch",
-      "basic_text": "Roll two mana dice: a crystal per color (gold: your choice); black: Fame +1",
-      "strong_text": "One token of each basic color, plus gold (day) or black (night)"
+      "basic_text": "Roll a mana die twice. Gain a crystal of each color rolled (on <gold>gold</gold>, you choose the color). On <black>black</black>, you gain 1 [[fame]]Fame instead of a crystal.",
+      "strong_text": "Gain one mana token of each basic color, plus a <gold>gold</gold> token by day or a <black>black</black> token at night."
     },
     "golden_grail": {
       "name": "Golden Grail",
-      "basic_text": "Heal 2; Fame +1 per Heal point from this card spent",
-      "strong_text": "Heal 6; draw a card each time you heal a Wound from hand this turn"
+      "basic_text": "Heal 2. You gain 1 [[fame]]Fame for each Healing point of this card spent this turn.",
+      "strong_text": "Heal 6. This turn, draw a card each time you heal a Wound from your hand."
     },
     "book_of_wisdom": {
       "name": "Book of Wisdom",
-      "basic_text": "Throw away an Action card: gain an Advanced Action of that color into hand",
-      "strong_text": "Throw away an Action card: gain a Spell of that color into hand, plus a crystal of it"
+      "basic_text": "Destroy an Action card from your hand. Take an Advanced Action of the same color from the offer and put it in your hand.",
+      "strong_text": "Destroy an Action card from your hand. Take a Spell of the same color from the offer and put it in your hand, and gain a crystal of that color."
     },
     "amulet_of_sun": {
       "name": "Amulet of Sun",
-      "basic_text": "Gold mana token; at night: forests cost 3, gold mana usable, garrisons revealed as by day",
-      "strong_text": "As the basic effect, with three gold tokens"
+      "basic_text": "Gain a <gold>gold</gold> mana token. If you play it at night, this turn works as by day: forests cost 3 Move points, you may use <gold>gold</gold> mana, and the garrisons of nearby [[fortified]]fortified sites and ruins are revealed.",
+      "strong_text": "As the basic effect, but you gain three <gold>gold</gold> mana tokens instead of one."
     },
     "amulet_of_darkness": {
       "name": "Amulet of Darkness",
-      "basic_text": "Mana token of any color; by day: deserts cost 3, black mana usable",
-      "strong_text": "As the basic effect, with three mana tokens"
+      "basic_text": "Gain a mana token of the color of your choice. If you play it by day, this turn works as at night: deserts cost 3 Move points and you may use <black>black</black> mana.",
+      "strong_text": "As the basic effect, but you gain three mana tokens of the colors of your choice instead of one."
     }
   },
   "effect": {
@@ -804,9 +901,10 @@
     "gain_crystal": "{color} crystal",
     "pay_for_crystal": "Pay {color}: {color} crystal",
     "extra_die": "One more die this turn",
-    "extra_die_black": "One more die this turn; black: any color",
-    "set_dice": "Set {amount} die/dice to a color, gain tokens",
-    "boost": "Power another card for free, +{amount}",
+    "extra_die_black": "One more die this turn, <black>black</black> as any color",
+    "set_dice": "{amount} Source dice turned to a color: one token each",
+    "set_die": "A Source die turned to a color: 2 tokens",
+    "boost": "Powered effect of another card, free, +{amount}",
     "fire_attack": "Fire Attack {amount}",
     "cold_fire_attack": "Cold Fire Attack {amount}",
     "ranged_fire_attack": "Ranged Fire Attack {amount}",
@@ -845,7 +943,7 @@
     "gain_owned_crystal": "{color} crystal (already owned)",
     "crystal_from_die": "Source die: crystal of its color, then reroll the die",
     "reroll_source": "Reroll the Source; 3 extra dice",
-    "repeat": "Another Action card, {times} times",
+    "repeat": "Effect of another Action card {times} times",
     "gain_spell": "Pay {color}: a {color} Spell from the offer",
     "spell_from_offer": "a {color} Spell from the offer",
     "train": "Throw away an Action card: Advanced Action of the same color",
@@ -861,7 +959,7 @@
     "underground": "Up to 3 spaces, without provoking",
     "underground_attack": "Up to 3 spaces, assault a fortified site",
     "fly": "Flight: up to {max} spaces, 1 Move per space",
-    "does_not_attack_per_move": "targeted enemies do not attack (extra Move per enemy)",
+    "does_not_attack_per_move": "the targeted enemies do not attack, Move for each extra enemy",
     "meditation": "two random cards from the discard pile on top of or under the deck; draw 2 more cards",
     "trance": "two chosen cards from the discard pile on top of or under the deck; draw 2 more cards",
     "claim_die": "Keep a Source die: 3 tokens of its color",
@@ -870,8 +968,8 @@
     "cancel_attacks": "Up to {amount} enemies do not attack",
     "ready_all_units": "Ready all units",
     "sword_discard": "Attack 3 per discarded card",
-    "horn_of_wrath": "Siege Attack {amount} and mana dice",
-    "gem_pouch_dice": "Roll two mana dice: crystals",
+    "horn_of_wrath": "Siege Attack {amount}, one mana die per point added",
+    "gem_pouch_dice": "Two mana dice rolled, one crystal per color",
     "tokens_each_color": "One token of each basic color, and gold by day or black by night",
     "spell_and_crystal": "A spell from the offer to hand and a crystal",
     "move_per_unit": "Move 1 per ready, unwounded Unit (max {max})",
@@ -1257,13 +1355,13 @@
     },
     "herbalists": {
       "name": "Herbalists",
-      "ability_1": "(green mana) Heal 2",
+      "ability_1": "(<green>green</green> mana) Heal 2",
       "ability_2": "Ready a level I or II Unit",
-      "ability_3": "Green mana token"
+      "ability_3": "<green>Green</green> mana token"
     },
     "foresters": {
       "name": "Foresters",
-      "ability_1": "Move 2; forests, hills and swamps cost 1 less (min. 0)",
+      "ability_1": "Move 2, forests, hills and swamps cost 1 less",
       "ability_2": "Block 3"
     },
     "utem_crossbowmen": {
@@ -1274,89 +1372,89 @@
     "utem_guardsmen": {
       "name": "Utem Guardsmen",
       "ability_1": "Attack 2",
-      "ability_2": "Block 4; counts twice against a [[swift]]Swift enemy"
+      "ability_2": "Block 4, doubled against a [[swift]]Swift enemy"
     },
     "utem_swordsmen": {
       "name": "Utem Swordsmen",
       "ability_1": "Attack or Block 3",
-      "ability_2": "Attack or Block 6; the Unit is Wounded"
+      "ability_2": "Attack or Block 6, the Unit is Wounded"
     },
     "guardian_golems": {
       "name": "Guardian Golems",
       "ability_1": "Attack or Block 2",
-      "ability_2": "(red mana) Fire Block 4",
-      "ability_3": "(blue mana) Ice Block 4"
+      "ability_2": "(<red>red</red> mana) Fire Block 4",
+      "ability_3": "(<blue>blue</blue> mana) Ice Block 4"
     },
     "illusionists": {
       "name": "Illusionists",
       "ability_1": "Influence 4",
-      "ability_2": "(white mana) One [[fortified]]unfortified enemy does not attack",
-      "ability_3": "White crystal"
+      "ability_2": "(<white>white</white> mana) One [[fortified]]unfortified enemy does not attack",
+      "ability_3": "<white>White</white> crystal"
     },
     "red_cape_monks": {
       "name": "Red Cape Monks",
       "ability_1": "Attack or Block 3",
-      "ability_2": "(red mana) Fire Attack or Fire Block 4"
+      "ability_2": "(<red>red</red> mana) Fire Attack or Fire Block 4"
     },
     "northern_monks": {
       "name": "Northern Monks",
       "ability_1": "Attack or Block 3",
-      "ability_2": "(blue mana) Ice Attack or Ice Block 4"
+      "ability_2": "(<blue>blue</blue> mana) Ice Attack or Ice Block 4"
     },
     "savage_monks": {
       "name": "Savage Monks",
       "ability_1": "Attack or Block 3",
-      "ability_2": "(green mana) Siege Attack 4"
+      "ability_2": "(<green>green</green> mana) Siege Attack 4"
     },
     "fire_golems": {
       "name": "Fire Golems",
       "ability_1": "Attack or Block 3",
-      "ability_2": "(red mana) Ranged Fire Attack 4"
+      "ability_2": "(<red>red</red> mana) Ranged Fire Attack 4"
     },
     "ice_golems": {
       "name": "Ice Golems",
       "ability_1": "Attack or Block 3",
-      "ability_2": "(blue mana) Ice Attack 6"
+      "ability_2": "(<blue>blue</blue> mana) Ice Attack 6"
     },
     "fire_mages": {
       "name": "Fire Mages",
       "ability_1": "Ranged Fire Attack 3",
-      "ability_2": "(red mana) Fire Attack or Fire Block 6",
-      "ability_3": "Red token and red crystal"
+      "ability_2": "(<red>red</red> mana) Fire Attack or Fire Block 6",
+      "ability_3": "<red>Red</red> token and crystal"
     },
     "ice_mages": {
       "name": "Ice Mages",
       "ability_1": "Ice Attack or Ice Block 4",
-      "ability_2": "(blue mana) Siege Ice Attack 4",
-      "ability_3": "Blue token and blue crystal"
+      "ability_2": "(<blue>blue</blue> mana) Siege Ice Attack 4",
+      "ability_3": "<blue>Blue</blue> token and crystal"
     },
     "amotep_gunners": {
       "name": "Amotep Gunners",
       "ability_1": "Attack or Block 5",
-      "ability_2": "(red mana) Ranged Fire Attack 6"
+      "ability_2": "(<red>red</red> mana) Ranged Fire Attack 6"
     },
     "amotep_freezers": {
       "name": "Amotep Freezers",
       "ability_1": "Attack or Block 5",
-      "ability_2": "(blue mana) One enemy does not attack and gets Armor -3 (min. 1)"
+      "ability_2": "(<blue>blue</blue> mana) One enemy does not attack and loses 3 Armor"
     },
     "catapults": {
       "name": "Catapults",
       "ability_1": "Siege Attack 3",
-      "ability_2": "(red mana) Siege Fire Attack 5",
-      "ability_3": "(blue mana) Siege Ice Attack 5"
+      "ability_2": "(<red>red</red> mana) Siege Fire Attack 5",
+      "ability_3": "(<blue>blue</blue> mana) Siege Ice Attack 5"
     },
     "altem_mages": {
       "name": "Altem Mages",
       "ability_1": "Two mana tokens of any colors",
-      "ability_2": "Cold Fire Attack or Block 5 (7 with blue or red mana, 9 with both)",
-      "ability_3": "(black mana) Your attacks become Cold Fire, or also Siege"
+      "ability_2": "Cold Fire Attack or Block 5, 7 or 9 depending on the mana paid",
+      "ability_3": "(<black>black</black> mana) Your attacks become Cold Fire, or also Siege"
     },
     "altem_guardians": {
       "name": "Altem Guardians",
       "ability_1": "Attack 5",
-      "ability_2": "Block 8; counts twice against a [[swift]]Swift enemy",
-      "ability_3": "(green mana) Your Units gain all resistances this turn"
+      "ability_2": "Block 8, doubled against a [[swift]]Swift enemy",
+      "ability_3": "(<green>green</green> mana) Your Units gain all resistances this turn"
     },
     "cost": "Cost: Influence {influence}",
     "level": "Level {level}",
@@ -1747,163 +1845,163 @@
   "skill": {
     "dark_paths": {
       "name": "Dark Paths",
-      "text": "Move 1 by day, 2 by night."
+      "text": "Once per turn: [[move]]Move 1 by day, or [[move]]Move 2 at night."
     },
     "burning_power": {
       "name": "Burning Power",
-      "text": "Siege Attack 1, or Fire Siege Attack 1."
+      "text": "Once per turn: [[siege_attack]]Siege Attack 1, or [[siege_fire_attack]]Siege Fire Attack 1."
     },
     "hot_swordsmanship": {
       "name": "Hot Swordsmanship",
-      "text": "Attack 2, or Fire Attack 2."
+      "text": "Once per turn: [[attack]]Attack 2, or [[fire_attack]]Fire Attack 2."
     },
     "dark_negotiation": {
       "name": "Dark Negotiation",
-      "text": "Influence 2 by day, 3 by night."
+      "text": "Once per turn: [[influence]]Influence 2 by day, or [[influence]]Influence 3 at night."
     },
     "dark_fire_magic": {
       "name": "Dark Fire Magic",
-      "text": "Flip it: a red crystal, and a red or black mana token."
+      "text": "Once per Round, by flipping it: gain a <red>red</red> crystal, and a <red>red</red> or <black>black</black> mana token."
     },
     "motivation_arythea": {
       "name": "Motivation",
-      "text": "Flip it: draw 2 cards and gain a red mana token. No other Motivation until the end of your next turn."
+      "text": "Once per Round, by flipping it: draw two cards and gain a <red>red</red> mana token. You cannot use a Motivation skill again before the end of your next turn."
     },
     "power_of_pain": {
       "name": "Power of Pain",
-      "text": "Play a Wound sideways, for 2 points instead of 1."
+      "text": "Once per turn: you may play a Wound sideways like any other card. It gives 2 points instead of 1. At the end of the turn, it goes to your discard pile."
     },
     "invocation": {
       "name": "Invocation",
-      "text": "Discard a card for a mana token to spend at once: red or black for a Wound, white or green otherwise."
+      "text": "Once per turn: discard a Wound to gain a <red>red</red> or <black>black</black> mana token, or another card for a <white>white</white> or <green>green</green> token. That token must be spent right away."
     },
     "polarization": {
       "name": "Polarization",
-      "text": "Use one mana as its opposite color; by day, black as any basic color; at night, gold as black."
+      "text": "Once per turn: use one mana as if it were of the opposite color. By day, a <black>black</black> mana can stand for any color except <black>black</black>, but not to power a Spell. At night, a <gold>gold</gold> mana can stand for <black>black</black> to power a Spell, and only for that."
     },
     "ritual_of_pain": {
       "name": "Ritual of Pain",
-      "text": "Flip it: throw away up to 2 Wounds from your hand, put it in the center; on your next turn, a Wound played sideways is worth 3."
+      "text": "Once per Round, outside combat: destroy up to two Wounds from your hand, then put the skill in the center. On your next turn, you may take it back, flipped, to play a Wound sideways like any other card: it gives 3 points instead of 1."
     },
     "freezing_power": {
       "name": "Freezing Power",
-      "text": "Siege Attack 1, or Ice Siege Attack 1."
+      "text": "Once per turn: [[siege_attack]]Siege Attack 1, or [[siege_ice_attack]]Siege Ice Attack 1."
     },
     "potion_making": {
       "name": "Potion Making",
-      "text": "Flip it, not in combat: Heal 2."
+      "text": "Once per Round, outside combat, by flipping it: Heal 2."
     },
     "white_crystal_craft": {
       "name": "White Crystal Craft",
-      "text": "Flip it: a blue crystal and a white mana token."
+      "text": "Once per Round, by flipping it: gain a <blue>blue</blue> crystal and a <white>white</white> mana token."
     },
     "green_crystal_craft": {
       "name": "Green Crystal Craft",
-      "text": "Flip it: a blue crystal and a green mana token."
+      "text": "Once per Round, by flipping it: gain a <blue>blue</blue> crystal and a <green>green</green> mana token."
     },
     "red_crystal_craft": {
       "name": "Red Crystal Craft",
-      "text": "Flip it: a blue crystal and a red mana token."
+      "text": "Once per Round, by flipping it: gain a <blue>blue</blue> crystal and a <red>red</red> mana token."
     },
     "motivation_goldyx": {
       "name": "Motivation",
-      "text": "Flip it: draw 2 cards and gain a green mana token. No other Motivation until the end of your next turn."
+      "text": "Once per Round, by flipping it: draw two cards and gain a <green>green</green> mana token. You cannot use a Motivation skill again before the end of your next turn."
     },
     "glittering_fortune": {
       "name": "Glittering Fortune",
-      "text": "During an interaction: Influence 1 per crystal color you have."
+      "text": "Once per turn, during an interaction: [[influence]]Influence 1 for each different crystal color in your Inventory. This Influence only counts for that interaction."
     },
     "flight": {
       "name": "Flight",
-      "text": "Flip it: move to an adjacent space for free, or two spaces for Move 2, without provoking."
+      "text": "Once per Round, by flipping it: move to an adjacent space for free, or two spaces away for 2 Move points. You must end on a safe space. This move does not provoke rampaging enemies."
     },
     "universal_power": {
       "name": "Universal Power",
-      "text": "One mana on a card played sideways: 3 points, or 4 if it matches its color."
+      "text": "Once per turn: add one mana to a card played sideways. It then gives 3 points instead of 1, or 4 if it is an Action card or a Spell of that mana's color."
     },
     "source_opening": {
       "name": "Source Opening",
-      "text": "Flip it: reroll a die, put it in the center; on your next turn, one more die and a crystal of its color."
+      "text": "Once per Round: you may reroll a Source die, then put the skill in the center. On your next turn, take it back, flipped, to use one more Source die of a basic color, and gain a crystal of that color."
     },
     "day_sharpshooting": {
       "name": "Day Sharpshooting",
-      "text": "Ranged Attack 2 by day, 1 at night."
+      "text": "Once per turn: [[ranged_attack]]Ranged Attack 2 by day, or [[ranged_attack]]Ranged Attack 1 at night."
     },
     "bright_negotiation": {
       "name": "Bright Negotiation",
-      "text": "Influence 3 by day, 2 at night."
+      "text": "Once per turn: [[influence]]Influence 3 by day, or [[influence]]Influence 2 at night."
     },
     "inspiration": {
       "name": "Inspiration",
-      "text": "Flip it, not in combat: ready a unit, or heal it."
+      "text": "Once per Round, outside combat, by flipping it: ready a unit, or heal one."
     },
     "leaves_in_the_wind": {
       "name": "Leaves in the Wind",
-      "text": "Flip it: a green crystal and a white mana token."
+      "text": "Once per Round, by flipping it: gain a <green>green</green> crystal and a <white>white</white> mana token."
     },
     "whisper_in_the_treetops": {
       "name": "Whisper in the Treetops",
-      "text": "Flip it: a white crystal and a green mana token."
+      "text": "Once per Round, by flipping it: gain a <white>white</white> crystal and a <green>green</green> mana token."
     },
     "motivation_norowas": {
       "name": "Motivation",
-      "text": "Flip it: draw 2 cards and gain a white mana token. No other Motivation until the end of your next turn."
+      "text": "Once per Round, by flipping it: draw two cards and gain a <white>white</white> mana token. You cannot use a Motivation skill again before the end of your next turn."
     },
     "forward_march": {
       "name": "Forward March",
-      "text": "Move 1 per ready, unwounded unit, 3 at most."
+      "text": "Once per turn: [[move]]Move 1 for each of your ready and unwounded units, [[move]]Move 3 at most."
     },
     "leadership": {
       "name": "Leadership",
-      "text": "When you activate a unit: +1 to its Ranged Attack, +2 to its Attack or +3 to its Block."
+      "text": "Once per turn, when you activate a unit: add 3 to its [[block]]Block, 2 to its [[attack]]Attack, or 1 to its [[ranged_attack]]Ranged Attack (not Siege), whatever the element."
     },
     "bonds_of_loyalty": {
       "name": "Bonds of Loyalty",
-      "text": "One more command token; the unit recruited under it costs 5 less."
+      "text": "This skill becomes one more command token. The unit recruited under this token costs 5 Influence less, down to 0."
     },
     "calming_the_weather": {
       "name": "Calming the Weather",
-      "text": "Flip it: terrains cost 2 less this turn, put it in the center; on your next turn, 1 less."
+      "text": "Once per Round: this turn, every terrain costs you 2 Move points less, but not below 1. Put the skill in the center. On your next turn, take it back, flipped, so that every terrain costs 1 point less, but not below 1."
     },
     "double_time": {
       "name": "Double Time",
-      "text": "Move 2 by day, 1 at night."
+      "text": "Once per turn: [[move]]Move 2 by day, or [[move]]Move 1 at night."
     },
     "night_sharpshooting": {
       "name": "Night Sharpshooting",
-      "text": "Ranged Attack 1 by day, 2 at night."
+      "text": "Once per turn: [[ranged_attack]]Ranged Attack 1 by day, or [[ranged_attack]]Ranged Attack 2 at night."
     },
     "cold_swordsmanship": {
       "name": "Cold Swordsmanship",
-      "text": "Attack 2, or Ice Attack 2."
+      "text": "Once per turn: [[attack]]Attack 2, or [[ice_attack]]Ice Attack 2."
     },
     "shield_mastery": {
       "name": "Shield Mastery",
-      "text": "Block 3, or Ice Block 2, or Fire Block 2."
+      "text": "Once per turn: [[block]]Block 3, [[ice_block]]Ice Block 2 or [[fire_block]]Fire Block 2."
     },
     "motivation_tovak": {
       "name": "Motivation",
-      "text": "Flip it: draw 2 cards and gain a blue mana token. No other Motivation until the end of your next turn."
+      "text": "Once per Round, by flipping it: draw two cards and gain a <blue>blue</blue> mana token. You cannot use a Motivation skill again before the end of your next turn."
     },
     "resistance_break": {
       "name": "Resistance Break",
-      "text": "One enemy loses 1 Armor per resistance, down to 1."
+      "text": "Once per turn: choose an enemy. It loses 1 [[armor]]Armor for each resistance it has, but not below 1."
     },
     "i_feel_no_pain": {
       "name": "I Feel No Pain",
-      "text": "Not in combat: discard a Wound from your hand to draw a card."
+      "text": "Once per turn, outside combat: discard a Wound from your hand. If you do, draw a card."
     },
     "i_dont_give_a_damn": {
       "name": "I Don't Give a Damn",
-      "text": "A card played sideways is worth 2, or 3 for an Advanced Action, Spell or Artifact."
+      "text": "Once per turn: a card played sideways gives 2 points instead of 1, or 3 if it is an Advanced Action, a Spell or an Artifact."
     },
     "who_needs_magic": {
       "name": "Who Needs Magic?",
-      "text": "A card played sideways is worth 2, or 3 if you use no Source die this turn."
+      "text": "Once per turn: a card played sideways gives 2 points instead of 1, or 3 if you use no Source die this turn."
     },
     "mana_overload": {
       "name": "Mana Overload",
-      "text": "Flip it: a non-gold mana token, put it in the center; later, +4 on a card powered with that color."
+      "text": "Once per Round: choose a color other than <gold>gold</gold> and gain a mana token of that color, then put the skill in the center with that color. The next time you use that mana to power a card that gives [[move]]Move, [[influence]]Influence, an [[attack]]Attack or a [[block]]Block, it gives 4 more, and the skill comes back to you flipped."
     },
     "title": "Skills",
     "once_a_turn": "Once a turn",
@@ -1947,23 +2045,23 @@
     },
     "rethink": {
       "name": "Rethink",
-      "text": "When taken: discard up to 3 cards (Wounds included), draw as many, then shuffle the discard pile into your deck."
+      "text": "When you take it: discard up to 3 cards from your hand, Wounds included, and draw as many. Then shuffle your discard pile into your deck."
     },
     "mana_steal": {
       "name": "Mana Steal",
-      "text": "When taken: put a basic-color Source die here. This Day, it pays one mana besides your Source die; rerolled and returned at the end of the turn you use it."
+      "text": "When you take it: put on this card a Source die showing a basic color. You may use that mana on any of your turns this Day, besides your die for the turn. At the end of the turn you use it, it is rerolled and put back in the Source."
     },
     "planning": {
       "name": "Planning",
-      "text": "End of turn: with at least 2 cards in hand before drawing, Hand limit + 1."
+      "text": "At the end of each of your turns, if you have at least two cards in hand before drawing, draw up to your Hand limit plus one card."
     },
     "great_start": {
       "name": "Great Start",
-      "text": "When taken: draw 2 cards."
+      "text": "When you take it: draw two cards right away."
     },
     "right_moment": {
       "name": "The Right Moment",
-      "text": "Once this Day, during your turn: announce another turn, played right after this one."
+      "text": "Once this Day, during your turn: announce that you will take another turn right after this one. The Tactic flips over."
     },
     "from_the_dusk": {
       "name": "From the Dusk",
@@ -1971,23 +2069,23 @@
     },
     "long_night": {
       "name": "Long Night",
-      "text": "Once this Night, with an empty deck: 3 random cards from your discard pile go back into your deck."
+      "text": "Once this Night, if your deck is empty: shuffle your discard pile and put 3 random cards from it back into your deck. The Tactic flips over."
     },
     "mana_search": {
       "name": "Mana Search",
-      "text": "Once per turn, before taking a Source die: reroll up to 2 dice, gold dice first."
+      "text": "Once per turn, before using mana from the Source: you may reroll up to two Source dice. If there are <gold>gold</gold> dice, reroll them first."
     },
     "midnight_meditation": {
       "name": "Midnight Meditation",
-      "text": "Once this Night, at the start of a turn: shuffle up to 5 cards from your hand into your deck and draw as many."
+      "text": "Once this Night, before one of your turns: shuffle up to 5 cards from your hand into your deck, Wounds included, then draw as many. The Tactic flips over."
     },
     "preparation": {
       "name": "Preparation",
-      "text": "When taken: put any card from your deck into your hand, then shuffle it."
+      "text": "When you take it: search your deck for the card of your choice and put it in your hand, then shuffle the deck."
     },
     "sparing_power": {
       "name": "Sparing Power",
-      "text": "Before each turn: put the top card of your deck here, or flip this Tactic and take the cards here into your hand."
+      "text": "Before each of your turns, choose one: put the top card of your deck face down under this card, or flip the Tactic and take all the cards under it into your hand."
     },
     "choose_title": "Choose a Tactic ({time})",
     "take": "Take this Tactic",

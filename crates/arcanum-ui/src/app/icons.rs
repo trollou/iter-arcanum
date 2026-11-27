@@ -332,7 +332,7 @@ pub(super) fn marked_label(
     style: impl Fn(String) -> egui::RichText,
     catalog: &arcanum_i18n::Catalog,
 ) {
-    if !text.contains("[[") {
+    if !text.contains("[[") && !text.contains('<') {
         ui.add(egui::Label::new(style(text.to_string())).wrap());
         return;
     }

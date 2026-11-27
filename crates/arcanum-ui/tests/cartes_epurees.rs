@@ -70,17 +70,8 @@ fn info(name: &str, basic: &str, strong_title: &str, strong: &str) -> Option<Car
 
 // --- Texte complet derrière « i » ---
 
-// Spec #11 C1 : une action de base, ses textes calculés.
-#[test]
-fn basic_action_info_holds_computed_text() {
-    let catalog = french();
-    let rage = held_alone(card(Rage, 1), &catalog);
-    assert!(!rage.show_text);
-    assert_eq!(
-        rage.info,
-        info("Rage", "Attaque 2 ou Parade 2", "Renforcé", "Attaque 4")
-    );
-}
+// Spec #11 C1 (une action de base, ses textes calculés) : remplacé par la spec #68, C2
+// (`basic_action_info_shows_its_full_text`).
 
 // Spec #11 C2 (#12) : le texte écrit, y compris ce qui ne vaut qu'à plusieurs joueurs.
 #[test]
@@ -100,7 +91,7 @@ fn spell_info_holds_written_text_for_other_players() {
         mind_read
             .info
             .as_ref()
-            .is_some_and(|info| info.basic.contains("les autres défaussent"))
+            .is_some_and(|info| info.basic.contains("Chaque autre joueur défausse"))
     );
     // En solo, seul le cristal joue : les quatre cristaux (spec 057).
     assert_eq!(mind_read.basic_effects.len(), 4);
@@ -134,11 +125,8 @@ fn artifact_keeps_its_text() {
     let ring = held_alone(artifact(Artifact::RubyRing), &catalog);
     assert_eq!(ring.info, None);
     assert!(ring.show_text);
-    assert_eq!(ring.effect, "Jeton et cristal rouges ; Gloire +1");
-    assert_eq!(
-        ring.strong_text,
-        "Mana rouge et noir illimité ce tour ; Gloire +1 par sort rouge lancé"
-    );
+    assert_eq!(ring.effect, catalog.text("card.ruby_ring.basic_text"));
+    assert_eq!(ring.strong_text, catalog.text("card.ruby_ring.strong_text"));
 }
 
 // Spec #11 C6 : en mode choix, la carte se lit avant d'être défaussée.
@@ -156,7 +144,12 @@ fn info_stays_in_choice_mode() {
     assert!(rage.basic_effects.is_empty());
     assert_eq!(
         rage.info,
-        info("Rage", "Attaque 2 ou Parade 2", "Renforcé", "Attaque 4")
+        info(
+            "Rage",
+            &catalog.text("card.rage.basic_text"),
+            "Renforcé",
+            &catalog.text("card.rage.strong_text"),
+        )
     );
 }
 
@@ -238,7 +231,7 @@ fn paid_option_face_omits_payment() {
     // Puis, à la ligne, la raison du grisé (pas de mana bleu).
     assert_eq!(
         red.tooltip.lines().next(),
-        Some("Renforcer : Payer rouge : un sort rouge de l'offre")
+        Some("Renforcer : Payer <red>rouge</red> : un sort <red>rouge</red> de l'offre")
     );
 }
 

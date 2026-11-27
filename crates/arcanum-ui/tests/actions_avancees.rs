@@ -482,13 +482,13 @@ fn option_buttons_name_the_new_effects() {
     );
     assert_eq!(
         screen.hand[1].basic_effects[0].face,
-        EffectFace::Text(catalog.text("card.into_the_heat.basic_text"))
+        EffectFace::Text(catalog.text("card.into_the_heat.basic_label"))
     );
     assert_eq!(
         screen.hand[1].effect,
         catalog.text("card.into_the_heat.basic_text")
     );
-    let written = format!("Jouer : {}", catalog.text("card.into_the_heat.basic_text"));
+    let written = format!("Jouer : {}", catalog.text("card.into_the_heat.basic_label"));
     assert!(
         screen.hand[1]
             .plays
@@ -499,7 +499,7 @@ fn option_buttons_name_the_new_effects() {
     );
     let strong = format!(
         "Renforcer : {}",
-        catalog.text("card.into_the_heat.strong_text")
+        catalog.text("card.into_the_heat.strong_label")
     );
     assert!(
         screen.hand[1]
@@ -528,7 +528,7 @@ fn into_the_heat_modifiers_and_damage_to_hero_only() {
     // La zone de jeu nomme la carte jouée par son texte écrit (vérification à l'œil).
     let played = &screen_of(&state, &catalog).play_area[0].text;
     assert!(
-        played.ends_with(&catalog.text("card.into_the_heat.basic_text")),
+        played.ends_with(&catalog.text("card.into_the_heat.basic_label")),
         "{played:?}"
     );
     let lines = screen_of(&state, &catalog)

@@ -220,6 +220,34 @@ pub(super) fn mana_text_color(color: ManaColor) -> Color32 {
     }
 }
 
+/// Un texte de bouton, d'infobulle ou de ligne, sans repère d'icône et ses mots de couleur de
+/// mana colorés (spec #68, Q5) ; un texte sans balise reste un texte simple.
+pub(super) fn rich_text(style: &egui::Style, text: &str, catalog: &Catalog) -> egui::WidgetText {
+    let pieces = crate::colored_text(text, catalog);
+    if pieces.iter().all(|(_, color)| color.is_none()) {
+        return pieces
+            .into_iter()
+            .map(|(text, _)| text)
+            .collect::<String>()
+            .into();
+    }
+    let mut job = egui::text::LayoutJob::default();
+    for (text, color) in pieces {
+        let piece = egui::RichText::new(text);
+        let piece = match color {
+            Some(color) => piece.color(mana_text_color(color)),
+            None => piece,
+        };
+        piece.append_to(
+            &mut job,
+            style,
+            egui::FontSelection::Default,
+            egui::Align::Center,
+        );
+    }
+    job.into()
+}
+
 /// Couleurs provisoires des cartes (spec 013).
 pub(super) fn card_color(color: BasicColor) -> Color32 {
     match color {
@@ -248,11 +276,10 @@ pub(super) fn enabled_shortcut_button(
     shortcut: Option<&str>,
     catalog: &Catalog,
 ) -> egui::Response {
-    // Spec #27, C21 : un bouton n'écrit que du texte, sans repère d'icône.
-    let response = ui.add_enabled(
-        enabled,
-        egui::Button::new(crate::plain_text(label, catalog)),
-    );
+    // Spec #27, C21 : un bouton n'écrit que du texte, sans repère d'icône ; spec #68 : en
+    // couleur.
+    let text = rich_text(ui.style(), label, catalog);
+    let response = ui.add_enabled(enabled, egui::Button::new(text));
     match hover_text(None, shortcut, catalog) {
         Some(text) => response
             .on_hover_text(text.clone())
