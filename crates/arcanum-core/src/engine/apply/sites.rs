@@ -67,10 +67,12 @@ pub(super) fn site_event(state: &mut GameState, event: &Event) {
             city_shields,
         } => {
             if let Some(p) = state.player_mut(*player) {
-                // MKUE p. 6, 6.e : l'action commence, les points restants sont perdus ; p. 8,
-                // 2.a : le bonus de réputation, une fois. Plus de repos (p. 6, 7).
+                // MKUE p. 6, 6.e : l'action commence, le mouvement restant est perdu ; p. 8,
+                // 2.a : le bonus de réputation, une fois. Plus de repos (p. 6, 7). Variante
+                // maison (issue #95) : l'influence déjà jouée reste, pour que l'ordre des clics
+                // ne coûte rien ; les autres actions (combat, incendie, aventure) la perdent.
                 p.move_points = 0;
-                p.influence_points = i32::from(*bonus) + i32::from(*city_shields);
+                p.influence_points += i32::from(*bonus) + i32::from(*city_shields);
                 p.interaction = Some(Interaction {
                     site: *site,
                     bonus: *bonus,

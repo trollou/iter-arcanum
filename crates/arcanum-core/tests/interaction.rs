@@ -566,7 +566,7 @@ fn interacting_can_be_undone() {
     play(&mut runner, &puppet, basic(march));
     play(&mut runner, &puppet, basic(promise));
     play(&mut runner, &puppet, Action::Interact);
-    assert_eq!(runner.state().influence_points(SOLO), 1);
+    assert_eq!(runner.state().influence_points(SOLO), 3);
     assert_eq!(runner.undo(), Ok(()));
     let state = runner.state();
     assert_eq!(state.move_points(SOLO), 2);

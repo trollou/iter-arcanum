@@ -434,8 +434,9 @@ pub enum Event {
         player: PlayerId,
         change: i8,
     },
-    /// Le héros interagit avec les habitants de ce site : points non dépensés perdus, puis le
-    /// bonus de réputation devient l'influence de départ (MKUE p. 6, 6.e ; p. 8, 2.a ; spec 040).
+    /// Le héros interagit avec les habitants de ce site : mouvement non dépensé perdu, puis le
+    /// bonus de réputation s'ajoute à l'influence déjà jouée, gardée par variante maison
+    /// (MKUE p. 6, 6.e ; p. 8, 2.a ; spec 040 ; issue #95).
     InteractionStarted {
         player: PlayerId,
         site: Site,
@@ -1449,8 +1450,9 @@ pub enum PlayerEvent {
         player: PlayerId,
         change: i8,
     },
-    /// Le héros interagit avec les habitants de ce site : points non dépensés perdus, puis le
-    /// bonus de réputation devient l'influence de départ (MKUE p. 6, 6.e ; p. 8, 2.a ; spec 040).
+    /// Le héros interagit avec les habitants de ce site : mouvement non dépensé perdu, puis le
+    /// bonus de réputation s'ajoute à l'influence déjà jouée, gardée par variante maison
+    /// (MKUE p. 6, 6.e ; p. 8, 2.a ; spec 040 ; issue #95).
     InteractionStarted {
         player: PlayerId,
         site: Site,
