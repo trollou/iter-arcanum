@@ -40,7 +40,7 @@ pub enum Icon {
 }
 
 impl Icon {
-    /// Toutes les icônes nommées de la planche (26).
+    /// Toutes les icônes nommées de la planche (32).
     pub fn all() -> Vec<Icon> {
         let fixed = [Icon::Move, Icon::Influence, Icon::Armor, Icon::Fame];
         let attacks = [AttackKind::Melee, AttackKind::Ranged, AttackKind::Siege]
@@ -48,11 +48,14 @@ impl Icon {
             .flat_map(|kind| Element::ALL.map(|element| Icon::Attack { kind, element }));
         let blocks = Element::ALL.map(Icon::Block);
         let resistances = RESISTANCES.map(Icon::Resistance);
+        let abilities = ABILITIES.map(Icon::Ability);
         fixed
             .into_iter()
             .chain(attacks)
             .chain(blocks)
             .chain(resistances)
+            .chain(abilities)
+            .chain([Icon::Summon])
             .chain([Icon::Sideways, Icon::TileCountryside, Icon::TileCore])
             .collect()
     }
@@ -228,7 +231,7 @@ pub fn hero_emblem(hero: Hero) -> ImageId {
     ImageId::new("ui", stem)
 }
 
-/// Toutes les images de `ui/`, sans doublon (37).
+/// Toutes les images de `ui/`, sans doublon (44).
 pub fn ui_images() -> Vec<ImageId> {
     let images: BTreeSet<ImageId> = Icon::all()
         .into_iter()
@@ -242,3 +245,12 @@ pub fn ui_images() -> Vec<ImageId> {
 }
 
 const RESISTANCES: [Resistance; 3] = [Resistance::Physical, Resistance::Fire, Resistance::Ice];
+
+/// Les capacités des ennemis du jeu de base (spec #27, Q1), dans l'ordre de la planche.
+const ABILITIES: [EnemyAbility; 5] = [
+    EnemyAbility::Fortified,
+    EnemyAbility::Swift,
+    EnemyAbility::Brutal,
+    EnemyAbility::Poison,
+    EnemyAbility::Paralyze,
+];
