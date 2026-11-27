@@ -761,7 +761,7 @@ fn swift_block_button_shows_condition() {
         assert_eq!(button.fallback_text(), format!("Parade {amount} ×2 si Vif"));
         assert_eq!(
             arcanum_ui::plain_text(&button.tooltip, &catalog),
-            format!("Jouer : Parade {amount}, double contre Vif")
+            format!("Parade {amount}, double contre Vif")
         );
     }
 }

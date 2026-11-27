@@ -606,6 +606,11 @@ impl EffectButton {
             EffectFace::Icon(value) => value.fallback_text(),
             EffectFace::Crystal { label, .. } | EffectFace::Text(label) => label.clone(),
         };
+        // Spec #27, C13 : « Parade 4 ×2 si Vif ».
+        let text = match &self.condition {
+            Some(condition) => format!("{text} {} {}", condition.text, condition.icon.tooltip),
+            None => text,
+        };
         match &self.mark {
             Some(mark) => format!("{text} {mark}"),
             None => text,
