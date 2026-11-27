@@ -223,7 +223,7 @@ fn enemy_card_status_omits_in_play() {
     // MKUE p. 9, *Ranged and Siege Attack Phase* 3 : fortifiés, seul le siège les atteint.
     assert_eq!(
         screen.enemies[1].status.as_deref(),
-        Some("fortifié : siège seulement")
+        Some("[[fortified]] : siège seulement")
     );
     let state = done(&both(), declare(&[prowlers()]));
     let state = done(&state, strong(card(Swiftness, 1), WHITE_DIE));
@@ -264,7 +264,7 @@ fn block_stakes_on_two_lines() {
     assert_eq!(
         shown(&state, &catalog).enemies[0].stakes,
         [
-            "À parer : 6 (vif, 2 × 3)",
+            "À parer : 6 ([[swift]], 2 × 3)",
             "Si non paré : 3 dégâts, 2 blessure(s)"
         ]
     );

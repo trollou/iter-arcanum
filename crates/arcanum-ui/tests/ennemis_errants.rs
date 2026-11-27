@@ -198,7 +198,7 @@ fn hover_describes_the_enemy_token() {
         screen.hover_lines[2..],
         [
             "Cogneurs (orques maraudeurs) : armure 3, attaque 4, gloire 4",
-            "Capacités : brutal",
+            "Capacités : [[brutal]]brutal",
             "Résistances : physique",
             "Case occupée par un ennemi errant",
         ]
@@ -424,4 +424,14 @@ fn every_enemy_key_exists_in_french() {
         }
         assert_eq!(catalog.gaps(), vec![]);
     }
+}
+
+// Spec #27, C17 : l'icône devant chaque capacité dans l'infobulle du plateau (Dragons des
+// marais : Vif, Toxique).
+#[test]
+fn hover_abilities_carry_icon_markers() {
+    let catalog = french();
+    let token = arcanum_core::EnemyToken::new(arcanum_core::Enemy::SwampDragon, 1);
+    let lines = arcanum_ui::token_lines(token, &catalog);
+    assert_eq!(lines[1], "Capacités : [[swift]]vif, [[poison]]toxique");
 }

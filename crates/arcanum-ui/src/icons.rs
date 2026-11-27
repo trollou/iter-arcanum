@@ -188,6 +188,28 @@ pub enum ValuePiece {
     Text(String),
 }
 
+/// Les noms des repères d'icône `[[nom]]` d'un libellé (spec #27, Q3 et Q4), et leur icône.
+pub const ICON_MARKERS: [(&str, Icon); 6] = [
+    ("fortified", Icon::Ability(EnemyAbility::Fortified)),
+    ("swift", Icon::Ability(EnemyAbility::Swift)),
+    ("brutal", Icon::Ability(EnemyAbility::Brutal)),
+    ("poison", Icon::Ability(EnemyAbility::Poison)),
+    ("paralyze", Icon::Ability(EnemyAbility::Paralyze)),
+    ("summon", Icon::Summon),
+];
+
+/// Découpe un texte à repères en morceaux de texte et en icônes, sans valeur, nommées et avec
+/// leur règle (spec #27, C15) ; un texte sans repère donne un seul morceau.
+pub fn icon_pieces(text: &str, _catalog: &Catalog) -> Vec<ValuePiece> {
+    vec![ValuePiece::Text(text.to_string())]
+}
+
+/// Le texte sans repère (spec #27, C15 et C21) : un repère suivi d'un mot disparaît, un repère
+/// seul devient le nom de son icône (« Vif »).
+pub fn plain_text(text: &str, _catalog: &Catalog) -> String {
+    text.to_string()
+}
+
 /// Une valeur à icône, son nom traduit en infobulle.
 pub fn icon_value(icon: Icon, value: impl Into<String>, catalog: &Catalog) -> IconValue {
     IconValue {

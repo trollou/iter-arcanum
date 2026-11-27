@@ -171,7 +171,7 @@ fn city_tooltip_lines() {
     assert!(
         has(
             &lines,
-            "Défenseur doublement fortifié : aucun tir à distance"
+            "Défenseur doublement [[fortified]]fortifié : aucun tir à distance"
         ),
         "{lines:?}"
     );
@@ -375,7 +375,7 @@ fn combat_shows_city_bonus() {
     );
     let freezers = enemy_card(&blue, token(Enemy::Freezers, 1), &catalog);
     assert!(
-        stakes(&freezers).contains(&"À parer : 10 (vif, 2 × 5)".to_string()),
+        stakes(&freezers).contains(&"À parer : 10 ([[swift]], 2 × 5)".to_string()),
         "{:?}",
         freezers.stakes
     );
@@ -397,7 +397,7 @@ fn combat_shows_city_bonus() {
     assert!(
         stakes(&guards)
             .iter()
-            .any(|line| line.starts_with("Si non paré : 6 (brutal, 2 × 3)")),
+            .any(|line| line.starts_with("Si non paré : 6 ([[brutal]], 2 × 3)")),
         "{:?}",
         guards.stakes
     );

@@ -867,3 +867,134 @@ fn escape_buttons_show_shortcut() {
     .expect("choix de la carte à défausser");
     assert_eq!(discard.cancel.shortcut, escape);
 }
+
+// --- Texte à icônes (spec #27) ---
+
+use arcanum_ui::{ICON_MARKERS, icon_pieces, plain_text};
+
+fn english() -> Catalog {
+    Catalog::load(
+        &repository_assets_dir().join("i18n"),
+        &Language("en".into()),
+    )
+    .expect("en.json du dépôt")
+}
+
+// Spec #27, C15 : un repère devant le mot, un repère seul à la place du mot, un texte sans
+// repère.
+#[test]
+fn icon_pieces_split_markers() {
+    let catalog = french();
+    let brutal = ruled(
+        Icon::Ability(EnemyAbility::Brutal),
+        "",
+        "Brutal",
+        "S'il n'est pas paré, il inflige le double de son attaque.",
+    );
+    assert_eq!(
+        icon_pieces("Capacités : [[brutal]]brutal", &catalog),
+        [
+            ValuePiece::Text("Capacités : ".into()),
+            ValuePiece::Icon(brutal),
+            ValuePiece::Text("brutal".into()),
+        ]
+    );
+    let swift = ruled(
+        Icon::Ability(EnemyAbility::Swift),
+        "",
+        "Vif",
+        "Pour le parer, il faut une Parade du double de son attaque.",
+    );
+    assert_eq!(
+        icon_pieces("À parer : 6 ([[swift]], 2 × 3)", &catalog),
+        [
+            ValuePiece::Text("À parer : 6 (".into()),
+            ValuePiece::Icon(swift),
+            ValuePiece::Text(", 2 × 3)".into()),
+        ]
+    );
+    assert_eq!(
+        icon_pieces("Armure 3", &catalog),
+        [ValuePiece::Text("Armure 3".into())]
+    );
+    assert_eq!(
+        plain_text("Capacités : [[brutal]]brutal", &catalog),
+        "Capacités : brutal"
+    );
+    assert_eq!(
+        plain_text("À parer : 6 ([[swift]], 2 × 3)", &catalog),
+        "À parer : 6 (Vif, 2 × 3)"
+    );
+}
+
+/// Les repères `[[nom]]` d'un texte, dans l'ordre.
+fn markers(text: &str) -> Vec<String> {
+    let mut found = Vec::new();
+    let mut rest = text;
+    while let Some(start) = rest.find("[[") {
+        let after = &rest[start + 2..];
+        let end = after.find("]]").expect("repère fermé");
+        found.push(after[..end].to_string());
+        rest = &after[end + 2..];
+    }
+    found
+}
+
+// Spec #27, C16 : chaque repère nomme une des six icônes, et chaque clé a les mêmes repères dans
+// le même ordre en français et en anglais.
+#[test]
+fn icon_markers_are_known_and_shared() {
+    let (fr, en) = (french(), english());
+    let known: Vec<&str> = ICON_MARKERS.iter().map(|(name, _)| *name).collect();
+    let mut marked = 0;
+    for key in fr.keys() {
+        let found = markers(&fr.text(&key));
+        for name in &found {
+            assert!(known.contains(&name.as_str()), "{key} : [[{name}]] inconnu");
+        }
+        assert_eq!(found, markers(&en.text(&key)), "{key}");
+        marked += usize::from(!found.is_empty());
+    }
+    // Les clés marquées de la spec (section Libellés).
+    assert!(marked >= 30, "{marked} clés marquées");
+}
+
+// Spec #27, C19 et C20 : hors du combat, l'icône devant le mot, qui reste.
+#[test]
+fn marked_texts_keep_the_word() {
+    let catalog = french();
+    for (key, expected) in [
+        (
+            "board.hover.city.bonus_red",
+            "Bonus des défenseurs : [[brutal]]brutal si leur attaque est physique",
+        ),
+        (
+            "board.hover.city.bonus_green",
+            "Bonus des défenseurs : [[poison]]toxique si leur attaque est physique",
+        ),
+        (
+            "unit.altem_guardians.ability_2",
+            "Parade 8 ; compte double contre un ennemi [[swift]]Vif",
+        ),
+        (
+            "unit.illusionists.ability_2",
+            "(mana blanc) Un ennemi [[fortified]]non fortifié n'attaque pas",
+        ),
+        (
+            "card.tremor.strong_text",
+            "Un ennemi Armure -3 (-6 si [[fortified]]fortifié), ou tous -2 (-4 si \
+             [[fortified]]fortifiés) (min. 1)",
+        ),
+        (
+            "modifier.by_fortification",
+            "{plain} ({fortified} si [[fortified]]fortifié)",
+        ),
+    ] {
+        assert_eq!(catalog.text(key), expected, "{key}");
+    }
+    assert!(
+        catalog
+            .text("card.expose.basic_text")
+            .contains("perd [[fortified]]fortifications")
+    );
+}

@@ -683,3 +683,34 @@ fn panel_greys_unaffordable_recruits() {
         [Some(Command::ChooseDisband(herbalists())), None]
     );
 }
+
+// Spec #27, C20 : dans l'offre d'unités, la ligne de capacité des Gardes d'Utem porte l'icône Vif
+// devant le mot.
+#[test]
+fn gardes_utem_offer_line_shows_swift_icon() {
+    let catalog = french();
+    let state = Units {
+        offer: vec![guardsmen()],
+        ..Units::default()
+    }
+    .state();
+    let window = arcanum_ui::offers_window(&arcanum_core::view(&state, SOLO), &[], &catalog);
+    let line = window
+        .columns
+        .iter()
+        .flat_map(|column| &column.cards)
+        .flat_map(|card| &card.lines)
+        .find(|line| line.contains("compte double"))
+        .expect("ligne de la Parade vive");
+    assert_eq!(
+        line,
+        "Parade 4 ; compte double contre un ennemi [[swift]]Vif"
+    );
+    let swift = arcanum_ui::Icon::Ability(arcanum_core::EnemyAbility::Swift);
+    assert!(
+        arcanum_ui::icon_pieces(line, &catalog).iter().any(
+            |piece| matches!(piece, arcanum_ui::ValuePiece::Icon(value) if value.icon == swift)
+        ),
+        "{line}"
+    );
+}
